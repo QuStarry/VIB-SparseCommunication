@@ -178,6 +178,6 @@ def create_baseline_agent(llm_client: DeepSeekClient) -> Dict:
         name="Baseline",
         system_prompt=system_prompt,
         llm_client=llm_client,
-        max_tokens=1024
+        max_tokens=2048
     )
     return agent.to_agent_dict()

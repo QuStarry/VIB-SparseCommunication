@@ -154,7 +154,7 @@ def run_baseline_experiment(
         api_key=api_key,
         model="deepseek-chat",
         temperature=0.7,
-        max_tokens=1024
+        max_tokens=2048
     )
     
     # Single agent, multiple rounds without VIB
