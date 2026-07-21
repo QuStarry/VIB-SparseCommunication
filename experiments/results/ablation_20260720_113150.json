@@ -1,0 +1,443 @@
+{
+  "results": [
+    {
+      "beta_0": 1.5,
+      "lambda_decay": 0.1,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4104,
+      "prompt_tokens": 3423,
+      "completion_tokens": 681,
+      "api_calls": 9,
+      "elapsed_seconds": 28.636876106262207,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 1.5,
+      "lambda_decay": 0.15,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4066,
+      "prompt_tokens": 3405,
+      "completion_tokens": 661,
+      "api_calls": 9,
+      "elapsed_seconds": 22.688971996307373,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 1.5,
+      "lambda_decay": 0.3,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3875,
+      "prompt_tokens": 3267,
+      "completion_tokens": 608,
+      "api_calls": 9,
+      "elapsed_seconds": 22.250003814697266,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 2.0,
+      "lambda_decay": 0.1,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3972,
+      "prompt_tokens": 3333,
+      "completion_tokens": 639,
+      "api_calls": 9,
+      "elapsed_seconds": 21.94343090057373,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 2.0,
+      "lambda_decay": 0.15,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3764,
+      "prompt_tokens": 3171,
+      "completion_tokens": 593,
+      "api_calls": 9,
+      "elapsed_seconds": 24.088900089263916,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 2.0,
+      "lambda_decay": 0.3,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4242,
+      "prompt_tokens": 3537,
+      "completion_tokens": 705,
+      "api_calls": 9,
+      "elapsed_seconds": 24.82234215736389,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 3.0,
+      "lambda_decay": 0.1,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3500,
+      "prompt_tokens": 2979,
+      "completion_tokens": 521,
+      "api_calls": 9,
+      "elapsed_seconds": 26.11315417289734,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 3.0,
+      "lambda_decay": 0.15,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3939,
+      "prompt_tokens": 3267,
+      "completion_tokens": 672,
+      "api_calls": 9,
+      "elapsed_seconds": 24.77181887626648,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 3.0,
+      "lambda_decay": 0.3,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3758,
+      "prompt_tokens": 3153,
+      "completion_tokens": 605,
+      "api_calls": 9,
+      "elapsed_seconds": 23.683260917663574,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "total_valid_runs": 9,
+    "best_compression": {
+      "beta_0": 1.5,
+      "lambda_decay": 0.1,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4104,
+      "prompt_tokens": 3423,
+      "completion_tokens": 681,
+      "api_calls": 9,
+      "elapsed_seconds": 28.636876106262207,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    "lowest_tokens": {
+      "beta_0": 3.0,
+      "lambda_decay": 0.1,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3500,
+      "prompt_tokens": 2979,
+      "completion_tokens": 521,
+      "api_calls": 9,
+      "elapsed_seconds": 26.11315417289734,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    "pareto_front": [
+      {
+        "beta_0": 3.0,
+        "lambda_decay": 0.1,
+        "total_candidates": 9,
+        "total_approved": 3,
+        "total_blocked": 6,
+        "compression_rate": 66.66666666666667,
+        "total_tokens": 3500,
+        "prompt_tokens": 2979,
+        "completion_tokens": 521,
+        "api_calls": 9,
+        "elapsed_seconds": 26.11315417289734,
+        "history_per_step": [
+          {
+            "step": 1,
+            "candidates": 3,
+            "approved": 3,
+            "blocked": 0
+          },
+          {
+            "step": 2,
+            "candidates": 3,
+            "approved": 0,
+            "blocked": 3
+          },
+          {
+            "step": 3,
+            "candidates": 3,
+            "approved": 0,
+            "blocked": 3
+          }
+        ]
+      }
+    ],
+    "beta_averages": {
+      "2.0": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 3992.6666666666665
+      },
+      "3.0": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 3732.3333333333335
+      }
+    },
+    "lambda_averages": {
+      "0.15": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 3923.0
+      },
+      "0.3": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 3958.3333333333335
+      }
+    }
+  },
+  "params": {
+    "beta_values": [
+      1.5,
+      2.0,
+      3.0
+    ],
+    "lambda_values": [
+      0.1,
+      0.15,
+      0.3
+    ],
+    "task": {
+      "id": "ablation_sort",
+      "name": "排序算法优化（消融实验标准任务）",
+      "goal": "设计一个高性能的Python排序函数，要求：1) 对小数组使用插入排序，大数组使用快速排序；2) 处理大量重复元素的情况；3) 给出时间复杂度分析。",
+      "max_steps": 4
+    }
+  }
+}

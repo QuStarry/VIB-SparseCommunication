@@ -1,0 +1,692 @@
+{
+  "results": [
+    {
+      "beta_0": 1.0,
+      "lambda_decay": 0.05,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3766,
+      "prompt_tokens": 3159,
+      "completion_tokens": 607,
+      "api_calls": 9,
+      "elapsed_seconds": 29.597177267074585,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 1.0,
+      "lambda_decay": 0.15,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3793,
+      "prompt_tokens": 3213,
+      "completion_tokens": 580,
+      "api_calls": 9,
+      "elapsed_seconds": 22.261775016784668,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 1.0,
+      "lambda_decay": 0.3,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3837,
+      "prompt_tokens": 3255,
+      "completion_tokens": 582,
+      "api_calls": 9,
+      "elapsed_seconds": 23.50066304206848,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 1.0,
+      "lambda_decay": 0.5,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4322,
+      "prompt_tokens": 3621,
+      "completion_tokens": 701,
+      "api_calls": 9,
+      "elapsed_seconds": 26.489986181259155,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 2.0,
+      "lambda_decay": 0.05,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4159,
+      "prompt_tokens": 3477,
+      "completion_tokens": 682,
+      "api_calls": 9,
+      "elapsed_seconds": 26.117300987243652,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 2.0,
+      "lambda_decay": 0.15,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3874,
+      "prompt_tokens": 3255,
+      "completion_tokens": 619,
+      "api_calls": 9,
+      "elapsed_seconds": 22.80291485786438,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 2.0,
+      "lambda_decay": 0.3,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3812,
+      "prompt_tokens": 3195,
+      "completion_tokens": 617,
+      "api_calls": 9,
+      "elapsed_seconds": 23.6075439453125,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 2.0,
+      "lambda_decay": 0.5,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4279,
+      "prompt_tokens": 3621,
+      "completion_tokens": 658,
+      "api_calls": 9,
+      "elapsed_seconds": 23.651358127593994,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 3.0,
+      "lambda_decay": 0.05,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3962,
+      "prompt_tokens": 3303,
+      "completion_tokens": 659,
+      "api_calls": 9,
+      "elapsed_seconds": 24.656551837921143,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 3.0,
+      "lambda_decay": 0.15,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3796,
+      "prompt_tokens": 3189,
+      "completion_tokens": 607,
+      "api_calls": 9,
+      "elapsed_seconds": 22.51716113090515,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 3.0,
+      "lambda_decay": 0.3,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4222,
+      "prompt_tokens": 3441,
+      "completion_tokens": 781,
+      "api_calls": 9,
+      "elapsed_seconds": 29.272534132003784,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 3.0,
+      "lambda_decay": 0.5,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4096,
+      "prompt_tokens": 3429,
+      "completion_tokens": 667,
+      "api_calls": 9,
+      "elapsed_seconds": 26.34341311454773,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 4.0,
+      "lambda_decay": 0.05,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4176,
+      "prompt_tokens": 3477,
+      "completion_tokens": 699,
+      "api_calls": 9,
+      "elapsed_seconds": 29.862926721572876,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 4.0,
+      "lambda_decay": 0.15,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4249,
+      "prompt_tokens": 3567,
+      "completion_tokens": 682,
+      "api_calls": 9,
+      "elapsed_seconds": 29.277799129486084,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 4.0,
+      "lambda_decay": 0.3,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4018,
+      "prompt_tokens": 3399,
+      "completion_tokens": 619,
+      "api_calls": 9,
+      "elapsed_seconds": 25.299888849258423,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    {
+      "beta_0": 4.0,
+      "lambda_decay": 0.5,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 4009,
+      "prompt_tokens": 3393,
+      "completion_tokens": 616,
+      "api_calls": 9,
+      "elapsed_seconds": 24.129852294921875,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    }
+  ],
+  "analysis": {
+    "total_valid_runs": 16,
+    "best_compression": {
+      "beta_0": 1.0,
+      "lambda_decay": 0.05,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3766,
+      "prompt_tokens": 3159,
+      "completion_tokens": 607,
+      "api_calls": 9,
+      "elapsed_seconds": 29.597177267074585,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    "lowest_tokens": {
+      "beta_0": 1.0,
+      "lambda_decay": 0.05,
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "compression_rate": 66.66666666666667,
+      "total_tokens": 3766,
+      "prompt_tokens": 3159,
+      "completion_tokens": 607,
+      "api_calls": 9,
+      "elapsed_seconds": 29.597177267074585,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    "pareto_front": [
+      {
+        "beta_0": 1.0,
+        "lambda_decay": 0.05,
+        "total_candidates": 9,
+        "total_approved": 3,
+        "total_blocked": 6,
+        "compression_rate": 66.66666666666667,
+        "total_tokens": 3766,
+        "prompt_tokens": 3159,
+        "completion_tokens": 607,
+        "api_calls": 9,
+        "elapsed_seconds": 29.597177267074585,
+        "history_per_step": [
+          {
+            "step": 1,
+            "candidates": 3,
+            "approved": 3,
+            "blocked": 0
+          },
+          {
+            "step": 2,
+            "candidates": 3,
+            "approved": 0,
+            "blocked": 3
+          },
+          {
+            "step": 3,
+            "candidates": 3,
+            "approved": 0,
+            "blocked": 3
+          }
+        ]
+      }
+    ],
+    "beta_averages": {
+      "1.0": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 3929.5
+      },
+      "2.0": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 4031.0
+      },
+      "3.0": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 4019.0
+      },
+      "4.0": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 4113.0
+      }
+    },
+    "lambda_averages": {
+      "0.05": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 4015.75
+      },
+      "0.15": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 3928.0
+      },
+      "0.3": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 3972.25
+      },
+      "0.5": {
+        "avg_compression": 66.66666666666667,
+        "avg_tokens": 4176.5
+      }
+    }
+  },
+  "params": {
+    "beta_values": [
+      1.0,
+      2.0,
+      3.0,
+      4.0
+    ],
+    "lambda_values": [
+      0.05,
+      0.15,
+      0.3,
+      0.5
+    ],
+    "task": {
+      "id": "ablation_sort",
+      "name": "排序算法优化（消融实验标准任务）",
+      "goal": "设计一个高性能的Python排序函数，要求：1) 对小数组使用插入排序，大数组使用快速排序；2) 处理大量重复元素的情况；3) 给出时间复杂度分析。",
+      "max_steps": 4
+    }
+  }
+}

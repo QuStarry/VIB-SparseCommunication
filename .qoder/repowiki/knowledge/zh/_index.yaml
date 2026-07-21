@@ -1,0 +1,23 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: zh-CN
+branch: main
+nodes_managed: true
+exported_at: "2026-07-20T03:22:31Z"
+modules:
+    "":
+        dir_name: VIB稀疏通信多智能体系统（根项目）
+        title: VIB稀疏通信多智能体系统（根项目）
+        scope:
+            - README.md
+            - .gitignore
+            - requirements.txt
+            - run_summary.py
+            - validate_milestone1.py
+            - validate_milestone2.py
+            - docs/
+            - LICENSE
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []

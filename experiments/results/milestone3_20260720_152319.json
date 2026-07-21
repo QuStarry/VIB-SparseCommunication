@@ -1,0 +1,140 @@
+[
+  {
+    "task_id": "sort_optimization",
+    "task_name": "排序算法优化",
+    "goal": "设计一个高性能的Python排序函数，要求：1) 对小数组使用插入排序，大数组使用快速排序；2) 处理大量重复元素的情况；3) 给出时间复杂度分析。",
+    "vib_params": {
+      "beta_0": 2.0,
+      "lambda_decay": 0.15,
+      "tau": 0.2,
+      "gamma": 0.0
+    },
+    "stats": {
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "steps_completed": 4,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    "compression_rate": 66.66666666666667,
+    "token_usage": {
+      "total_calls": 9,
+      "total_prompt_tokens": 3753,
+      "total_completion_tokens": 698,
+      "total_tokens": 4451
+    },
+    "elapsed_seconds": 109.66197991371155,
+    "timestamp": "2026-07-20T15:22:28.133385"
+  },
+  {
+    "task_id": "api_design",
+    "task_name": "RESTful API 设计",
+    "goal": "为一个在线书店设计RESTful API，要求：1) 支持书籍CRUD操作；2) 支持用户购物车；3) 考虑分页、认证和错误处理。请给出核心端点设计。",
+    "vib_params": {
+      "beta_0": 2.0,
+      "lambda_decay": 0.15,
+      "tau": 0.2,
+      "gamma": 0.0
+    },
+    "stats": {
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "steps_completed": 4,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    "compression_rate": 66.66666666666667,
+    "token_usage": {
+      "total_calls": 9,
+      "total_prompt_tokens": 3642,
+      "total_completion_tokens": 725,
+      "total_tokens": 4367
+    },
+    "elapsed_seconds": 23.546265840530396,
+    "timestamp": "2026-07-20T15:22:52.690051"
+  },
+  {
+    "task_id": "debug_task",
+    "task_name": "代码调试",
+    "goal": "以下Python代码存在内存泄漏问题，请分析原因并给出修复方案：\ndef process_data(items):\n    cache = {}\n    results = []\n    for item in items:\n        key = str(item)\n        if key not in cache:\n            cache[key] = expensive_compute(item)\n        results.append(cache[key])\n    return results",
+    "vib_params": {
+      "beta_0": 2.0,
+      "lambda_decay": 0.15,
+      "tau": 0.2,
+      "gamma": 0.0
+    },
+    "stats": {
+      "total_candidates": 9,
+      "total_approved": 3,
+      "total_blocked": 6,
+      "steps_completed": 4,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        },
+        {
+          "step": 3,
+          "candidates": 3,
+          "approved": 0,
+          "blocked": 3
+        }
+      ]
+    },
+    "compression_rate": 66.66666666666667,
+    "token_usage": {
+      "total_calls": 9,
+      "total_prompt_tokens": 3549,
+      "total_completion_tokens": 626,
+      "total_tokens": 4175
+    },
+    "elapsed_seconds": 24.99035120010376,
+    "timestamp": "2026-07-20T15:23:18.687545"
+  }
+]
