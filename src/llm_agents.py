@@ -112,7 +112,7 @@ class LLMAgent:
         result = self.llm_client.chat(
             messages=messages,
             max_tokens=self.max_tokens,
-            temperature=0.7
+            temperature=0.2  # 修改点：从 0.7 降至 0.2，增强代码逻辑严谨度
         )
         
         # Track usage

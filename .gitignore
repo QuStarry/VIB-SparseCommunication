@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+experiments/results/
+experiments/dataset/
+experiments/HumanEval.jsonl.gz

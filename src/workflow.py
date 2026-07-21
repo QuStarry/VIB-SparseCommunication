@@ -197,14 +197,14 @@ class VIBMultiAgentWorkflow:
     
     def _should_continue(self, state: AgentState) -> str:
         """Determine whether to continue or end the workflow."""
-        self.stats["steps_completed"] = state["step_t"]
+        self.stats["steps_completed"] = state["step_t"] - 1
         
         # Check completion
         if self.completion_checker(state["history"], state["global_goal"]):
             return "end"
         
-        # Check max steps
-        if state["step_t"] >= self.max_steps:
+        # 修改点：当 step_t 严格大于 max_steps 时才退出，确保第 2 轮能够正常执行
+        if state["step_t"] > self.max_steps:
             return "end"
         
         return "continue"
