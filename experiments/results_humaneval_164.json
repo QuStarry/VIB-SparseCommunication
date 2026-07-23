@@ -1,0 +1,2150 @@
+{
+  "summary": {
+    "Full_Comm": {
+      "passed": 148,
+      "tokens": 484026,
+      "generated": 984,
+      "accepted": 984
+    },
+    "VIB_Sparse": {
+      "passed": 144,
+      "tokens": 380088,
+      "generated": 984,
+      "accepted": 170
+    }
+  },
+  "details": [
+    {
+      "task_id": "HumanEval/0",
+      "entry_point": "has_close_elements",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 24.96
+    },
+    {
+      "task_id": "HumanEval/1",
+      "entry_point": "separate_paren_groups",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.5
+    },
+    {
+      "task_id": "HumanEval/2",
+      "entry_point": "truncate_number",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.06
+    },
+    {
+      "task_id": "HumanEval/3",
+      "entry_point": "below_zero",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.66
+    },
+    {
+      "task_id": "HumanEval/4",
+      "entry_point": "mean_absolute_deviation",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.55
+    },
+    {
+      "task_id": "HumanEval/5",
+      "entry_point": "intersperse",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 16.44
+    },
+    {
+      "task_id": "HumanEval/6",
+      "entry_point": "parse_nested_parens",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.77
+    },
+    {
+      "task_id": "HumanEval/7",
+      "entry_point": "filter_by_substring",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.15
+    },
+    {
+      "task_id": "HumanEval/8",
+      "entry_point": "sum_product",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.29
+    },
+    {
+      "task_id": "HumanEval/9",
+      "entry_point": "rolling_max",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 16.97
+    },
+    {
+      "task_id": "HumanEval/10",
+      "entry_point": "make_palindrome",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.94
+    },
+    {
+      "task_id": "HumanEval/11",
+      "entry_point": "string_xor",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.65
+    },
+    {
+      "task_id": "HumanEval/12",
+      "entry_point": "longest",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.74
+    },
+    {
+      "task_id": "HumanEval/13",
+      "entry_point": "greatest_common_divisor",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 2
+      },
+      "time_sec": 19.63
+    },
+    {
+      "task_id": "HumanEval/14",
+      "entry_point": "all_prefixes",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 16.28
+    },
+    {
+      "task_id": "HumanEval/15",
+      "entry_point": "string_sequence",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 15.66
+    },
+    {
+      "task_id": "HumanEval/16",
+      "entry_point": "count_distinct_characters",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 16.56
+    },
+    {
+      "task_id": "HumanEval/17",
+      "entry_point": "parse_music",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.42
+    },
+    {
+      "task_id": "HumanEval/18",
+      "entry_point": "how_many_times",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.18
+    },
+    {
+      "task_id": "HumanEval/19",
+      "entry_point": "sort_numbers",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.24
+    },
+    {
+      "task_id": "HumanEval/20",
+      "entry_point": "find_closest_elements",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.53
+    },
+    {
+      "task_id": "HumanEval/21",
+      "entry_point": "rescale_to_unit",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.21
+    },
+    {
+      "task_id": "HumanEval/22",
+      "entry_point": "filter_integers",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.18
+    },
+    {
+      "task_id": "HumanEval/23",
+      "entry_point": "strlen",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 14.42
+    },
+    {
+      "task_id": "HumanEval/24",
+      "entry_point": "largest_divisor",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.11
+    },
+    {
+      "task_id": "HumanEval/25",
+      "entry_point": "factorize",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.38
+    },
+    {
+      "task_id": "HumanEval/26",
+      "entry_point": "remove_duplicates",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.31
+    },
+    {
+      "task_id": "HumanEval/27",
+      "entry_point": "flip_case",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.69
+    },
+    {
+      "task_id": "HumanEval/28",
+      "entry_point": "concatenate",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.5
+    },
+    {
+      "task_id": "HumanEval/29",
+      "entry_point": "filter_by_prefix",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.26
+    },
+    {
+      "task_id": "HumanEval/30",
+      "entry_point": "get_positive",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.71
+    },
+    {
+      "task_id": "HumanEval/31",
+      "entry_point": "is_prime",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.35
+    },
+    {
+      "task_id": "HumanEval/32",
+      "entry_point": "find_zero",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 28.92
+    },
+    {
+      "task_id": "HumanEval/33",
+      "entry_point": "sort_third",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.5
+    },
+    {
+      "task_id": "HumanEval/34",
+      "entry_point": "unique",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.63
+    },
+    {
+      "task_id": "HumanEval/35",
+      "entry_point": "max_element",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.47
+    },
+    {
+      "task_id": "HumanEval/36",
+      "entry_point": "fizz_buzz",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.81
+    },
+    {
+      "task_id": "HumanEval/37",
+      "entry_point": "sort_even",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.73
+    },
+    {
+      "task_id": "HumanEval/38",
+      "entry_point": "decode_cyclic",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 23.08
+    },
+    {
+      "task_id": "HumanEval/39",
+      "entry_point": "prime_fib",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 25.18
+    },
+    {
+      "task_id": "HumanEval/40",
+      "entry_point": "triples_sum_to_zero",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 24.49
+    },
+    {
+      "task_id": "HumanEval/41",
+      "entry_point": "car_race_collision",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.61
+    },
+    {
+      "task_id": "HumanEval/42",
+      "entry_point": "incr_list",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.18
+    },
+    {
+      "task_id": "HumanEval/43",
+      "entry_point": "pairs_sum_to_zero",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.02
+    },
+    {
+      "task_id": "HumanEval/44",
+      "entry_point": "change_base",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.88
+    },
+    {
+      "task_id": "HumanEval/45",
+      "entry_point": "triangle_area",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.91
+    },
+    {
+      "task_id": "HumanEval/46",
+      "entry_point": "fib4",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.69
+    },
+    {
+      "task_id": "HumanEval/47",
+      "entry_point": "median",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 26.47
+    },
+    {
+      "task_id": "HumanEval/48",
+      "entry_point": "is_palindrome",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.55
+    },
+    {
+      "task_id": "HumanEval/49",
+      "entry_point": "modp",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.33
+    },
+    {
+      "task_id": "HumanEval/50",
+      "entry_point": "decode_shift",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.27
+    },
+    {
+      "task_id": "HumanEval/51",
+      "entry_point": "remove_vowels",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.21
+    },
+    {
+      "task_id": "HumanEval/52",
+      "entry_point": "below_threshold",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.25
+    },
+    {
+      "task_id": "HumanEval/53",
+      "entry_point": "add",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.79
+    },
+    {
+      "task_id": "HumanEval/54",
+      "entry_point": "same_chars",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.37
+    },
+    {
+      "task_id": "HumanEval/55",
+      "entry_point": "fib",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.68
+    },
+    {
+      "task_id": "HumanEval/56",
+      "entry_point": "correct_bracketing",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.3
+    },
+    {
+      "task_id": "HumanEval/57",
+      "entry_point": "monotonic",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.39
+    },
+    {
+      "task_id": "HumanEval/58",
+      "entry_point": "common",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.71
+    },
+    {
+      "task_id": "HumanEval/59",
+      "entry_point": "largest_prime_factor",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.14
+    },
+    {
+      "task_id": "HumanEval/60",
+      "entry_point": "sum_to_n",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.89
+    },
+    {
+      "task_id": "HumanEval/61",
+      "entry_point": "correct_bracketing",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.28
+    },
+    {
+      "task_id": "HumanEval/62",
+      "entry_point": "derivative",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.93
+    },
+    {
+      "task_id": "HumanEval/63",
+      "entry_point": "fibfib",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.77
+    },
+    {
+      "task_id": "HumanEval/64",
+      "entry_point": "vowels_count",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.23
+    },
+    {
+      "task_id": "HumanEval/65",
+      "entry_point": "circular_shift",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.2
+    },
+    {
+      "task_id": "HumanEval/66",
+      "entry_point": "digitSum",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.41
+    },
+    {
+      "task_id": "HumanEval/67",
+      "entry_point": "fruit_distribution",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 23.12
+    },
+    {
+      "task_id": "HumanEval/68",
+      "entry_point": "pluck",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.6
+    },
+    {
+      "task_id": "HumanEval/69",
+      "entry_point": "search",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.34
+    },
+    {
+      "task_id": "HumanEval/70",
+      "entry_point": "strange_sort_list",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.02
+    },
+    {
+      "task_id": "HumanEval/71",
+      "entry_point": "triangle_area",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.07
+    },
+    {
+      "task_id": "HumanEval/72",
+      "entry_point": "will_it_fly",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.97
+    },
+    {
+      "task_id": "HumanEval/73",
+      "entry_point": "smallest_change",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 20.37
+    },
+    {
+      "task_id": "HumanEval/74",
+      "entry_point": "total_match",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.02
+    },
+    {
+      "task_id": "HumanEval/75",
+      "entry_point": "is_multiply_prime",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.64
+    },
+    {
+      "task_id": "HumanEval/76",
+      "entry_point": "is_simple_power",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.73
+    },
+    {
+      "task_id": "HumanEval/77",
+      "entry_point": "iscube",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.39
+    },
+    {
+      "task_id": "HumanEval/78",
+      "entry_point": "hex_key",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.66
+    },
+    {
+      "task_id": "HumanEval/79",
+      "entry_point": "decimal_to_binary",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.54
+    },
+    {
+      "task_id": "HumanEval/80",
+      "entry_point": "is_happy",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.09
+    },
+    {
+      "task_id": "HumanEval/81",
+      "entry_point": "numerical_letter_grade",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.72
+    },
+    {
+      "task_id": "HumanEval/82",
+      "entry_point": "prime_length",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 2
+      },
+      "time_sec": 19.71
+    },
+    {
+      "task_id": "HumanEval/83",
+      "entry_point": "starts_one_ends",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.46
+    },
+    {
+      "task_id": "HumanEval/84",
+      "entry_point": "solve",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.92
+    },
+    {
+      "task_id": "HumanEval/85",
+      "entry_point": "add",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 16.35
+    },
+    {
+      "task_id": "HumanEval/86",
+      "entry_point": "anti_shuffle",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.08
+    },
+    {
+      "task_id": "HumanEval/87",
+      "entry_point": "get_row",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.87
+    },
+    {
+      "task_id": "HumanEval/88",
+      "entry_point": "sort_array",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.54
+    },
+    {
+      "task_id": "HumanEval/89",
+      "entry_point": "encrypt",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.35
+    },
+    {
+      "task_id": "HumanEval/90",
+      "entry_point": "next_smallest",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.15
+    },
+    {
+      "task_id": "HumanEval/91",
+      "entry_point": "is_bored",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.2
+    },
+    {
+      "task_id": "HumanEval/92",
+      "entry_point": "any_int",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.45
+    },
+    {
+      "task_id": "HumanEval/93",
+      "entry_point": "encode",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.63
+    },
+    {
+      "task_id": "HumanEval/94",
+      "entry_point": "skjkasdkd",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.33
+    },
+    {
+      "task_id": "HumanEval/95",
+      "entry_point": "check_dict_case",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.82
+    },
+    {
+      "task_id": "HumanEval/96",
+      "entry_point": "count_up_to",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.68
+    },
+    {
+      "task_id": "HumanEval/97",
+      "entry_point": "multiply",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.78
+    },
+    {
+      "task_id": "HumanEval/98",
+      "entry_point": "count_upper",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.71
+    },
+    {
+      "task_id": "HumanEval/99",
+      "entry_point": "closest_integer",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 23.27
+    },
+    {
+      "task_id": "HumanEval/100",
+      "entry_point": "make_a_pile",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.12
+    },
+    {
+      "task_id": "HumanEval/101",
+      "entry_point": "words_string",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.29
+    },
+    {
+      "task_id": "HumanEval/102",
+      "entry_point": "choose_num",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.23
+    },
+    {
+      "task_id": "HumanEval/103",
+      "entry_point": "rounded_avg",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.95
+    },
+    {
+      "task_id": "HumanEval/104",
+      "entry_point": "unique_digits",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.37
+    },
+    {
+      "task_id": "HumanEval/105",
+      "entry_point": "by_length",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.74
+    },
+    {
+      "task_id": "HumanEval/106",
+      "entry_point": "f",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.0
+    },
+    {
+      "task_id": "HumanEval/107",
+      "entry_point": "even_odd_palindrome",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.99
+    },
+    {
+      "task_id": "HumanEval/108",
+      "entry_point": "count_nums",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.31
+    },
+    {
+      "task_id": "HumanEval/109",
+      "entry_point": "move_one_ball",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.7
+    },
+    {
+      "task_id": "HumanEval/110",
+      "entry_point": "exchange",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.48
+    },
+    {
+      "task_id": "HumanEval/111",
+      "entry_point": "histogram",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.47
+    },
+    {
+      "task_id": "HumanEval/112",
+      "entry_point": "reverse_delete",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 2
+      },
+      "time_sec": 22.33
+    },
+    {
+      "task_id": "HumanEval/113",
+      "entry_point": "odd_count",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 2
+      },
+      "time_sec": 25.09
+    },
+    {
+      "task_id": "HumanEval/114",
+      "entry_point": "minSubArraySum",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.14
+    },
+    {
+      "task_id": "HumanEval/115",
+      "entry_point": "max_fill",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.67
+    },
+    {
+      "task_id": "HumanEval/116",
+      "entry_point": "sort_array",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 25.68
+    },
+    {
+      "task_id": "HumanEval/117",
+      "entry_point": "select_words",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 23.9
+    },
+    {
+      "task_id": "HumanEval/118",
+      "entry_point": "get_closest_vowel",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.05
+    },
+    {
+      "task_id": "HumanEval/119",
+      "entry_point": "match_parens",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 26.64
+    },
+    {
+      "task_id": "HumanEval/120",
+      "entry_point": "maximum",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.97
+    },
+    {
+      "task_id": "HumanEval/121",
+      "entry_point": "solution",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.4
+    },
+    {
+      "task_id": "HumanEval/122",
+      "entry_point": "add_elements",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.95
+    },
+    {
+      "task_id": "HumanEval/123",
+      "entry_point": "get_odd_collatz",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.08
+    },
+    {
+      "task_id": "HumanEval/124",
+      "entry_point": "valid_date",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 23.06
+    },
+    {
+      "task_id": "HumanEval/125",
+      "entry_point": "split_words",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 2
+      },
+      "time_sec": 21.34
+    },
+    {
+      "task_id": "HumanEval/126",
+      "entry_point": "is_sorted",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.24
+    },
+    {
+      "task_id": "HumanEval/127",
+      "entry_point": "intersection",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 20.1
+    },
+    {
+      "task_id": "HumanEval/128",
+      "entry_point": "prod_signs",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.83
+    },
+    {
+      "task_id": "HumanEval/129",
+      "entry_point": "minPath",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 32.13
+    },
+    {
+      "task_id": "HumanEval/130",
+      "entry_point": "tri",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.98
+    },
+    {
+      "task_id": "HumanEval/131",
+      "entry_point": "digits",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.72
+    },
+    {
+      "task_id": "HumanEval/132",
+      "entry_point": "is_nested",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 22.44
+    },
+    {
+      "task_id": "HumanEval/133",
+      "entry_point": "sum_squares",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.43
+    },
+    {
+      "task_id": "HumanEval/134",
+      "entry_point": "check_if_last_char_is_a_letter",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 20.75
+    },
+    {
+      "task_id": "HumanEval/135",
+      "entry_point": "can_arrange",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.02
+    },
+    {
+      "task_id": "HumanEval/136",
+      "entry_point": "largest_smallest_integers",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.41
+    },
+    {
+      "task_id": "HumanEval/137",
+      "entry_point": "compare_one",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 21.21
+    },
+    {
+      "task_id": "HumanEval/138",
+      "entry_point": "is_equal_to_sum_even",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.86
+    },
+    {
+      "task_id": "HumanEval/139",
+      "entry_point": "special_factorial",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.8
+    },
+    {
+      "task_id": "HumanEval/140",
+      "entry_point": "fix_spaces",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.56
+    },
+    {
+      "task_id": "HumanEval/141",
+      "entry_point": "file_name_check",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.86
+    },
+    {
+      "task_id": "HumanEval/142",
+      "entry_point": "sum_squares",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 25.72
+    },
+    {
+      "task_id": "HumanEval/143",
+      "entry_point": "words_in_sentence",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.24
+    },
+    {
+      "task_id": "HumanEval/144",
+      "entry_point": "simplify",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.93
+    },
+    {
+      "task_id": "HumanEval/145",
+      "entry_point": "order_by_points",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 23.39
+    },
+    {
+      "task_id": "HumanEval/146",
+      "entry_point": "specialFilter",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 21.09
+    },
+    {
+      "task_id": "HumanEval/147",
+      "entry_point": "get_max_triples",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 23.54
+    },
+    {
+      "task_id": "HumanEval/148",
+      "entry_point": "bf",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.51
+    },
+    {
+      "task_id": "HumanEval/149",
+      "entry_point": "sorted_list_sum",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 20.8
+    },
+    {
+      "task_id": "HumanEval/150",
+      "entry_point": "x_or_y",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.71
+    },
+    {
+      "task_id": "HumanEval/151",
+      "entry_point": "double_the_difference",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.08
+    },
+    {
+      "task_id": "HumanEval/152",
+      "entry_point": "compare",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.12
+    },
+    {
+      "task_id": "HumanEval/153",
+      "entry_point": "Strongest_Extension",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 2
+      },
+      "time_sec": 19.91
+    },
+    {
+      "task_id": "HumanEval/154",
+      "entry_point": "cycpattern_check",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.33
+    },
+    {
+      "task_id": "HumanEval/155",
+      "entry_point": "even_odd_count",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.7
+    },
+    {
+      "task_id": "HumanEval/156",
+      "entry_point": "int_to_mini_roman",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 22.2
+    },
+    {
+      "task_id": "HumanEval/157",
+      "entry_point": "right_angle_triangle",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.32
+    },
+    {
+      "task_id": "HumanEval/158",
+      "entry_point": "find_max",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 20.24
+    },
+    {
+      "task_id": "HumanEval/159",
+      "entry_point": "eat",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 19.66
+    },
+    {
+      "task_id": "HumanEval/160",
+      "entry_point": "do_algebra",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 26.64
+    },
+    {
+      "task_id": "HumanEval/161",
+      "entry_point": "solve",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 18.69
+    },
+    {
+      "task_id": "HumanEval/162",
+      "entry_point": "string_to_md5",
+      "full_comm": {
+        "pass": true,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": true,
+        "msgs": 1
+      },
+      "time_sec": 17.11
+    },
+    {
+      "task_id": "HumanEval/163",
+      "entry_point": "generate_integers",
+      "full_comm": {
+        "pass": false,
+        "msgs": 6
+      },
+      "vib_sparse": {
+        "pass": false,
+        "msgs": 1
+      },
+      "time_sec": 20.14
+    }
+  ]
+}

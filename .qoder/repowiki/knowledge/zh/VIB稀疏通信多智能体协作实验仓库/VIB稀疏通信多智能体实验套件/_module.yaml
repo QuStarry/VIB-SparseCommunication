@@ -1,0 +1,8 @@
+schema_version: 1
+module_path: experiments
+title: VIB稀疏通信多智能体实验套件
+scope:
+    - experiments/
+source_files: []
+depends_on: []
+related_to: []

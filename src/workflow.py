@@ -154,32 +154,35 @@ class VIBMultiAgentWorkflow:
     
     def _vib_gatekeeper_node(self, state: AgentState) -> Dict:
         """
-        VIB Gatekeeper Node: Evaluates candidates and filters to history.
-        
-        This is the core sparse communication mechanism.
+        VIB Gatekeeper Node: 修复批处理内部历史同步问题
         """
         approved_broadcasts = []
         candidates = state.get("candidates", [])
         
-        # Track statistics
         self.stats["total_candidates"] += len(candidates)
         
-        # Evaluate each candidate
+        # 建立当前轮次的增量历史视图
+        running_history = list(state["history"]) # 浅拷贝当前全局历史
+        
         for item in candidates:
+            # 实时传入包含同轮次已批准消息的 running_history
             result = self.vib_router.evaluate_detailed(
                 candidate_msg=item["content"],
-                history=state["history"],
+                history=running_history, # <--- 修复：使用增量历史
                 goal=state["global_goal"],
-                step_t=state["step_t"]
+                step_t=state["step_t"],
+                token_probs=item.get("token_probs"), # 透传 Ada-VIB 所需指标
+                confidence_score=item.get("confidence")
             )
             
             if result.is_allowed:
-                approved_broadcasts.append(f"[{item['agent']}]: {item['content']}")
+                formatted_msg = f"[{item['agent']}]: {item['content']}"
+                approved_broadcasts.append(formatted_msg)
+                running_history.append(formatted_msg) # <--- 修复：一旦批准，立即加入当前轮次增量历史
                 self.stats["total_approved"] += 1
             else:
                 self.stats["total_blocked"] += 1
         
-        # Track history per step
         self.stats["history_per_step"].append({
             "step": state["step_t"],
             "candidates": len(candidates),
@@ -189,7 +192,7 @@ class VIBMultiAgentWorkflow:
         
         return {
             "history": approved_broadcasts,
-            "candidates": [],  # Clear buffer
+            "candidates": [], 
             "step_t": state["step_t"] + 1,
             "total_candidates": state.get("total_candidates", 0) + len(candidates),
             "total_approved": state.get("total_approved", 0) + len(approved_broadcasts)

@@ -1,0 +1,11 @@
+schema_version: 1
+module_path: ""
+title: VIB稀疏通信多智能体协作实验仓库
+scope:
+    - .gitignore
+    - README.md
+    - requirements.txt
+    - docs/
+source_files: []
+depends_on: []
+related_to: []

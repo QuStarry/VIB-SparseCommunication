@@ -1,6 +1,9 @@
 import os
 # 1. 彻底禁用 HuggingFace Tokenizer 多进程并行警告（必须置于最顶部）
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+# 2. 强制 HuggingFace Hub 离线模式，避免每道题重复联网校验模型（SSL 超时）
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["TRANSFORMERS_OFFLINE"] = "1"
 
 import sys
 import json
@@ -74,7 +77,9 @@ def create_humaneval_agents(client: DeepSeekClient) -> list:
     ]
 
 class BypassVIBRouter:
-    def evaluate_detailed(self, candidate_msg: str, history: list, goal: str, step_t: int) -> VIBEvaluationResult:
+    """Full Comm 对照组透传门控：无条件放行所有消息。"""
+    def evaluate_detailed(self, candidate_msg: str, history: list, goal: str, step_t: int,
+                          token_probs=None, confidence_score=None) -> VIBEvaluationResult:
         return VIBEvaluationResult(
             utility_score=1.0, sufficiency=1.0, redundancy=0.0,
             beta_t=1.0, is_allowed=True, threshold=0.0
@@ -161,7 +166,14 @@ def run_humaneval_full_benchmark(num_samples: int = 164):
         # ---- 2. VIB Sparse (我们的方法) ----
         client_vib = DeepSeekClient(api_key=api_key, max_tokens=256)
         agents_vib = create_humaneval_agents(client_vib)
-        router_vib = VIBSparseCommRouter(beta_0=2.0, lambda_decay=0.15, temp_tau=0.2, gamma=0.0)
+        router_vib = VIBSparseCommRouter(
+            beta_0=1.5,           # 适度降低初始 beta，防止前期无脑放行
+            lambda_decay=0.1,     # 减缓衰减速度
+            gamma=-0.2,           # 调整基础准入门槛
+            adaptive=True,        # <--- 必须开启 Ada-VIB 自适应开关！
+            alpha=0.3,            # 提高对熵/不确定度的敏感度
+            tau_min=-0.8
+        )
         workflow_vib = VIBMultiAgentWorkflow(
             agents=[a.to_agent_dict() for a in agents_vib],
             vib_router=router_vib,
