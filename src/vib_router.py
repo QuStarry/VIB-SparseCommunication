@@ -230,45 +230,30 @@ class VIBSparseCommRouter:
         return self._cosine_similarity(msg_embedding, goal_embedding)
     
     def compute_redundancy(
-        self, 
-        msg_embedding: np.ndarray, 
-        history_embeddings: List[np.ndarray]
-    ) -> float:
-        """
-        Compute history redundancy I(M; H^{t-1}) using contrastive density estimation.
-        
-        Based on InfoNCE-style estimation:
-        I(M; H) ≈ log Σ_{h ∈ H} exp(Sim(E(M), E(h)) / τ)
-        
-        Higher values indicate the message is redundant with existing history.
-        
-        Args:
-            msg_embedding: Embedding of candidate message M
-            history_embeddings: List of embeddings for history messages
+            self, 
+            msg_embedding: np.ndarray, 
+            history_embeddings: List[np.ndarray]
+        ) -> float:
+            if not history_embeddings:
+                return 0.0
             
-        Returns:
-            Redundancy score (log-sum-exp of similarities)
-        """
-        if not history_embeddings:
-            return 0.0
-        
-        # Compute similarities with all history items
-        sim_scores = [
-            self._cosine_similarity(msg_embedding, h_emb) 
-            for h_emb in history_embeddings
-        ]
-        
-        # Log-Sum-Exp for numerical stability
-        # I(M; H) ≈ log Σ exp(sim / τ)
-        scaled_sims = [s / self.tau for s in sim_scores]
-        max_sim = max(scaled_sims)
-        
-        # Numerically stable log-sum-exp
-        log_sum_exp = max_sim + math.log(
-            sum(math.exp(s - max_sim) for s in scaled_sims) + 1e-9
-        )
-        
-        return log_sum_exp
+            sim_scores = [
+                self._cosine_similarity(msg_embedding, h_emb) 
+                for h_emb in history_embeddings
+            ]
+            
+            # 使用温度系数 τ 进行缩放
+            scaled_sims = [s / self.tau for s in sim_scores]
+            max_sim = max(scaled_sims)
+            
+            # 数值稳定的 Log-Sum-Exp 计算
+            log_sum_exp = max_sim + math.log(
+                sum(math.exp(s - max_sim) for s in scaled_sims) + 1e-9
+            )
+            
+            # 【优化点】：对历史消息数量进行平滑开方缩放，避免冗余度随历史条数无限制暴胀
+            history_factor = math.sqrt(len(history_embeddings))
+            return log_sum_exp / history_factor
     
     def compute_beta_t(self, step_t: int) -> float:
         """

@@ -4861,3 +4861,509 @@ vib_router = VIBSparseCommRouter(
 
 2. **Token 节省率跃升**：
 * 由于第 1 轮不再无脑放行 3 条消息，第 2 轮及以后的 Prompt Context 将大幅缩减，Token 节省率预计将从 **6.01% 提升至 25% ~ 40%**。
+
+
+(base) starry@Mac-Studio VIB-SparseCommunication % python3 experiments/run_humaneval.py
+================================================================================
+ 🚀 开始 HumanEval 全量 164 题学术 Benchmark 评估
+ 🎯 目标样本数: 164 题 | 输出日志路径: /Users/starry/Development/Code/VIB-SparseCommunication/experiments/results_humaneval_164.json
+================================================================================
+[001/164] HumanEval/0               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 25.0s | 预估剩余 (ETA): 67.8 min
+[002/164] HumanEval/1               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.5s | 预估剩余 (ETA): 61.4 min
+[003/164] HumanEval/2               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.1s | 预估剩余 (ETA): 56.8 min
+[004/164] HumanEval/3               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.7s | 预估剩余 (ETA): 55.5 min
+[005/164] HumanEval/4               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.5s | 预估剩余 (ETA): 53.4 min
+[006/164] HumanEval/5               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 16.4s | 预估剩余 (ETA): 51.4 min
+[007/164] HumanEval/6               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.8s | 预估剩余 (ETA): 51.2 min
+[008/164] HumanEval/7               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.1s | 预估剩余 (ETA): 50.7 min
+[009/164] HumanEval/8               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.3s | 预估剩余 (ETA): 49.8 min
+[010/164] HumanEval/9               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.0s | 预估剩余 (ETA): 48.9 min
+[011/164] HumanEval/10              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.9s | 预估剩余 (ETA): 49.2 min
+[012/164] HumanEval/11              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.7s | 预估剩余 (ETA): 48.8 min
+[013/164] HumanEval/12              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.7s | 预估剩余 (ETA): 48.1 min
+[014/164] HumanEval/13              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.6s | 预估剩余 (ETA): 47.9 min
+[015/164] HumanEval/14              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 16.3s | 预估剩余 (ETA): 47.1 min
+[016/164] HumanEval/15              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 15.7s | 预估剩余 (ETA): 46.3 min
+[017/164] HumanEval/16              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 16.6s | 预估剩余 (ETA): 45.7 min
+[018/164] HumanEval/17              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.4s | 预估剩余 (ETA): 45.6 min
+[019/164] HumanEval/18              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.2s | 预估剩余 (ETA): 45.1 min
+[020/164] HumanEval/19              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.2s | 预估剩余 (ETA): 44.8 min
+[021/164] HumanEval/20              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.5s | 预估剩余 (ETA): 44.7 min
+[022/164] HumanEval/21              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.2s | 预估剩余 (ETA): 44.5 min
+[023/164] HumanEval/22              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.2s | 预估剩余 (ETA): 44.2 min
+[024/164] HumanEval/23              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 14.4s | 预估剩余 (ETA): 43.5 min
+[025/164] HumanEval/24              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.1s | 预估剩余 (ETA): 43.1 min
+[026/164] HumanEval/25              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.4s | 预估剩余 (ETA): 42.9 min
+[027/164] HumanEval/26              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.3s | 预估剩余 (ETA): 42.5 min
+[028/164] HumanEval/27              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.7s | 预估剩余 (ETA): 42.1 min
+[029/164] HumanEval/28              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.5s | 预估剩余 (ETA): 41.7 min
+[030/164] HumanEval/29              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.3s | 预估剩余 (ETA): 41.5 min
+[031/164] HumanEval/30              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.7s | 预估剩余 (ETA): 41.3 min
+[032/164] HumanEval/31              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.4s | 预估剩余 (ETA): 41.3 min
+[033/164] HumanEval/32              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 28.9s | 预估剩余 (ETA): 41.6 min
+[034/164] HumanEval/33              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.5s | 预估剩余 (ETA): 41.5 min
+[035/164] HumanEval/34              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.6s | 预估剩余 (ETA): 41.2 min
+[036/164] HumanEval/35              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.5s | 预估剩余 (ETA): 40.8 min
+[037/164] HumanEval/36              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.8s | 预估剩余 (ETA): 40.7 min
+[038/164] HumanEval/37              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.7s | 预估剩余 (ETA): 40.5 min
+[039/164] HumanEval/38              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 23.1s | 预估剩余 (ETA): 40.4 min
+[040/164] HumanEval/39              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 25.2s | 预估剩余 (ETA): 40.3 min
+[041/164] HumanEval/40              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 24.5s | 预估剩余 (ETA): 40.3 min
+[042/164] HumanEval/41              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.6s | 预估剩余 (ETA): 40.0 min
+[043/164] HumanEval/42              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.2s | 预估剩余 (ETA): 39.7 min
+[044/164] HumanEval/43              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.0s | 预估剩余 (ETA): 39.4 min
+[045/164] HumanEval/44              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.9s | 预估剩余 (ETA): 39.1 min
+[046/164] HumanEval/45              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.9s | 预估剩余 (ETA): 38.7 min
+[047/164] HumanEval/46              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.7s | 预估剩余 (ETA): 38.5 min
+[048/164] HumanEval/47              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 26.5s | 预估剩余 (ETA): 38.4 min
+[049/164] HumanEval/48              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.6s | 预估剩余 (ETA): 38.0 min
+[050/164] HumanEval/49              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.3s | 预估剩余 (ETA): 37.7 min
+[051/164] HumanEval/50              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.3s | 预估剩余 (ETA): 37.4 min
+[052/164] HumanEval/51              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.2s | 预估剩余 (ETA): 37.0 min
+[053/164] HumanEval/52              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.2s | 预估剩余 (ETA): 36.6 min
+[054/164] HumanEval/53              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.8s | 预估剩余 (ETA): 36.3 min
+[055/164] HumanEval/54              | Full: ❌ | VIB: ✅ (消息 1/6) | 耗时: 21.4s | 预估剩余 (ETA): 36.0 min
+[056/164] HumanEval/55              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.7s | 预估剩余 (ETA): 35.7 min
+[057/164] HumanEval/56              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.3s | 预估剩余 (ETA): 35.3 min
+[058/164] HumanEval/57              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.4s | 预估剩余 (ETA): 35.0 min
+[059/164] HumanEval/58              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.7s | 预估剩余 (ETA): 34.6 min
+[060/164] HumanEval/59              | Full: ✅ | VIB: ❌ (消息 1/6) | 耗时: 21.1s | 预估剩余 (ETA): 34.3 min
+[061/164] HumanEval/60              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.9s | 预估剩余 (ETA): 34.0 min
+[062/164] HumanEval/61              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.3s | 预估剩余 (ETA): 33.6 min
+[063/164] HumanEval/62              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.9s | 预估剩余 (ETA): 33.2 min
+[064/164] HumanEval/63              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.8s | 预估剩余 (ETA): 32.9 min
+[065/164] HumanEval/64              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.2s | 预估剩余 (ETA): 32.5 min
+[066/164] HumanEval/65              | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 21.2s | 预估剩余 (ETA): 32.2 min
+[067/164] HumanEval/66              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.4s | 预估剩余 (ETA): 31.9 min
+[068/164] HumanEval/67              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 23.1s | 预估剩余 (ETA): 31.6 min
+[069/164] HumanEval/68              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.6s | 预估剩余 (ETA): 31.3 min
+[070/164] HumanEval/69              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.3s | 预估剩余 (ETA): 31.1 min
+[071/164] HumanEval/70              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.0s | 预估剩余 (ETA): 30.7 min
+[072/164] HumanEval/71              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.1s | 预估剩余 (ETA): 30.4 min
+[073/164] HumanEval/72              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.0s | 预估剩余 (ETA): 30.1 min
+[074/164] HumanEval/73              | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 20.4s | 预估剩余 (ETA): 29.8 min
+[075/164] HumanEval/74              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.0s | 预估剩余 (ETA): 29.5 min
+[076/164] HumanEval/75              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.6s | 预估剩余 (ETA): 29.2 min
+[077/164] HumanEval/76              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.7s | 预估剩余 (ETA): 28.9 min
+[078/164] HumanEval/77              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.4s | 预估剩余 (ETA): 28.6 min
+[079/164] HumanEval/78              | Full: ❌ | VIB: ✅ (消息 1/6) | 耗时: 18.7s | 预估剩余 (ETA): 28.2 min
+[080/164] HumanEval/79              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.5s | 预估剩余 (ETA): 27.9 min
+[081/164] HumanEval/80              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.1s | 预估剩余 (ETA): 27.5 min
+[082/164] HumanEval/81              | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 21.7s | 预估剩余 (ETA): 27.2 min
+[083/164] HumanEval/82              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.7s | 预估剩余 (ETA): 26.9 min
+[084/164] HumanEval/83              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.5s | 预估剩余 (ETA): 26.5 min
+[085/164] HumanEval/84              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.9s | 预估剩余 (ETA): 26.2 min
+[086/164] HumanEval/85              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 16.3s | 预估剩余 (ETA): 25.8 min
+[087/164] HumanEval/86              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.1s | 预估剩余 (ETA): 25.5 min
+[088/164] HumanEval/87              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.9s | 预估剩余 (ETA): 25.1 min
+[089/164] HumanEval/88              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.5s | 预估剩余 (ETA): 24.8 min
+[090/164] HumanEval/89              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.3s | 预估剩余 (ETA): 24.5 min
+[091/164] HumanEval/90              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.2s | 预估剩余 (ETA): 24.2 min
+[092/164] HumanEval/91              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.2s | 预估剩余 (ETA): 23.8 min
+[093/164] HumanEval/92              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.5s | 预估剩余 (ETA): 23.5 min
+[094/164] HumanEval/93              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.6s | 预估剩余 (ETA): 23.2 min
+[095/164] HumanEval/94              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.3s | 预估剩余 (ETA): 22.9 min
+[096/164] HumanEval/95              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.8s | 预估剩余 (ETA): 22.6 min
+[097/164] HumanEval/96              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.7s | 预估剩余 (ETA): 22.2 min
+[098/164] HumanEval/97              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.8s | 预估剩余 (ETA): 21.9 min
+[099/164] HumanEval/98              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.7s | 预估剩余 (ETA): 21.5 min
+[100/164] HumanEval/99              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 23.3s | 预估剩余 (ETA): 21.2 min
+[101/164] HumanEval/100             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.1s | 预估剩余 (ETA): 20.9 min
+[102/164] HumanEval/101             | Full: ✅ | VIB: ❌ (消息 1/6) | 耗时: 21.3s | 预估剩余 (ETA): 20.6 min
+[103/164] HumanEval/102             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.2s | 预估剩余 (ETA): 20.3 min
+[104/164] HumanEval/103             | Full: ❌ | VIB: ✅ (消息 1/6) | 耗时: 23.0s | 预估剩余 (ETA): 19.9 min
+[105/164] HumanEval/104             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.4s | 预估剩余 (ETA): 19.6 min
+[106/164] HumanEval/105             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.7s | 预估剩余 (ETA): 19.3 min
+[107/164] HumanEval/106             | Full: ✅ | VIB: ❌ (消息 1/6) | 耗时: 21.0s | 预估剩余 (ETA): 19.0 min
+[108/164] HumanEval/107             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.0s | 预估剩余 (ETA): 18.6 min
+[109/164] HumanEval/108             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 21.3s | 预估剩余 (ETA): 18.3 min
+[110/164] HumanEval/109             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.7s | 预估剩余 (ETA): 18.0 min
+[111/164] HumanEval/110             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.5s | 预估剩余 (ETA): 17.7 min
+[112/164] HumanEval/111             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.5s | 预估剩余 (ETA): 17.3 min
+[113/164] HumanEval/112             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 22.3s | 预估剩余 (ETA): 17.0 min
+[114/164] HumanEval/113             | Full: ✅ | VIB: ❌ (消息 2/6) | 耗时: 25.1s | 预估剩余 (ETA): 16.7 min
+[115/164] HumanEval/114             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.1s | 预估剩余 (ETA): 16.4 min
+[116/164] HumanEval/115             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.7s | 预估剩余 (ETA): 16.1 min
+[117/164] HumanEval/116             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 25.7s | 预估剩余 (ETA): 15.8 min
+[118/164] HumanEval/117             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 23.9s | 预估剩余 (ETA): 15.5 min
+[119/164] HumanEval/118             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.0s | 预估剩余 (ETA): 15.1 min
+[120/164] HumanEval/119             | Full: ✅ | VIB: ❌ (消息 1/6) | 耗时: 26.6s | 预估剩余 (ETA): 14.9 min
+[121/164] HumanEval/120             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.0s | 预估剩余 (ETA): 14.5 min
+[122/164] HumanEval/121             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.4s | 预估剩余 (ETA): 14.2 min
+[123/164] HumanEval/122             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.9s | 预估剩余 (ETA): 13.8 min
+[124/164] HumanEval/123             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.1s | 预估剩余 (ETA): 13.5 min
+[125/164] HumanEval/124             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 23.1s | 预估剩余 (ETA): 13.2 min
+[126/164] HumanEval/125             | Full: ❌ | VIB: ❌ (消息 2/6) | 耗时: 21.3s | 预估剩余 (ETA): 12.9 min
+[127/164] HumanEval/126             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.2s | 预估剩余 (ETA): 12.5 min
+[128/164] HumanEval/127             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 20.1s | 预估剩余 (ETA): 12.2 min
+[129/164] HumanEval/128             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.8s | 预估剩余 (ETA): 11.8 min
+[130/164] HumanEval/129             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 32.1s | 预估剩余 (ETA): 11.5 min
+[131/164] HumanEval/130             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 22.0s | 预估剩余 (ETA): 11.2 min
+[132/164] HumanEval/131             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.7s | 预估剩余 (ETA): 10.9 min
+[133/164] HumanEval/132             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 22.4s | 预估剩余 (ETA): 10.5 min
+[134/164] HumanEval/133             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.4s | 预估剩余 (ETA): 10.2 min
+[135/164] HumanEval/134             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 20.8s | 预估剩余 (ETA): 9.9 min
+[136/164] HumanEval/135             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.0s | 预估剩余 (ETA): 9.5 min
+[137/164] HumanEval/136             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.4s | 预估剩余 (ETA): 9.2 min
+[138/164] HumanEval/137             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.2s | 预估剩余 (ETA): 8.8 min
+[139/164] HumanEval/138             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.9s | 预估剩余 (ETA): 8.5 min
+[140/164] HumanEval/139             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.8s | 预估剩余 (ETA): 8.1 min
+[141/164] HumanEval/140             | Full: ✅ | VIB: ❌ (消息 1/6) | 耗时: 21.6s | 预估剩余 (ETA): 7.8 min
+[142/164] HumanEval/141             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.9s | 预估剩余 (ETA): 7.5 min
+[143/164] HumanEval/142             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 25.7s | 预估剩余 (ETA): 7.1 min
+[144/164] HumanEval/143             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.2s | 预估剩余 (ETA): 6.8 min
+[145/164] HumanEval/144             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.9s | 预估剩余 (ETA): 6.5 min
+[146/164] HumanEval/145             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 23.4s | 预估剩余 (ETA): 6.1 min
+[147/164] HumanEval/146             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 21.1s | 预估剩余 (ETA): 5.8 min
+[148/164] HumanEval/147             | Full: ✅ | VIB: ❌ (消息 1/6) | 耗时: 23.5s | 预估剩余 (ETA): 5.4 min
+[149/164] HumanEval/148             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.5s | 预估剩余 (ETA): 5.1 min
+[150/164] HumanEval/149             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.8s | 预估剩余 (ETA): 4.8 min
+[151/164] HumanEval/150             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.7s | 预估剩余 (ETA): 4.4 min
+[152/164] HumanEval/151             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.1s | 预估剩余 (ETA): 4.1 min
+[153/164] HumanEval/152             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.1s | 预估剩余 (ETA): 3.7 min
+[154/164] HumanEval/153             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.9s | 预估剩余 (ETA): 3.4 min
+[155/164] HumanEval/154             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.3s | 预估剩余 (ETA): 3.1 min
+[156/164] HumanEval/155             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.7s | 预估剩余 (ETA): 2.7 min
+[157/164] HumanEval/156             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.2s | 预估剩余 (ETA): 2.4 min
+[158/164] HumanEval/157             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.3s | 预估剩余 (ETA): 2.0 min
+[159/164] HumanEval/158             | Full: ✅ | VIB: ❌ (消息 1/6) | 耗时: 20.2s | 预估剩余 (ETA): 1.7 min
+[160/164] HumanEval/159             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.7s | 预估剩余 (ETA): 1.4 min
+[161/164] HumanEval/160             | Full: ❌ | VIB: ✅ (消息 1/6) | 耗时: 26.6s | 预估剩余 (ETA): 1.0 min
+[162/164] HumanEval/161             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 18.7s | 预估剩余 (ETA): 0.7 min
+[163/164] HumanEval/162             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.1s | 预估剩余 (ETA): 0.3 min
+[164/164] HumanEval/163             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 20.1s | 预估剩余 (ETA): 0.0 min
+
+================================================================================
+ 📊 HumanEval 164 题全量 Benchmark 终极大表 (Academic Report)
+================================================================================
+评估指标 (Metrics)                     | Full Comm (对照组)      | VIB Sparse (我们的)    
+-------------------------------------------------------------------------------------
+测试题目总数 (Total Tasks)               | 164                  | 164                 
+⭐ Pass@1 准确率 (%)                   | 90.24%               | 87.80%              
+尝试生成广播总数 (Generated)               | 984                  | 984                 
+实际通过广播消息数 (Accepted)               | 984                  | 170                 
+⭐ 通信压缩率 (Msg Compression %)        | 0.00%                | 82.72%              
+消耗 Token 总数 (Total Tokens)         | 484026               | 380088              
+⭐ Token 节省率 (Token Savings %)      | 0.00%                | 21.47%              
+评测总耗时 (Total Runtime)              | 55.73 分钟           | 55.73 分钟          
+================================================================================
+🎉 详细明细已成功持久化至: /Users/starry/Development/Code/VIB-SparseCommunication/experiments/results_humaneval_164.json 上面是最新的结果，结果变差了，请根据结果进行分析优化
+
+针对您运行的 HumanEval 164 题全量 Benchmark 结果，我们进行**定量诊断与数学根因分析**，并提供针对性的优化方案。
+
+---
+
+## 一、 现象与问题诊断 (Diagnostic Summary)
+
+对比关键指标：
+
+* **Pass@1 准确率**：Full Comm (**90.24%**, 148/164) vs VIB Sparse (**87.80%**, 144/164)，VIB 下降了 **2.44%**（少解出 4 道题）。
+* **广播通过消息数**：生成 984 条，仅通过 170 条。
+* **单题平均保留消息**：$170 / 164 \approx \mathbf{1.03}$ **条/题**。
+
+### 核心痛点：**门控过度剪枝 (Hyper-Pruning Degeneration)**
+
+日志显示，在 164 道题目中，**几乎每道题都只有第 1 条消息（Architect 架构分析）被放行**，后续 Coder（代码编写）和 Reviewer（代码审查）的消息几乎全被拦截（984 条只通过 170 条）。
+
+这导致 Multi-Agent 协同退化为了 **Single-Agent 极简模式**：后续聚合节点（Aggregator）只能拿到 Architect 的自然语言分析，而拿不到 Coder 写的初始代码与 Reviewer 的 Bug 修复意见，导致代码生成质量下降。
+
+---
+
+## 二、 数学与工程根因分析 (Root Cause Analysis)
+
+### 1. 温度系数 $\tau = 0.2$ 导致冗余度惩罚指数级暴胀
+
+在 `VIBSparseCommRouter` 中，冗余度计算采用 InfoNCE 范式：
+
+
+$$\text{Redundancy}(M) = \log \sum_{h \in H} \exp\left(\frac{\text{Sim}(E(M), E(h))}{\tau}\right)$$
+
+在代码生成任务中，所有 Agent 都在讨论同一个函数，句子嵌入向量的余弦相似度 $\text{Sim}$ 通常在 $0.5 \sim 0.7$ 之间。当 $\tau = 0.2$ 时：
+
+* $\frac{\text{Sim}}{\tau} = \frac{0.6}{0.2} = 3.0$
+* $\exp(3.0) \approx 20.08$，导致 $\text{Redundancy}$ 计算值高达 **$2.5 \sim 3.5$**。
+
+### 2. $\beta_0 = 1.5$ 无法抵消冗余惩罚
+
+当前效用函数公式为：
+
+
+$$\text{Utility}(M) = \beta_t \cdot \text{Sufficiency}(M) - \text{Redundancy}(M)$$
+
+* 任务相关度 $\text{Sufficiency} \approx 0.7 \sim 0.8$
+* 当 $\beta_0 = 1.5$ 时，收益项 $\beta_t \cdot \text{Sufficiency} \approx 1.5 \times 0.7 = 1.05$
+* 净效用 $\text{Utility} = 1.05 - 3.0 = \mathbf{-1.95}$
+
+由于准入门槛 $\gamma = -0.2$，只要历史中有了第 1 条消息，第 2 条（Coder）和第 3 条（Reviewer）的 Utility 就会瞬间跌至 $-1.95$，**被 Router 无差别误杀**。
+
+---
+
+## 三、 优化策略与修改方案 (Optimization Plan)
+
+为了在保留 60%~70% 通信压缩率的同时，恢复 **90.24%+** 的 Pass@1 准确率，需要进行以下三点调整：
+
+### 1. 调整超参数（平滑冗余度 & 提升收益权重）
+
+* **增大 $\tau$**：从 $0.2 \to 0.5$，降低同主题讨论带来的指数级冗余惩罚。
+* **提高 $\beta_0$**：从 $1.5 \to 3.2$，增强有效代码信息的收益权重。
+* **放缓 $\lambda$**：从 $0.1 \to 0.08$，确保第 2 轮 Reviewer 能够补充边界修复。
+
+### 2. 引入冗余度归一化 (Normalized Redundancy)
+
+在 `vib_router.py` 中，对冗余度除以历史消息数量 $\vert{}H\vert{}$，防止随着历史增长而无脑惩罚后续有效补充。
+
+---
+
+## 四、 代码修改指南
+
+### 修改 1：优化 `vib_router.py` 中的冗余度计算
+
+在 `src/vib_router.py` 的 `compute_redundancy` 函数中增加历史长度归一化平滑：
+
+```python
+def compute_redundancy(
+    self, 
+    msg_embedding: np.ndarray, 
+    history_embeddings: List[np.ndarray]
+) -> float:
+    if not history_embeddings:
+        return 0.0
+    
+    sim_scores = [
+        self._cosine_similarity(msg_embedding, h_emb) 
+        for h_emb in history_embeddings
+    ]
+    
+    # 使用温度系数 τ 进行缩放
+    scaled_sims = [s / self.tau for s in sim_scores]
+    max_sim = max(scaled_sims)
+    
+    # 数值稳定的 Log-Sum-Exp 计算
+    log_sum_exp = max_sim + math.log(
+        sum(math.exp(s - max_sim) for s in scaled_sims) + 1e-9
+    )
+    
+    # 【优化点】：对历史消息数量进行平滑开方缩放，避免冗余度随历史条数无限制暴胀
+    history_factor = math.sqrt(len(history_embeddings))
+    return log_sum_exp / history_factor
+
+```
+
+### 修改 2：调整 `experiments/run_humaneval.py` 路由超参数
+
+更新 `run_humaneval.py` 中的 `router_vib` 配置：
+
+```python
+        # ---- 2. VIB Sparse (优化后的超参数) ----
+        client_vib = DeepSeekClient(api_key=api_key, max_tokens=256)
+        agents_vib = create_humaneval_agents(client_vib)
+        
+        router_vib = VIBSparseCommRouter(
+            beta_0=3.2,           # 提高任务收益权重 (由 1.5 -> 3.2)
+            lambda_decay=0.08,    # 减缓衰减速度，保留 Reviewer 校验能力
+            temp_tau=0.5,         # 平滑冗余惩罚 (由 0.2 -> 0.5)
+            gamma=-0.4,           # 适度放宽基础准入门槛
+            adaptive=True,        # 开启 Ada-VIB 自适应门控
+            alpha=0.35,           # 提升不确定性放行敏感度
+            tau_min=-1.0
+        )
+
+```
+
+---
+
+## 五、 预期效果评估
+
+调整后，单题放行消息数预计将从 **1.03 条** 提升至 **2.1 ~ 2.5 条**（典型拓扑：Architect 方案 + Coder 代码，必要时通过 Reviewer 补丁）：
+
+| 评估指标 | 当前结果 (Current) | 优化预期 (Target) | 说明 |
+| --- | --- | --- | --- |
+| **Pass@1 准确率** | 87.80% | **90.24% ~ 91.46%** | 恢复/超越 Full Comm 基线 |
+| **消息通过数/题** | 1.03 条 | **2.20 条** | 保留 Coder & Reviewer 核心贡献 |
+| **通信压缩率** | 82.72% | **63.00% ~ 68.00%** | 维持高压缩率与学术竞争力 |
+| **Token 节省率** | 21.47% | **18.00% ~ 22.00%** | 维持显存与计算开销节省 |
+
+
+(base) starry@Mac-Studio VIB-SparseCommunication % python3 experiments/run_humaneval.py
+================================================================================
+ 🚀 开始 HumanEval 全量 164 题学术 Benchmark 评估
+ 🎯 目标样本数: 164 题 | 输出日志路径: /Users/starry/Development/Code/VIB-SparseCommunication/experiments/results_humaneval_164.json
+================================================================================
+[001/164] HumanEval/0               | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 24.5s | 预估剩余 (ETA): 66.5 min
+[002/164] HumanEval/1               | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.5s | 预估剩余 (ETA): 62.1 min
+[003/164] HumanEval/2               | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 19.1s | 预估剩余 (ETA): 58.2 min
+[004/164] HumanEval/3               | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.8s | 预估剩余 (ETA): 55.9 min
+[005/164] HumanEval/4               | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 18.8s | 预估剩余 (ETA): 54.4 min
+[006/164] HumanEval/5               | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 17.9s | 预估剩余 (ETA): 52.9 min
+[007/164] HumanEval/6               | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 22.4s | 预估剩余 (ETA): 53.5 min
+[008/164] HumanEval/7               | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 18.7s | 预估剩余 (ETA): 52.6 min
+[009/164] HumanEval/8               | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 21.0s | 预估剩余 (ETA): 52.4 min
+[010/164] HumanEval/9               | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.8s | 预估剩余 (ETA): 51.7 min
+[011/164] HumanEval/10              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 23.2s | 预估剩余 (ETA): 52.1 min
+[012/164] HumanEval/11              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.7s | 预估剩余 (ETA): 51.6 min
+[013/164] HumanEval/12              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 23.5s | 预估剩余 (ETA): 51.9 min
+[014/164] HumanEval/13              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.2s | 预估剩余 (ETA): 51.3 min
+[015/164] HumanEval/14              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.7s | 预估剩余 (ETA): 50.6 min
+[016/164] HumanEval/15              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 21.8s | 预估剩余 (ETA): 50.5 min
+[017/164] HumanEval/16              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.8s | 预估剩余 (ETA): 50.1 min
+[018/164] HumanEval/17              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 23.5s | 预估剩余 (ETA): 50.1 min
+[019/164] HumanEval/18              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.7s | 预估剩余 (ETA): 49.7 min
+[020/164] HumanEval/19              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 23.0s | 预估剩余 (ETA): 49.6 min
+[021/164] HumanEval/20              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 23.9s | 预估剩余 (ETA): 49.7 min
+[022/164] HumanEval/21              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.2s | 预估剩余 (ETA): 49.4 min
+[023/164] HumanEval/22              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 24.0s | 预估剩余 (ETA): 49.3 min
+[024/164] HumanEval/23              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 17.9s | 预估剩余 (ETA): 48.7 min
+[025/164] HumanEval/24              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.0s | 预估剩余 (ETA): 48.2 min
+[026/164] HumanEval/25              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 22.5s | 预估剩余 (ETA): 48.0 min
+[027/164] HumanEval/26              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.1s | 预估剩余 (ETA): 47.6 min
+[028/164] HumanEval/27              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.4s | 预估剩余 (ETA): 47.1 min
+[029/164] HumanEval/28              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 18.1s | 预估剩余 (ETA): 46.5 min
+[030/164] HumanEval/29              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.1s | 预估剩余 (ETA): 46.2 min
+[031/164] HumanEval/30              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.8s | 预估剩余 (ETA): 45.7 min
+[032/164] HumanEval/31              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.8s | 预估剩余 (ETA): 45.5 min
+[033/164] HumanEval/32              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 31.2s | 预估剩余 (ETA): 45.8 min
+[034/164] HumanEval/33              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 22.9s | 预估剩余 (ETA): 45.6 min
+[035/164] HumanEval/34              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.9s | 预估剩余 (ETA): 45.2 min
+[036/164] HumanEval/35              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 19.7s | 预估剩余 (ETA): 44.8 min
+[037/164] HumanEval/36              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 23.2s | 预估剩余 (ETA): 44.6 min
+[038/164] HumanEval/37              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.9s | 预估剩余 (ETA): 44.3 min
+[039/164] HumanEval/38              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 24.8s | 预估剩余 (ETA): 44.1 min
+[040/164] HumanEval/39              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 25.4s | 预估剩余 (ETA): 44.0 min
+[041/164] HumanEval/40              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.0s | 预估剩余 (ETA): 43.7 min
+[042/164] HumanEval/41              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.2s | 预估剩余 (ETA): 43.3 min
+[043/164] HumanEval/42              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 17.6s | 预估剩余 (ETA): 42.7 min
+[044/164] HumanEval/43              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.8s | 预估剩余 (ETA): 42.4 min
+[045/164] HumanEval/44              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 23.1s | 预估剩余 (ETA): 42.1 min
+[046/164] HumanEval/45              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.5s | 预估剩余 (ETA): 41.7 min
+[047/164] HumanEval/46              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.4s | 预估剩余 (ETA): 41.4 min
+[048/164] HumanEval/47              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.4s | 预估剩余 (ETA): 41.0 min
+[049/164] HumanEval/48              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 20.9s | 预估剩余 (ETA): 40.7 min
+[050/164] HumanEval/49              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.6s | 预估剩余 (ETA): 40.2 min
+[051/164] HumanEval/50              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 20.7s | 预估剩余 (ETA): 39.9 min
+[052/164] HumanEval/51              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.0s | 预估剩余 (ETA): 39.5 min
+[053/164] HumanEval/52              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.2s | 预估剩余 (ETA): 39.0 min
+[054/164] HumanEval/53              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 17.5s | 预估剩余 (ETA): 38.6 min
+[055/164] HumanEval/54              | Full: ✅ | VIB: ❌ (消息 5/6) | 耗时: 22.0s | 预估剩余 (ETA): 38.2 min
+[056/164] HumanEval/55              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.4s | 预估剩余 (ETA): 37.9 min
+[057/164] HumanEval/56              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.8s | 预估剩余 (ETA): 37.5 min
+[058/164] HumanEval/57              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.7s | 预估剩余 (ETA): 37.1 min
+[059/164] HumanEval/58              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.0s | 预估剩余 (ETA): 36.7 min
+[060/164] HumanEval/59              | Full: ✅ | VIB: ❌ (消息 2/6) | 耗时: 22.4s | 预估剩余 (ETA): 36.4 min
+[061/164] HumanEval/60              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 19.6s | 预估剩余 (ETA): 36.0 min
+[062/164] HumanEval/61              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.7s | 预估剩余 (ETA): 35.6 min
+[063/164] HumanEval/62              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.4s | 预估剩余 (ETA): 35.3 min
+[064/164] HumanEval/63              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 20.9s | 预估剩余 (ETA): 34.9 min
+[065/164] HumanEval/64              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 22.4s | 预估剩余 (ETA): 34.6 min
+[066/164] HumanEval/65              | Full: ✅ | VIB: ❌ (消息 6/6) | 耗时: 22.4s | 预估剩余 (ETA): 34.3 min
+[067/164] HumanEval/66              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.2s | 预估剩余 (ETA): 33.9 min
+[068/164] HumanEval/67              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 22.8s | 预估剩余 (ETA): 33.6 min
+[069/164] HumanEval/68              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 22.6s | 预估剩余 (ETA): 33.3 min
+[070/164] HumanEval/69              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 23.4s | 预估剩余 (ETA): 33.0 min
+[071/164] HumanEval/70              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.0s | 预估剩余 (ETA): 32.7 min
+[072/164] HumanEval/71              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.3s | 预估剩余 (ETA): 32.3 min
+[073/164] HumanEval/72              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 21.5s | 预估剩余 (ETA): 32.0 min
+[074/164] HumanEval/73              | Full: ❌ | VIB: ❌ (消息 4/6) | 耗时: 24.1s | 预估剩余 (ETA): 31.7 min
+[075/164] HumanEval/74              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 24.3s | 预估剩余 (ETA): 31.4 min
+[076/164] HumanEval/75              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.9s | 预估剩余 (ETA): 31.0 min
+[077/164] HumanEval/76              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 26.1s | 预估剩余 (ETA): 30.8 min
+[078/164] HumanEval/77              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.3s | 预估剩余 (ETA): 30.4 min
+[079/164] HumanEval/78              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.7s | 预估剩余 (ETA): 30.0 min
+[080/164] HumanEval/79              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 23.7s | 预估剩余 (ETA): 29.7 min
+[081/164] HumanEval/80              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.6s | 预估剩余 (ETA): 29.3 min
+[082/164] HumanEval/81              | Full: ❌ | VIB: ✅ (消息 3/6) | 耗时: 26.4s | 预估剩余 (ETA): 29.1 min
+[083/164] HumanEval/82              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.9s | 预估剩余 (ETA): 28.7 min
+[084/164] HumanEval/83              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.6s | 预估剩余 (ETA): 28.3 min
+[085/164] HumanEval/84              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.0s | 预估剩余 (ETA): 28.0 min
+[086/164] HumanEval/85              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.0s | 预估剩余 (ETA): 27.6 min
+[087/164] HumanEval/86              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.1s | 预估剩余 (ETA): 27.2 min
+[088/164] HumanEval/87              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.3s | 预估剩余 (ETA): 26.9 min
+[089/164] HumanEval/88              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.3s | 预估剩余 (ETA): 26.5 min
+[090/164] HumanEval/89              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 22.1s | 预估剩余 (ETA): 26.2 min
+[091/164] HumanEval/90              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.9s | 预估剩余 (ETA): 25.8 min
+[092/164] HumanEval/91              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 23.3s | 预估剩余 (ETA): 25.5 min
+[093/164] HumanEval/92              | Full: ✅ | VIB: ❌ (消息 6/6) | 耗时: 22.5s | 预估剩余 (ETA): 25.1 min
+[094/164] HumanEval/93              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 26.5s | 预估剩余 (ETA): 24.9 min
+[095/164] HumanEval/94              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 24.5s | 预估剩余 (ETA): 24.5 min
+[096/164] HumanEval/95              | Full: ✅ | VIB: ❌ (消息 2/6) | 耗时: 24.6s | 预估剩余 (ETA): 24.2 min
+[097/164] HumanEval/96              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 21.3s | 预估剩余 (ETA): 23.9 min
+[098/164] HumanEval/97              | Full: ❌ | VIB: ✅ (消息 5/6) | 耗时: 19.4s | 预估剩余 (ETA): 23.5 min
+[099/164] HumanEval/98              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.3s | 预估剩余 (ETA): 23.1 min
+[100/164] HumanEval/99              | Full: ❌ | VIB: ✅ (消息 6/6) | 耗时: 25.3s | 预估剩余 (ETA): 22.8 min
+[101/164] HumanEval/100             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.8s | 预估剩余 (ETA): 22.5 min
+[102/164] HumanEval/101             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.8s | 预估剩余 (ETA): 22.1 min
+[103/164] HumanEval/102             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.4s | 预估剩余 (ETA): 21.7 min
+[104/164] HumanEval/103             | Full: ❌ | VIB: ❌ (消息 4/6) | 耗时: 21.3s | 预估剩余 (ETA): 21.4 min
+[105/164] HumanEval/104             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.5s | 预估剩余 (ETA): 21.0 min
+[106/164] HumanEval/105             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.5s | 预估剩余 (ETA): 20.6 min
+[107/164] HumanEval/106             | Full: ✅ | VIB: ❌ (消息 2/6) | 耗时: 20.4s | 预估剩余 (ETA): 20.3 min
+[108/164] HumanEval/107             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.7s | 预估剩余 (ETA): 19.9 min
+[109/164] HumanEval/108             | Full: ❌ | VIB: ✅ (消息 4/6) | 耗时: 22.3s | 预估剩余 (ETA): 19.5 min
+[110/164] HumanEval/109             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.0s | 预估剩余 (ETA): 19.2 min
+[111/164] HumanEval/110             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.7s | 预估剩余 (ETA): 18.8 min
+[112/164] HumanEval/111             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 22.0s | 预估剩余 (ETA): 18.5 min
+[113/164] HumanEval/112             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.2s | 预估剩余 (ETA): 18.1 min
+[114/164] HumanEval/113             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.6s | 预估剩余 (ETA): 17.8 min
+[115/164] HumanEval/114             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 21.8s | 预估剩余 (ETA): 17.4 min
+[116/164] HumanEval/115             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 22.2s | 预估剩余 (ETA): 17.1 min
+[117/164] HumanEval/116             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 23.5s | 预估剩余 (ETA): 16.7 min
+[118/164] HumanEval/117             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 24.0s | 预估剩余 (ETA): 16.4 min
+[119/164] HumanEval/118             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.8s | 预估剩余 (ETA): 16.0 min
+[120/164] HumanEval/119             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 27.6s | 预估剩余 (ETA): 15.7 min
+[121/164] HumanEval/120             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.6s | 预估剩余 (ETA): 15.4 min
+[122/164] HumanEval/121             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.0s | 预估剩余 (ETA): 15.0 min
+[123/164] HumanEval/122             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.3s | 预估剩余 (ETA): 14.6 min
+[124/164] HumanEval/123             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.8s | 预估剩余 (ETA): 14.3 min
+[125/164] HumanEval/124             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 22.5s | 预估剩余 (ETA): 13.9 min
+[126/164] HumanEval/125             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.9s | 预估剩余 (ETA): 13.6 min
+[127/164] HumanEval/126             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.2s | 预估剩余 (ETA): 13.2 min
+[128/164] HumanEval/127             | Full: ❌ | VIB: ❌ (消息 3/6) | 耗时: 22.9s | 预估剩余 (ETA): 12.9 min
+[129/164] HumanEval/128             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 20.2s | 预估剩余 (ETA): 12.5 min
+[130/164] HumanEval/129             | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 32.0s | 预估剩余 (ETA): 12.2 min
+[131/164] HumanEval/130             | Full: ❌ | VIB: ❌ (消息 6/6) | 耗时: 24.6s | 预估剩余 (ETA): 11.9 min
+[132/164] HumanEval/131             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.3s | 预估剩余 (ETA): 11.5 min
+[133/164] HumanEval/132             | Full: ❌ | VIB: ❌ (消息 4/6) | 耗时: 23.4s | 预估剩余 (ETA): 11.1 min
+[134/164] HumanEval/133             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.3s | 预估剩余 (ETA): 10.8 min
+[135/164] HumanEval/134             | Full: ❌ | VIB: ❌ (消息 3/6) | 耗时: 21.2s | 预估剩余 (ETA): 10.4 min
+[136/164] HumanEval/135             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.3s | 预估剩余 (ETA): 10.0 min
+[137/164] HumanEval/136             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 18.8s | 预估剩余 (ETA): 9.7 min
+[138/164] HumanEval/137             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 23.7s | 预估剩余 (ETA): 9.3 min
+[139/164] HumanEval/138             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 19.5s | 预估剩余 (ETA): 9.0 min
+[140/164] HumanEval/139             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.3s | 预估剩余 (ETA): 8.6 min
+[141/164] HumanEval/140             | Full: ❌ | VIB: ✅ (消息 2/6) | 耗时: 20.6s | 预估剩余 (ETA): 8.2 min
+[142/164] HumanEval/141             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 25.2s | 预估剩余 (ETA): 7.9 min
+[143/164] HumanEval/142             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 25.7s | 预估剩余 (ETA): 7.5 min
+[144/164] HumanEval/143             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.2s | 预估剩余 (ETA): 7.2 min
+[145/164] HumanEval/144             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.0s | 预估剩余 (ETA): 6.8 min
+[146/164] HumanEval/145             | Full: ❌ | VIB: ❌ (消息 5/6) | 耗时: 23.4s | 预估剩余 (ETA): 6.5 min
+[147/164] HumanEval/146             | Full: ❌ | VIB: ✅ (消息 3/6) | 耗时: 21.5s | 预估剩余 (ETA): 6.1 min
+[148/164] HumanEval/147             | Full: ❌ | VIB: ❌ (消息 1/6) | 耗时: 27.6s | 预估剩余 (ETA): 5.8 min
+[149/164] HumanEval/148             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.9s | 预估剩余 (ETA): 5.4 min
+[150/164] HumanEval/149             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 21.3s | 预估剩余 (ETA): 5.0 min
+[151/164] HumanEval/150             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.3s | 预估剩余 (ETA): 4.7 min
+[152/164] HumanEval/151             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.2s | 预估剩余 (ETA): 4.3 min
+[153/164] HumanEval/152             | Full: ✅ | VIB: ❌ (消息 4/6) | 耗时: 19.4s | 预估剩余 (ETA): 4.0 min
+[154/164] HumanEval/153             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.9s | 预估剩余 (ETA): 3.6 min
+[155/164] HumanEval/154             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 23.2s | 预估剩余 (ETA): 3.2 min
+[156/164] HumanEval/155             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.6s | 预估剩余 (ETA): 2.9 min
+[157/164] HumanEval/156             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.7s | 预估剩余 (ETA): 2.5 min
+[158/164] HumanEval/157             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.4s | 预估剩余 (ETA): 2.2 min
+[159/164] HumanEval/158             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.6s | 预估剩余 (ETA): 1.8 min
+[160/164] HumanEval/159             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 18.4s | 预估剩余 (ETA): 1.4 min
+[161/164] HumanEval/160             | Full: ❌ | VIB: ✅ (消息 6/6) | 耗时: 25.4s | 预估剩余 (ETA): 1.1 min
+[162/164] HumanEval/161             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 20.3s | 预估剩余 (ETA): 0.7 min
+[163/164] HumanEval/162             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 19.0s | 预估剩余 (ETA): 0.4 min
+[164/164] HumanEval/163             | Full: ❌ | VIB: ❌ (消息 5/6) | 耗时: 23.1s | 预估剩余 (ETA): 0.0 min
+
+================================================================================
+ 📊 HumanEval 164 题全量 Benchmark 终极大表 (Academic Report)
+================================================================================
+评估指标 (Metrics)                     | Full Comm (对照组)      | VIB Sparse (我们的)    
+-------------------------------------------------------------------------------------
+测试题目总数 (Total Tasks)               | 164                  | 164                 
+⭐ Pass@1 准确率 (%)                   | 90.24%               | 90.24%              
+尝试生成广播总数 (Generated)               | 984                  | 984                 
+实际通过广播消息数 (Accepted)               | 984                  | 557                 
+⭐ 通信压缩率 (Msg Compression %)        | 0.00%                | 43.39%              
+消耗 Token 总数 (Total Tokens)         | 484498               | 437401              
+⭐ Token 节省率 (Token Savings %)      | 0.00%                | 9.72%              
+评测总耗时 (Total Runtime)              | 58.88 分钟           | 58.88 分钟 目前效果追平，但是不是最好的，还不够好，应该还有可以改进的办法吧，请进行思考优化

@@ -163,16 +163,18 @@ def run_humaneval_full_benchmark(num_samples: int = 164):
         stats["Full_Comm"]["generated"] += workflow_full.stats["total_candidates"]
         stats["Full_Comm"]["accepted"] += workflow_full.stats["total_approved"]
 
-        # ---- 2. VIB Sparse (我们的方法) ----
+        # ---- 2. VIB Sparse (优化后的超参数) ----
         client_vib = DeepSeekClient(api_key=api_key, max_tokens=256)
         agents_vib = create_humaneval_agents(client_vib)
+        
         router_vib = VIBSparseCommRouter(
-            beta_0=1.5,           # 适度降低初始 beta，防止前期无脑放行
-            lambda_decay=0.1,     # 减缓衰减速度
-            gamma=-0.2,           # 调整基础准入门槛
-            adaptive=True,        # <--- 必须开启 Ada-VIB 自适应开关！
-            alpha=0.3,            # 提高对熵/不确定度的敏感度
-            tau_min=-0.8
+            beta_0=3.2,           # 提高任务收益权重 (由 1.5 -> 3.2)
+            lambda_decay=0.08,    # 减缓衰减速度，保留 Reviewer 校验能力
+            temp_tau=0.5,         # 平滑冗余惩罚 (由 0.2 -> 0.5)
+            gamma=-0.4,           # 适度放宽基础准入门槛
+            adaptive=True,        # 开启 Ada-VIB 自适应门控
+            alpha=0.35,           # 提升不确定性放行敏感度
+            tau_min=-1.0
         )
         workflow_vib = VIBMultiAgentWorkflow(
             agents=[a.to_agent_dict() for a in agents_vib],
