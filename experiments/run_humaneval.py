@@ -79,7 +79,7 @@ def create_humaneval_agents(client: DeepSeekClient) -> list:
 class BypassVIBRouter:
     """Full Comm 对照组透传门控：无条件放行所有消息。"""
     def evaluate_detailed(self, candidate_msg: str, history: list, goal: str, step_t: int,
-                          token_probs=None, confidence_score=None) -> VIBEvaluationResult:
+                          token_probs=None, confidence_score=None, role=None) -> VIBEvaluationResult:
         return VIBEvaluationResult(
             utility_score=1.0, sufficiency=1.0, redundancy=0.0,
             beta_t=1.0, is_allowed=True, threshold=0.0

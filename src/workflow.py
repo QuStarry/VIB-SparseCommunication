@@ -171,8 +171,9 @@ class VIBMultiAgentWorkflow:
                 history=running_history, # <--- 修复：使用增量历史
                 goal=state["global_goal"],
                 step_t=state["step_t"],
-                token_probs=item.get("token_probs"), # 透传 Ada-VIB 所需指标
-                confidence_score=item.get("confidence")
+                token_probs=item.get("token_probs"), # 透传 Ada-VIB 所需的指标
+                confidence_score=item.get("confidence"),
+                role=item.get("agent")  # 透传角色信息，启用 Role-Adaptive β
             )
             
             if result.is_allowed:
