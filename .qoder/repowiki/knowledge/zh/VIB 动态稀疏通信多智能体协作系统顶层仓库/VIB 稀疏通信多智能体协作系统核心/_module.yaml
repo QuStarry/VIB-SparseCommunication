@@ -1,0 +1,10 @@
+schema_version: 1
+module_path: src
+title: VIB 稀疏通信多智能体协作系统核心
+scope:
+    - src/
+source_files: []
+depends_on: []
+related_to:
+    - path: experiments
+    - path: tests

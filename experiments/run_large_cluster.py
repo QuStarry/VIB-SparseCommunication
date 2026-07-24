@@ -69,7 +69,8 @@ class BypassVIBRouter:
         return True
     
     def evaluate_detailed(self, candidate_msg: str, history: list, goal: str, step_t: int,
-                          token_probs=None, confidence_score=None, role=None) -> VIBEvaluationResult:
+                          token_probs=None, confidence_score=None, role=None,
+                          is_execution_failed=False) -> VIBEvaluationResult:
         return VIBEvaluationResult(
             utility_score=1.0, sufficiency=1.0, redundancy=0.0,
             beta_t=1.0, is_allowed=True, threshold=0.0

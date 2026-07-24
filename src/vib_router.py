@@ -150,13 +150,11 @@ class VIBSparseCommRouter:
         self.alpha = alpha
         self.tau_min = tau_min
         
-        # Bugfix-Aware: 针对代码修正与边界条件的敏感词汇表（含 HumanEval 误杀题关键词）
+        # Bugfix-Aware: 通用代码修正与边界条件敏感词汇表（泛化设计，不依赖特定题库）
         self.fix_keywords = [
             "fix", "bug", "incorrect", "corner case", "edge case",
             "boundary", "fails when", "missing", "instead of", "should be",
-            "error", "wrong", "typo", "off-by-one", "overflow",
-            "prime", "prime_factor", "condition", "dict", "case-sensitive", "circular",
-            "modulo", "factorial", "reverse", "shift", "palindrome"
+            "error", "wrong", "typo", "off-by-one", "overflow"
         ]
         
         # 角色自适应 Beta 权重映射 (Role-Prior Dynamic β) - 基于 HumanEval 164 题消融分析优化
@@ -171,13 +169,6 @@ class VIBSparseCommRouter:
         
         # Cache for embeddings to avoid redundant computation
         self._embedding_cache: dict = {}
-        
-        # 任务难度感知：用于识别复杂算法题的关键词
-        self.complexity_indicators = [
-            "prime", "recursive", "dp", "matrix", "tree", "graph", 
-            "parse", "sort", "factor", "factorial", "modulo", "shift",
-            "reverse", "palindrome", "encode", "decode", "compress"
-        ]
     
     @property
     def encoder(self):
@@ -317,49 +308,60 @@ class VIBSparseCommRouter:
     
     def _compute_complexity_bonus(self, goal: str) -> float:
         """
-        根据任务 Prompt 的复杂度动态计算 Beta 权重加成。
+        基于任务 Prompt 文本长度的泛化复杂度指标。
         
-        原理：复杂算法题（如质因子分解 largest_prime_factor、字典键值检查 check_dict_case）
-        需要更高的信息准入，避免关键分析被过度裁剪。
+        原理：任务描述越长、词汇越丰富，通常意味着约束条件越多、边界情况越复杂，
+        需要更高的信息准入来避免关键分析被过度裁剪。
+        
+        相比硬编码关键词匹配，此方法更具泛化能力，避免针对特定题库过拟合。
         
         Returns:
-            complexity_bonus ∈ [0, 1.0]，难度越高加成越大
+            complexity_bonus ∈ [0, 1.0]，描述越长加成越大
         """
-        goal_lower = goal.lower()
-        matched = sum(1 for kw in self.complexity_indicators if kw in goal_lower)
-        return min(1.0, matched * 0.3)
+        word_count = len(goal.split())
+        return min(1.0, word_count / 50.0)
     
-    def compute_beta_t(self, step_t: int, role: Optional[str] = None, goal: Optional[str] = None) -> float:
+    def compute_beta_t(
+        self,
+        step_t: int,
+        role: Optional[str] = None,
+        goal: Optional[str] = None,
+        is_execution_failed: bool = False
+    ) -> float:
         """
-        Compute the dynamic Lagrange multiplier β_t with optional role-adaptive weighting
-        and task-complexity awareness.
+        Compute the dynamic Lagrange multiplier β_t with role-adaptive weighting,
+        task-complexity awareness, and feedback-aware decay reset.
         
-        β_t = (β_role + complexity_bonus) * exp(-λ * t)
+        β_t = (β_role + complexity_bonus) * exp(-λ * effective_t)
         
         When role is provided, uses role-specific base beta:
         - Architect: 3.2 (方案高准入)
         - Coder: 4.2 (保障代码送达，避免误杀)
         - Reviewer: 3.6 (增强纠错权重)
         
-        When goal is provided, adds complexity bonus for hard algorithmic tasks:
-        - +0.3 per matched complexity keyword (max 1.0)
+        When goal is provided, adds generalized complexity bonus based on text length.
+        When is_execution_failed=True, resets decay to t=0 to ensure fix messages pass through.
         
         Args:
             step_t: Current collaboration step
             role: Agent role name (optional, enables role-adaptive mode)
             goal: Global task goal (optional, enables complexity-aware mode)
+            is_execution_failed: Whether previous code execution failed (feedback signal)
             
         Returns:
             Dynamic β_t value
         """
         base_beta = self.role_beta_map.get(role, self.beta_0) if role else self.beta_0
         
-        # Task-Complexity Adaptive: 动态增加 Beta 权重
+        # Task-Complexity Adaptive: 基于文本长度的泛化复杂度加成
         if goal:
             complexity_bonus = self._compute_complexity_bonus(goal)
             base_beta += complexity_bonus
         
-        return base_beta * math.exp(-self.lambda_decay * step_t)
+        # Feedback-Aware: 当执行失败时重置衰减，确保修正消息强行放行
+        effective_t = 0 if is_execution_failed else step_t
+        
+        return base_beta * math.exp(-self.lambda_decay * effective_t)
     
     def compute_entropy_proxy(
         self,
@@ -484,16 +486,20 @@ class VIBSparseCommRouter:
         step_t: int,
         token_probs: Optional[List[float]] = None,
         confidence_score: Optional[float] = None,
-        role: Optional[str] = None
+        role: Optional[str] = None,
+        is_execution_failed: bool = False
     ) -> VIBEvaluationResult:
         """
         Detailed evaluation with full metrics for analysis and debugging.
         
-        Integrates three advanced mechanisms:
+        Integrates advanced mechanisms:
         1. Ada-VIB: adaptive threshold based on uncertainty
         2. Code-Diff Sensitivity: reduces false redundancy for code patches
         3. Bugfix-Aware Gating: detects fix-related keywords to protect critical patches
         4. Role-Adaptive β: role-specific beta weights (Architect/Coder/Reviewer)
+        5. Task-Complexity Awareness: generalized complexity via text length
+        6. Feedback-Aware β Reset: decay reset when execution fails
+        7. Token-Aware Redundancy: mild length penalty for token compression balance
         
         Args:
             candidate_msg: The candidate message from an agent
@@ -503,6 +509,7 @@ class VIBSparseCommRouter:
             token_probs: Optional token probabilities for entropy calculation
             confidence_score: Optional agent self-assessed confidence (0~1)
             role: Agent role name (Architect/Coder/Reviewer) for adaptive beta
+            is_execution_failed: Whether previous code execution failed (feedback signal)
             
         Returns:
             VIBEvaluationResult with all computed metrics
@@ -512,7 +519,7 @@ class VIBSparseCommRouter:
             emb_m = self.get_embedding(candidate_msg)
             emb_g = self.get_embedding(goal)
             sufficiency = self.compute_sufficiency(emb_m, emb_g)
-            beta_t = self.compute_beta_t(step_t, role=role, goal=goal)
+            beta_t = self.compute_beta_t(step_t, role=role, goal=goal, is_execution_failed=is_execution_failed)
             utility_score = beta_t * sufficiency  # 此时 redundancy 为 0
             
             # 依然走动态阈值判断，防止极低质量/幻觉首条消息混入
@@ -555,10 +562,12 @@ class VIBSparseCommRouter:
         omega_fix = 0.25 if (has_fix_signal and role in ("Reviewer", "Coder")) else 1.0
         
         # 综合冗余度修正: Redundancy_adjusted = Redundancy * code_discount * omega_fix
-        adjusted_redundancy = redundancy * code_discount * omega_fix
+        # Token-Aware: 对长文本施加温和长度惩罚，平衡 Token 压缩比
+        token_length_factor = math.log(max(len(candidate_msg.split()), 1) + 1)
+        adjusted_redundancy = redundancy * code_discount * omega_fix * (1.0 + 0.05 * token_length_factor)
         
-        # === Role-Adaptive β: 角色驱动的动态收益权重 + Task-Complexity 感知 ===
-        beta_t = self.compute_beta_t(step_t, role=role, goal=goal)
+        # === Role-Adaptive β: 角色驱动 + Task-Complexity + Feedback-Aware ===
+        beta_t = self.compute_beta_t(step_t, role=role, goal=goal, is_execution_failed=is_execution_failed)
         
         # Compute final utility score
         # Utility(M) = β_role * I(M; G) - Redundancy_adjusted

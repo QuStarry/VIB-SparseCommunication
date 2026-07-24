@@ -173,7 +173,8 @@ class VIBMultiAgentWorkflow:
                 step_t=state["step_t"],
                 token_probs=item.get("token_probs"), # 透传 Ada-VIB 所需的指标
                 confidence_score=item.get("confidence"),
-                role=item.get("agent")  # 透传角色信息，启用 Role-Adaptive β
+                role=item.get("agent"),  # 透传角色信息，启用 Role-Adaptive β
+                is_execution_failed=state.get("execution_failed", False)  # 透传执行反馈信号
             )
             
             if result.is_allowed:

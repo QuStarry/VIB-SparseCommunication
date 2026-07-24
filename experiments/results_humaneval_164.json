@@ -1,16 +1,16 @@
 {
   "summary": {
     "Full_Comm": {
-      "passed": 148,
-      "tokens": 484026,
+      "passed": 146,
+      "tokens": 482976,
       "generated": 984,
       "accepted": 984
     },
     "VIB_Sparse": {
-      "passed": 144,
-      "tokens": 380088,
+      "passed": 147,
+      "tokens": 453198,
       "generated": 984,
-      "accepted": 170
+      "accepted": 690
     }
   },
   "details": [
@@ -23,9 +23,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 24.96
+      "time_sec": 24.87
     },
     {
       "task_id": "HumanEval/1",
@@ -36,9 +36,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 20.5
+      "time_sec": 23.77
     },
     {
       "task_id": "HumanEval/2",
@@ -49,9 +49,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.06
+      "time_sec": 19.69
     },
     {
       "task_id": "HumanEval/3",
@@ -62,9 +62,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 19.66
+      "time_sec": 20.29
     },
     {
       "task_id": "HumanEval/4",
@@ -75,9 +75,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 17.55
+      "time_sec": 20.51
     },
     {
       "task_id": "HumanEval/5",
@@ -88,9 +88,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 16.44
+      "time_sec": 18.9
     },
     {
       "task_id": "HumanEval/6",
@@ -103,7 +103,7 @@
         "pass": true,
         "msgs": 1
       },
-      "time_sec": 19.77
+      "time_sec": 23.2
     },
     {
       "task_id": "HumanEval/7",
@@ -114,9 +114,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 19.15
+      "time_sec": 21.11
     },
     {
       "task_id": "HumanEval/8",
@@ -127,9 +127,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 17.29
+      "time_sec": 20.43
     },
     {
       "task_id": "HumanEval/9",
@@ -140,9 +140,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 16.97
+      "time_sec": 18.96
     },
     {
       "task_id": "HumanEval/10",
@@ -153,9 +153,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 21.94
+      "time_sec": 24.6
     },
     {
       "task_id": "HumanEval/11",
@@ -166,9 +166,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 18.65
+      "time_sec": 21.61
     },
     {
       "task_id": "HumanEval/12",
@@ -179,9 +179,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 17.74
+      "time_sec": 20.17
     },
     {
       "task_id": "HumanEval/13",
@@ -194,7 +194,7 @@
         "pass": true,
         "msgs": 2
       },
-      "time_sec": 19.63
+      "time_sec": 21.63
     },
     {
       "task_id": "HumanEval/14",
@@ -205,9 +205,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 16.28
+      "time_sec": 19.48
     },
     {
       "task_id": "HumanEval/15",
@@ -218,9 +218,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 15.66
+      "time_sec": 20.3
     },
     {
       "task_id": "HumanEval/16",
@@ -231,9 +231,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 16.56
+      "time_sec": 18.99
     },
     {
       "task_id": "HumanEval/17",
@@ -244,9 +244,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.42
+      "time_sec": 23.54
     },
     {
       "task_id": "HumanEval/18",
@@ -257,9 +257,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 17.18
+      "time_sec": 21.72
     },
     {
       "task_id": "HumanEval/19",
@@ -270,9 +270,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 19.24
+      "time_sec": 20.13
     },
     {
       "task_id": "HumanEval/20",
@@ -283,9 +283,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 20.53
+      "time_sec": 23.24
     },
     {
       "task_id": "HumanEval/21",
@@ -296,9 +296,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 19.21
+      "time_sec": 19.06
     },
     {
       "task_id": "HumanEval/22",
@@ -311,7 +311,7 @@
         "pass": true,
         "msgs": 1
       },
-      "time_sec": 19.18
+      "time_sec": 19.2
     },
     {
       "task_id": "HumanEval/23",
@@ -322,9 +322,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 14.42
+      "time_sec": 15.38
     },
     {
       "task_id": "HumanEval/24",
@@ -335,9 +335,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 18.11
+      "time_sec": 17.74
     },
     {
       "task_id": "HumanEval/25",
@@ -348,9 +348,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 19.38
+      "time_sec": 20.97
     },
     {
       "task_id": "HumanEval/26",
@@ -361,9 +361,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 18.31
+      "time_sec": 19.39
     },
     {
       "task_id": "HumanEval/27",
@@ -374,9 +374,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 17.69
+      "time_sec": 16.2
     },
     {
       "task_id": "HumanEval/28",
@@ -387,9 +387,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 17.5
+      "time_sec": 16.71
     },
     {
       "task_id": "HumanEval/29",
@@ -400,9 +400,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 19.26
+      "time_sec": 624.18
     },
     {
       "task_id": "HumanEval/30",
@@ -413,9 +413,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 20.71
+      "time_sec": 20.36
     },
     {
       "task_id": "HumanEval/31",
@@ -426,22 +426,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 22.35
+      "time_sec": 21.4
     },
     {
       "task_id": "HumanEval/32",
       "entry_point": "find_zero",
       "full_comm": {
-        "pass": true,
+        "pass": false,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 28.92
+      "time_sec": 26.91
     },
     {
       "task_id": "HumanEval/33",
@@ -452,9 +452,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 22.5
+      "time_sec": 22.12
     },
     {
       "task_id": "HumanEval/34",
@@ -465,9 +465,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.63
+      "time_sec": 19.93
     },
     {
       "task_id": "HumanEval/35",
@@ -478,9 +478,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.47
+      "time_sec": 20.67
     },
     {
       "task_id": "HumanEval/36",
@@ -491,9 +491,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 21.81
+      "time_sec": 22.53
     },
     {
       "task_id": "HumanEval/37",
@@ -504,22 +504,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 21.73
+      "time_sec": 21.97
     },
     {
       "task_id": "HumanEval/38",
       "entry_point": "decode_cyclic",
       "full_comm": {
-        "pass": true,
+        "pass": false,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 23.08
+      "time_sec": 24.32
     },
     {
       "task_id": "HumanEval/39",
@@ -530,9 +530,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 25.18
+      "time_sec": 23.48
     },
     {
       "task_id": "HumanEval/40",
@@ -543,9 +543,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 24.49
+      "time_sec": 22.43
     },
     {
       "task_id": "HumanEval/41",
@@ -556,9 +556,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 20.61
+      "time_sec": 20.96
     },
     {
       "task_id": "HumanEval/42",
@@ -569,9 +569,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 20.18
+      "time_sec": 19.05
     },
     {
       "task_id": "HumanEval/43",
@@ -582,9 +582,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 21.02
+      "time_sec": 17.89
     },
     {
       "task_id": "HumanEval/44",
@@ -595,9 +595,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 20.88
+      "time_sec": 18.43
     },
     {
       "task_id": "HumanEval/45",
@@ -608,9 +608,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 17.91
+      "time_sec": 17.09
     },
     {
       "task_id": "HumanEval/46",
@@ -621,9 +621,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 21.69
+      "time_sec": 22.41
     },
     {
       "task_id": "HumanEval/47",
@@ -634,9 +634,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 26.47
+      "time_sec": 18.1
     },
     {
       "task_id": "HumanEval/48",
@@ -647,9 +647,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 18.55
+      "time_sec": 17.85
     },
     {
       "task_id": "HumanEval/49",
@@ -660,9 +660,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 20.33
+      "time_sec": 18.28
     },
     {
       "task_id": "HumanEval/50",
@@ -673,9 +673,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 19.27
+      "time_sec": 22.06
     },
     {
       "task_id": "HumanEval/51",
@@ -686,9 +686,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 18.21
+      "time_sec": 19.18
     },
     {
       "task_id": "HumanEval/52",
@@ -699,9 +699,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 19.25
+      "time_sec": 17.37
     },
     {
       "task_id": "HumanEval/53",
@@ -712,9 +712,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 18.79
+      "time_sec": 17.09
     },
     {
       "task_id": "HumanEval/54",
@@ -724,10 +724,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": true,
-        "msgs": 1
+        "pass": false,
+        "msgs": 4
       },
-      "time_sec": 21.37
+      "time_sec": 22.58
     },
     {
       "task_id": "HumanEval/55",
@@ -738,9 +738,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 19.68
+      "time_sec": 19.71
     },
     {
       "task_id": "HumanEval/56",
@@ -751,9 +751,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 20.3
+      "time_sec": 20.49
     },
     {
       "task_id": "HumanEval/57",
@@ -764,9 +764,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 19.39
+      "time_sec": 17.78
     },
     {
       "task_id": "HumanEval/58",
@@ -777,22 +777,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.71
+      "time_sec": 18.27
     },
     {
       "task_id": "HumanEval/59",
       "entry_point": "largest_prime_factor",
       "full_comm": {
-        "pass": true,
+        "pass": false,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 21.14
+      "time_sec": 20.01
     },
     {
       "task_id": "HumanEval/60",
@@ -803,9 +803,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 17.89
+      "time_sec": 18.08
     },
     {
       "task_id": "HumanEval/61",
@@ -816,9 +816,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 19.28
+      "time_sec": 19.18
     },
     {
       "task_id": "HumanEval/62",
@@ -829,9 +829,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 17.93
+      "time_sec": 17.2
     },
     {
       "task_id": "HumanEval/63",
@@ -842,9 +842,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 17.77
+      "time_sec": 19.29
     },
     {
       "task_id": "HumanEval/64",
@@ -855,9 +855,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 20.23
+      "time_sec": 19.36
     },
     {
       "task_id": "HumanEval/65",
@@ -868,9 +868,9 @@
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 21.2
+      "time_sec": 20.61
     },
     {
       "task_id": "HumanEval/66",
@@ -881,9 +881,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 18.41
+      "time_sec": 18.12
     },
     {
       "task_id": "HumanEval/67",
@@ -894,9 +894,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 23.12
+      "time_sec": 21.39
     },
     {
       "task_id": "HumanEval/68",
@@ -907,9 +907,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.6
+      "time_sec": 19.1
     },
     {
       "task_id": "HumanEval/69",
@@ -920,9 +920,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 22.34
+      "time_sec": 20.83
     },
     {
       "task_id": "HumanEval/70",
@@ -933,9 +933,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.02
+      "time_sec": 18.6
     },
     {
       "task_id": "HumanEval/71",
@@ -946,9 +946,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 20.07
+      "time_sec": 19.21
     },
     {
       "task_id": "HumanEval/72",
@@ -959,9 +959,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.97
+      "time_sec": 18.93
     },
     {
       "task_id": "HumanEval/73",
@@ -972,9 +972,9 @@
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 20.37
+      "time_sec": 20.86
     },
     {
       "task_id": "HumanEval/74",
@@ -985,22 +985,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 21.02
+      "time_sec": 20.55
     },
     {
       "task_id": "HumanEval/75",
       "entry_point": "is_multiply_prime",
       "full_comm": {
-        "pass": true,
+        "pass": false,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 22.64
+      "time_sec": 21.89
     },
     {
       "task_id": "HumanEval/76",
@@ -1011,9 +1011,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 21.73
+      "time_sec": 22.48
     },
     {
       "task_id": "HumanEval/77",
@@ -1024,22 +1024,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 21.39
+      "time_sec": 19.11
     },
     {
       "task_id": "HumanEval/78",
       "entry_point": "hex_key",
       "full_comm": {
-        "pass": false,
+        "pass": true,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 18.66
+      "time_sec": 17.54
     },
     {
       "task_id": "HumanEval/79",
@@ -1050,9 +1050,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 18.54
+      "time_sec": 20.38
     },
     {
       "task_id": "HumanEval/80",
@@ -1063,22 +1063,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 17.09
+      "time_sec": 17.66
     },
     {
       "task_id": "HumanEval/81",
       "entry_point": "numerical_letter_grade",
       "full_comm": {
-        "pass": false,
+        "pass": true,
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": false,
-        "msgs": 1
+        "pass": true,
+        "msgs": 6
       },
-      "time_sec": 21.72
+      "time_sec": 22.48
     },
     {
       "task_id": "HumanEval/82",
@@ -1089,22 +1089,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 2
+        "msgs": 4
       },
-      "time_sec": 19.71
+      "time_sec": 20.24
     },
     {
       "task_id": "HumanEval/83",
       "entry_point": "starts_one_ends",
       "full_comm": {
-        "pass": true,
+        "pass": false,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.46
+      "time_sec": 23.1
     },
     {
       "task_id": "HumanEval/84",
@@ -1115,9 +1115,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 17.92
+      "time_sec": 17.4
     },
     {
       "task_id": "HumanEval/85",
@@ -1128,9 +1128,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 16.35
+      "time_sec": 18.35
     },
     {
       "task_id": "HumanEval/86",
@@ -1141,9 +1141,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.08
+      "time_sec": 21.63
     },
     {
       "task_id": "HumanEval/87",
@@ -1154,9 +1154,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 18.87
+      "time_sec": 21.72
     },
     {
       "task_id": "HumanEval/88",
@@ -1167,22 +1167,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 21.54
+      "time_sec": 19.4
     },
     {
       "task_id": "HumanEval/89",
       "entry_point": "encrypt",
       "full_comm": {
-        "pass": true,
+        "pass": false,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 22.35
+      "time_sec": 22.04
     },
     {
       "task_id": "HumanEval/90",
@@ -1193,9 +1193,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.15
+      "time_sec": 19.63
     },
     {
       "task_id": "HumanEval/91",
@@ -1206,9 +1206,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 21.2
+      "time_sec": 22.76
     },
     {
       "task_id": "HumanEval/92",
@@ -1219,9 +1219,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 20.45
+      "time_sec": 19.77
     },
     {
       "task_id": "HumanEval/93",
@@ -1231,10 +1231,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": true,
-        "msgs": 1
+        "pass": false,
+        "msgs": 4
       },
-      "time_sec": 22.63
+      "time_sec": 24.17
     },
     {
       "task_id": "HumanEval/94",
@@ -1245,22 +1245,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 20.33
+      "time_sec": 20.97
     },
     {
       "task_id": "HumanEval/95",
       "entry_point": "check_dict_case",
       "full_comm": {
-        "pass": true,
+        "pass": false,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 21.82
+      "time_sec": 21.93
     },
     {
       "task_id": "HumanEval/96",
@@ -1271,9 +1271,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 17.68
+      "time_sec": 17.56
     },
     {
       "task_id": "HumanEval/97",
@@ -1284,9 +1284,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 18.78
+      "time_sec": 17.59
     },
     {
       "task_id": "HumanEval/98",
@@ -1297,9 +1297,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 18.71
+      "time_sec": 18.3
     },
     {
       "task_id": "HumanEval/99",
@@ -1310,9 +1310,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 23.27
+      "time_sec": 22.79
     },
     {
       "task_id": "HumanEval/100",
@@ -1323,9 +1323,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 19.12
+      "time_sec": 20.86
     },
     {
       "task_id": "HumanEval/101",
@@ -1335,10 +1335,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": false,
-        "msgs": 1
+        "pass": true,
+        "msgs": 6
       },
-      "time_sec": 21.29
+      "time_sec": 18.56
     },
     {
       "task_id": "HumanEval/102",
@@ -1349,9 +1349,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 19.23
+      "time_sec": 21.0
     },
     {
       "task_id": "HumanEval/103",
@@ -1361,10 +1361,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": true,
-        "msgs": 1
+        "pass": false,
+        "msgs": 4
       },
-      "time_sec": 22.95
+      "time_sec": 19.89
     },
     {
       "task_id": "HumanEval/104",
@@ -1375,9 +1375,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.37
+      "time_sec": 19.04
     },
     {
       "task_id": "HumanEval/105",
@@ -1388,9 +1388,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 19.74
+      "time_sec": 18.96
     },
     {
       "task_id": "HumanEval/106",
@@ -1400,10 +1400,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": false,
-        "msgs": 1
+        "pass": true,
+        "msgs": 5
       },
-      "time_sec": 21.0
+      "time_sec": 19.96
     },
     {
       "task_id": "HumanEval/107",
@@ -1414,9 +1414,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 21.99
+      "time_sec": 18.9
     },
     {
       "task_id": "HumanEval/108",
@@ -1426,10 +1426,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": false,
-        "msgs": 1
+        "pass": true,
+        "msgs": 4
       },
-      "time_sec": 21.31
+      "time_sec": 20.85
     },
     {
       "task_id": "HumanEval/109",
@@ -1442,7 +1442,7 @@
         "pass": true,
         "msgs": 1
       },
-      "time_sec": 20.7
+      "time_sec": 18.2
     },
     {
       "task_id": "HumanEval/110",
@@ -1453,9 +1453,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 21.48
+      "time_sec": 19.66
     },
     {
       "task_id": "HumanEval/111",
@@ -1466,9 +1466,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 20.47
+      "time_sec": 18.35
     },
     {
       "task_id": "HumanEval/112",
@@ -1481,7 +1481,7 @@
         "pass": true,
         "msgs": 2
       },
-      "time_sec": 22.33
+      "time_sec": 23.21
     },
     {
       "task_id": "HumanEval/113",
@@ -1491,10 +1491,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": false,
-        "msgs": 2
+        "pass": true,
+        "msgs": 5
       },
-      "time_sec": 25.09
+      "time_sec": 24.62
     },
     {
       "task_id": "HumanEval/114",
@@ -1505,9 +1505,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 22.14
+      "time_sec": 21.65
     },
     {
       "task_id": "HumanEval/115",
@@ -1518,9 +1518,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 21.67
+      "time_sec": 21.15
     },
     {
       "task_id": "HumanEval/116",
@@ -1531,9 +1531,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 25.68
+      "time_sec": 23.79
     },
     {
       "task_id": "HumanEval/117",
@@ -1544,9 +1544,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 23.9
+      "time_sec": 22.45
     },
     {
       "task_id": "HumanEval/118",
@@ -1557,9 +1557,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 21.05
+      "time_sec": 20.22
     },
     {
       "task_id": "HumanEval/119",
@@ -1569,10 +1569,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": false,
-        "msgs": 1
+        "pass": true,
+        "msgs": 2
       },
-      "time_sec": 26.64
+      "time_sec": 27.34
     },
     {
       "task_id": "HumanEval/120",
@@ -1583,9 +1583,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 21.97
+      "time_sec": 18.49
     },
     {
       "task_id": "HumanEval/121",
@@ -1596,9 +1596,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 20.4
+      "time_sec": 17.42
     },
     {
       "task_id": "HumanEval/122",
@@ -1609,9 +1609,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 19.95
+      "time_sec": 18.65
     },
     {
       "task_id": "HumanEval/123",
@@ -1622,9 +1622,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 20.08
+      "time_sec": 18.96
     },
     {
       "task_id": "HumanEval/124",
@@ -1635,22 +1635,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 23.06
+      "time_sec": 20.93
     },
     {
       "task_id": "HumanEval/125",
       "entry_point": "split_words",
       "full_comm": {
-        "pass": false,
+        "pass": true,
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": false,
-        "msgs": 2
+        "pass": true,
+        "msgs": 4
       },
-      "time_sec": 21.34
+      "time_sec": 20.32
     },
     {
       "task_id": "HumanEval/126",
@@ -1661,9 +1661,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 21.24
+      "time_sec": 19.39
     },
     {
       "task_id": "HumanEval/127",
@@ -1674,9 +1674,9 @@
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 20.1
+      "time_sec": 19.18
     },
     {
       "task_id": "HumanEval/128",
@@ -1687,9 +1687,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.83
+      "time_sec": 18.36
     },
     {
       "task_id": "HumanEval/129",
@@ -1699,10 +1699,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": true,
+        "pass": false,
         "msgs": 1
       },
-      "time_sec": 32.13
+      "time_sec": 28.91
     },
     {
       "task_id": "HumanEval/130",
@@ -1713,9 +1713,9 @@
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 21.98
+      "time_sec": 22.03
     },
     {
       "task_id": "HumanEval/131",
@@ -1726,22 +1726,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.72
+      "time_sec": 19.54
     },
     {
       "task_id": "HumanEval/132",
       "entry_point": "is_nested",
       "full_comm": {
-        "pass": false,
+        "pass": true,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 22.44
+      "time_sec": 20.51
     },
     {
       "task_id": "HumanEval/133",
@@ -1752,22 +1752,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 18.43
+      "time_sec": 17.52
     },
     {
       "task_id": "HumanEval/134",
       "entry_point": "check_if_last_char_is_a_letter",
       "full_comm": {
-        "pass": false,
+        "pass": true,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.75
+      "time_sec": 20.53
     },
     {
       "task_id": "HumanEval/135",
@@ -1778,9 +1778,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.02
+      "time_sec": 19.43
     },
     {
       "task_id": "HumanEval/136",
@@ -1791,9 +1791,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 19.41
+      "time_sec": 18.69
     },
     {
       "task_id": "HumanEval/137",
@@ -1804,9 +1804,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 21.21
+      "time_sec": 20.46
     },
     {
       "task_id": "HumanEval/138",
@@ -1817,9 +1817,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 17.86
+      "time_sec": 18.08
     },
     {
       "task_id": "HumanEval/139",
@@ -1830,9 +1830,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 19.8
+      "time_sec": 19.81
     },
     {
       "task_id": "HumanEval/140",
@@ -1843,9 +1843,9 @@
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 21.56
+      "time_sec": 18.62
     },
     {
       "task_id": "HumanEval/141",
@@ -1856,9 +1856,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 22.86
+      "time_sec": 20.47
     },
     {
       "task_id": "HumanEval/142",
@@ -1869,9 +1869,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 25.72
+      "time_sec": 22.7
     },
     {
       "task_id": "HumanEval/143",
@@ -1882,9 +1882,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 20.24
+      "time_sec": 19.13
     },
     {
       "task_id": "HumanEval/144",
@@ -1895,9 +1895,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 17.93
+      "time_sec": 16.83
     },
     {
       "task_id": "HumanEval/145",
@@ -1908,22 +1908,22 @@
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 23.39
+      "time_sec": 20.81
     },
     {
       "task_id": "HumanEval/146",
       "entry_point": "specialFilter",
       "full_comm": {
-        "pass": false,
+        "pass": true,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 21.09
+      "time_sec": 20.29
     },
     {
       "task_id": "HumanEval/147",
@@ -1933,10 +1933,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": false,
-        "msgs": 1
+        "pass": true,
+        "msgs": 2
       },
-      "time_sec": 23.54
+      "time_sec": 20.4
     },
     {
       "task_id": "HumanEval/148",
@@ -1947,9 +1947,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 20.51
+      "time_sec": 19.31
     },
     {
       "task_id": "HumanEval/149",
@@ -1960,9 +1960,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 20.8
+      "time_sec": 21.42
     },
     {
       "task_id": "HumanEval/150",
@@ -1973,9 +1973,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 18.71
+      "time_sec": 17.94
     },
     {
       "task_id": "HumanEval/151",
@@ -1986,9 +1986,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 4
       },
-      "time_sec": 19.08
+      "time_sec": 17.49
     },
     {
       "task_id": "HumanEval/152",
@@ -1999,9 +1999,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 19.12
+      "time_sec": 17.4
     },
     {
       "task_id": "HumanEval/153",
@@ -2012,9 +2012,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 2
+        "msgs": 5
       },
-      "time_sec": 19.91
+      "time_sec": 18.95
     },
     {
       "task_id": "HumanEval/154",
@@ -2025,9 +2025,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 3
       },
-      "time_sec": 19.33
+      "time_sec": 18.18
     },
     {
       "task_id": "HumanEval/155",
@@ -2038,9 +2038,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 2
       },
-      "time_sec": 19.7
+      "time_sec": 19.71
     },
     {
       "task_id": "HumanEval/156",
@@ -2051,9 +2051,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 22.2
+      "time_sec": 22.08
     },
     {
       "task_id": "HumanEval/157",
@@ -2064,22 +2064,22 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 17.32
+      "time_sec": 17.31
     },
     {
       "task_id": "HumanEval/158",
       "entry_point": "find_max",
       "full_comm": {
-        "pass": true,
+        "pass": false,
         "msgs": 6
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 20.24
+      "time_sec": 16.73
     },
     {
       "task_id": "HumanEval/159",
@@ -2090,9 +2090,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 19.66
+      "time_sec": 16.51
     },
     {
       "task_id": "HumanEval/160",
@@ -2102,10 +2102,10 @@
         "msgs": 6
       },
       "vib_sparse": {
-        "pass": true,
-        "msgs": 1
+        "pass": false,
+        "msgs": 5
       },
-      "time_sec": 26.64
+      "time_sec": 21.27
     },
     {
       "task_id": "HumanEval/161",
@@ -2116,9 +2116,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 18.69
+      "time_sec": 17.73
     },
     {
       "task_id": "HumanEval/162",
@@ -2129,9 +2129,9 @@
       },
       "vib_sparse": {
         "pass": true,
-        "msgs": 1
+        "msgs": 6
       },
-      "time_sec": 17.11
+      "time_sec": 18.11
     },
     {
       "task_id": "HumanEval/163",
@@ -2142,9 +2142,9 @@
       },
       "vib_sparse": {
         "pass": false,
-        "msgs": 1
+        "msgs": 5
       },
-      "time_sec": 20.14
+      "time_sec": 17.13
     }
   ]
 }

@@ -246,7 +246,7 @@ SaveResults --> End(["结束"])
 - 整个评测框架具备良好的稳定性和可扩展性
 - **优化后的参数配置有效解决了门控过度修剪问题，提升了整体代码生成质量**
 
-**Section sources**
+**章节来源**
 - [experiments/results_humaneval_164.json](file://experiments/results_humaneval_164.json)
 - [experiments/run_humaneval.py](file://experiments/run_humaneval.py)
 

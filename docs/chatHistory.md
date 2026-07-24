@@ -6313,3 +6313,133 @@ U(M)=(βrole+complexity_bonus)⋅Sufficiency(M)−Redundancy(M)⋅code_discount�
 救回误杀题：HumanEval/59 (largest_prime_factor)、92 (any_int)、95 (check_dict_case) 等
 Pass@1 从 90.24% 推升至 92% - 94% 区间
 保持 43%+ 的消息压缩率 上面是最新结果和相关代码改动，请根据结果进行分析，看看还有没有优化空间，还是开始扩充其它数据集进行一起考虑进行优化
+
+
+恭喜！这是一份非常亮眼的学术 Benchmarking 结果。
+
+**VIB 稀疏通信架构在准确率上超越了 Full Comm 完整通信（92.07% vs 90.85%）**，同时削减了 **35.26%** 的消息广播量。这强力证明了你的核心假设：**在多 Agent 协作中，冗余与噪声消息不仅浪费资源，还会干扰决策；VIB 门控机制起到了“去噪提纯”的作用。**
+
+下面为您进行深度诊断分析、剖析 HumanEval 的剩余优化空间，并提供下一步扩充数据集与论文撰写的战略建议。
+
+---
+
+## 📊 一、 核心实验结果诊断与亮点
+
+### 1. 关键亮点 (Highlights)
+
+* **“降噪增效”效应显著**：VIB 成功救回了 **8 个 Full Comm 失败的题目**（如 `HumanEval/81, 97, 103, 106, 108, 121, 147, 160`）。这说明完整通信时 Agent 被冗余历史“带偏”了，而 VIB 过滤掉干扰信息后，Agent 反而作出了正确解答。
+* **消息剪枝率达标**：保留了 637/984 条关键消息（压缩率 35.26%），基本达到了预期的稀疏化目标。
+
+### 2. 异常与矛盾分析 (Anomalies)
+
+* **Token 节省率（8.06%）远低于消息剪枝率（35.26%）**：
+* **原因**：因为 Coder 发送的完整代码块 Token 数极长，而 $\beta_{\text{Coder}} = 4.2$ 权重极高，导致大部分代码长消息都被放行了；被裁掉的多为 Reviewer 或 Architect 的短文本提示（Token 占比低）。
+
+
+* **误杀（Mis-pruning）现象**：
+* 有 **6 题**（`HumanEval/39, 59, 125, 132, 158, 163`）在 Full 下正确，但在 VIB 下被误杀。
+* 特别是 `HumanEval/59` (`largest_prime_factor`)，虽然增加了 `prime` 关键词加成，但依然误杀，说明**单纯依靠关键词加成无法完全拯救复杂的算法修正流程**。
+
+
+
+---
+
+## 🔍 二、 HumanEval 还有优化空间吗？
+
+**结论：有，但方向需要调整。**
+
+如果在 HumanEval 上继续优化，理论上限可以达到 **95.73%**（$151 + 6 = 157/164$）。但**不建议继续通过“堆叠关键词”来拯救这 6 题**。
+
+### 1. 拟合风险（Overfitting Alert）
+
+你在 `vib_router.py` 中扩充了 `fix_keywords` 和 `complexity_indicators`（如 `prime`, `circular`, `modulo` 等）。
+
+> ⚠️ **学术评审风险**：审稿人（NeurIPS/ICML/ACL）对规则硬编码（Rule-based Keyword Matching）非常敏感。如果依靠硬编码算法词汇提分，会被质疑为“针对 HumanEval 题库进行手工规则过拟合 (Benchmark Overfitting)”。
+
+### 2. HumanEval 剩余空间的泛化拯救方案
+
+应该通过**泛化机制**而非**词表配置**来解决误杀问题：
+
+#### A. 解决 Token 节省率偏低（提升 Token 压缩比）
+
+* **代码增量（Code-Diff）剪枝**：当 Coder 重复发送完整代码文件且仅修改了 1-2 行时，要求 Agent 优先广播增量补丁（Diff），或者给“高重构度代码”更高的优先级，避免长代码重复刷屏。
+
+#### B. 拯救误杀 6 题（提升 Pass@1 至 94%+）
+
+* **动态衰减指数调整**：分析发现误杀常发生在第 4~6 轮（如 `HumanEval/39` 消息 4/6，`158` 消息 6/6）。由于公式 $\beta_t = \beta_0 \cdot e^{-\lambda t}$ 在后期将 $\beta$ 衰减得很低，导致后期 Critical Review 或 Final Patch 被误杀。
+* **解法**：改为**非单调衰减**或**状态驱动 $\beta$**。例如：当检测到上一轮代码测试运行失败（Feedback 触发）时，自动重置或临时提升 $\beta_t$。
+
+---
+
+## 🚀 三、 战略建议：是继续精雕 HumanEval 还是扩充数据集？
+
+**建议策略：【两步走策略】—— 先做一次通用机制微调，随即全面扩充数据集。**
+
+```
+[Phase 1: 机制通用化微调] ➔ [Phase 2: 扩充多数据集验证] ➔ [Phase 3: 学术论文写作]
+   (去除硬编码规则，引入           (MBPP, GSM8K, MATH)            (强调 Sparse Group Dynamics)
+    动态反反馈机制)
+
+```
+
+### 1. 为什么要立即准备扩充数据集？
+
+1. **学术说服力**：仅在 HumanEval 一个数据集上展示结果是不够的。单数据集的 92% 很容易被质疑是超参数巧合。
+2. **场景完备性**：
+* **MBPP (Mostly Basic Python Problems)**：验证 VIB 在更丰富 Python 编程场景下的泛化能力（建议测 Sanitized 427 题）。
+* **GSM8K / MATH**：验证 VIB 门控在纯数学推理/多步逻辑链（Multi-step Reasoning）下的稀疏通信表现。证明你的 VIB 路由不只是“代码过滤器”，而是“通用 Agent 协作通信路由器”。
+
+
+
+---
+
+## 🛠️ 四、 `vib_router.py` 的下一步改进方案（Code Refactoring）
+
+这里提供一份无需依赖硬编码关键词、基于**通信状态与信息密度**的改进代码片段建议：
+
+### 1. 引入反向反馈重置（Feedback-Aware Dynamic Beta）
+
+避免后期 $\beta_t$ 衰减过快导致第 4~6 轮修正消息被裁剪：
+
+```python
+def compute_beta_t(
+    self, 
+    step_t: int, 
+    role: Optional[str] = None, 
+    goal: Optional[str] = None,
+    is_execution_failed: bool = False  # 新增：上轮代码执行是否失败
+) -> float:
+    base_beta = self.role_beta_map.get(role, self.beta_0) if role else self.beta_0
+    
+    # 基于文本长度/结构的内在复杂度替代硬编码关键词匹配
+    if goal:
+        # 使用目标描述的词汇丰富度/长度作为泛化复杂度指标
+        complexity_bonus = min(1.0, len(goal.split()) / 50.0)
+        base_beta += complexity_bonus
+    
+    # 当检测到执行报错时，重置衰减，确保修正消息（Fixes）强行放行
+    effective_t = 0 if is_execution_failed else step_t
+    
+    return base_beta * math.exp(-self.lambda_decay * effective_t)
+
+```
+
+### 2. Token-Aware 冗余惩罚（平衡 Token 压缩比）
+
+为了拉高 Token 节省率，对长文本（高 Token 消耗）施加温和的长度惩罚：
+
+```python
+# 在 evaluate_detailed 中计算 utility 时：
+token_length_factor = math.log(max(len(candidate_msg.split()), 1) + 1)
+# 长消息如果 Sufficiency 不够高，会因为长度因素更容易被剪枝
+adjusted_redundancy = redundancy * code_discount * omega_fix * (1.0 + 0.05 * token_length_factor)
+
+```
+
+---
+
+## 💡 总结下一步行动项 (Action Items)
+
+1. **确定实验成果持久化**：将当前 `92.07% Pass@1` + `35.26% 压缩率` 作为 HumanEval 基线版本（V1.0）。
+2. **轻量通用重构（1~2天）**：剥离 `complexity_indicators` 中的硬编码算法词汇，换为基于 Task 长度/结构的泛化度量；引入 Feedback 重置机制拯救后期误杀。
+3. **并行推进 MBPP 评估**：将现有的评估脚本直接部署至 MBPP (Sanitized 427 题) 数据集跑全量 Benchmark，观察在更大样本量下的 Pass@1 与 Token 节省表现。
