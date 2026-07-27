@@ -3,11 +3,11 @@ schema_version: 1
 locale: zh-CN
 branch: main
 nodes_managed: true
-exported_at: "2026-07-24T02:34:25Z"
+exported_at: "2026-07-24T08:04:36Z"
 modules:
     "":
-        dir_name: VIB 动态稀疏通信多智能体协作系统顶层仓库
-        title: VIB 动态稀疏通信多智能体协作系统顶层仓库
+        dir_name: VIB 动态稀疏通信多智能体研究仓库顶层
+        title: VIB 动态稀疏通信多智能体研究仓库顶层
         scope:
             - .gitignore
             - README.md
@@ -21,8 +21,8 @@ modules:
         depends_on: []
         related_to: []
     experiments:
-        dir_name: VIB 动态稀疏通信多智能体系统实验套件
-        title: VIB 动态稀疏通信多智能体系统实验套件
+        dir_name: VIB 动态稀疏通信多智能体实验脚本集
+        title: VIB 动态稀疏通信多智能体实验脚本集
         scope:
             - experiments/
         source_files: []
@@ -31,8 +31,8 @@ modules:
         related_to:
             - path: src
     src:
-        dir_name: VIB 稀疏通信多智能体协作系统核心
-        title: VIB 稀疏通信多智能体协作系统核心
+        dir_name: VIB 稀疏通信多智能体工作流核心
+        title: VIB 稀疏通信多智能体工作流核心
         scope:
             - src/
         source_files: []

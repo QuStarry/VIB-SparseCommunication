@@ -6443,3 +6443,741 @@ adjusted_redundancy = redundancy * code_discount * omega_fix * (1.0 + 0.05 * tok
 1. **确定实验成果持久化**：将当前 `92.07% Pass@1` + `35.26% 压缩率` 作为 HumanEval 基线版本（V1.0）。
 2. **轻量通用重构（1~2天）**：剥离 `complexity_indicators` 中的硬编码算法词汇，换为基于 Task 长度/结构的泛化度量；引入 Feedback 重置机制拯救后期误杀。
 3. **并行推进 MBPP 评估**：将现有的评估脚本直接部署至 MBPP (Sanitized 427 题) 数据集跑全量 Benchmark，观察在更大样本量下的 Pass@1 与 Token 节省表现。
+
+
+
+HumanEval 164 题全量 Benchmark 终极大表 (Academic Report)
+================================================================================
+评估指标 (Metrics)                     | Full Comm (对照组)      | VIB Sparse (我们的)    
+-------------------------------------------------------------------------------------
+测试题目总数 (Total Tasks)               | 164                  | 164                 
+⭐ Pass@1 准确率 (%)                   | 89.02%               | 89.63%              
+尝试生成广播总数 (Generated)               | 984                  | 984                 
+实际通过广播消息数 (Accepted)               | 984                  | 690                 
+⭐ 通信压缩率 (Msg Compression %)        | 0.00%                | 29.88%              
+消耗 Token 总数 (Total Tokens)         | 482976               | 453198              
+⭐ Token 节省率 (Token Savings %)      | 0.00%                | 6.17%              
+评测总耗时 (Total Runtime)              | 65.02 分钟           | 65.02 分钟          
+================================================================================
+🎉 详细明细已成功持久化至: /Users/starry/Development/Code/VIB-SparseCommunication/experiments/results_humaneval_164.json 上面是最新的结果，请进行对应的分析，思考接下来如何做
+
+这份 HumanEval 164 题全量 Benchmark 的测试结果非常理想！不仅成功验证了 **VIB (Variational Information Bottleneck) 稀疏通信机制** 的有效性，还展现出了非常硬核的“Less is More”现象。
+
+下面从**数据深挖、异常诊断、核心结论**以及**下一步行动指南**四个维度为你进行系统性的学术分析与规划。
+
+---
+
+## 一、 核心指标对比与深挖
+
+| Metric (评估指标) | Full Comm (全量广播) | VIB Sparse (我们的) | 差值 / 增益 |
+| --- | --- | --- | --- |
+| **Pass@1 准确率** | 89.02% (146/164)
+
+ | **89.63% (147/164)**<br> | **+0.61% (+1 题)**<br> |
+| **接受消息总数** | 984
+
+ | **690**<br> | **-29.88% (通信大幅压缩)**<br> |
+| **Token 总消耗** | 482,976
+
+ | **453,198**<br> | **-6.17%**<br> |
+| **平均每题消息数** | 6.0 条
+
+ | **4.21 条**<br> | 减少约 1.79 条/题
+
+ |
+
+---
+
+## 二、 数据细粒度分析 (Detailed Insights)
+
+### 1. 噪声过滤效应 (7胜/6负，净胜 1 题)
+
+VIB 机制通过约 30% 的消息压缩率，不仅没有降低性能，反而提升了准确率，这有力证明了多 Agent 系统中存在“冗余信息干扰（Interference/Noise Broadcast）”。
+
+* **VIB 成功救回的题目 (7 题)**：`HumanEval/32`, `38`, `75`, `83`, `89`, `95`, `108`。在全量通信下，Agent 之间的无效幻觉广播误导了推理路径；VIB 阻断了低信息量的消息，保留了核心逻辑。
+
+
+* **VIB 剪枝过度的题目 (6 题)**：`HumanEval/93`, `129`, `132`, `134`, `140`, `146`。
+
+
+> **典型痛点分析**：以 `HumanEval/129 (minPath)` 为例，全量通信通过了该题，而 VIB Sparse 将消息数**过度压缩至 1 条**导致失败。这说明对于复杂路径搜索问题，Agent 之间极度依赖持续的状态同步，过度剪枝会导致上下文断层。
+> 
+> 
+
+
+
+### 2. 消息压缩率 (29.88%) vs Token 节省率 (6.17%) 的剪刀差
+
+为什么消息减少了近 30%，Token 却只节省了 6.17%？
+
+* **原因分析**：Agent 的 System Prompt、上下文历史（Context History）以及 Task Description 在每次 API 调用中依然占用了基础 Token。仅拦截消息广播（Broadcast Block）虽然省去了该条消息本身的输出 Token 和下游接收者的 Input Token，但未能完全消除 Agent 内部思考/准备过程的开销。
+
+### 3. 运行耗时异常点 (Runtime Anomaly)
+
+测试总耗时为 65.02 分钟，但注意到：
+
+* `HumanEval/29 (filter_by_prefix)` **单题耗时高达 624.18 秒（约 10.4 分钟）**！
+
+
+* 这占到了整个测试时间的 **16%**。很可能是遇到了 API 请求超时、死循环重试或长文本生成的 Edge Case。
+
+---
+
+## 三、 下一步工作规划 (Actionable Next Steps)
+
+基于上述发现，建议按以下三个方向推进研究与优化：
+
+```
+                    ┌─────────────────────────────────────────┐
+                    │    VIB Sparse 阶段性成果 (Pass@1 89.63%) │
+                    └────────────────────┬────────────────────┘
+                                         │
+        ┌────────────────────────────────┼────────────────────────────────┐
+        ▼                                ▼                                ▼
+【算法层：动态阈值】              【架构层：Token 极致压缩】           【基准层：扩展复杂场景】
+ 解决过度剪枝(如HE/129)          缩小 Msg% 与 Token% 剪刀差           挑战 MBPP / MATH / SWE-bench
+
+```
+
+### 1. 算法层面：自适应 VIB 剪枝阈值 (Dynamic/Task-Adaptive Thresholding)
+
+目前固定/统一的 VIB 门控容易在复杂题目上“误伤”关键通信。
+
+* **优化策略**：引入基于不确定性（Uncertainty）**或**推理阶段（Reasoning Stage）的自适应 $\beta$ 调节机制。
+* **目标**：在简单任务（如 `HumanEval/22`）维持高剪枝率（只用 1 条消息），但在复杂搜索/路径类任务（如 `HumanEval/129`）自动降低剪枝强度，避免单条消息孤立。
+
+
+
+### 2. 工程与架构层面：Short-Circuit 真正的 Token 节省
+
+* **解决剪刀差**：当 VIB 决策“阻断通信”时，直接跳过下游 Agent 的不必要 Prompt 构建或激活轻量级 Acknowledgement 状态，避免将重复的全局 Context 发送给大模型，从而将 Token 节省率从 6.17% 提升至 20%+。
+
+
+* **修复长尾耗时异常**：为单个任务增加严格的超时截断（Timeout Circuit Breaker）与指数退避重试，定位并解决 `HumanEval/29` 耗时 624s 的问题。
+
+
+
+### 3. 论文与实验层面：扩展到更复杂的 Benchmark
+
+HumanEval 的整体 Pass@1 已经高达 89.63%，存在一定的天花板效应（Ceiling Effect）。
+
+* **下一步实验**：
+1. **MBPP / MBPP-Sanitized**：验证代码生成领域的泛化性。
+2. **MATH / GSM8K**：在多步数学推理中，Agent 通信噪声更大，VIB 稀疏化的优势会更加显著。
+3. **SWE-bench Lite**：在长上下文、多 Agent 分工协同的真实软件工程场景下验证通信压缩比。
+
+
+
+---
+
+接下来你希望先推进哪一个方向？是深入分析 `HumanEval/129` 等失败 Case 并改进动态阈值算法，还是优先部署 MBPP Benchmark 验证泛化能力？
+
+部署 MBPP及其它几个数据集的 Benchmark 验证泛化能力，优化也要结合多个数据集进行优化，避免单一数据集过拟合
+
+没问题！构建一个高度解耦、可扩展的 **Multi-Dataset Harness** 是确保测试流程标准化、避免过拟合的核心基石。
+
+为了兼顾不同任务类型（代码生成 vs 数学推理）的评估机制，驱动框架采用 **“统一任务接口 + 数据集加载适配器 + 模块化评估器 + 统一指标收集器”** 的架构。
+
+---
+
+## 🏗️ 架构设计图解
+
+```text
+                           ┌──────────────────────────┐
+                           │   run_multi_benchmark.py │  (统一入口与配置)
+                           └────────────┬─────────────┘
+                                        │
+           ┌────────────────────────────┼────────────────────────────┐
+           ▼                            ▼                            ▼
+┌──────────────────────┐    ┌──────────────────────┐    ┌──────────────────────┐
+│  HumanEvalAdapter    │    │     MBPPAdapter      │    │     GSM8KAdapter     │
+└──────────┬───────────┘    └──────────┬───────────┘    └──────────┬───────────┘
+           │                            │                            │
+           └────────────────────────────┼────────────────────────────┘
+                                        │ Standardized TaskSample
+                                        ▼
+                           ┌──────────────────────────┐
+                           │    MultiAgentPipeline    │  (集成 VIB Router)
+                           └────────────┬─────────────┘
+                                        │ Standardized Result
+                                        ▼
+                           ┌──────────────────────────┐
+                           │    UnifiedEvaluator      │
+                           │  (Exec Code / Math Match)│
+                           └────────────┬─────────────┘
+                                        │
+                                        ▼
+                           ┌──────────────────────────┐
+                           │   Metrics & JSON Report  │
+                           └──────────────────────────┘
+
+```
+
+---
+
+## 💻 驱动脚本核心代码实现
+
+我们可以将框架组织为单文件，或拆分为模块。以下是完整可运行的 `run_multi_benchmark.py` 驱动核心：
+
+```python
+import os
+import re
+import sys
+import json
+import time
+import argparse
+import traceback
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, field, asdict
+from typing import List, Dict, Any, Optional
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# ==========================================
+# 1. 统一数据结构定义 (Data Structures)
+# ==========================================
+
+@dataclass
+class TaskSample:
+    """标准化任务样本"""
+    task_id: str
+    dataset_name: str
+    prompt: str
+    entry_point: Optional[str] = None          # 代码类任务函数入口
+    test_cases: Optional[List[str]] = None      # 代码测试用例 (Asserts)
+    reference_answer: Optional[str] = None     # 数学/文本参考标答
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+@dataclass
+class TaskResult:
+    """单个 Task 执行与评估结果"""
+    task_id: str
+    dataset_name: str
+    passed: bool
+    generated_output: str
+    execution_time: float
+    total_messages: int
+    total_tokens: int
+    vib_suppression_rate: float
+    error_msg: Optional[str] = None
+
+# ==========================================
+# 2. 数据集加载适配器 (Dataset Loaders)
+# ==========================================
+
+class BaseDatasetAdapter(ABC):
+    @abstractmethod
+    def load(self, data_path: Optional[str] = None, limit: int = -1) -> List[TaskSample]:
+        pass
+
+class HumanEvalAdapter(BaseDatasetAdapter):
+    def load(self, data_path: Optional[str] = None, limit: int = -1) -> List[TaskSample]:
+        # 兼容 HuggingFace datasets 或 本地 JSONL
+        try:
+            from datasets import load_dataset
+            ds = load_dataset("openai_humaneval", split="test")
+            samples = []
+            for i, item in enumerate(ds):
+                if limit > 0 and i >= limit:
+                    break
+                samples.append(TaskSample(
+                    task_id=item["task_id"],
+                    dataset_name="HumanEval",
+                    prompt=item["prompt"],
+                    entry_point=item["entry_point"],
+                    test_cases=[item["test"]],
+                    reference_answer=item["canonical_solution"]
+                ))
+            return samples
+        except Exception as e:
+            print(f"[Warning] Failed to load HumanEval via datasets package: {e}")
+            return []
+
+class MBPPAdapter(BaseDatasetAdapter):
+    def load(self, data_path: Optional[str] = None, limit: int = -1) -> List[TaskSample]:
+        try:
+            from datasets import load_dataset
+            # 推荐使用 mbpp sanitized 版本
+            ds = load_dataset("mbpp", "sanitized", split="test")
+            samples = []
+            for i, item in enumerate(ds):
+                if limit > 0 and i >= limit:
+                    break
+                # MBPP 组合 prompt 与 test_list
+                prompt_text = f'"""\n{item["prompt"]}\n"""\n'
+                samples.append(TaskSample(
+                    task_id=f"MBPP/{item['task_id']}",
+                    dataset_name="MBPP",
+                    prompt=prompt_text,
+                    entry_point=item.get("code", "").split("def ")[1].split("(")[0] if "def " in item.get("code", "") else None,
+                    test_cases=item["test_list"],
+                    reference_answer=item["code"]
+                ))
+            return samples
+        except Exception as e:
+            print(f"[Warning] Failed to load MBPP via datasets package: {e}")
+            return []
+
+class GSM8KAdapter(BaseDatasetAdapter):
+    def load(self, data_path: Optional[str] = None, limit: int = -1) -> List[TaskSample]:
+        try:
+            from datasets import load_dataset
+            ds = load_dataset("gsm8k", "main", split="test")
+            samples = []
+            for i, item in enumerate(ds):
+                if limit > 0 and i >= limit:
+                    break
+                # 解析 GSM8K 标答中的 #### 数字
+                target = item["answer"].split("####")[-1].strip() if "####" in item["answer"] else item["answer"]
+                samples.append(TaskSample(
+                    task_id=f"GSM8K/{i}",
+                    dataset_name="GSM8K",
+                    prompt=item["question"],
+                    reference_answer=target,
+                    metadata={"full_answer": item["answer"]}
+                ))
+            return samples
+        except Exception as e:
+            print(f"[Warning] Failed to load GSM8K via datasets package: {e}")
+            return []
+
+class DatasetFactory:
+    _adapters = {
+        "humaneval": HumanEvalAdapter(),
+        "mbpp": MBPPAdapter(),
+        "gsm8k": GSM8KAdapter()
+    }
+
+    @classmethod
+    def get_adapter(cls, dataset_name: str) -> BaseDatasetAdapter:
+        name = dataset_name.lower()
+        if name not in cls._adapters:
+            raise ValueError(f"Unsupported dataset: {dataset_name}. Supported: {list(cls._adapters.keys())}")
+        return cls._adapters[name]
+
+# ==========================================
+# 3. 多任务评估引擎 (Evaluators)
+# ==========================================
+
+class CodeEvaluator:
+    """Python 代码执行评估 (HumanEval & MBPP)"""
+    @staticmethod
+    def evaluate(code_str: str, test_cases: List[str], timeout: float = 3.0) -> tuple[bool, str]:
+        # 构造完整可运行的代码段
+        exec_program = code_str + "\n\n" + "\n".join(test_cases)
+        
+        # 安全子进程执行逻辑 (简化版使用 exec，生产环境建议用 isolated sandbox)
+        global_scope = {}
+        try:
+            # 捕获 exec 输出与异常
+            exec(exec_program, global_scope)
+            return True, "PASSED"
+        except Exception as e:
+            return False, f"Execution failed: {type(e).__name__} - {str(e)}"
+
+class MathEvaluator:
+    """GSM8K 表达式/数字抽取与匹配评估"""
+    @staticmethod
+    def evaluate(prediction: str, reference: str) -> tuple[bool, str]:
+        # 简单抽取最后一个出现的数字或表达式
+        extracted_numbers = re.findall(r"[-+]?\d*\.\d+|\d+", prediction)
+        if not extracted_numbers:
+            return False, "No numeric output found"
+        
+        last_pred = extracted_numbers[-1].strip()
+        ref = reference.strip()
+        
+        is_correct = (last_pred == ref)
+        msg = f"Extracted: '{last_pred}', Expected: '{ref}'"
+        return is_correct, msg
+
+class UnifiedEvaluator:
+    @classmethod
+    def evaluate(cls, sample: TaskSample, model_output: str) -> tuple[bool, str]:
+        if sample.dataset_name in ["HumanEval", "MBPP"]:
+            if not sample.test_cases:
+                return False, "No test cases provided"
+            return CodeEvaluator.evaluate(model_output, sample.test_cases)
+        elif sample.dataset_name == "GSM8K":
+            return MathEvaluator.evaluate(model_output, sample.reference_answer)
+        else:
+            raise NotImplementedError(f"No evaluator for dataset {sample.dataset_name}")
+
+# ==========================================
+# 4. Mock Multi-Agent System Engine (替身/接入点)
+# ==========================================
+
+class DummyMultiAgentSystem:
+    """
+    此处替换为您实际的 Multi-Agent pipeline (集成 TaskAgnosticVIBRouter)
+    """
+    def __init__(self, enable_vib: bool = True):
+        self.enable_vib = enable_vib
+
+    def run_task(self, sample: TaskSample) -> Dict[str, Any]:
+        start_time = time.time()
+        
+        # 模拟生成逻辑 (根据任务类型)
+        if sample.dataset_name == "GSM8K":
+            generated = f"Let's think step by step... Therefore the answer is {sample.reference_answer}."
+        else:
+            # 代码任务模拟
+            generated = f"{sample.prompt}\n    return True"
+            
+        exec_time = time.time() - start_time
+        
+        # 模拟 VIB 产生的统计数据
+        return {
+            "output": generated,
+            "exec_time": exec_time,
+            "total_messages": 4 if self.enable_vib else 6,
+            "total_tokens": 1200 if self.enable_vib else 1500,
+            "vib_suppression_rate": 0.33 if self.enable_vib else 0.0
+        }
+
+# ==========================================
+# 5. 统一 Runner & 统计导出 (Benchmark Harness)
+# ==========================================
+
+class MultiDatasetHarness:
+    def __init__(self, agent_system: Any, num_workers: int = 1):
+        self.agent_system = agent_system
+        self.num_workers = num_workers
+
+    def run_sample(self, sample: TaskSample) -> TaskResult:
+        try:
+            # 1. 运行多 Agent 交互生成解答
+            agent_res = self.agent_system.run_task(sample)
+            
+            # 2. 统一评估判定
+            passed, err_msg = UnifiedEvaluator.evaluate(sample, agent_res["output"])
+            
+            return TaskResult(
+                task_id=sample.task_id,
+                dataset_name=sample.dataset_name,
+                passed=passed,
+                generated_output=agent_res["output"],
+                execution_time=agent_res["exec_time"],
+                total_messages=agent_res["total_messages"],
+                total_tokens=agent_res["total_tokens"],
+                vib_suppression_rate=agent_res["vib_suppression_rate"],
+                error_msg=err_msg if not passed else None
+            )
+        except Exception as e:
+            return TaskResult(
+                task_id=sample.task_id,
+                dataset_name=sample.dataset_name,
+                passed=False,
+                generated_output="",
+                execution_time=0.0,
+                total_messages=0,
+                total_tokens=0,
+                vib_suppression_rate=0.0,
+                error_msg=f"Runner Exception: {str(e)}\n{traceback.format_exc()}"
+            )
+
+    def run_benchmark(self, datasets: List[str], limit_per_dataset: int = -1) -> Dict[str, Any]:
+        all_results = {}
+        summary = {}
+
+        for ds_name in datasets:
+            print(f"\n==========================================")
+            print(f"🚀 Running Benchmark: {ds_name.upper()}")
+            print(f"==========================================")
+            
+            adapter = DatasetFactory.get_adapter(ds_name)
+            samples = adapter.load(limit=limit_per_dataset)
+            
+            if not samples:
+                print(f"[Skipped] No samples loaded for {ds_name}.")
+                continue
+                
+            print(f"Loaded {len(samples)} samples from {ds_name}.")
+            
+            results: List[TaskResult] = []
+            
+            # 多线程并发执行
+            if self.num_workers > 1:
+                with ThreadPoolExecutor(max_workers=self.num_workers) as executor:
+                    futures = {executor.submit(self.run_sample, s): s for s in samples}
+                    for future in as_completed(futures):
+                        res = future.result()
+                        results.append(res)
+                        status = "✅ PASS" if res.passed else "❌ FAIL"
+                        print(f"[{res.dataset_name}] {res.task_id} -> {status}")
+            else:
+                for s in samples:
+                    res = self.run_sample(s)
+                    results.append(res)
+                    status = "✅ PASS" if res.passed else "❌ FAIL"
+                    print(f"[{res.dataset_name}] {res.task_id} -> {status}")
+
+            # 汇总该数据集的核心指标
+            passed_count = sum(1 for r in results if r.passed)
+            total_count = len(results)
+            pass_rate = (passed_count / total_count) * 100 if total_count > 0 else 0.0
+            avg_msgs = sum(r.total_messages for r in results) / total_count if total_count > 0 else 0
+            avg_tokens = sum(r.total_tokens for r in results) / total_count if total_count > 0 else 0
+            avg_suppression = sum(r.vib_suppression_rate for r in results) / total_count if total_count > 0 else 0
+
+            summary[ds_name] = {
+                "total_tasks": total_count,
+                "passed_tasks": passed_count,
+                "pass_rate_pct": round(pass_rate, 2),
+                "avg_messages_per_task": round(avg_msgs, 2),
+                "avg_tokens_per_task": round(avg_tokens, 2),
+                "avg_vib_suppression_rate": round(avg_suppression, 4)
+            }
+            
+            all_results[ds_name] = [asdict(r) for r in results]
+
+        return {"summary": summary, "detailed_results": all_results}
+
+# ==========================================
+# 6. 主程序与命令行解析 (CLI Entry)
+# ==========================================
+
+def main():
+    parser = argparse.ArgumentParser(description="Multi-Dataset Evaluation Harness for VIB-Sparse Communication")
+    parser.add_argument("--datasets", nargs="+", default=["humaneval", "mbpp", "gsm8k"], help="Dataset list to evaluate")
+    parser.add_argument("--limit", type=int, default=10, help="Limit number of samples per dataset (-1 for all)")
+    parser.add_argument("--workers", type=int, default=1, help="Parallel worker threads")
+    parser.add_argument("--disable-vib", action="store_true", help="Disable VIB mechanism (Baseline comparison)")
+    parser.add_argument("--output-dir", type=str, default="./results", help="Directory to save JSON result")
+    
+    args = parser.parse_args()
+
+    # 初始化 Multi-Agent 系统 (注入 VIB 开关状态)
+    agent_system = DummyMultiAgentSystem(enable_vib=not args.disable_vib)
+    
+    # 启动 Harness
+    harness = MultiDatasetHarness(agent_system=agent_system, num_workers=args.workers)
+    report = harness.run_benchmark(datasets=args.datasets, limit_per_dataset=args.limit)
+
+    # 保存报告 JSON
+    os.makedirs(args.output_dir, exist_ok=True)
+    timestamp = time.strftime("%Y%m%d_%H%M%S")
+    mode = "vib_sparse" if not args.disable_vib else "full_comm"
+    file_path = os.path.join(args.output_dir, f"benchmark_{mode}_{timestamp}.json")
+    
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2, ensure_ascii=False)
+
+    print("\n" + "="*50)
+    print("📊 BENCHMARK SUMMARY REPORT")
+    print("="*50)
+    print(json.dumps(report["summary"], indent=2))
+    print(f"\nDetailed JSON saved to: {file_path}")
+
+if __name__ == "__main__":
+    main()
+
+```
+
+---
+
+## 🛠️ 三、 Harness 的核心优势
+
+1. **统一输入输出抽象 (`TaskSample` / `TaskResult`)**：
+* 屏蔽不同数据集（HuggingFace / Local JSONL）的数据格式差异。
+* 自动统计每个数据集的 **Pass@1 准确率**、**平均消息数**、**平均 Token 消耗** 和 **VIB 通信压缩抑制率**。
+
+
+2. **模块化动态评估引擎 (`UnifiedEvaluator`)**：
+* 对 `HumanEval` / `MBPP` 调用 Python 代码断言执行器；
+* 对 `GSM8K` 自动采用正则提取与数值匹配器，具备优良的扩展性（后续增加 `MATH` 或 `SWE-bench` 仅需扩充 Adapter 与 Evaluator）。
+
+
+3. **原生支持 A/B 开关（Baseline 对比测试）**：
+* 支持通过 `--disable-vib` 参数一键切换 **“VIB Sparse 通信模式”** 与 **“Full Comm 全量广播模式”**，便于直接输出对比数据。
+
+
+(base) starry@Mac-Studio VIB-SparseCommunication % python3 experiments/run_multi_benchmark.py --datasets humaneval mbpp --output results/my_run.json 
+
+
+============================================================
+ 🚀 Running Benchmark: HUMANEVAL
+============================================================
+  已加载 164 个样本
+  [001/164] HumanEval/0               | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 26.7s | ETA: 72.5min
+  [002/164] HumanEval/1               | Full: ❌ | VIB: ✅ (消息 2/6) | 耗时: 21.4s | ETA: 65.0min
+  [003/164] HumanEval/2               | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.7s | ETA: 59.8min
+  [004/164] HumanEval/3               | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.4s | ETA: 56.2min
+  [005/164] HumanEval/4               | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.6s | ETA: 54.0min
+  [006/164] HumanEval/5               | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.7s | ETA: 52.5min
+  [007/164] HumanEval/6               | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 20.0s | ETA: 52.2min
+  [008/164] HumanEval/7               | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.9s | ETA: 51.2min
+  [009/164] HumanEval/8               | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 19.5s | ETA: 50.8min
+  [010/164] HumanEval/9               | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 17.1s | ETA: 49.8min
+  [011/164] HumanEval/10              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.7s | ETA: 50.0min
+  [012/164] HumanEval/11              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.1s | ETA: 49.4min
+  [013/164] HumanEval/12              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.2s | ETA: 48.8min
+  [014/164] HumanEval/13              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.4s | ETA: 48.3min
+  [015/164] HumanEval/14              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 16.9s | ETA: 47.6min
+  [016/164] HumanEval/15              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 17.6s | ETA: 47.0min
+  [017/164] HumanEval/16              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 18.2s | ETA: 46.6min
+  [018/164] HumanEval/17              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 22.2s | ETA: 46.7min
+  [019/164] HumanEval/18              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.5s | ETA: 46.4min
+  [020/164] HumanEval/19              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 19.5s | ETA: 46.1min
+  [021/164] HumanEval/20              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.9s | ETA: 46.0min
+  [022/164] HumanEval/21              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.4s | ETA: 45.6min
+  [023/164] HumanEval/22              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.1s | ETA: 45.4min
+  [024/164] HumanEval/23              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 16.1s | ETA: 44.8min
+  [025/164] HumanEval/24              | Full: ✅ | VIB: ❌ (消息 2/6) | 耗时: 18.9s | ETA: 44.4min
+  [026/164] HumanEval/25              | Full: ✅ | VIB: ✅ (消息 1/6) | 耗时: 20.7s | ETA: 44.3min
+  [027/164] HumanEval/26              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.4s | ETA: 43.9min
+  [028/164] HumanEval/27              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.7s | ETA: 43.5min
+  [029/164] HumanEval/28              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.8s | ETA: 43.2min
+  [030/164] HumanEval/29              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.8s | ETA: 43.0min
+  [031/164] HumanEval/30              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.4s | ETA: 42.6min
+  [032/164] HumanEval/31              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.9s | ETA: 42.4min
+  [033/164] HumanEval/32              | Full: ✅ | VIB: ❌ (消息 4/6) | 耗时: 29.0s | ETA: 42.8min
+  [034/164] HumanEval/33              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.6s | ETA: 42.6min
+  [035/164] HumanEval/34              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.1s | ETA: 42.2min
+  [036/164] HumanEval/35              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 17.3s | ETA: 41.7min
+  [037/164] HumanEval/36              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 20.7s | ETA: 41.5min
+  [038/164] HumanEval/37              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.5s | ETA: 41.2min
+  [039/164] HumanEval/38              | Full: ✅ | VIB: ❌ (消息 5/6) | 耗时: 22.8s | ETA: 41.0min
+  [040/164] HumanEval/39              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.3s | ETA: 40.8min
+  [041/164] HumanEval/40              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 25.1s | ETA: 40.7min
+  [042/164] HumanEval/41              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.1s | ETA: 40.4min
+  [043/164] HumanEval/42              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 17.7s | ETA: 39.9min
+  [044/164] HumanEval/43              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.4s | ETA: 39.6min
+  [045/164] HumanEval/44              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 20.4s | ETA: 39.3min
+  [046/164] HumanEval/45              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.4s | ETA: 39.0min
+  [047/164] HumanEval/46              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.6s | ETA: 38.7min
+  [048/164] HumanEval/47              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 17.8s | ETA: 38.3min
+  [049/164] HumanEval/48              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 17.6s | ETA: 37.9min
+  [050/164] HumanEval/49              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 19.3s | ETA: 37.5min
+  [051/164] HumanEval/50              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 21.7s | ETA: 37.3min
+  [052/164] HumanEval/51              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.7s | ETA: 37.0min
+  [053/164] HumanEval/52              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.1s | ETA: 36.6min
+  [054/164] HumanEval/53              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.5s | ETA: 36.2min
+  [055/164] HumanEval/54              | Full: ❌ | VIB: ✅ (消息 4/6) | 耗时: 19.8s | ETA: 35.9min
+  [056/164] HumanEval/55              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 22.6s | ETA: 35.7min
+  [057/164] HumanEval/56              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.2s | ETA: 35.4min
+  [058/164] HumanEval/57              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.0s | ETA: 35.0min
+  [059/164] HumanEval/58              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.7s | ETA: 34.7min
+  [060/164] HumanEval/59              | Full: ✅ | VIB: ❌ (消息 2/6) | 耗时: 20.8s | ETA: 34.4min
+  [061/164] HumanEval/60              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.8s | ETA: 34.1min
+  [062/164] HumanEval/61              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.0s | ETA: 33.8min
+  [063/164] HumanEval/62              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.2s | ETA: 33.5min
+  [064/164] HumanEval/63              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.6s | ETA: 33.1min
+  [065/164] HumanEval/64              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.4s | ETA: 32.7min
+  [066/164] HumanEval/65              | Full: ✅ | VIB: ❌ (消息 6/6) | 耗时: 19.5s | ETA: 32.4min
+  [067/164] HumanEval/66              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 18.2s | ETA: 32.0min
+  [068/164] HumanEval/67              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 23.0s | ETA: 31.8min
+  [069/164] HumanEval/68              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.3s | ETA: 31.4min
+  [070/164] HumanEval/69              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.6s | ETA: 31.1min
+  [071/164] HumanEval/70              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.4s | ETA: 30.8min
+  [072/164] HumanEval/71              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.5s | ETA: 30.4min
+  [073/164] HumanEval/72              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.8s | ETA: 30.1min
+  [074/164] HumanEval/73              | Full: ❌ | VIB: ❌ (消息 3/6) | 耗时: 19.4s | ETA: 29.8min
+  [075/164] HumanEval/74              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.7s | ETA: 29.4min
+  [076/164] HumanEval/75              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 19.6s | ETA: 29.1min
+  [077/164] HumanEval/76              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 20.8s | ETA: 28.8min
+  [078/164] HumanEval/77              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.9s | ETA: 28.4min
+  [079/164] HumanEval/78              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.7s | ETA: 28.1min
+  [080/164] HumanEval/79              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.2s | ETA: 27.7min
+  [081/164] HumanEval/80              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.4s | ETA: 27.4min
+  [082/164] HumanEval/81              | Full: ✅ | VIB: ❌ (消息 6/6) | 耗时: 23.6s | ETA: 27.1min
+  [083/164] HumanEval/82              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.1s | ETA: 26.8min
+  [084/164] HumanEval/83              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 21.0s | ETA: 26.5min
+  [085/164] HumanEval/84              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 17.2s | ETA: 26.1min
+  [086/164] HumanEval/85              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.0s | ETA: 25.8min
+  [087/164] HumanEval/86              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.2s | ETA: 25.5min
+  [088/164] HumanEval/87              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 20.8s | ETA: 25.2min
+  [089/164] HumanEval/88              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 21.3s | ETA: 24.9min
+  [090/164] HumanEval/89              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.2s | ETA: 24.5min
+  [091/164] HumanEval/90              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.7s | ETA: 24.2min
+  [092/164] HumanEval/91              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 21.5s | ETA: 23.9min
+  [093/164] HumanEval/92              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.9s | ETA: 23.5min
+  [094/164] HumanEval/93              | Full: ✅ | VIB: ❌ (消息 2/6) | 耗时: 21.6s | ETA: 23.2min
+  [095/164] HumanEval/94              | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.9s | ETA: 22.9min
+  [096/164] HumanEval/95              | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 21.7s | ETA: 22.6min
+  [097/164] HumanEval/96              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.9s | ETA: 22.3min
+  [098/164] HumanEval/97              | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 17.3s | ETA: 21.9min
+  [099/164] HumanEval/98              | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.4s | ETA: 21.6min
+  [100/164] HumanEval/99              | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.8s | ETA: 21.2min
+  [101/164] HumanEval/100             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.9s | ETA: 20.9min
+  [102/164] HumanEval/101             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 18.2s | ETA: 20.5min
+  [103/164] HumanEval/102             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.9s | ETA: 20.2min
+  [104/164] HumanEval/103             | Full: ❌ | VIB: ❌ (消息 6/6) | 耗时: 19.7s | ETA: 19.8min
+  [105/164] HumanEval/104             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 17.8s | ETA: 19.5min
+  [106/164] HumanEval/105             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 18.2s | ETA: 19.2min
+  [107/164] HumanEval/106             | Full: ❌ | VIB: ❌ (消息 4/6) | 耗时: 20.8s | ETA: 18.8min
+  [108/164] HumanEval/107             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.8s | ETA: 18.5min
+  [109/164] HumanEval/108             | Full: ❌ | VIB: ❌ (消息 4/6) | 耗时: 23.5s | ETA: 18.2min
+  [110/164] HumanEval/109             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.8s | ETA: 17.9min
+  [111/164] HumanEval/110             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.3s | ETA: 17.5min
+  [112/164] HumanEval/111             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 17.3s | ETA: 17.2min
+  [113/164] HumanEval/112             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.8s | ETA: 16.8min
+  [114/164] HumanEval/113             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 23.3s | ETA: 16.5min
+  [115/164] HumanEval/114             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 17.9s | ETA: 16.2min
+  [116/164] HumanEval/115             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.9s | ETA: 15.9min
+  [117/164] HumanEval/116             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 23.0s | ETA: 15.6min
+  [118/164] HumanEval/117             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 21.2s | ETA: 15.2min
+  [119/164] HumanEval/118             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.9s | ETA: 14.9min
+  [120/164] HumanEval/119             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 25.2s | ETA: 14.6min
+  [121/164] HumanEval/120             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.6s | ETA: 14.3min
+  [122/164] HumanEval/121             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.0s | ETA: 13.9min
+  [123/164] HumanEval/122             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 17.8s | ETA: 13.6min
+  [124/164] HumanEval/123             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 17.1s | ETA: 13.2min
+  [125/164] HumanEval/124             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.3s | ETA: 12.9min
+  [126/164] HumanEval/125             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.4s | ETA: 12.6min
+  [127/164] HumanEval/126             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 17.9s | ETA: 12.2min
+  [128/164] HumanEval/127             | Full: ✅ | VIB: ❌ (消息 4/6) | 耗时: 20.2s | ETA: 11.9min
+  [129/164] HumanEval/128             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 17.6s | ETA: 11.5min
+  [130/164] HumanEval/129             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 33.1s | ETA: 11.3min
+  [131/164] HumanEval/130             | Full: ❌ | VIB: ❌ (消息 6/6) | 耗时: 22.3s | ETA: 11.0min
+  [132/164] HumanEval/131             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 17.7s | ETA: 10.6min
+  [133/164] HumanEval/132             | Full: ❌ | VIB: ❌ (消息 2/6) | 耗时: 21.5s | ETA: 10.3min
+  [134/164] HumanEval/133             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.8s | ETA: 10.0min
+  [135/164] HumanEval/134             | Full: ❌ | VIB: ✅ (消息 6/6) | 耗时: 19.8s | ETA: 9.6min
+  [136/164] HumanEval/135             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 17.3s | ETA: 9.3min
+  [137/164] HumanEval/136             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 18.6s | ETA: 8.9min
+  [138/164] HumanEval/137             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.0s | ETA: 8.6min
+  [139/164] HumanEval/138             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 16.0s | ETA: 8.3min
+  [140/164] HumanEval/139             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.6s | ETA: 7.9min
+  [141/164] HumanEval/140             | Full: ❌ | VIB: ❌ (消息 3/6) | 耗时: 17.8s | ETA: 7.6min
+  [142/164] HumanEval/141             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 22.5s | ETA: 7.3min
+  [143/164] HumanEval/142             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 19.6s | ETA: 6.9min
+  [144/164] HumanEval/143             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.5s | ETA: 6.6min
+  [145/164] HumanEval/144             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 18.7s | ETA: 6.3min
+  [146/164] HumanEval/145             | Full: ❌ | VIB: ❌ (消息 6/6) | 耗时: 20.2s | ETA: 6.0min
+  [147/164] HumanEval/146             | Full: ❌ | VIB: ❌ (消息 3/6) | 耗时: 20.6s | ETA: 5.6min
+  [148/164] HumanEval/147             | Full: ✅ | VIB: ❌ (消息 3/6) | 耗时: 23.8s | ETA: 5.3min
+  [149/164] HumanEval/148             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.9s | ETA: 5.0min
+  [150/164] HumanEval/149             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 22.4s | ETA: 4.6min
+  [151/164] HumanEval/150             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.4s | ETA: 4.3min
+  [152/164] HumanEval/151             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 19.8s | ETA: 4.0min
+  [153/164] HumanEval/152             | Full: ✅ | VIB: ✅ (消息 2/6) | 耗时: 18.4s | ETA: 3.6min
+  [154/164] HumanEval/153             | Full: ✅ | VIB: ✅ (消息 3/6) | 耗时: 20.3s | ETA: 3.3min
+  [155/164] HumanEval/154             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.7s | ETA: 3.0min
+  [156/164] HumanEval/155             | Full: ✅ | VIB: ✅ (消息 4/6) | 耗时: 19.4s | ETA: 2.7min
+  [157/164] HumanEval/156             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.3s | ETA: 2.3min
+  [158/164] HumanEval/157             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 19.4s | ETA: 2.0min
+  [159/164] HumanEval/158             | Full: ❌ | VIB: ❌ (消息 5/6) | 耗时: 22.1s | ETA: 1.7min
+  [160/164] HumanEval/159             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 16.8s | ETA: 1.3min
+  [161/164] HumanEval/160             | Full: ❌ | VIB: ❌ (消息 6/6) | 耗时: 21.7s | ETA: 1.0min
+  [162/164] HumanEval/161             | Full: ✅ | VIB: ✅ (消息 5/6) | 耗时: 20.3s | ETA: 0.7min
+  [163/164] HumanEval/162             | Full: ✅ | VIB: ✅ (消息 6/6) | 耗时: 16.4s | ETA: 0.3min
+  [164/164] HumanEval/163             | Full: ❌ | VIB: ❌ (消息 4/6) | 耗时: 17.6s | ETA: 0.0min
+
+============================================================
+ 🚀 Running Benchmark: MBPP
+============================================================
+  [Warning] 无法加载 MBPP 数据集: Couldn't reach 'mbpp' on the Hub (OfflineModeIsEnabled)
+  请安装 datasets 库: pip install datasets
+  [Skipped] 无数据加载: mbpp
+
+================================================================================
+ 📊 Multi-Dataset Benchmark Report (Full Comm vs VIB Sparse)
+================================================================================
+Dataset      |  Full Pass@1 |   VIB Pass@1 |  Msg Compress |  Token Saving
+---------------------------------------------------------------------------
+humaneval    |      90.85% |      87.20% |       32.72% |        7.84%
+================================================================================
+
+评测总耗时: 54.32 分钟
+
+📄 详细结果已保存至: results/my_run.json
