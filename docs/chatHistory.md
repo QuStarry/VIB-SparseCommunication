@@ -7181,3 +7181,79 @@ humaneval    |      90.85% |      87.20% |       32.72% |        7.84%
 评测总耗时: 54.32 分钟
 
 📄 详细结果已保存至: results/my_run.json
+
+
+
+根据 chatHistory.md 6447-6991 的讨论，创建多数据集 Benchmark 评估框架 `run_multi_benchmark.py`：
+
+
+验证语法并测试导入：
+
+
+全部工作完成。让我确认现有测试仍然通过：
+
+
+所有测试通过。以下是创建的多数据集 Benchmark 评估框架总结：
+
+---
+
+## 新建文件：`experiments/run_multi_benchmark.py`
+
+### 架构设计
+```
+run_multi_benchmark.py (统一入口)
+├── TaskSample / TaskResult (标准化数据结构)
+├── Dataset Adapters
+│   ├── HumanEvalAdapter (164题，本地 JSONL.gz)
+│   ├── MBPPAdapter (Sanitized 427题，HuggingFace datasets)
+│   └── GSM8KAdapter (数学推理，HuggingFace datasets)
+├── Evaluators
+│   ├── CodeEvaluator (Python 子进程执行+断言)
+│   ├── MathEvaluator (数值提取+匹配)
+│   └── UnifiedEvaluator (统一调度)
+├── Agent System
+│   ├── create_code_agents() (Architect/Coder/Reviewer)
+│   └── create_math_agents() (Planner/Solver/Verifier)
+└── MultiDatasetHarness (对比评估引擎)
+```
+
+### 使用方式
+
+```bash
+# 单数据集快速测试
+python3 experiments/run_multi_benchmark.py --datasets humaneval --limit 10
+
+# 多数据集全量评估
+python3 experiments/run_multi_benchmark.py --datasets humaneval mbpp gsm8k
+
+# 指定输出路径
+python3 experiments/run_multi_benchmark.py --datasets humaneval mbpp --limit 50 --output results/my_run.json
+```
+
+### 核心特性
+- **A/B 对比**：每题同时运行 Full Comm + VIB Sparse，直接输出 Pass@1、消息压缩率、Token 节省率
+- **泛化设计**：不依赖硬编码关键词，使用文本长度泛化复杂度度量
+- **模块化扩展**：新增数据集只需添加 Adapter + Evaluator
+- **统一指标报告**：表格化对比所有数据集的关键指标
+
+### 输出报告示例
+```
+================================================================================
+ 📊 Multi-Dataset Benchmark Report (Full Comm vs VIB Sparse)
+================================================================================
+Dataset      |   Full Pass@1 |   VIB Pass@1 |  Msg Compress |  Token Saving
+-------------------------------------------------------------------------------
+HumanEval    |       89.02%  |       89.63%  |       29.88%  |        6.17%
+MBPP         |         ...   |         ...   |          ...  |           ...
+GSM8K        |         ...   |         ...   |          ...  |           ...
+================================================================================
+```
+
+Multi-Dataset Benchmark Report (Full Comm vs VIB Sparse)
+================================================================================
+Dataset      |  Full Pass@1 |   VIB Pass@1 |  Msg Compress |  Token Saving
+---------------------------------------------------------------------------
+humaneval    |      88.41% |      89.02% |       28.05% |        5.58%
+mbpp         |      89.49% |      89.88% |        1.43% |        0.23%
+gsm8k        |      95.15% |      94.16% |       45.73% |       11.08%
+上面是最新的全部数据集的结果，请结合结果和代码进行分析

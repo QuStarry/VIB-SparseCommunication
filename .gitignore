@@ -221,3 +221,6 @@ __marimo__/
 experiments/results/
 experiments/dataset/
 experiments/HumanEval.jsonl.gz
+
+
+.dbg/

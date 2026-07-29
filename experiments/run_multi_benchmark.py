@@ -11,8 +11,6 @@ Usage:
 
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-os.environ["HF_HUB_OFFLINE"] = "1"
-os.environ["TRANSFORMERS_OFFLINE"] = "1"
 
 import sys
 import re
@@ -32,6 +30,75 @@ from llm_client import DeepSeekClient
 from llm_agents import LLMAgent
 from vib_router import VIBSparseCommRouter, VIBEvaluationResult
 from workflow import VIBMultiAgentWorkflow
+
+
+def _is_hf_offline_mode() -> bool:
+    return (
+        os.environ.get("HF_HUB_OFFLINE") == "1"
+        or os.environ.get("HF_DATASETS_OFFLINE") == "1"
+        or os.environ.get("TRANSFORMERS_OFFLINE") == "1"
+    )
+
+#region debug-point dbg_helpers
+_DBG_RUN_ID = str(int(time.time() * 1000))
+
+def _dbg_get_url() -> Optional[str]:
+    url = os.environ.get("DEBUG_SERVER_URL")
+    if url:
+        return url
+
+    env_path = os.path.join(os.path.dirname(__file__), "..", ".dbg", "mbpp-eval-fails.env")
+    if not os.path.exists(env_path):
+        return None
+
+    try:
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("DEBUG_SERVER_URL="):
+                    return line.split("=", 1)[1].strip()
+    except Exception:
+        return None
+    return None
+
+def _dbg_get_session_id() -> Optional[str]:
+    sid = os.environ.get("DEBUG_SESSION_ID")
+    if sid:
+        return sid
+
+    env_path = os.path.join(os.path.dirname(__file__), "..", ".dbg", "mbpp-eval-fails.env")
+    if not os.path.exists(env_path):
+        return None
+
+    try:
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("DEBUG_SESSION_ID="):
+                    return line.split("=", 1)[1].strip()
+    except Exception:
+        return None
+    return None
+
+def _dbg_event(event_type: str, payload: Dict[str, Any]):
+    url = _dbg_get_url()
+    if not url:
+        return
+    sid = _dbg_get_session_id()
+
+    try:
+        import urllib.request
+        data = json.dumps({
+            "sessionId": sid,
+            "eventType": event_type,
+            "runId": _DBG_RUN_ID,
+            "ts": time.time(),
+            "payload": payload
+        }, ensure_ascii=False).encode("utf-8")
+        req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(req, timeout=1.0) as _:
+            pass
+    except Exception:
+        return
+#endregion debug-point dbg_helpers
 
 
 # ============================================
@@ -82,6 +149,10 @@ class HumanEvalAdapter(BaseDatasetAdapter):
 
     def load(self, limit: int = -1) -> List[TaskSample]:
         if not os.path.exists(self.DATASET_PATH):
+            if _is_hf_offline_mode():
+                print(f"  [Warning] 离线模式下未找到 HumanEval 数据集: {self.DATASET_PATH}")
+                print("  请先手动放置 HumanEval.jsonl.gz，或用 --online 运行一次以允许下载")
+                return []
             print(f"  📥 下载 HumanEval 数据集...")
             import urllib.request
             urllib.request.urlretrieve(self.HUMANEVAL_URL, self.DATASET_PATH)
@@ -110,9 +181,16 @@ class MBPPAdapter(BaseDatasetAdapter):
         try:
             from datasets import load_dataset
             ds = load_dataset("mbpp", "sanitized", split="test")
+        except ImportError:
+            print("  [Warning] 无法加载 MBPP 数据集: 缺少 datasets 依赖")
+            print("  请安装依赖: pip install -r requirements.txt")
+            return []
         except Exception as e:
             print(f"  [Warning] 无法加载 MBPP 数据集: {e}")
-            print(f"  请安装 datasets 库: pip install datasets")
+            if "OfflineModeIsEnabled" in str(e) or _is_hf_offline_mode():
+                print("  当前为离线模式且本地未命中缓存；请先用 --online 运行一次以下载缓存")
+            else:
+                print("  请检查网络/代理，或确认 HuggingFace Hub 可访问")
             return []
 
         samples = []
@@ -123,14 +201,47 @@ class MBPPAdapter(BaseDatasetAdapter):
             if "def " in code:
                 entry_point = code.split("def ")[1].split("(")[0].strip()
 
+            signature_line = ""
+            m = re.search(r"def\\s+(\\w+)\\s*\\(([^)]*)\\)\\s*:", code)
+            if m:
+                signature_line = f"def {m.group(1)}({m.group(2)}):"
+
+            test_imports = item.get("test_imports", []) or []
+            test_list = item.get("test_list", []) or []
+            test_cases = [*test_imports, *test_list]
+
+            prompt_text = "\n".join([
+                "请根据题目描述实现函数，并确保函数名与签名严格匹配，能通过单元测试。",
+                "",
+                "【函数签名】",
+                signature_line or (f"def {entry_point}(...):" if entry_point else "def <function>(...):"),
+                "",
+                "【题目】",
+                item.get("prompt", ""),
+                "",
+                "【单元测试（供参考，不要改动测试的函数名）】",
+                "\n".join(test_list[:5])
+            ]).strip()
+
             samples.append(TaskSample(
                 task_id=f"MBPP/{item['task_id']}",
                 dataset_name="MBPP",
-                prompt=f'"""\n{item["prompt"]}\n"""\n',
+                prompt=prompt_text,
                 entry_point=entry_point,
-                test_cases=item.get("test_list", []),
+                test_cases=test_cases,
                 reference_answer=code
             ))
+
+            _dbg_event("dataset_sample", {
+                "dataset": "MBPP",
+                "task_id": f"MBPP/{item.get('task_id')}",
+                "prompt_head": prompt_text[:200],
+                "entry_point": entry_point,
+                "test_imports": test_imports,
+                "test_case_head": (test_list or [""])[0][:200],
+                "signature_line": signature_line
+            })
+
             if 0 < limit <= len(samples):
                 break
         return samples
@@ -143,9 +254,16 @@ class GSM8KAdapter(BaseDatasetAdapter):
         try:
             from datasets import load_dataset
             ds = load_dataset("gsm8k", "main", split="test")
+        except ImportError:
+            print("  [Warning] 无法加载 GSM8K 数据集: 缺少 datasets 依赖")
+            print("  请安装依赖: pip install -r requirements.txt")
+            return []
         except Exception as e:
             print(f"  [Warning] 无法加载 GSM8K 数据集: {e}")
-            print(f"  请安装 datasets 库: pip install datasets")
+            if "OfflineModeIsEnabled" in str(e) or _is_hf_offline_mode():
+                print("  当前为离线模式且本地未命中缓存；请先用 --online 运行一次以下载缓存")
+            else:
+                print("  请检查网络/代理，或确认 HuggingFace Hub 可访问")
             return []
 
         samples = []
@@ -188,7 +306,7 @@ class DatasetFactory:
 class CodeEvaluator:
     """Python 代码执行评估 (HumanEval & MBPP)"""
     @staticmethod
-    def _unsafe_execute(code: str, test_script: str, entry_point: str, result_queue):
+    def _unsafe_execute(code: str, test_script: str, entry_point: str, result_queue, dbg_meta: Optional[Dict[str, Any]] = None):
         try:
             if entry_point:
                 full_code = f"{code}\n\n{test_script}\n\ncheck({entry_point})"
@@ -198,16 +316,30 @@ class CodeEvaluator:
             exec(full_code, exec_globals)
             result_queue.put(True)
         except Exception:
+            #region debug-point code_exec_error
+            try:
+                import traceback
+                _dbg_event("code_exec_error", {
+                    "meta": dbg_meta or {},
+                    "entry_point": entry_point,
+                    "code_head": (code or "")[:400],
+                    "code_tail": (code or "")[-400:],
+                    "test_head": (test_script or "")[:400],
+                    "traceback": traceback.format_exc(limit=20)
+                })
+            except Exception:
+                pass
+            #endregion debug-point code_exec_error
             result_queue.put(False)
 
     @classmethod
     def evaluate(cls, code_str: str, test_cases: List[str], entry_point: str = None,
-                 timeout: float = 5.0) -> bool:
+                 timeout: float = 5.0, dbg_meta: Optional[Dict[str, Any]] = None) -> bool:
         test_script = "\n".join(test_cases)
         result_queue = multiprocessing.Queue()
         p = multiprocessing.Process(
             target=cls._unsafe_execute,
-            args=(code_str, test_script, entry_point, result_queue)
+            args=(code_str, test_script, entry_point, result_queue, dbg_meta)
         )
         p.start()
         p.join(timeout)
@@ -236,12 +368,21 @@ class MathEvaluator:
 class UnifiedEvaluator:
     @classmethod
     def evaluate(cls, sample: TaskSample, model_output: str) -> bool:
-        if sample.dataset_name in ("HumanEval", "MBPP"):
+        if sample.dataset_name == "HumanEval":
             if not sample.test_cases:
                 return False
             return CodeEvaluator.evaluate(
                 model_output, sample.test_cases,
-                entry_point=sample.entry_point
+                entry_point=sample.entry_point,
+                dbg_meta={"task_id": sample.task_id, "dataset": sample.dataset_name}
+            )
+        if sample.dataset_name == "MBPP":
+            if not sample.test_cases:
+                return False
+            return CodeEvaluator.evaluate(
+                model_output, sample.test_cases,
+                entry_point=None,
+                dbg_meta={"task_id": sample.task_id, "dataset": sample.dataset_name}
             )
         elif sample.dataset_name == "GSM8K":
             if not sample.reference_answer:
@@ -522,9 +663,19 @@ def main():
                         help="每个数据集最大样本数 (-1=全量)")
     parser.add_argument("--max-steps", type=int, default=2,
                         help="Agent 最大协作轮数")
+    parser.add_argument("--online", action="store_true",
+                        help="允许联网拉取/更新 HuggingFace 数据集缓存（默认离线）")
     parser.add_argument("--output", type=str, default="results/multi_benchmark.json",
                         help="输出 JSON 文件路径")
     args = parser.parse_args()
+
+    offline = not args.online
+    os.environ["HF_HUB_OFFLINE"] = "1" if offline else "0"
+    os.environ["HF_DATASETS_OFFLINE"] = "1" if offline else "0"
+    os.environ["TRANSFORMERS_OFFLINE"] = "1" if offline else "0"
+
+    mode_text = "OFFLINE" if offline else "ONLINE"
+    print(f"[HF Mode] {mode_text} (HF_HUB_OFFLINE={os.environ['HF_HUB_OFFLINE']}, HF_DATASETS_OFFLINE={os.environ['HF_DATASETS_OFFLINE']})")
 
     api_key = os.environ.get("DEEPSEEK_API_KEY")
     if not api_key:
