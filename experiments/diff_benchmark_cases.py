@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Re-run selected benchmark cases and export Full/VIB differential traces.
+Prefer same-run trace_results for differential analysis, and only re-run
+missing cases when trace data is unavailable.
 """
 
 import argparse
@@ -23,8 +24,8 @@ def count_reasoning_markers(history: list[str]) -> int:
 
 
 def infer_root_cause(case: dict) -> str:
-    full_messages = case["full"]["workflow_stats"]["total_approved"]
-    vib_messages = case["vib"]["workflow_stats"]["total_approved"]
+    full_messages = case["full"]["messages"]
+    vib_messages = case["vib"]["messages"]
     full_reasoning = count_reasoning_markers(case["full"]["history"])
     vib_reasoning = count_reasoning_markers(case["vib"]["history"])
 
@@ -35,14 +36,15 @@ def infer_root_cause(case: dict) -> str:
     return "两分支通信量接近，失败更像最终答案生成波动，而不是单纯由剪枝导致。"
 
 
-def build_case_report(task_id: str, sample, rerun: dict) -> dict:
+def build_case_report_from_rerun(task_id: str, sample, rerun: dict) -> dict:
     full_output = rerun["full"]["output"]
     vib_output = rerun["vib"]["output"]
     reference = sample.reference_answer or ""
-    return {
+    case = {
         "task_id": task_id,
         "prompt": sample.prompt,
         "reference_answer": reference,
+        "trace_source": "rerun",
         "full": {
             "passed": rerun["task_result"].full_passed,
             "messages": rerun["task_result"].full_messages,
@@ -61,8 +63,44 @@ def build_case_report(task_id: str, sample, rerun: dict) -> dict:
             "output_last_number": extract_last_number(vib_output),
             "history": rerun["vib"]["history"],
         },
-        "inferred_root_cause": infer_root_cause(rerun),
     }
+    case["inferred_root_cause"] = infer_root_cause(case)
+    return case
+
+
+def build_case_report_from_trace(trace_case: dict) -> dict:
+    full = trace_case["full"]
+    vib = trace_case["vib"]
+    case = {
+        "task_id": trace_case["task_id"],
+        "prompt": full["prompt"] if full else (vib["prompt"] if vib else ""),
+        "reference_answer": full["reference_answer"] if full else (vib["reference_answer"] if vib else ""),
+        "trace_source": "same_run_trace",
+        "full": {
+            "passed": full["passed"],
+            "messages": full["workflow_stats"]["total_approved"],
+            "prompt_tokens": full["token_stats"]["total_prompt_tokens"],
+            "completion_tokens": full["token_stats"]["total_completion_tokens"],
+            "output": full["output"],
+            "output_last_number": extract_last_number(full["output"]),
+            "history": full["history"],
+        },
+        "vib": {
+            "passed": vib["passed"],
+            "messages": vib["workflow_stats"]["total_approved"],
+            "prompt_tokens": vib["token_stats"]["total_prompt_tokens"],
+            "completion_tokens": vib["token_stats"]["total_completion_tokens"],
+            "output": vib["output"],
+            "output_last_number": extract_last_number(vib["output"]),
+            "history": vib["history"],
+        },
+    }
+    case["inferred_root_cause"] = infer_root_cause(case)
+    return case
+
+
+def index_trace_rows(trace_rows: list[dict]) -> dict:
+    return {row["task_id"]: row for row in trace_rows if row.get("full") and row.get("vib")}
 
 
 def render_markdown(dataset: str, cases: list[dict], source_json: str) -> str:
@@ -71,7 +109,7 @@ def render_markdown(dataset: str, cases: list[dict], source_json: str) -> str:
         "",
         f"Source benchmark: `{source_json}`",
         "",
-        "以下样例来自 `Full 成功但 VIB 失败` 的差分重跑。重点看三件事：",
+        "以下样例优先来自同次 benchmark 的 `trace_results`；仅在 trace 缺失时才会回退到事后重跑。重点看三件事：",
         "- VIB 是否明显减少了消息数",
         "- VIB history 是否少了关键中间推理",
         "- 最终输出的数字是否偏离参考答案",
@@ -82,6 +120,7 @@ def render_markdown(dataset: str, cases: list[dict], source_json: str) -> str:
         lines.extend([
             f"## {case['task_id']}",
             "",
+            f"- Trace 来源: `{case['trace_source']}`",
             f"- 参考答案: `{case['reference_answer']}`",
             f"- Full: `passed={case['full']['passed']}`，`messages={case['full']['messages']}`，`prompt={case['full']['prompt_tokens']}`，`completion={case['full']['completion_tokens']}`，`last_number={case['full']['output_last_number']}`",
             f"- VIB: `passed={case['vib']['passed']}`，`messages={case['vib']['messages']}`，`prompt={case['vib']['prompt_tokens']}`，`completion={case['vib']['completion_tokens']}`，`last_number={case['vib']['output_last_number']}`",
@@ -112,7 +151,7 @@ def render_markdown(dataset: str, cases: list[dict], source_json: str) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Re-run benchmark disagreement cases")
+    parser = argparse.ArgumentParser(description="Analyze benchmark disagreement cases")
     parser.add_argument("--input", default="results/multi_benchmark.json", help="输入 benchmark JSON")
     parser.add_argument("--dataset", default="gsm8k", help="数据集名")
     parser.add_argument("--mode", default="full_only", choices=["full_only", "vib_only"], help="筛选模式")
@@ -124,48 +163,60 @@ def main():
 
     report = json.loads(Path(args.input).read_text(encoding="utf-8"))
     rows = report["detailed_results"][args.dataset]
+    trace_map = index_trace_rows(report.get("trace_results", {}).get(args.dataset, []))
 
     if args.mode == "full_only":
         selected_ids = [r["task_id"] for r in rows if r["full_passed"] and not r["vib_passed"]][:args.limit_cases]
     else:
         selected_ids = [r["task_id"] for r in rows if r["vib_passed"] and not r["full_passed"]][:args.limit_cases]
-
-    adapter = DatasetFactory.get_adapter(args.dataset)
-    all_samples = adapter.load(limit=-1)
-    sample_map = {sample.task_id: sample for sample in all_samples}
-
-    api_key = resolve_deepseek_api_key()
-    if not api_key:
-        raise SystemExit("Error: 请设置 DEEPSEEK_API_KEY 环境变量")
-
-    harness = MultiDatasetHarness(api_key=api_key, max_steps=2, workers=args.workers)
     cases = []
+    missing_ids = []
 
-    if harness.workers == 1:
-        for task_id in selected_ids:
-            sample = sample_map[task_id]
-            rerun = harness.run_single_task_with_trace(sample)
-            cases.append(build_case_report(task_id, sample, rerun))
-    else:
-        from concurrent.futures import ThreadPoolExecutor, as_completed
+    for task_id in selected_ids:
+        trace_case = trace_map.get(task_id)
+        if trace_case:
+            cases.append(build_case_report_from_trace(trace_case))
+        else:
+            missing_ids.append(task_id)
 
-        with ThreadPoolExecutor(max_workers=harness.workers) as executor:
-            future_map = {
-                executor.submit(harness.run_single_task_with_trace, sample_map[task_id]): task_id
-                for task_id in selected_ids
-            }
-            for future in as_completed(future_map):
-                task_id = future_map[future]
+    if missing_ids:
+        adapter = DatasetFactory.get_adapter(args.dataset)
+        all_samples = adapter.load(limit=-1)
+        sample_map = {sample.task_id: sample for sample in all_samples}
+
+        api_key = resolve_deepseek_api_key()
+        if not api_key:
+            raise SystemExit("Error: 缺少同次运行 trace，且无法获取 DEEPSEEK_API_KEY 进行补充重跑")
+
+        harness = MultiDatasetHarness(api_key=api_key, max_steps=2, workers=args.workers)
+
+        if harness.workers == 1:
+            for task_id in missing_ids:
                 sample = sample_map[task_id]
-                rerun = future.result()
-                cases.append(build_case_report(task_id, sample, rerun))
+                rerun = harness.run_single_task_with_trace(sample)
+                cases.append(build_case_report_from_rerun(task_id, sample, rerun))
+        else:
+            from concurrent.futures import ThreadPoolExecutor, as_completed
 
-        cases.sort(key=lambda item: selected_ids.index(item["task_id"]))
+            with ThreadPoolExecutor(max_workers=harness.workers) as executor:
+                future_map = {
+                    executor.submit(harness.run_single_task_with_trace, sample_map[task_id]): task_id
+                    for task_id in missing_ids
+                }
+                for future in as_completed(future_map):
+                    task_id = future_map[future]
+                    sample = sample_map[task_id]
+                    rerun = future.result()
+                    cases.append(build_case_report_from_rerun(task_id, sample, rerun))
+
+    cases.sort(key=lambda item: selected_ids.index(item["task_id"]))
 
     payload = {
         "dataset": args.dataset,
         "mode": args.mode,
         "selected_ids": selected_ids,
+        "used_same_run_trace": len(cases) - len(missing_ids),
+        "rerun_fallback_count": len(missing_ids),
         "cases": cases,
     }
 

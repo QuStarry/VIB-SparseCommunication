@@ -56,7 +56,45 @@ def analyze_dataset(dataset_name: str, rows: list, summary_metrics: dict) -> dic
     return analysis
 
 
-def render_markdown(result_path: Path, analyses: list) -> str:
+def index_trace_results(trace_rows: list) -> dict:
+    return {row["task_id"]: row for row in trace_rows}
+
+
+def collect_trace_examples(dataset_name: str, rows: list, trace_rows: list) -> dict:
+    trace_map = index_trace_results(trace_rows)
+    full_only_examples = []
+    vib_only_examples = []
+
+    for row in rows:
+        trace = trace_map.get(row["task_id"])
+        if not trace or not trace.get("full") or not trace.get("vib"):
+            continue
+        if row["full_passed"] and not row["vib_passed"]:
+            full_only_examples.append({
+                "task_id": row["task_id"],
+                "full_messages": trace["full"]["workflow_stats"]["total_approved"],
+                "vib_messages": trace["vib"]["workflow_stats"]["total_approved"],
+                "full_output": trace["full"]["output"],
+                "vib_output": trace["vib"]["output"],
+            })
+        elif row["vib_passed"] and not row["full_passed"]:
+            vib_only_examples.append({
+                "task_id": row["task_id"],
+                "full_messages": trace["full"]["workflow_stats"]["total_approved"],
+                "vib_messages": trace["vib"]["workflow_stats"]["total_approved"],
+                "full_output": trace["full"]["output"],
+                "vib_output": trace["vib"]["output"],
+            })
+
+    return {
+        "dataset": dataset_name,
+        "trace_coverage": round(len(trace_map) / max(1, len(rows)), 4),
+        "full_only_trace_examples": full_only_examples[:3],
+        "vib_only_trace_examples": vib_only_examples[:3],
+    }
+
+
+def render_markdown(result_path: Path, analyses: list, trace_context: dict) -> str:
     lines = [
         "# Multi-Benchmark Analysis",
         "",
@@ -68,13 +106,23 @@ def render_markdown(result_path: Path, analyses: list) -> str:
         "- `full_only_count` 表示 `Full 成功但 VIB 失败`；`vib_only_count` 表示 `VIB 成功但 Full 失败`。",
         "- `mcnemar_pvalue` 越小，说明两种设置在同一批任务上的差异越不像随机波动。",
         "",
-        "## 数据集逐项分析",
+        "## Trace 可用性",
         "",
     ]
 
+    if trace_context:
+        for dataset_name, trace_info in trace_context.items():
+            lines.append(
+                f"- `{dataset_name}`: 同次运行 trace 覆盖率 `{trace_info['trace_coverage']:.2%}`"
+            )
+    else:
+        lines.append("- 当前输入结果不包含 `trace_results`，后续差分仍需依赖事后重跑。")
+
+    lines.extend(["", "## 数据集逐项分析", ""])
     for item in analyses:
         lines.extend([
             f"### {item['dataset']}",
+            "",
             "",
             f"- `Pass@1` 变化: `{item['pass_delta_pp']:+.2f} pp`",
             f"- 配对胜负: `VIB only = {item['vib_only_count']}`，`Full only = {item['full_only_count']}`，净增益 `{item['net_win_count']:+d}` 题",
@@ -93,6 +141,22 @@ def render_markdown(result_path: Path, analyses: list) -> str:
             lines.append(f"- `Full` 优势样例: `{', '.join(item['full_only_examples'])}`")
         if item["vib_only_examples"]:
             lines.append(f"- `VIB` 优势样例: `{', '.join(item['vib_only_examples'])}`")
+
+        trace_info = trace_context.get(item["dataset"], {})
+        if trace_info.get("full_only_trace_examples"):
+            lines.append("- 同次 trace 的 `Full only` 样例:")
+            for ex in trace_info["full_only_trace_examples"]:
+                lines.append(
+                    f"  - `{ex['task_id']}`: `full_msgs={ex['full_messages']}`，`vib_msgs={ex['vib_messages']}`，"
+                    f"`full_out={ex['full_output']}`，`vib_out={ex['vib_output']}`"
+                )
+        if trace_info.get("vib_only_trace_examples"):
+            lines.append("- 同次 trace 的 `VIB only` 样例:")
+            for ex in trace_info["vib_only_trace_examples"]:
+                lines.append(
+                    f"  - `{ex['task_id']}`: `full_msgs={ex['full_messages']}`，`vib_msgs={ex['vib_messages']}`，"
+                    f"`full_out={ex['full_output']}`，`vib_out={ex['vib_output']}`"
+                )
 
         lines.append("")
 
@@ -133,11 +197,15 @@ def main():
 
     report = json.loads(result_path.read_text(encoding="utf-8"))
     analyses = []
+    trace_context = {}
     for dataset_name, rows in report.get("detailed_results", {}).items():
         summary_metrics = report.get("summary", {}).get(dataset_name, {})
         analyses.append(analyze_dataset(dataset_name, rows, summary_metrics))
+        trace_rows = report.get("trace_results", {}).get(dataset_name, [])
+        if trace_rows:
+            trace_context[dataset_name] = collect_trace_examples(dataset_name, rows, trace_rows)
 
-    markdown = render_markdown(result_path, analyses)
+    markdown = render_markdown(result_path, analyses, trace_context)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(markdown, encoding="utf-8")
     print(f"已生成分析报告: {output_path}")

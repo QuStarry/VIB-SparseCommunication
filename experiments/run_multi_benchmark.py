@@ -20,6 +20,7 @@ import gzip
 import argparse
 import multiprocessing
 import threading
+from decimal import Decimal, InvalidOperation
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field, asdict
@@ -360,14 +361,22 @@ class CodeEvaluator:
 class MathEvaluator:
     """GSM8K 数值匹配评估"""
     @staticmethod
+    def _extract_last_number(text: str) -> Optional[str]:
+        matches = re.findall(r"[-+]?\d[\d,]*(?:\.\d+)?|[-+]?\.\d+", text or "")
+        if not matches:
+            return None
+        return matches[-1].replace(",", "").strip().rstrip(".")
+
+    @staticmethod
     def evaluate(prediction: str, reference: str) -> bool:
-        # 提取预测中最后一个数字
-        extracted = re.findall(r"[-+]?\d*\.\d+|\d+", prediction)
-        if not extracted:
+        pred_number = MathEvaluator._extract_last_number(prediction)
+        ref_number = MathEvaluator._extract_last_number(reference)
+        if pred_number is None or ref_number is None:
             return False
-        last_pred = extracted[-1].strip().rstrip(".")
-        ref = reference.strip().replace(",", "")
-        return last_pred == ref
+        try:
+            return Decimal(pred_number) == Decimal(ref_number)
+        except InvalidOperation:
+            return pred_number == ref_number
 
 
 class UnifiedEvaluator:
@@ -522,6 +531,26 @@ class MultiDatasetHarness:
             "token_stats": token_stats
         }
 
+    def _build_trace_payload(self, sample: TaskSample, variant_name: str, variant_result: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+        if variant_result is None:
+            return None
+        token_stats = variant_result["token_stats"]
+        return {
+            "variant": variant_name,
+            "task_id": sample.task_id,
+            "dataset_name": sample.dataset_name,
+            "prompt": sample.prompt,
+            "reference_answer": sample.reference_answer,
+            "entry_point": sample.entry_point,
+            "test_cases": sample.test_cases,
+            "metadata": sample.metadata,
+            "passed": variant_result["passed"],
+            "history": variant_result["history"],
+            "output": variant_result["output"],
+            "workflow_stats": variant_result["workflow_stats"],
+            "token_stats": token_stats,
+        }
+
     def run_single_task_with_trace(self, sample: TaskSample) -> Dict[str, Any]:
         """执行单题并保留 Full/VIB 双分支 trace，用于差分归因分析。"""
         task_start = time.time()
@@ -594,6 +623,7 @@ class MultiDatasetHarness:
     def run_benchmark(self, datasets: List[str], limit: int = -1) -> Dict[str, Any]:
         """运行多数据集 Benchmark 并输出对比报告"""
         all_results = {}
+        trace_results = {}
         summary = {}
         global_start = time.time()
 
@@ -616,6 +646,7 @@ class MultiDatasetHarness:
             print(f"  已加载 {total} 个样本")
 
             results: List[Optional[TaskResult]] = [None] * total
+            traces: List[Optional[Dict[str, Any]]] = [None] * total
             stats = {
                 "full_passed": 0, "vib_passed": 0,
                 "full_tokens": 0, "vib_tokens": 0,
@@ -629,8 +660,17 @@ class MultiDatasetHarness:
 
             dataset_start = time.time()
 
-            def consume_result(result_index: int, res: TaskResult, done_count: int):
+            def consume_result(result_index: int, task_bundle: Dict[str, Any], done_count: int):
+                res = task_bundle["task_result"]
                 results[result_index] = res
+                sample = samples[result_index]
+                traces[result_index] = {
+                    "task_id": sample.task_id,
+                    "dataset_name": sample.dataset_name,
+                    "full": self._build_trace_payload(sample, "full", task_bundle["full"]),
+                    "vib": self._build_trace_payload(sample, "vib", task_bundle["vib"]),
+                    "error_msg": res.error_msg
+                }
 
                 # 累计统计
                 stats["full_passed"] += int(res.full_passed)
@@ -668,20 +708,20 @@ class MultiDatasetHarness:
 
             if self.workers == 1:
                 for idx, sample in enumerate(samples, start=1):
-                    res = self._run_single_task(sample)
-                    consume_result(idx - 1, res, idx)
+                    task_bundle = self.run_single_task_with_trace(sample)
+                    consume_result(idx - 1, task_bundle, idx)
             else:
                 with ThreadPoolExecutor(max_workers=self.workers) as executor:
                     future_map = {
-                        executor.submit(self._run_single_task, sample): idx
+                        executor.submit(self.run_single_task_with_trace, sample): idx
                         for idx, sample in enumerate(samples)
                     }
                     done_count = 0
                     for future in as_completed(future_map):
                         done_count += 1
                         result_index = future_map[future]
-                        res = future.result()
-                        consume_result(result_index, res, done_count)
+                        task_bundle = future.result()
+                        consume_result(result_index, task_bundle, done_count)
 
             # 汇总该数据集指标
             full_rate = (stats["full_passed"] / total) * 100
@@ -716,6 +756,7 @@ class MultiDatasetHarness:
                 "both_fail_count": stats["both_fail"]
             }
             all_results[ds_name] = [asdict(r) for r in results if r is not None]
+            trace_results[ds_name] = [trace for trace in traces if trace is not None]
 
         # 打印总报告
         self._print_summary_report(summary)
@@ -723,7 +764,11 @@ class MultiDatasetHarness:
         total_time = (time.time() - global_start) / 60.0
         print(f"\n评测总耗时: {total_time:.2f} 分钟")
 
-        return {"summary": summary, "detailed_results": all_results}
+        return {
+            "summary": summary,
+            "detailed_results": all_results,
+            "trace_results": trace_results
+        }
 
     def _print_summary_report(self, summary: Dict[str, Any]):
         """打印多数据集对比报告"""
