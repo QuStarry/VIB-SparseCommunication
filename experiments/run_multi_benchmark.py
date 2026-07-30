@@ -17,16 +17,17 @@ import re
 import json
 import time
 import gzip
-import math
 import argparse
 import multiprocessing
+import threading
 from abc import ABC, abstractmethod
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field, asdict
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from llm_client import DeepSeekClient
+from llm_client import DeepSeekClient, resolve_deepseek_api_key
 from llm_agents import LLMAgent
 from vib_router import VIBSparseCommRouter, VIBEvaluationResult
 from workflow import VIBMultiAgentWorkflow
@@ -129,6 +130,10 @@ class TaskResult:
     full_tokens: int
     vib_tokens: int
     execution_time: float
+    full_prompt_tokens: int = 0
+    full_completion_tokens: int = 0
+    vib_prompt_tokens: int = 0
+    vib_completion_tokens: int = 0
     error_msg: Optional[str] = None
 
 
@@ -480,72 +485,94 @@ def generate_final_answer(client: DeepSeekClient, prompt: str, history: list) ->
 # ============================================
 
 class MultiDatasetHarness:
-    def __init__(self, api_key: str, max_steps: int = 2):
+    def __init__(self, api_key: str, max_steps: int = 2, workers: int = 1):
         self.api_key = api_key
         self.max_steps = max_steps
+        self.workers = max(1, workers)
+        self._print_lock = threading.Lock()
 
-    def _run_single_task(self, sample: TaskSample) -> TaskResult:
-        """对单个任务执行 Full Comm + VIB Sparse 对比评估"""
+    def _select_task_components(self, sample: TaskSample) -> Tuple[Any, Any]:
+        if sample.dataset_name in ("HumanEval", "MBPP"):
+            return create_code_agents, generate_final_code
+        return create_math_agents, generate_final_answer
+
+    def _run_variant(
+        self,
+        sample: TaskSample,
+        create_agents_fn,
+        generate_fn,
+        router
+    ) -> Dict[str, Any]:
+        client = DeepSeekClient(api_key=self.api_key, max_tokens=256)
+        agents = create_agents_fn(client)
+        workflow = VIBMultiAgentWorkflow(
+            agents=[a.to_agent_dict() for a in agents],
+            vib_router=router,
+            max_steps=self.max_steps
+        )
+        workflow_result = workflow.run(goal=sample.prompt, verbose=False)
+        final_output = generate_fn(client, sample.prompt, workflow_result["history"])
+        passed = UnifiedEvaluator.evaluate(sample, final_output)
+        token_stats = client.get_token_stats()
+        return {
+            "history": workflow_result["history"],
+            "workflow_stats": workflow.stats,
+            "output": final_output,
+            "passed": passed,
+            "token_stats": token_stats
+        }
+
+    def run_single_task_with_trace(self, sample: TaskSample) -> Dict[str, Any]:
+        """执行单题并保留 Full/VIB 双分支 trace，用于差分归因分析。"""
         task_start = time.time()
 
         try:
-            # 选择 Agent 类型
-            if sample.dataset_name in ("HumanEval", "MBPP"):
-                create_agents_fn = create_code_agents
-                generate_fn = generate_final_code
-            else:
-                create_agents_fn = create_math_agents
-                generate_fn = generate_final_answer
+            create_agents_fn, generate_fn = self._select_task_components(sample)
 
-            # ---- Full Comm (对照组) ----
-            client_full = DeepSeekClient(api_key=self.api_key, max_tokens=256)
-            agents_full = create_agents_fn(client_full)
-            workflow_full = VIBMultiAgentWorkflow(
-                agents=[a.to_agent_dict() for a in agents_full],
-                vib_router=BypassVIBRouter(),
-                max_steps=self.max_steps
+            full_result = self._run_variant(
+                sample=sample,
+                create_agents_fn=create_agents_fn,
+                generate_fn=generate_fn,
+                router=BypassVIBRouter()
             )
-            res_full = workflow_full.run(goal=sample.prompt, verbose=False)
-            output_full = generate_fn(client_full, sample.prompt, res_full["history"])
-            full_passed = UnifiedEvaluator.evaluate(sample, output_full)
-            full_tokens = client_full.get_token_stats()["total_tokens"]
-            full_msgs = workflow_full.stats["total_approved"]
 
-            # ---- VIB Sparse (我们的方法) ----
-            client_vib = DeepSeekClient(api_key=self.api_key, max_tokens=256)
-            agents_vib = create_agents_fn(client_vib)
-            router_vib = VIBSparseCommRouter(
-                beta_0=3.2, lambda_decay=0.08, temp_tau=0.5,
-                gamma=-0.4, adaptive=True, alpha=0.35, tau_min=-1.0
+            vib_result = self._run_variant(
+                sample=sample,
+                create_agents_fn=create_agents_fn,
+                generate_fn=generate_fn,
+                router=VIBSparseCommRouter(
+                    beta_0=3.2, lambda_decay=0.08, temp_tau=0.5,
+                    gamma=-0.4, adaptive=True, alpha=0.35, tau_min=-1.0
+                )
             )
-            workflow_vib = VIBMultiAgentWorkflow(
-                agents=[a.to_agent_dict() for a in agents_vib],
-                vib_router=router_vib,
-                max_steps=self.max_steps
-            )
-            res_vib = workflow_vib.run(goal=sample.prompt, verbose=False)
-            output_vib = generate_fn(client_vib, sample.prompt, res_vib["history"])
-            vib_passed = UnifiedEvaluator.evaluate(sample, output_vib)
-            vib_tokens = client_vib.get_token_stats()["total_tokens"]
-            vib_msgs = workflow_vib.stats["total_approved"]
-
             exec_time = time.time() - task_start
+            full_token_stats = full_result["token_stats"]
+            vib_token_stats = vib_result["token_stats"]
 
-            return TaskResult(
+            task_result = TaskResult(
                 task_id=sample.task_id,
                 dataset_name=sample.dataset_name,
-                full_passed=full_passed,
-                vib_passed=vib_passed,
-                full_messages=full_msgs,
-                vib_messages=vib_msgs,
-                full_tokens=full_tokens,
-                vib_tokens=vib_tokens,
-                execution_time=exec_time
+                full_passed=full_result["passed"],
+                vib_passed=vib_result["passed"],
+                full_messages=full_result["workflow_stats"]["total_approved"],
+                vib_messages=vib_result["workflow_stats"]["total_approved"],
+                full_tokens=full_token_stats["total_tokens"],
+                vib_tokens=vib_token_stats["total_tokens"],
+                execution_time=exec_time,
+                full_prompt_tokens=full_token_stats["total_prompt_tokens"],
+                full_completion_tokens=full_token_stats["total_completion_tokens"],
+                vib_prompt_tokens=vib_token_stats["total_prompt_tokens"],
+                vib_completion_tokens=vib_token_stats["total_completion_tokens"]
             )
+            return {
+                "task_result": task_result,
+                "full": full_result,
+                "vib": vib_result
+            }
 
         except Exception as e:
             exec_time = time.time() - task_start
-            return TaskResult(
+            error_result = TaskResult(
                 task_id=sample.task_id,
                 dataset_name=sample.dataset_name,
                 full_passed=False, vib_passed=False,
@@ -554,6 +581,15 @@ class MultiDatasetHarness:
                 execution_time=exec_time,
                 error_msg=str(e)
             )
+            return {
+                "task_result": error_result,
+                "full": None,
+                "vib": None
+            }
+
+    def _run_single_task(self, sample: TaskSample) -> TaskResult:
+        """对单个任务执行 Full Comm + VIB Sparse 对比评估"""
+        return self.run_single_task_with_trace(sample)["task_result"]
 
     def run_benchmark(self, datasets: List[str], limit: int = -1) -> Dict[str, Any]:
         """运行多数据集 Benchmark 并输出对比报告"""
@@ -566,6 +602,9 @@ class MultiDatasetHarness:
             print(f" 🚀 Running Benchmark: {ds_name.upper()}")
             print(f"{'='*60}")
 
+            if self.workers > 1:
+                VIBSparseCommRouter.warmup_shared_encoder()
+
             adapter = DatasetFactory.get_adapter(ds_name)
             samples = adapter.load(limit=limit)
 
@@ -576,16 +615,22 @@ class MultiDatasetHarness:
             total = len(samples)
             print(f"  已加载 {total} 个样本")
 
-            results: List[TaskResult] = []
+            results: List[Optional[TaskResult]] = [None] * total
             stats = {
                 "full_passed": 0, "vib_passed": 0,
                 "full_tokens": 0, "vib_tokens": 0,
-                "full_msgs": 0, "vib_msgs": 0
+                "full_msgs": 0, "vib_msgs": 0,
+                "full_prompt_tokens": 0, "vib_prompt_tokens": 0,
+                "full_completion_tokens": 0, "vib_completion_tokens": 0,
+                "full_only": 0, "vib_only": 0,
+                "both_pass": 0, "both_fail": 0,
+                "same_msg_count": 0
             }
 
-            for idx, sample in enumerate(samples):
-                res = self._run_single_task(sample)
-                results.append(res)
+            dataset_start = time.time()
+
+            def consume_result(result_index: int, res: TaskResult, done_count: int):
+                results[result_index] = res
 
                 # 累计统计
                 stats["full_passed"] += int(res.full_passed)
@@ -594,36 +639,83 @@ class MultiDatasetHarness:
                 stats["vib_tokens"] += res.vib_tokens
                 stats["full_msgs"] += res.full_messages
                 stats["vib_msgs"] += res.vib_messages
+                stats["full_prompt_tokens"] += res.full_prompt_tokens
+                stats["vib_prompt_tokens"] += res.vib_prompt_tokens
+                stats["full_completion_tokens"] += res.full_completion_tokens
+                stats["vib_completion_tokens"] += res.vib_completion_tokens
+                stats["same_msg_count"] += int(res.full_messages == res.vib_messages)
+
+                if res.full_passed and res.vib_passed:
+                    stats["both_pass"] += 1
+                elif res.full_passed and not res.vib_passed:
+                    stats["full_only"] += 1
+                elif not res.full_passed and res.vib_passed:
+                    stats["vib_only"] += 1
+                else:
+                    stats["both_fail"] += 1
 
                 # 进度输出
-                elapsed = time.time() - global_start
-                avg_time = elapsed / (idx + 1)
-                eta = avg_time * (total - idx - 1) / 60.0
+                elapsed = time.time() - dataset_start
+                avg_time = elapsed / max(1, done_count)
+                eta = avg_time * (total - done_count) / 60.0
 
                 full_icon = "✅" if res.full_passed else "❌"
                 vib_icon = "✅" if res.vib_passed else "❌"
-                print(f"  [{idx+1:03d}/{total:03d}] {res.task_id:<25} | "
-                      f"Full: {full_icon} | VIB: {vib_icon} (消息 {res.vib_messages}/6) | "
-                      f"耗时: {res.execution_time:.1f}s | ETA: {eta:.1f}min")
+                with self._print_lock:
+                    print(f"  [{done_count:03d}/{total:03d}] {res.task_id:<25} | "
+                          f"Full: {full_icon} | VIB: {vib_icon} (消息 {res.vib_messages}/6) | "
+                          f"耗时: {res.execution_time:.1f}s | ETA: {eta:.1f}min")
+
+            if self.workers == 1:
+                for idx, sample in enumerate(samples, start=1):
+                    res = self._run_single_task(sample)
+                    consume_result(idx - 1, res, idx)
+            else:
+                with ThreadPoolExecutor(max_workers=self.workers) as executor:
+                    future_map = {
+                        executor.submit(self._run_single_task, sample): idx
+                        for idx, sample in enumerate(samples)
+                    }
+                    done_count = 0
+                    for future in as_completed(future_map):
+                        done_count += 1
+                        result_index = future_map[future]
+                        res = future.result()
+                        consume_result(result_index, res, done_count)
 
             # 汇总该数据集指标
             full_rate = (stats["full_passed"] / total) * 100
             vib_rate = (stats["vib_passed"] / total) * 100
             msg_compression = ((stats["full_msgs"] - stats["vib_msgs"]) / max(1, stats["full_msgs"])) * 100
             token_saving = ((stats["full_tokens"] - stats["vib_tokens"]) / max(1, stats["full_tokens"])) * 100
+            prompt_saving = ((stats["full_prompt_tokens"] - stats["vib_prompt_tokens"]) / max(1, stats["full_prompt_tokens"])) * 100
+            completion_saving = ((stats["full_completion_tokens"] - stats["vib_completion_tokens"]) / max(1, stats["full_completion_tokens"])) * 100
+            pass_delta_pp = vib_rate - full_rate
 
             summary[ds_name] = {
                 "total_tasks": total,
                 "full_pass_rate": round(full_rate, 2),
                 "vib_pass_rate": round(vib_rate, 2),
+                "pass_delta_pp": round(pass_delta_pp, 2),
                 "full_messages": stats["full_msgs"],
                 "vib_messages": stats["vib_msgs"],
                 "msg_compression_pct": round(msg_compression, 2),
+                "same_message_ratio": round(stats["same_msg_count"] / max(1, total), 4),
                 "full_tokens": stats["full_tokens"],
                 "vib_tokens": stats["vib_tokens"],
-                "token_saving_pct": round(token_saving, 2)
+                "token_saving_pct": round(token_saving, 2),
+                "full_prompt_tokens": stats["full_prompt_tokens"],
+                "vib_prompt_tokens": stats["vib_prompt_tokens"],
+                "prompt_saving_pct": round(prompt_saving, 2),
+                "full_completion_tokens": stats["full_completion_tokens"],
+                "vib_completion_tokens": stats["vib_completion_tokens"],
+                "completion_saving_pct": round(completion_saving, 2),
+                "full_only_count": stats["full_only"],
+                "vib_only_count": stats["vib_only"],
+                "both_pass_count": stats["both_pass"],
+                "both_fail_count": stats["both_fail"]
             }
-            all_results[ds_name] = [asdict(r) for r in results]
+            all_results[ds_name] = [asdict(r) for r in results if r is not None]
 
         # 打印总报告
         self._print_summary_report(summary)
@@ -663,6 +755,8 @@ def main():
                         help="每个数据集最大样本数 (-1=全量)")
     parser.add_argument("--max-steps", type=int, default=2,
                         help="Agent 最大协作轮数")
+    parser.add_argument("--workers", type=int, default=1,
+                        help="并发 worker 数（默认 1，建议 2~6）")
     parser.add_argument("--online", action="store_true",
                         help="允许联网拉取/更新 HuggingFace 数据集缓存（默认离线）")
     parser.add_argument("--output", type=str, default="results/multi_benchmark.json",
@@ -677,12 +771,12 @@ def main():
     mode_text = "OFFLINE" if offline else "ONLINE"
     print(f"[HF Mode] {mode_text} (HF_HUB_OFFLINE={os.environ['HF_HUB_OFFLINE']}, HF_DATASETS_OFFLINE={os.environ['HF_DATASETS_OFFLINE']})")
 
-    api_key = os.environ.get("DEEPSEEK_API_KEY")
+    api_key = resolve_deepseek_api_key()
     if not api_key:
         print("Error: 请设置 DEEPSEEK_API_KEY 环境变量")
         sys.exit(1)
 
-    harness = MultiDatasetHarness(api_key=api_key, max_steps=args.max_steps)
+    harness = MultiDatasetHarness(api_key=api_key, max_steps=args.max_steps, workers=args.workers)
     report = harness.run_benchmark(datasets=args.datasets, limit=args.limit)
 
     # 保存 JSON 报告

@@ -9,6 +9,44 @@ import time
 from typing import List, Dict, Optional
 
 
+def resolve_deepseek_api_key(
+    api_key: Optional[str] = None,
+    fallback_env_path: str = "configs/pro.env"
+) -> Optional[str]:
+    """
+    Resolve DeepSeek API key from:
+    1. explicit argument
+    2. DEEPSEEK_API_KEY environment variable
+    3. local env-style config file, e.g. configs/pro.env
+    """
+    if api_key:
+        return api_key
+
+    env_key = os.environ.get("DEEPSEEK_API_KEY")
+    if env_key:
+        return env_key
+
+    if not os.path.exists(fallback_env_path):
+        return None
+
+    try:
+        with open(fallback_env_path, "r", encoding="utf-8") as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                key, value = line.split("=", 1)
+                if key.strip() != "DEEPSEEK_API_KEY":
+                    continue
+                value = value.strip().strip('"').strip("'")
+                if value:
+                    return value
+    except OSError:
+        return None
+
+    return None
+
+
 class DeepSeekClient:
     """
     DeepSeek API Client (OpenAI-compatible interface).
@@ -34,7 +72,7 @@ class DeepSeekClient:
             temperature: Sampling temperature
             max_tokens: Maximum tokens in response
         """
-        self.api_key = api_key or os.environ.get("DEEPSEEK_API_KEY")
+        self.api_key = resolve_deepseek_api_key(api_key=api_key)
         if not self.api_key:
             raise ValueError(
                 "DeepSeek API key required. Set DEEPSEEK_API_KEY env variable "

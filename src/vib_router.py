@@ -21,6 +21,7 @@ Ada-VIB (Adaptive Uncertainty-Guided VIB):
 
 import math
 import re
+import threading
 import numpy as np
 from typing import List, Tuple, Optional
 from dataclasses import dataclass
@@ -128,6 +129,15 @@ class VIBSparseCommRouter:
         tau_min: Minimum threshold floor to prevent degeneration to Full Comm. Default: -0.5
     """
     
+    _shared_encoder_cache = {}
+    _encoder_lock = threading.Lock()
+
+    @classmethod
+    def warmup_shared_encoder(cls, model_name: str = "all-MiniLM-L6-v2"):
+        """Preload the shared sentence-transformers encoder once for concurrent runs."""
+        router = cls(embedding_model=model_name)
+        _ = router.encoder
+
     def __init__(
         self,
         beta_0: float = 2.0,
@@ -174,18 +184,22 @@ class VIBSparseCommRouter:
     def encoder(self):
         """Lazy load the sentence-transformers model (offline-first to avoid SSL timeouts)."""
         if self._encoder is None:
-            try:
-                from sentence_transformers import SentenceTransformer
-                # 优先尝试离线加载（模型已缓存时避免联网校验）
-                try:
-                    self._encoder = SentenceTransformer(self.model_name, local_files_only=True)
-                except Exception:
-                    # 本地无缓存时回退到在线下载
-                    self._encoder = SentenceTransformer(self.model_name)
-            except ImportError:
-                raise ImportError(
-                    "sentence-transformers is required. Install with: pip install sentence-transformers"
-                )
+            with self.__class__._encoder_lock:
+                shared = self.__class__._shared_encoder_cache.get(self.model_name)
+                if shared is None:
+                    try:
+                        from sentence_transformers import SentenceTransformer
+                        # 并发场景下仅允许一个线程初始化底层模型，避免 meta tensor/race 问题
+                        try:
+                            shared = SentenceTransformer(self.model_name, local_files_only=True)
+                        except Exception:
+                            shared = SentenceTransformer(self.model_name)
+                    except ImportError:
+                        raise ImportError(
+                            "sentence-transformers is required. Install with: pip install sentence-transformers"
+                        )
+                    self.__class__._shared_encoder_cache[self.model_name] = shared
+                self._encoder = shared
         return self._encoder
     
     def get_embedding(self, text: str) -> np.ndarray:

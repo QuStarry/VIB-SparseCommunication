@@ -224,3 +224,6 @@ experiments/HumanEval.jsonl.gz
 
 
 .dbg/
+configs/pro.env
+
+docs/chatHistory.md

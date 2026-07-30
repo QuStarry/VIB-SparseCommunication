@@ -9,7 +9,13 @@
       "msg_compression_pct": 28.05,
       "full_tokens": 471256,
       "vib_tokens": 444961,
-      "token_saving_pct": 5.58
+      "token_saving_pct": 5.58,
+      "pass_delta_pp": 0.61,
+      "full_only_count": 6,
+      "vib_only_count": 7,
+      "both_pass_count": 139,
+      "both_fail_count": 12,
+      "same_message_ratio": 0.2805
     },
     "mbpp": {
       "total_tasks": 257,
@@ -20,7 +26,13 @@
       "msg_compression_pct": 1.43,
       "full_tokens": 752236,
       "vib_tokens": 750508,
-      "token_saving_pct": 0.23
+      "token_saving_pct": 0.23,
+      "pass_delta_pp": 0.39,
+      "full_only_count": 7,
+      "vib_only_count": 8,
+      "both_pass_count": 223,
+      "both_fail_count": 19,
+      "same_message_ratio": 0.9416
     },
     "gsm8k": {
       "total_tasks": 1319,
@@ -31,7 +43,13 @@
       "msg_compression_pct": 45.73,
       "full_tokens": 2867984,
       "vib_tokens": 2550144,
-      "token_saving_pct": 11.08
+      "token_saving_pct": 11.08,
+      "pass_delta_pp": -0.99,
+      "full_only_count": 27,
+      "vib_only_count": 14,
+      "both_pass_count": 1228,
+      "both_fail_count": 50,
+      "same_message_ratio": 0.094
     }
   },
   "detailed_results": {
