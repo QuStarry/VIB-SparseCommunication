@@ -138,6 +138,15 @@ class TaskResult:
     error_msg: Optional[str] = None
 
 
+@dataclass
+class ExperimentConfig:
+    enable_gsm8k_frozen_history: bool = True
+    enable_math_role_weights: bool = False
+    enable_gsm8k_reasoning_guard: bool = False
+    enable_humaneval_digest: bool = True
+    enable_mbpp_early_stop: bool = True
+
+
 # ============================================
 # 2. 数据集加载适配器 (Dataset Adapters)
 # ============================================
@@ -494,30 +503,60 @@ def generate_final_answer(client: DeepSeekClient, prompt: str, history: list) ->
 # ============================================
 
 class MultiDatasetHarness:
-    def __init__(self, api_key: str, max_steps: int = 2, workers: int = 1):
+    def __init__(self, api_key: str, max_steps: int = 2, workers: int = 1, experiment_config: Optional[ExperimentConfig] = None):
         self.api_key = api_key
         self.max_steps = max_steps
         self.workers = max(1, workers)
         self._print_lock = threading.Lock()
+        self.experiment_config = experiment_config or ExperimentConfig()
 
     def _select_task_components(self, sample: TaskSample) -> Tuple[Any, Any]:
         if sample.dataset_name in ("HumanEval", "MBPP"):
             return create_code_agents, generate_final_code
         return create_math_agents, generate_final_answer
 
+    def _workflow_options_for_sample(self, sample: TaskSample) -> Dict[str, Any]:
+        return {
+            "same_round_history_mode": (
+                "frozen"
+                if sample.dataset_name == "GSM8K" and self.experiment_config.enable_gsm8k_frozen_history
+                else "incremental"
+            ),
+            "enable_digest_fallback": (
+                sample.dataset_name == "HumanEval" and self.experiment_config.enable_humaneval_digest
+            )
+        }
+
+    def _create_vib_router(self) -> VIBSparseCommRouter:
+        return VIBSparseCommRouter(
+            beta_0=3.2,
+            lambda_decay=0.08,
+            temp_tau=0.5,
+            gamma=-0.4,
+            adaptive=True,
+            alpha=0.35,
+            tau_min=-1.0,
+            enable_math_role_weights=self.experiment_config.enable_math_role_weights,
+            enable_reasoning_guard=self.experiment_config.enable_gsm8k_reasoning_guard,
+        )
+
     def _run_variant(
         self,
         sample: TaskSample,
         create_agents_fn,
         generate_fn,
-        router
+        router,
+        max_steps_override: Optional[int] = None
     ) -> Dict[str, Any]:
         client = DeepSeekClient(api_key=self.api_key, max_tokens=256)
         agents = create_agents_fn(client)
+        workflow_options = self._workflow_options_for_sample(sample)
         workflow = VIBMultiAgentWorkflow(
             agents=[a.to_agent_dict() for a in agents],
             vib_router=router,
-            max_steps=self.max_steps
+            max_steps=max_steps_override or self.max_steps,
+            same_round_history_mode=workflow_options["same_round_history_mode"],
+            enable_digest_fallback=workflow_options["enable_digest_fallback"]
         )
         workflow_result = workflow.run(goal=sample.prompt, verbose=False)
         final_output = generate_fn(client, sample.prompt, workflow_result["history"])
@@ -528,7 +567,8 @@ class MultiDatasetHarness:
             "workflow_stats": workflow.stats,
             "output": final_output,
             "passed": passed,
-            "token_stats": token_stats
+            "token_stats": token_stats,
+            "early_stopped": False
         }
 
     def _build_trace_payload(self, sample: TaskSample, variant_name: str, variant_result: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
@@ -549,6 +589,7 @@ class MultiDatasetHarness:
             "output": variant_result["output"],
             "workflow_stats": variant_result["workflow_stats"],
             "token_stats": token_stats,
+            "early_stopped": variant_result.get("early_stopped", False),
         }
 
     def run_single_task_with_trace(self, sample: TaskSample) -> Dict[str, Any]:
@@ -558,22 +599,57 @@ class MultiDatasetHarness:
         try:
             create_agents_fn, generate_fn = self._select_task_components(sample)
 
-            full_result = self._run_variant(
-                sample=sample,
-                create_agents_fn=create_agents_fn,
-                generate_fn=generate_fn,
-                router=BypassVIBRouter()
-            )
-
-            vib_result = self._run_variant(
-                sample=sample,
-                create_agents_fn=create_agents_fn,
-                generate_fn=generate_fn,
-                router=VIBSparseCommRouter(
-                    beta_0=3.2, lambda_decay=0.08, temp_tau=0.5,
-                    gamma=-0.4, adaptive=True, alpha=0.35, tau_min=-1.0
+            # MBPP 简单题优先尝试 1 轮协作；若已通过则直接早停，避免固定 6 条消息模板化消耗
+            if sample.dataset_name == "MBPP" and self.experiment_config.enable_mbpp_early_stop:
+                probe_full = self._run_variant(
+                    sample=sample,
+                    create_agents_fn=create_agents_fn,
+                    generate_fn=generate_fn,
+                    router=BypassVIBRouter(),
+                    max_steps_override=1
                 )
-            )
+                if probe_full["passed"]:
+                    probe_full["early_stopped"] = True
+                    full_result = probe_full
+                else:
+                    full_result = self._run_variant(
+                        sample=sample,
+                        create_agents_fn=create_agents_fn,
+                        generate_fn=generate_fn,
+                        router=BypassVIBRouter()
+                    )
+
+                probe_vib = self._run_variant(
+                    sample=sample,
+                    create_agents_fn=create_agents_fn,
+                    generate_fn=generate_fn,
+                    router=self._create_vib_router(),
+                    max_steps_override=1
+                )
+                if probe_vib["passed"]:
+                    probe_vib["early_stopped"] = True
+                    vib_result = probe_vib
+                else:
+                    vib_result = self._run_variant(
+                        sample=sample,
+                        create_agents_fn=create_agents_fn,
+                        generate_fn=generate_fn,
+                        router=self._create_vib_router()
+                    )
+            else:
+                full_result = self._run_variant(
+                    sample=sample,
+                    create_agents_fn=create_agents_fn,
+                    generate_fn=generate_fn,
+                    router=BypassVIBRouter()
+                )
+
+                vib_result = self._run_variant(
+                    sample=sample,
+                    create_agents_fn=create_agents_fn,
+                    generate_fn=generate_fn,
+                    router=self._create_vib_router()
+                )
             exec_time = time.time() - task_start
             full_token_stats = full_result["token_stats"]
             vib_token_stats = vib_result["token_stats"]
@@ -767,7 +843,8 @@ class MultiDatasetHarness:
         return {
             "summary": summary,
             "detailed_results": all_results,
-            "trace_results": trace_results
+            "trace_results": trace_results,
+            "experiment_config": asdict(self.experiment_config),
         }
 
     def _print_summary_report(self, summary: Dict[str, Any]):
@@ -806,6 +883,16 @@ def main():
                         help="允许联网拉取/更新 HuggingFace 数据集缓存（默认离线）")
     parser.add_argument("--output", type=str, default="results/multi_benchmark.json",
                         help="输出 JSON 文件路径")
+    parser.add_argument("--disable-gsm8k-frozen-history", action="store_true",
+                        help="关闭 GSM8K 同轮 frozen-history 修复")
+    parser.add_argument("--disable-math-role-weights", action="store_true",
+                        help="关闭数学角色权重补偿（Planner/Solver/Verifier）")
+    parser.add_argument("--disable-gsm8k-reasoning-guard", action="store_true",
+                        help="关闭 GSM8K 轻量推理守护")
+    parser.add_argument("--disable-humaneval-digest", action="store_true",
+                        help="关闭 HumanEval reviewer digest fallback")
+    parser.add_argument("--disable-mbpp-early-stop", action="store_true",
+                        help="关闭 MBPP 一轮 probe early stopping")
     args = parser.parse_args()
 
     offline = not args.online
@@ -821,7 +908,20 @@ def main():
         print("Error: 请设置 DEEPSEEK_API_KEY 环境变量")
         sys.exit(1)
 
-    harness = MultiDatasetHarness(api_key=api_key, max_steps=args.max_steps, workers=args.workers)
+    experiment_config = ExperimentConfig(
+        enable_gsm8k_frozen_history=not args.disable_gsm8k_frozen_history,
+        enable_math_role_weights=not args.disable_math_role_weights,
+        enable_gsm8k_reasoning_guard=not args.disable_gsm8k_reasoning_guard,
+        enable_humaneval_digest=not args.disable_humaneval_digest,
+        enable_mbpp_early_stop=not args.disable_mbpp_early_stop,
+    )
+
+    harness = MultiDatasetHarness(
+        api_key=api_key,
+        max_steps=args.max_steps,
+        workers=args.workers,
+        experiment_config=experiment_config
+    )
     report = harness.run_benchmark(datasets=args.datasets, limit=args.limit)
 
     # 保存 JSON 报告

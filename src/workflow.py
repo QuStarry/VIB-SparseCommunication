@@ -5,8 +5,8 @@ This module implements the complete multi-agent collaboration system using LangG
 with VIB-based sparse communication gating.
 """
 
-import math
 import operator
+import re
 from typing import Annotated, List, Dict, TypedDict, Callable, Optional
 from langgraph.graph import StateGraph, END
 
@@ -52,7 +52,9 @@ class VIBMultiAgentWorkflow:
         agents: List[Dict[str, Callable]],
         vib_router: Optional[VIBSparseCommRouter] = None,
         max_steps: int = 8,
-        completion_checker: Optional[Callable] = None
+        completion_checker: Optional[Callable] = None,
+        same_round_history_mode: str = "incremental",
+        enable_digest_fallback: bool = False
     ):
         """
         Initialize the multi-agent workflow.
@@ -67,12 +69,15 @@ class VIBMultiAgentWorkflow:
         self.vib_router = vib_router or VIBSparseCommRouter()
         self.max_steps = max_steps
         self.completion_checker = completion_checker or self._default_completion_checker
+        self.same_round_history_mode = same_round_history_mode
+        self.enable_digest_fallback = enable_digest_fallback
         
         # Statistics tracking
         self.stats = {
             "total_candidates": 0,
             "total_approved": 0,
             "total_blocked": 0,
+            "total_digests": 0,
             "steps_completed": 0,
             "history_per_step": []
         }
@@ -151,6 +156,27 @@ class VIBMultiAgentWorkflow:
             }
         
         return agent_node
+
+    def _should_emit_digest(self, item: Dict[str, str], result: VIBEvaluationResult) -> bool:
+        if not self.enable_digest_fallback:
+            return False
+        if item.get("agent") != "Reviewer":
+            return False
+        if result.is_allowed:
+            return False
+        content = item.get("content", "")
+        content_lower = content.lower()
+        edge_keywords = [
+            "edge case", "boundary", "empty", "negative", "zero", "none",
+            "fails when", "corner case", "off-by-one", "invalid", "overflow"
+        ]
+        return any(keyword in content_lower for keyword in edge_keywords)
+
+    def _build_digest_message(self, item: Dict[str, str]) -> str:
+        content = " ".join(item.get("content", "").split())
+        sentences = re.split(r"(?<=[。.!?])\s+", content)
+        digest = sentences[0].strip() if sentences else content
+        return f"[Reviewer-digest]: {digest[:220]}"
     
     def _vib_gatekeeper_node(self, state: AgentState) -> Dict:
         """
@@ -165,10 +191,11 @@ class VIBMultiAgentWorkflow:
         running_history = list(state["history"]) # 浅拷贝当前全局历史
         
         for item in candidates:
+            history_view = running_history if self.same_round_history_mode == "incremental" else state["history"]
             # 实时传入包含同轮次已批准消息的 running_history
             result = self.vib_router.evaluate_detailed(
                 candidate_msg=item["content"],
-                history=running_history, # <--- 修复：使用增量历史
+                history=history_view,
                 goal=state["global_goal"],
                 step_t=state["step_t"],
                 token_probs=item.get("token_probs"), # 透传 Ada-VIB 所需的指标
@@ -180,8 +207,14 @@ class VIBMultiAgentWorkflow:
             if result.is_allowed:
                 formatted_msg = f"[{item['agent']}]: {item['content']}"
                 approved_broadcasts.append(formatted_msg)
-                running_history.append(formatted_msg) # <--- 修复：一旦批准，立即加入当前轮次增量历史
+                running_history.append(formatted_msg)
                 self.stats["total_approved"] += 1
+            elif self._should_emit_digest(item, result):
+                digest_msg = self._build_digest_message(item)
+                approved_broadcasts.append(digest_msg)
+                running_history.append(digest_msg)
+                self.stats["total_approved"] += 1
+                self.stats["total_digests"] += 1
             else:
                 self.stats["total_blocked"] += 1
         
@@ -189,7 +222,8 @@ class VIBMultiAgentWorkflow:
             "step": state["step_t"],
             "candidates": len(candidates),
             "approved": len(approved_broadcasts),
-            "blocked": len(candidates) - len(approved_broadcasts)
+            "blocked": len(candidates) - len(approved_broadcasts),
+            "digests": self.stats["total_digests"]
         })
         
         return {
@@ -230,6 +264,7 @@ class VIBMultiAgentWorkflow:
             "total_candidates": 0,
             "total_approved": 0,
             "total_blocked": 0,
+            "total_digests": 0,
             "steps_completed": 0,
             "history_per_step": []
         }
@@ -279,6 +314,7 @@ class VIBMultiAgentWorkflow:
             print(f"Total Candidates: {total}")
             print(f"Approved: {approved}")
             print(f"Blocked: {self.stats['total_blocked']}")
+            print(f"Digests: {self.stats['total_digests']}")
             print(f"Compression Rate: {compression_rate:.1f}%")
             print(f"{'='*60}\n")
         

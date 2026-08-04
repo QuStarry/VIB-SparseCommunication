@@ -7883,3 +7883,94 @@ class AdaptiveVIBGate:
 ---
 
 如果这一小规模验证流水线在 Log 输出与性能指标上达到上述“绿灯”标准，我们便可以无缝启动全量 6 大数据集的完整 Benchmark 评估！
+
+
+我更新了相关代码，做了相应的测试了，当前结果如下：Multi-Dataset Benchmark Report (Full Comm vs VIB Sparse)
+================================================================================
+Dataset      |  Full Pass@1 |   VIB Pass@1 |  Msg Compress |  Token Saving
+---------------------------------------------------------------------------
+humaneval    |      88.41% |      85.98% |       32.01% |        6.99%
+mbpp         |      89.88% |      89.49% |        1.17% |        0.45%
+gsm8k        |      95.45% |      94.77% |       45.46% |       10.97%  一句话总结
+
+- HumanEval : 有压缩收益，但会带来少量语义实现偏移
+- MBPP : 目前几乎没被真正压缩，结果更像“保守不伤害”
+- GSM8K : 主要问题不是平均退化，而是 极端剪枝会系统性砍掉 Solver/Verifier 链条 请深度思考看看如何优化改进
+
+从你的实验数据与差分归因归纳来看，**VIB Sparse 路由机制目前展现出了典型的“任务敏感型”特征**：它在数学推理（GSM8K）和复杂代码（HumanEval）上展现了强压缩潜力，但也暴露出了**硬剪枝破坏连续推理链**和**代码模板冗余钝化**的局限。
+
+---
+
+## 核心痛点诊断
+
+> **一句话诊股**：当前的 VIB 路由器依赖静态语义 Embedding 相似度，缺乏对“推理链条完整性”和“代码抽象语法树（AST）”的结构感知，导致**该剪的不敢剪（MBPP 钝化），不该剪的瞎剪（GSM8K 断链、HumanEval 细节偏移）**。
+
+1. **GSM8K（推理链断裂）**：推理任务对上下文连贯性极度敏感。VIB 将中途某些看起来“语义重复”的推导或验证步骤判定为高冗余而剪掉，直接导致 downstream 的 Solver/Verifier 丢失关键中间变量。
+2. **MBPP（机制钝化/保守）**：MBPP 题目简单、`max_steps=2` 且三智能体模板固定。智能体大量重复 Prompt 中的函数签名与 Docstring，导致 Embedding 判定相似度极高且无法区分有效逻辑，路由不敢动作（96.5% 消息未变）。
+3. **HumanEval（语义/细节偏移）**：裁剪掉了 Reviewer 或 Architect 提及的边界条件（Edge Cases），代码能跑通主干，但在边界测试用例上掉帧（-2.44 pp）。
+
+---
+
+## 深度优化与改进方案
+
+为了在保证 Pass@1 不受损的前提下，提升压缩率并解决不同任务上的痛点，建议从以下四个维度进行针对性改进：
+
+### 1. 针对 GSM8K：引入“推理链与角色守护” (Reasoning Chain Guardrails)
+
+* **算式与逻辑正则守护（Pattern-Based Rescue）**：
+* **机制**：在 VIB 评估 Utility 之前，增加轻量级规则/正则过滤器。若候选消息中包含关键算式推导（如含 `+`, `-`, `=`, `step`）或验证反驳词（如 `Wait`, `Incorrect`, `Therefore`），强制赋予保底 Utility 权重或提升保留概率。
+
+
+* **角色感知动态阈值（Role-Aware Dynamic Thresholding）**：
+* **机制**：不同角色在推理链中的信息密度不同。降低 Solver 和 Verifier 之间的剪枝力度，将控制重点放在 Architect/Planner 阶段。
+* **设计**：在公式中将基础阈值 $\beta_0$ 调整为 $\beta_0 \times w_{role}$，例如令 $w_{solver}=0.5$（更难被剪枝），$w_{planner}=1.2$（更容易被压缩）。
+
+
+
+### 2. 针对 MBPP：从“全文 Embedding”转向“增量与抽象语法树去重”
+
+*  Prompt/Signature 剥离（Template Stripping）：
+* **机制**：MBPP 压缩率低的主因是重复的 Prompt 和函数头。在将消息送入 VIB Encoder 算 Embedding 前，预处理**扣除公共 Prompt、Docstring 和函数签名**，仅对 Agent 产生的*增量代码/纯分析逻辑*计算语义相似度。
+
+
+* **早期止损与自适应轮次（Early Stopping / Agent Pruning）**：
+* **机制**：对简单题目引入“早停”机制。若 Architect 与 Coder 在 Step 1 产出的代码已通过语法检查/轻量探针，直接屏蔽 Reviewer 阶段，跳过后续消息生成，实现真正的 Token 与消息双重节省。
+
+
+
+### 3. 针对 HumanEval：从“硬丢弃 (Hard Drop)”转向“软摘要记忆 (Soft-Summary Digest)”
+
+* **摘要回退机制（Digest Fallback）**：
+* **机制**：HumanEval 的 Drop 主因是丢失了 Reviewer 提到的边界条件。当 VIB 判定某条消息 $M_t$ 冗余度较高（超过阈值 $\tau$）时，**不直接完全丢弃**，而是利用轻量小模型将其压缩为 1 句话的约束摘要（Digest）存入 Memory。
+* **效果**：既大幅节约了 Context Token，又避免了关键边界语义彻底失联。
+
+
+
+### 4. 路由算法底层升级：结合模型不确定性（Confidence-Aware VIB）
+
+* **结合 Token Logprobs 或熵（Entropy-Aware Routing）**：
+* **机制**：若当前 LLM 生成上一步答案的平均 Logprob 较低（说明模型对当前结果“不自信”），自动动态降低当前 Step 的剪枝阈值，放行更多讨论；反之，若 Logprob 极高（确定性极高），则加大剪枝力度。
+
+
+
+---
+
+## 建议的实施路线图 (Priority Matrix)
+
+```text
+[P0: 低成本高收益] 
+ ├─ GSM8K: 增加算式/逻辑关键词守护规则 (防止硬剪推导链)
+ └─ MBPP: 送入 VIB 路由前清洗掉重复 Prompt / 签名模板
+
+[P1: 核心机制升级]
+ ├─ 全局: 引入 Role-Aware 动态阈值 beta_role
+ └─ 代码任务: 引入简单题 Early Stopping (早停机制)
+
+[P2: 深度架构优化]
+ └─ 引入 Soft-Summary Digest (将 Hard Drop 改为摘要化压缩，解决 HumanEval 语义偏移)
+
+```
+
+---
+
+你更希望优先验证哪一个方向？我们可以先针对 **GSM8K 的正则守护规则** 或 **MBPP 的模板剥离** 尝试编写一个轻量 Patch 来快速验证效果。

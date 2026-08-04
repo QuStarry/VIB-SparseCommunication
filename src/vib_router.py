@@ -147,7 +147,9 @@ class VIBSparseCommRouter:
         embedding_model: str = "all-MiniLM-L6-v2",
         adaptive: bool = False,
         alpha: float = 0.2,
-        tau_min: float = -0.5
+        tau_min: float = -0.5,
+        enable_math_role_weights: bool = True,
+        enable_reasoning_guard: bool = True
     ):
         self.beta_0 = beta_0
         self.lambda_decay = lambda_decay
@@ -159,6 +161,8 @@ class VIBSparseCommRouter:
         self.adaptive = adaptive
         self.alpha = alpha
         self.tau_min = tau_min
+        self.enable_math_role_weights = enable_math_role_weights
+        self.enable_reasoning_guard = enable_reasoning_guard
         
         # Bugfix-Aware: 通用代码修正与边界条件敏感词汇表（泛化设计，不依赖特定题库）
         self.fix_keywords = [
@@ -166,12 +170,26 @@ class VIBSparseCommRouter:
             "boundary", "fails when", "missing", "instead of", "should be",
             "error", "wrong", "typo", "off-by-one", "overflow"
         ]
+
+        # 数学推理守护关键词：保护中间算式、单位换算与验证反驳信息
+        self.reasoning_keywords = [
+            "equation", "total", "remaining", "difference", "sum", "average",
+            "per", "each", "every", "times", "twice", "thrice", "percent",
+            "therefore", "so", "check", "verify", "incorrect", "re-check",
+            "let ", "=", "+", "-", "*", "/", "step", "first", "then",
+            "小时", "分钟", "美元", "总共", "剩余", "每", "因此", "所以", "检查"
+        ]
+
+        self.math_roles = {"Planner", "Solver", "Verifier"}
         
         # 角色自适应 Beta 权重映射 (Role-Prior Dynamic β) - 基于 HumanEval 164 题消融分析优化
         self.role_beta_map = {
             "Architect": 3.2,   # 架构方案高准入（+0.2 提升方案质量）
             "Coder": 4.2,       # 进一步提高 Coder 准入，保证关键代码递交
-            "Reviewer": 3.6     # 增强 Reviewer 对代码逻辑纠错的权重
+            "Reviewer": 3.6,    # 增强 Reviewer 对代码逻辑纠错的权重
+            "Planner": 2.8,     # 数学规划信息更容易被压缩
+            "Solver": 4.4,      # 保护具体算式与求解步骤
+            "Verifier": 4.0     # 保护校验/纠错链条
         }
         
         # Lazy load the embedding model
@@ -319,6 +337,20 @@ class VIBSparseCommRouter:
         """
         msg_lower = message.lower()
         return any(kw in msg_lower for kw in self.fix_keywords)
+
+    def _detect_reasoning_signal(self, message: str, role: Optional[str] = None) -> bool:
+        """
+        检测消息中是否包含数学推理链的关键算式、单位或验证信号。
+        该信号用于保护 GSM8K 等任务中的 Solver/Verifier 中间步骤。
+        """
+        if not self.enable_reasoning_guard or role not in self.math_roles:
+            return False
+
+        msg_lower = message.lower()
+        has_keyword = any(kw in msg_lower for kw in self.reasoning_keywords)
+        has_number = bool(re.search(r"\d", message))
+        has_equation_shape = bool(re.search(r"(\d+\s*[%*/+\-=]\s*\d+|=\s*\d+)", message))
+        return has_keyword or (has_number and has_equation_shape)
     
     def _compute_complexity_bonus(self, goal: str) -> float:
         """
@@ -365,7 +397,12 @@ class VIBSparseCommRouter:
         Returns:
             Dynamic β_t value
         """
-        base_beta = self.role_beta_map.get(role, self.beta_0) if role else self.beta_0
+        if role and self.enable_math_role_weights:
+            base_beta = self.role_beta_map.get(role, self.beta_0)
+        elif role and role not in self.math_roles:
+            base_beta = self.role_beta_map.get(role, self.beta_0)
+        else:
+            base_beta = self.beta_0
         
         # Task-Complexity Adaptive: 基于文本长度的泛化复杂度加成
         if goal:
@@ -574,11 +611,15 @@ class VIBSparseCommRouter:
         has_fix_signal = self._detect_fix_signal(candidate_msg, role)
         # 当检测到修复信号时，对冗余度惩罚给予 0.25 折扣（保护关键补丁）
         omega_fix = 0.25 if (has_fix_signal and role in ("Reviewer", "Coder")) else 1.0
+
+        # === Reasoning Chain Guardrails: 保护 GSM8K 中间推导/校验链 ===
+        has_reasoning_signal = self._detect_reasoning_signal(candidate_msg, role)
+        omega_reasoning = 0.65 if has_reasoning_signal else 1.0
         
         # 综合冗余度修正: Redundancy_adjusted = Redundancy * code_discount * omega_fix
         # Token-Aware: 对长文本施加温和长度惩罚，平衡 Token 压缩比
         token_length_factor = math.log(max(len(candidate_msg.split()), 1) + 1)
-        adjusted_redundancy = redundancy * code_discount * omega_fix * (1.0 + 0.05 * token_length_factor)
+        adjusted_redundancy = redundancy * code_discount * omega_fix * omega_reasoning * (1.0 + 0.05 * token_length_factor)
         
         # === Role-Adaptive β: 角色驱动 + Task-Complexity + Feedback-Aware ===
         beta_t = self.compute_beta_t(step_t, role=role, goal=goal, is_execution_failed=is_execution_failed)
@@ -598,6 +639,10 @@ class VIBSparseCommRouter:
             )
         else:
             effective_threshold = self.gamma
+
+        # 对数学求解/校验消息进一步放宽阈值，避免极端压缩直接截断推理链
+        if has_reasoning_signal and role in {"Solver", "Verifier"}:
+            effective_threshold = max(self.tau_min, effective_threshold - 0.1)
         
         # Gate decision
         is_allowed = utility_score >= effective_threshold
