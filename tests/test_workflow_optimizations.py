@@ -81,6 +81,70 @@ def test_reviewer_digest_fallback_keeps_edge_case_hint():
     assert any(msg.startswith("[Reviewer-digest]:") for msg in result["history"])
 
 
+def test_coder_digest_fallback_keeps_fix_hint():
+    router = RecordingRouter(allow_all=False)
+    workflow = VIBMultiAgentWorkflow(
+        agents=[make_agent("Coder", "Fix the bug for empty input; otherwise this fails if the list is empty.")],
+        vib_router=router,
+        max_steps=1,
+        enable_digest_fallback=True
+    )
+
+    result = workflow.run("code goal", verbose=False)
+
+    assert workflow.stats["total_digests"] == 1
+    assert any(msg.startswith("[Coder-digest]:") for msg in result["history"])
+
+
+def test_first_round_role_guard_rescues_coder_and_reviewer():
+    router = RecordingRouter(allow_all=False)
+    workflow = VIBMultiAgentWorkflow(
+        agents=[
+            make_agent("Architect", "High-level plan."),
+            make_agent("Coder", "Implement the main loop and handle edge constraints."),
+            make_agent("Reviewer", "Check boundary cases and invalid input."),
+        ],
+        vib_router=router,
+        max_steps=1,
+        required_roles_first_step=["Coder", "Reviewer"]
+    )
+
+    result = workflow.run("code goal", verbose=False)
+
+    assert workflow.stats["total_role_rescues"] == 2
+    assert workflow.stats["total_approved"] == 2
+    assert workflow.stats["total_blocked"] == 1
+    assert result["history"] == [
+        "[Coder]: Implement the main loop and handle edge constraints.",
+        "[Reviewer]: Check boundary cases and invalid input."
+    ]
+
+
+def test_first_round_role_guard_respects_minimum_approval_floor():
+    router = RecordingRouter(allow_all=False)
+    workflow = VIBMultiAgentWorkflow(
+        agents=[
+            make_agent("Architect", "High-level plan."),
+            make_agent("Coder", "Implement core logic."),
+            make_agent("Reviewer", "Check boundary conditions."),
+        ],
+        vib_router=router,
+        max_steps=1,
+        required_roles_first_step=["Coder", "Reviewer"],
+        first_step_min_approvals=2
+    )
+
+    # Simulate the Architect already being allowed via digest fallback.
+    workflow._should_emit_digest = lambda item, result: item["agent"] == "Architect"  # type: ignore[method-assign]
+    workflow._build_digest_message = lambda item: f"[{item['agent']}-digest]: {item['content']}"  # type: ignore[method-assign]
+
+    result = workflow.run("code goal", verbose=False)
+
+    assert workflow.stats["total_role_rescues"] == 1
+    assert len(result["history"]) == 2
+    assert any(msg.startswith("[Architect-digest]:") for msg in result["history"])
+
+
 def test_math_role_beta_map_prioritizes_solver_and_verifier():
     router = VIBSparseCommRouter()
 
@@ -112,7 +176,8 @@ def test_harness_experiment_config_controls_gsm8k_workflow_options():
         api_key="dummy-key",
         experiment_config=ExperimentConfig(
             enable_gsm8k_frozen_history=False,
-            enable_humaneval_digest=False
+            enable_humaneval_digest=False,
+            enable_humaneval_first_round_role_guard=False
         )
     )
 
@@ -124,6 +189,18 @@ def test_harness_experiment_config_controls_gsm8k_workflow_options():
 
     assert gsm8k_options["same_round_history_mode"] == "incremental"
     assert humaneval_options["enable_digest_fallback"] is False
+    assert humaneval_options["required_roles_first_step"] == []
+
+
+def test_harness_default_config_disables_humaneval_digest():
+    harness = MultiDatasetHarness(api_key="dummy-key")
+    sample = TaskSample(task_id="HumanEval/test", dataset_name="HumanEval", prompt="code")
+    options = harness._workflow_options_for_sample(sample)
+
+    assert harness.experiment_config.enable_humaneval_digest is False
+    assert options["enable_digest_fallback"] is False
+    assert options["required_roles_first_step"] == ["Coder", "Reviewer"]
+    assert options["first_step_min_approvals"] == 2
 
 
 def test_mbpp_early_stop_uses_probe_when_first_round_passes(monkeypatch):

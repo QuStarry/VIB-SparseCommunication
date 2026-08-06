@@ -54,7 +54,9 @@ class VIBMultiAgentWorkflow:
         max_steps: int = 8,
         completion_checker: Optional[Callable] = None,
         same_round_history_mode: str = "incremental",
-        enable_digest_fallback: bool = False
+        enable_digest_fallback: bool = False,
+        required_roles_first_step: Optional[List[str]] = None,
+        first_step_min_approvals: int = 0
     ):
         """
         Initialize the multi-agent workflow.
@@ -71,6 +73,8 @@ class VIBMultiAgentWorkflow:
         self.completion_checker = completion_checker or self._default_completion_checker
         self.same_round_history_mode = same_round_history_mode
         self.enable_digest_fallback = enable_digest_fallback
+        self.required_roles_first_step = list(required_roles_first_step or [])
+        self.first_step_min_approvals = first_step_min_approvals
         
         # Statistics tracking
         self.stats = {
@@ -78,6 +82,7 @@ class VIBMultiAgentWorkflow:
             "total_approved": 0,
             "total_blocked": 0,
             "total_digests": 0,
+            "total_role_rescues": 0,
             "steps_completed": 0,
             "history_per_step": []
         }
@@ -160,15 +165,17 @@ class VIBMultiAgentWorkflow:
     def _should_emit_digest(self, item: Dict[str, str], result: VIBEvaluationResult) -> bool:
         if not self.enable_digest_fallback:
             return False
-        if item.get("agent") != "Reviewer":
+        if item.get("agent") not in {"Reviewer", "Coder"}:
             return False
         if result.is_allowed:
             return False
         content = item.get("content", "")
         content_lower = content.lower()
         edge_keywords = [
-            "edge case", "boundary", "empty", "negative", "zero", "none",
-            "fails when", "corner case", "off-by-one", "invalid", "overflow"
+            "edge", "edge case", "boundary", "corner", "corner case",
+            "empty", "zero", "negative", "none", "null", "invalid",
+            "exception", "overflow", "off-by-one", "special case",
+            "fails when", "fails if", "fix", "bug", "missing"
         ]
         return any(keyword in content_lower for keyword in edge_keywords)
 
@@ -176,7 +183,42 @@ class VIBMultiAgentWorkflow:
         content = " ".join(item.get("content", "").split())
         sentences = re.split(r"(?<=[。.!?])\s+", content)
         digest = sentences[0].strip() if sentences else content
-        return f"[Reviewer-digest]: {digest[:220]}"
+        agent = item.get("agent", "Agent")
+        return f"[{agent}-digest]: {digest[:220]}"
+
+    def _rescue_required_roles(
+        self,
+        state: AgentState,
+        blocked_items: List[Dict[str, str]],
+        approved_broadcasts: List[str],
+        running_history: List[str],
+        approved_roles: set
+    ) -> List[Dict[str, str]]:
+        if state["step_t"] != 1 or not self.required_roles_first_step:
+            return blocked_items
+
+        remaining_blocked = list(blocked_items)
+        target_approvals = max(self.first_step_min_approvals, 0)
+        if target_approvals and len(approved_broadcasts) >= target_approvals:
+            return remaining_blocked
+
+        for role in self.required_roles_first_step:
+            if target_approvals and len(approved_broadcasts) >= target_approvals:
+                break
+            if role in approved_roles:
+                continue
+            match = next((item for item in remaining_blocked if item.get("agent") == role), None)
+            if match is None:
+                continue
+            formatted_msg = f"[{match['agent']}]: {match['content']}"
+            approved_broadcasts.append(formatted_msg)
+            running_history.append(formatted_msg)
+            approved_roles.add(role)
+            remaining_blocked.remove(match)
+            self.stats["total_approved"] += 1
+            self.stats["total_role_rescues"] += 1
+
+        return remaining_blocked
     
     def _vib_gatekeeper_node(self, state: AgentState) -> Dict:
         """
@@ -189,6 +231,8 @@ class VIBMultiAgentWorkflow:
         
         # 建立当前轮次的增量历史视图
         running_history = list(state["history"]) # 浅拷贝当前全局历史
+        approved_roles = set()
+        blocked_items = []
         
         for item in candidates:
             history_view = running_history if self.same_round_history_mode == "incremental" else state["history"]
@@ -209,21 +253,33 @@ class VIBMultiAgentWorkflow:
                 approved_broadcasts.append(formatted_msg)
                 running_history.append(formatted_msg)
                 self.stats["total_approved"] += 1
+                approved_roles.add(item["agent"])
             elif self._should_emit_digest(item, result):
                 digest_msg = self._build_digest_message(item)
                 approved_broadcasts.append(digest_msg)
                 running_history.append(digest_msg)
                 self.stats["total_approved"] += 1
                 self.stats["total_digests"] += 1
+                approved_roles.add(item["agent"])
             else:
-                self.stats["total_blocked"] += 1
+                blocked_items.append(item)
+
+        blocked_items = self._rescue_required_roles(
+            state=state,
+            blocked_items=blocked_items,
+            approved_broadcasts=approved_broadcasts,
+            running_history=running_history,
+            approved_roles=approved_roles
+        )
+        self.stats["total_blocked"] += len(blocked_items)
         
         self.stats["history_per_step"].append({
             "step": state["step_t"],
             "candidates": len(candidates),
             "approved": len(approved_broadcasts),
             "blocked": len(candidates) - len(approved_broadcasts),
-            "digests": self.stats["total_digests"]
+            "digests": self.stats["total_digests"],
+            "role_rescues": self.stats["total_role_rescues"]
         })
         
         return {
@@ -265,6 +321,7 @@ class VIBMultiAgentWorkflow:
             "total_approved": 0,
             "total_blocked": 0,
             "total_digests": 0,
+            "total_role_rescues": 0,
             "steps_completed": 0,
             "history_per_step": []
         }

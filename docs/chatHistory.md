@@ -7974,3 +7974,418 @@ gsm8k        |      95.45% |      94.77% |       45.46% |      
 ---
 
 你更希望优先验证哪一个方向？我们可以先针对 **GSM8K 的正则守护规则** 或 **MBPP 的模板剥离** 尝试编写一个轻量 Patch 来快速验证效果。
+
+建议大方向对，但还没打到当前系统最关键的根因。
+ 真正最值得优先改的，不只是“加规则”本身，而是先修这三个结构性问题：
+
+## 先说最关键的 3 个根因
+1. 同轮顺序抑制，是 GSM8K 断链的头号嫌疑。
+ 当前 gatekeeper 会按固定顺序处理候选消息，并把同轮刚批准的消息立刻塞进 running_history ，后面的候选会直接拿它当“历史冗余”来比。见 workflow.py:L155-L179 。
+
+而数学团队的顺序正好是 Planner -> Solver -> Verifier ，见 run_multi_benchmark.py:L433-L439 。
+
+这会导致一种很危险的模式：
+
+- Planner 的高层摘要先过
+- Solver 的具体算式因为“和 Planner 语义相近”被判冗余
+- Verifier 又因为缺少 Solver 历史，进一步被挡住
+你报告里的 GSM8K full_only 正好大量是 vib_msgs=1 ，这和这个机制高度一致，不像偶然。
+
+2. 角色自适应其实只覆盖了代码角色，没有覆盖数学角色。
+ 当前 role_beta_map 只有 Architect / Coder / Reviewer ，见 vib_router.py:L170-L175 。
+ 也就是说 Planner / Solver / Verifier 现在根本没吃到角色差异化权重，都会退回默认 beta_0 ，见 compute_beta_t 。
+
+所以外部建议里“Role-Aware Thresholding”是对的，但要补一句： 这不是新方向，而是当前实现还没真正把数学角色接进去。
+
+3. MBPP 的问题不是“全文 Embedding 不够好”，而是 router 其实几乎没介入。
+ 从结果看：
+
+- MBPP msg_compress = 1.17%
+- same_message_ratio = 96.50%
+- full_only 4 题里全是 vib_msgs=6
+这说明 MBPP 目前更像“保守放行”，而不是“压缩后仍然稳定”。
+ 所以“模板剥离 / AST 去重”听起来很合理，但就当前架构看，收益可能没你想象的大，因为 router 实际编码的是 agent 输出文本 ，不是完整 prompt，也不是完整代码 AST。
+ 而 LLMAgent.generate() 还明确要求只输出 2-3 句话 ，见 llm_agents.py:L95-L116 。
+ 这意味着：
+
+- _extract_code / _compute_code_diff_ratio 这套代码感知机制虽然接进了公式，见 vib_router.py:L565-L581
+- 但在当前 agent 输出形态下， 大概率很少真正触发
+所以 MBPP 真正该优先做的，不是更复杂的 AST，而是 早停 / 少轮数 / 少角色 。
+
+## 我对那份建议的逐条判断
+GSM8K 的正则守护规则
+ 这是对的，而且值得做成 P0 。
+ 但我建议不要只做“关键词保留”，还要加一个更强的结构规则：
+
+- 如果当前是数学角色流，且本轮 Planner 已过、 Solver/Verifier 全被挡，给 Solver/Verifier 一个保底通道
+- 或者更直接： 同轮评估先只对“上一轮历史”做冗余判断，不要让 Planner 先压死 Solver
+单靠正则守护，只能救一部分；不修顺序抑制，还是会反复掉进 vib_msgs=1 。
+
+MBPP 的模板剥离
+ 有一定价值，但不是最优先。
+ 因为当前 router 并不是直接在完整函数签名和题面上做冗余比较，模板剥离不会从根上改变 “96.5% 消息未变” 这个事实。
+ 它更像一个微调项，不像根治项。
+
+HumanEval 的 Soft-Summary Digest
+ 这是很有价值的，而且比“纯放宽阈值”更优雅。
+ 但我会建议先做一个轻量版，不要一上来接额外模型：
+
+- 对被挡掉的 Reviewer/Coder 消息，如果包含 edge case / boundary / empty / negative / zero / fails when 这类模式，就提炼成一句短摘要塞回 history
+- 先用规则摘要，不够再上小模型摘要
+这样成本更低，也更容易归因。
+
+Confidence-aware / Logprobs
+ 方向没错，但现在不该排太前。
+ 因为当前系统并没有真正把 logprobs 接进来：
+
+- llm_client.py 还没请求 logprobs
+- LLMAgent.generate() 也只返回文本，没有 token_probs/confidence
+- 虽然 router 支持 token_probs/confidence_score ，见 vib_router.py:L431-L471
+- 但现在实际走的是文本级 entropy proxy
+所以这个更像 P2 ，不是现在最有性价比的优化。
+
+## 我认为最靠谱的优化优先级
+### P0：先解决“误杀关键链条”
+1. 数学角色权重补齐
+
+- 给 Planner / Solver / Verifier 单独配置 role_beta_map
+- 建议方向： Solver >= Verifier > Planner
+- 这是最小改动、最直接对 GSM8K 起作用的 patch
+2. 修正同轮顺序抑制 两种做法都行：
+
+- 更稳：同轮所有候选先对“上一轮历史”独立打分，再做统一筛选
+- 更快：保留当前流程，但禁止 Planner 单独把 Solver/Verifier 压成 0 条
+这是我心里的第一优先级，比单纯加关键词更重要。
+
+3. GSM8K 规则守护 对数学消息增加保底规则：
+
+- 算式/数字密集
+- 反驳/校验词： incorrect , check , therefore , let , equation , total , remaining
+- 单位转换词： per , each , hour , minute , dollar
+但建议做成“加权放行”，不是硬编码永远不过滤。
+
+### P1：提升代码任务的稳定性和压缩效率
+4. HumanEval 的边界条件摘要回退
+
+- 针对被挡掉的 Reviewer/Coder 边界提醒，生成一行 digest
+- 这比直接放宽所有 Reviewer 阈值更精细
+5. MBPP 早停
+
+- Step 1 后尝试生成最终代码并跑单测
+- 如果已通过，就直接停，不再跑完整 Architect/Coder/Reviewer * 2
+- 这比模板剥离更可能真正提升 MBPP 压缩率
+### P2：更深的机制升级
+6. 再考虑 logprobs / confidence-aware
+
+- 先确认 DeepSeek 接口是否稳定支持
+- 再从 client -> agent -> workflow -> router 全链路透传
+7. AST / code diff 真正落地
+
+- 前提是 agent 输出里要包含结构化代码增量
+- 不然现有 _extract_code 很难发挥作用
+## 还缺的一个关键判断
+从你这轮结果看， 不应该再把“平均压缩率”当主指标单独解读 。
+ 真正更有解释力的是：
+
+- vib_msgs=1 / 2-3 / 4-6 分桶后的准确率
+- full_only 和 vib_only 各自落在哪些桶里
+因为现在最强信号已经很明显了：
+
+- GSM8K 的主要退化，集中在 极端压缩
+- MBPP 几乎没被压缩
+- HumanEval 是中等压缩下的语义偏移
+这三类问题其实应该用三套策略，而不是一个统一 patch。
+
+## 我的最终判断
+如果目标是“先优化改进、尽快拉正结果”，我建议顺序就是：
+
+1. 先修同轮顺序抑制
+2. 补数学角色权重
+3. 给 GSM8K 加轻量推理守护
+4. 给 HumanEval 加 Reviewer digest fallback
+5. 给 MBPP 做 early stopping
+这比直接上 AST、logprobs、复杂摘要模型更稳，也更贴近你现在暴露出来的真实问题。
+
+下一步最值得做的，是先实现一个很小的实验 patch：
+ “数学任务冻结同轮历史 + Solver/Verifier role beta 提升” ，然后只重跑 gsm8k --limit 200 看 full_only_count 和 vib_msgs=1 是否明显下降。我的结论先放前面：
+ 这版默认配置比上一版“完整 patch”更像合理默认值。
+ 尤其是 GSM8K ，它终于从“几乎不压缩”回到了“有明显压缩，同时不掉点”的状态。
+ 但 HumanEval 还没修到位， MBPP 现在更多体现的是 early stop ，不是 VIB 本体收益。
+## 总体判断
+三套数据集现在都是 统计上近似持平 ，没有显著差异：
+
+- HumanEval : 92.07 -> 89.63 ， -2.44pp ， full_only=7 ， vib_only=3 ， p=0.34375
+- MBPP : 91.83 -> 92.22 ， +0.39pp ， full_only=4 ， vib_only=5 ， p=1.0
+- GSM8K : 95.30 -> 95.60 ， +0.30pp ， full_only=15 ， vib_only=19 ， p=0.607591
+所以论文表述依然应该是：
+
+“在多数据集上总体保持近似性能，收益主要体现在部分任务的通信压缩。”
+
+## 最亮眼的部分：GSM8K
+这轮 GSM8K 的结果是最有说服力的：
+
+- VIB 95.60% ，比 Full 95.30% 略高
+- Msg Compress 30.53%
+- Token Saving 5.16%
+更重要的是，和上一版全量结果相比：
+
+- msg compress: 6.56% -> 30.53%
+- token saving: 1.01% -> 5.16%
+- vib_rate: 95.30% -> 95.60%
+也就是说， 我们前面做的消融判断是对的 ：
+
+- 真正该保留的是 frozen same-round history
+- math role weights 和 reasoning guard 会把 GSM8K 压得过于保守
+这轮 vib_messages 分布也印证了这一点：
+
+- 主要落在 3/4/5/6
+- 已经没有之前那种大面积 1/2 条消息的极端压缩断链
+而且 full_only 和 vib_only 都分布在 3~6 条消息里，说明：
+
+GSM8K 现在的输赢已经不再主要由“极端剪枝”决定，而更像正常的生成波动。
+
+这点很重要，因为它意味着结构性 bug 确实被修掉了。
+
+## HumanEval：还没有真正解决主问题
+这轮 HumanEval 反而更值得警惕：
+
+- 92.07 -> 89.63
+- -2.44pp
+- msg compress 24.49%
+- token saving 6.6%
+这说明 HumanEval 现在还是典型的：
+
+压缩有效，但会带来语义实现偏移。
+
+而且这次有个很清楚的证据：
+ digest fallback 几乎没发挥作用。
+
+我查了 trace：
+
+- vib_digest_sum = 2
+- 总共只触发了 2 次
+- 这些 case 不是主要的 full_only / vib_only 分歧来源
+所以现在不能说 “HumanEval 已经靠 digest 修好了”。
+ 更准确地说：
+
+digest 机制接上了，但触发面太窄，还没打中 HumanEval 的主要失分模式。
+
+从样例看也符合这个判断：
+
+- HumanEval/32 ： full=6, vib=6 ，不是被重压缩打坏，而是实现细节本身漂了
+- HumanEval/59 ： full=6, vib=2 ，这是更像压缩导致信息不足
+- HumanEval/75 / 81 ：又说明 VIB 有时也会把 Full 的错误实现“甩掉”
+所以 HumanEval 现在不是单一问题，而是两类混合：
+
+1. 中强度压缩导致关键信息丢失
+2. 即使消息数接近，代码实现也会有语义漂移
+## MBPP：现在更像 early stop 的结果，不像 VIB 的结果
+这轮 MBPP 很有意思：
+
+- 91.83 -> 92.22
+- 但 msg compression = -0.24%
+- token saving = -2.9%
+这说明什么？
+
+VIB 在 MBPP 上不但没有省，反而略微更贵了。
+
+再结合 trace：
+
+- full_early_stop = 231
+- vib_early_stop = 229
+这表明 MBPP 当前的主要机制是：
+
+- 两边都大量一轮 probe 后早停
+- 真正的 VIB 路由贡献很弱
+- 一旦 VIB 没早停，反而可能拖到 6 条消息，所以出现负压缩
+样例也很典型：
+
+- MBPP/101 , MBPP/228 ： full=3, vib=6 ，说明 Full 早停了，但 VIB 没停，还多走了几轮
+- MBPP/67 ： vib=3 且 early_stopped=True ，这才是 MBPP 上最健康的模式
+所以我会把 MBPP 的结论写得很克制：
+ 当前 MBPP 的收益主要来自 early stopping，而不是稀疏通信本身。
+ 就 VIB 路由而言，MBPP 还没有形成稳定的效率优势。
+## 这次和上一版 full patch 的差别，方向是对的
+和上一份 multi_benchmark_all.json 对比，最重要的变化是：
+
+- GSM8K 明显变好：
+   从“几乎不压缩但勉强不掉点”，变成“压缩 30% 仍然不掉点”
+- MBPP 反而变差：
+   从轻微负压缩变成更明显负压缩
+- HumanEval 没改善：
+   仍然是压缩和准确率之间有冲突
+所以这次默认配置的真正价值是：
+
+它把 GSM8K 拉回了一个更合理的 Pareto 区域。
+
+## 我现在的归因判断
+### 可以比较有把握地确认的
+1. same-round frozen history 是有效修复
+   
+   - 它解决了 GSM8K 的主 bug
+   - 而且不需要再叠重 guard
+2. math role weights 和 reasoning guard 作为默认项不值得保留
+   
+   - 前面消融已经说明它们会把 GSM8K 压缩率打得太低
+   - 这次全量重跑也间接支持这个结论
+3. MBPP early stop 值得保留
+   
+   - 这是稳定的工程优化
+   - 只是它不该被误写成 “VIB 通信压缩的胜利”
+### 还不能确认的
+1. HumanEval digest fallback 是否有效
+   
+   - 当前证据不足
+   - 更像“机制已接通，但几乎没真正参与”
+2. HumanEval 的主要失分是边界条件遗漏，还是实现语义漂移
+   
+   - 现在看两者都有
+   - 需要再分桶分析
+## 我会怎么写这一版的研究结论
+如果现在就写阶段性总结，我会这样落：
+
+- GSM8K ：
+   结构性修复后，VIB 在数学推理上实现了约 30% 的消息压缩，同时保持与 Full 通信相当的准确率。
+- HumanEval ：
+   VIB 仍存在约 2.4pp 的准确率损失，表明代码任务中的关键信约束保留问题尚未完全解决。
+- MBPP ：
+   当前主要收益来自早停机制，而非稀疏通信本身；VIB 在该数据集上尚未表现出明确效率优势。
+## 下一步最值得做的，不是再改 GSM8K
+GSM8K 现在已经比较健康了。
+ 下一步最该攻的是 HumanEval 和 MBPP。
+
+我建议优先级这样排：
+
+1. HumanEval：扩大 digest 触发面
+   
+   - 不只 Reviewer
+   - 加入 Coder 的边界修正/反例提示
+   - 触发词扩到 empty / zero / invalid / off-by-one / boundary / edge / negative
+2. MBPP：让 early stop 只作用于 VIB 分支，或至少把 early-stop 统计从 VIB 统计里单独拆出来
+   
+   - 不然 MBPP 的“压缩指标”会被 early stop 混淆
+   - 现在它更像一个 hybrid strategy，而不是纯 VIB 对照
+3. 补一版 HumanEval 分桶分析
+   
+   - vib_msgs=2/3/4/5/6
+   - 看 full_only 主要落在哪些桶
+   - 再决定是该加 digest，还是该降低代码任务的压缩强度
+一句话总结这轮：
+
+这次重跑最重要的成果，是确认了“GSM8K 保留 frozen history、去掉额外 guard”这条路是对的；现在真正的短板已经从数学推理转回到了代码任务侧。我参考了其它建议做了上面的改动，上面有最新的结果和相应的代码，请进行深度思考分析，看看下一步如何进行
+
+
+
+这份实验数据非常清晰地揭示了当前系统的真实状态。
+
+最关键的突破是：**GSM8K 掉点的结构性 Bug（同轮顺序抑制）已被彻底解决**。在无额外 Guard 的情况下，GSM8K 实现了 **30.53% 的消息压缩率且准确率微升 (+0.30pp)**，证明 VIB 在数学/推理链条上的稀疏化逻辑是完全成立且健康的。
+
+当前的短板已完全转移到**代码任务（HumanEval & MBPP）**。接下来**不需要再动 GSM8K**，建议采取以下**三步走**攻坚策略：
+
+---
+
+## 阶段目标与优先级规划
+
+```
+[GSM8K]      ──> 锁定配置 (作为 Baseline Baseline，防止性能回退)
+[HumanEval]  ──> P0 攻坚：拓宽 Digest 触发面 + 分桶归因 (解决 -2.44pp 掉点)
+[MBPP]       ──> P1 攻坚：解耦 Early Stop 与 VIB 路由 (解决 -0.24% 负压缩)
+
+```
+
+---
+
+## P0：HumanEval 攻坚 —— 救回 7 个 Full-Only 错题
+
+HumanEval 当前的掉点（$92.07\% \rightarrow 89.63\%$）主要由 **7 个 `full_only` 错题**导致。`vib_digest_sum = 2` 的数据证明 **Digest 机制并没有坏，而是“太保守”导致几乎没触发**。
+
+### 1. 对 7 个 `full_only` 错题进行分桶归因
+
+从日志提取出的错题分布如下：
+
+| Task ID | Full | VIB | VIB Msgs | 现象分析与根因判定 | 建议对策 |
+| --- | --- | --- | --- | --- | --- |
+| **HumanEval/59** | Pass | Fail | **2** | **极端过压缩**：被砍掉 4 条消息，关键算法提示缺失 | 降低过压缩概率 / 强化 Digest |
+| **HumanEval/32** | Pass | Fail | **6** | **语义漂移**：消息数一样，但 Reviewer/Coder 表达微调导致解法偏移 | 增加边界条件强校验 |
+| **HumanEval/65** | Pass | Fail | **6** | **语义漂移**：无消息剪枝，属于纯 LLM 采样波动 | 观察，不作硬干预 |
+| **HumanEval/125** | Pass | Fail | **5** | **轻度剪枝遗漏**：丢掉了 1 条含边界条件的评论 | 依靠扩充后的 Digest 救回 |
+| **HumanEval/134** | Pass | Fail | **5** | **边界条件遗漏**：特殊字符/空格处理遗漏 | 依靠扩充后的 Digest 救回 |
+
+### 2. 拓宽 Digest Fallback 的触发逻辑 (核心 Patch)
+
+不要只依赖 Reviewer 的 Hard Rules，改为“多角色 + 扩展词库”的轻量摘要回退：
+
+* **触发角色拓宽**：从仅限 `Reviewer` 拓宽至 `Coder` 与 `Reviewer`（当 Coder 提出了修正意见但被 Router 挡掉时，同样提炼）。
+* **正则词库扩充**：加入代码关键边界触发词：
+`edge`, `boundary`, `corner`, `empty`, `zero`, `negative`, `none`, `null`, `overflow`, `off-by-one`, `invalid`, `exception`
+* **摘要生成逻辑**：
+被挡掉的消息如果命中词库，自动生成一行结构化 Digest 注入 `history`：
+> `[System Digest]: Coder/Reviewer dropped msg noted boundary/edge constraints: <extracted_keyword_sentence>`
+
+
+
+---
+
+## P1：MBPP 优化 —— 解耦 Early Stop 与 VIB 路由
+
+MBPP 呈现出 **+0.39pp 准确率，但 -0.24% 消息压缩率** 的矛盾现象。
+
+### 根因剖析
+
+MBPP 的 `same_message_ratio` 高达 94.16%，`full_early_stop` (231) 与 `vib_early_stop` (229) 几乎完全一致。
+这说明：
+
+1. **绝大多数 MBPP 题目在 Step 1 跑单测就成功早停了**，VIB Router 根本没有发挥作用的空间。
+
+
+2. **在少数没有早停的复杂题上，VIB 路由反而多走了轮数（如 MBPP/101, 228）**，导致总体 Token/Message 呈现负节省。
+
+
+
+### 优化动作
+
+1. **统计指标解耦**：在评估脚本中，将“Early Stopping 带来的节省”与“VIB 稀疏通信带来的节省”拆开统计，避免论文中指标互相混淆。
+2. **代码路由阈值微调**：代码任务中的冗余定义与数学不同。对于 MBPP，如果未触发 Early Stop，说明前一轮单测失败，此时**后续 Reviewer/Coder 的报错反馈冗余度极低，应当放宽放行门槛**，避免让 VIB 陷入“因为不确定而反复无效多轮沟通”的陷阱。
+
+---
+
+## 下一步实验 Patch 实施计划
+
+建议立刻执行一轮小规模验证（重点验证 HumanEval 的修复）：
+
+```bash
+# 实验步骤：
+# 1. 应用扩充版 Digest Fallback Patch (代码见下)
+# 2. 保持 GSM8K frozen same-round history 逻辑不动
+# 3. 仅重跑 HumanEval 全部 164 题，观察 full_only 数量与 vib_digest_sum 是否显著增加
+
+```
+
+### 拟增加的 Patch 代码示例 (`vib_router.py` / `workflow.py`)
+
+```python
+# 扩充后的 Digest 提取规则
+DIGEST_KEYWORDS = re.compile(
+    r'\b(edge|boundary|corner|empty|zero|negative|none|null|overflow|off-by-one|invalid|exception|fails?|case)\b',
+    re.IGNORECASE
+)
+
+def extract_fallback_digest(dropped_msg: str, role: str) -> str | None:
+    """当 Coder/Reviewer 消息被卡掉时，如果包含边界条件关键词，提取精简摘要"""
+    if role not in ["Coder", "Reviewer"]:
+        return None
+    
+    sentences = re.split(r'[.\n]', dropped_msg)
+    matched_sentences = [s.strip() for s in sentences if DIGEST_KEYWORDS.search(s)]
+    
+    if matched_sentences:
+        # 取第一条命中的边界提示，限制长度不超过 100 字符
+        digest_text = matched_sentences[0][:100]
+        return f"[{role} Hint]: Pay attention to {digest_text}"
+    return None
+
+```
+
+---
+
+我们需要先针对 HumanEval 跑这一版 Digest 扩充 Patch，还是你希望先将 MBPP 的 Early Stop 统计指标做单独解耦？

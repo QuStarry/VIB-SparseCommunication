@@ -143,7 +143,8 @@ class ExperimentConfig:
     enable_gsm8k_frozen_history: bool = True
     enable_math_role_weights: bool = False
     enable_gsm8k_reasoning_guard: bool = False
-    enable_humaneval_digest: bool = True
+    enable_humaneval_digest: bool = False
+    enable_humaneval_first_round_role_guard: bool = True
     enable_mbpp_early_stop: bool = True
 
 
@@ -448,13 +449,73 @@ def create_math_agents(client: DeepSeekClient) -> list:
     ]
 
 
-def generate_final_code(client: DeepSeekClient, prompt: str, history: list) -> str:
-    """根据讨论历史生成最终代码"""
+def extract_visible_examples(prompt: str) -> List[str]:
+    """提取 HumanEval prompt 中题面可见的示例。"""
+    lines = prompt.splitlines()
+    examples: List[str] = []
+    idx = 0
+    while idx < len(lines):
+        line = lines[idx].rstrip()
+        stripped = line.strip()
+        if not stripped:
+            idx += 1
+            continue
+
+        if stripped.startswith(">>>"):
+            example_parts = [stripped]
+            next_idx = idx + 1
+            while next_idx < len(lines):
+                continuation = lines[next_idx].rstrip().strip()
+                if not continuation:
+                    break
+                if continuation.startswith(">>>"):
+                    break
+                if continuation.startswith('"""') or continuation.startswith("'''"):
+                    break
+                example_parts.append(continuation)
+                next_idx += 1
+            examples.append("\n".join(example_parts))
+            idx = next_idx
+            continue
+
+        if "=>" in stripped or "==" in stripped or "➞" in stripped:
+            examples.append(stripped)
+            idx += 1
+            continue
+
+        if stripped.startswith("Input:"):
+            example_parts = [stripped]
+            next_idx = idx + 1
+            while next_idx < len(lines):
+                continuation = lines[next_idx].rstrip().strip()
+                if not continuation:
+                    break
+                if continuation.startswith("Example") or continuation.startswith("Input:"):
+                    break
+                example_parts.append(continuation)
+                if continuation.startswith("Output:"):
+                    break
+                next_idx += 1
+            examples.append("\n".join(example_parts))
+            idx = next_idx + 1
+            continue
+
+        idx += 1
+    return examples
+
+
+def build_final_code_prompt(prompt: str, history: list) -> str:
+    """构造最终代码合成提示词，优先锚定题面示例而非讨论中的臆测约束。"""
     history_text = "\n".join(history) if history else "(无历史讨论)"
-    prompt_text = f"""请阅读团队讨论历史，补全并实现以下 Python 函数。
+    visible_examples = extract_visible_examples(prompt)
+    examples_text = "\n".join(visible_examples) if visible_examples else "(题面未提供可抽取示例)"
+    return f"""请阅读团队讨论历史，补全并实现以下 Python 函数。
 
 【需求与签名】:
 {prompt}
+
+【题面可见示例】:
+{examples_text}
 
 【团队讨论历史】:
 {history_text}
@@ -462,18 +523,38 @@ def generate_final_code(client: DeepSeekClient, prompt: str, history: list) -> s
 【极其重要的输出要求】:
 1. 仅输出最终可执行的 Python 代码实现。
 2. 必须包含完整的函数定义并直接可被调用。
-3. 不要包含任何 markdown 说明文字或解说，直接写代码。"""
+3. 不要包含任何 markdown 说明文字或解说，直接写代码。
+4. 若团队讨论存在冲突，以题面函数签名、docstring 示例和隐含测试语义为最高优先级，不要臆造额外约束。
+5. 优先选择最直接、最贴合示例的正确实现，避免为了“泛化”而偏离题目真实语义。
+6. 若【题面可见示例】存在，它们是最终代码必须优先满足的显式约束。
+7. 若团队讨论与题面自然语言说明、题面示例或题面运算语义（如优先级、边界条件、tie-break 规则）冲突，忽略讨论中的相反结论，以题面为最终裁决。
+8. 不要输出报错文本、占位符或解释；若有不确定，仍返回你认为最可能通过测试的完整实现。"""
 
-    res = client.chat(
-        messages=[{"role": "user", "content": prompt_text}],
-        max_tokens=1024, temperature=0.1
-    )
-    code = res["content"]
+
+def sanitize_code_output(code: str) -> str:
+    """从模型返回中提取纯代码文本。"""
+    code = (code or "").strip()
     if "```python" in code:
-        code = code.split("```python")[1].split("```")[0].strip()
+        code = code.split("```python", 1)[1].split("```", 1)[0].strip()
     elif "```" in code:
-        code = code.split("```")[1].split("```")[0].strip()
-    return code
+        code = code.split("```", 1)[1].split("```", 1)[0].strip()
+    return code.strip()
+
+
+def generate_final_code(client: DeepSeekClient, prompt: str, history: list) -> str:
+    """根据讨论历史生成最终代码"""
+    prompt_text = build_final_code_prompt(prompt, history)
+    last_code = ""
+    for _ in range(3):
+        res = client.chat(
+            messages=[{"role": "user", "content": prompt_text}],
+            max_tokens=1024, temperature=0.1
+        )
+        code = sanitize_code_output(res["content"])
+        last_code = code
+        if code and not code.startswith("[API Error:"):
+            return code
+    return last_code
 
 
 def generate_final_answer(client: DeepSeekClient, prompt: str, history: list) -> str:
@@ -524,7 +605,17 @@ class MultiDatasetHarness:
             ),
             "enable_digest_fallback": (
                 sample.dataset_name == "HumanEval" and self.experiment_config.enable_humaneval_digest
-            )
+            ),
+            "required_roles_first_step": (
+                ["Coder", "Reviewer"]
+                if sample.dataset_name == "HumanEval" and self.experiment_config.enable_humaneval_first_round_role_guard
+                else []
+            ),
+            "first_step_min_approvals": (
+                2
+                if sample.dataset_name == "HumanEval" and self.experiment_config.enable_humaneval_first_round_role_guard
+                else 0
+            ),
         }
 
     def _create_vib_router(self) -> VIBSparseCommRouter:
@@ -556,7 +647,9 @@ class MultiDatasetHarness:
             vib_router=router,
             max_steps=max_steps_override or self.max_steps,
             same_round_history_mode=workflow_options["same_round_history_mode"],
-            enable_digest_fallback=workflow_options["enable_digest_fallback"]
+            enable_digest_fallback=workflow_options["enable_digest_fallback"],
+            required_roles_first_step=workflow_options["required_roles_first_step"],
+            first_step_min_approvals=workflow_options["first_step_min_approvals"]
         )
         workflow_result = workflow.run(goal=sample.prompt, verbose=False)
         final_output = generate_fn(client, sample.prompt, workflow_result["history"])
@@ -890,7 +983,9 @@ def main():
     parser.add_argument("--disable-gsm8k-reasoning-guard", action="store_true",
                         help="关闭 GSM8K 轻量推理守护")
     parser.add_argument("--disable-humaneval-digest", action="store_true",
-                        help="关闭 HumanEval reviewer digest fallback")
+                        help="关闭 HumanEval reviewer digest fallback（默认已关闭）")
+    parser.add_argument("--enable-humaneval-digest", action="store_true",
+                        help="打开 HumanEval reviewer digest fallback（默认关闭）")
     parser.add_argument("--disable-mbpp-early-stop", action="store_true",
                         help="关闭 MBPP 一轮 probe early stopping")
     args = parser.parse_args()
@@ -908,11 +1003,19 @@ def main():
         print("Error: 请设置 DEEPSEEK_API_KEY 环境变量")
         sys.exit(1)
 
+    if args.enable_humaneval_digest and args.disable_humaneval_digest:
+        print("Error: 不能同时指定 --enable-humaneval-digest 和 --disable-humaneval-digest")
+        sys.exit(1)
+
     experiment_config = ExperimentConfig(
         enable_gsm8k_frozen_history=not args.disable_gsm8k_frozen_history,
         enable_math_role_weights=not args.disable_math_role_weights,
         enable_gsm8k_reasoning_guard=not args.disable_gsm8k_reasoning_guard,
-        enable_humaneval_digest=not args.disable_humaneval_digest,
+        enable_humaneval_digest=(
+            args.enable_humaneval_digest
+            if (args.enable_humaneval_digest or args.disable_humaneval_digest)
+            else False
+        ),
         enable_mbpp_early_stop=not args.disable_mbpp_early_stop,
     )
 
