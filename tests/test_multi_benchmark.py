@@ -126,6 +126,15 @@ def test_build_final_code_prompt_prioritizes_problem_examples():
     assert "【题面可见示例】" in final_prompt
     assert ">>> foo(1)\n2" in final_prompt
     assert prompt in final_prompt
+    assert "不要添加题面和示例均未明确要求的防御性分支或额外边界校验" in final_prompt
+    assert "题面没有写应该抛异常时永远不要写 raise 分支" in final_prompt
+    assert "永远不要因为“我认为示例有误”" in final_prompt
+    assert "若 Reviewer 明确给出“形如 输入X → 输出Y”的单点断言" in final_prompt
+    assert "有明确多数派（出现次数 ≥ 其他方案之和）时选多数派" in final_prompt
+    assert "任何被 Reviewer 用具体反例明确否决的方案" in final_prompt
+    assert "Reviewer 给出的具体反例（如“shift = 位数时应返回原字符串" in final_prompt
+    assert "严格照抄题面文本里的运算符用词" in final_prompt
+    assert "题面没提到应 raise ValueError 时，永远不要写 raise 分支" in final_prompt
 
 
 def test_extract_visible_examples_collects_doctest_blocks():

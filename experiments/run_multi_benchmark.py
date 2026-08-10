@@ -528,7 +528,18 @@ def build_final_code_prompt(prompt: str, history: list) -> str:
 5. 优先选择最直接、最贴合示例的正确实现，避免为了“泛化”而偏离题目真实语义。
 6. 若【题面可见示例】存在，它们是最终代码必须优先满足的显式约束。
 7. 若团队讨论与题面自然语言说明、题面示例或题面运算语义（如优先级、边界条件、tie-break 规则）冲突，忽略讨论中的相反结论，以题面为最终裁决。
-8. 不要输出报错文本、占位符或解释；若有不确定，仍返回你认为最可能通过测试的完整实现。"""
+8. 不要添加题面和示例均未明确要求的防御性分支或额外边界校验（例如对输入范围、空值、负数、符号位、输入数组长度等做出题面没有显式要求的判断或 raise）；题面没有写应该抛异常时永远不要写 raise 分支，哪怕 Note 里只是陈述长度关系也不要做显式校验。
+9. 永远不要因为“我认为示例有误”或“我认为示例需要修正”就推翻题面可见示例或示例对应的正确语义；题面和可见示例是最终裁决。
+10. 若 Reviewer 明确给出“形如 输入X → 输出Y”的单点断言（例如“[1, 1, 2] 的次小值应为 1”或“foo(3,4) 必须返回 9”等），请在最终实现中显式写出能够满足该断言的判断/分支/算法，不能仅停留在口头讨论。
+11. 当讨论里同时出现多种冲突实现/公式时，按以下顺序选最终方案：
+    a) 先统计每种实现/公式的出现次数，有明确多数派（出现次数 ≥ 其他方案之和）时选多数派；
+    b) 若打平，优先选 Architect 首次明确支持且 Reviewer 没有举出反例的方案；
+    c) 任何被 Reviewer 用具体反例明确否决的方案（例如“该简化公式会导致 n=5 时返回 10，但实际仅 1 个有效三元组”）无论出现多少次，必须排除。
+12. 当出现边界条件争议（例如 `>` vs `>=`、`<` vs `<=`、是否 raise、是否处理负数）时，严格按以下优先级裁决：
+    a) Reviewer 给出的具体反例（如“shift = 位数时应返回原字符串，而不是反转”）最高；
+    b) 若无反例，严格照抄题面文本里的运算符用词，题面写 `>` 就用 `>`，写 `>=` 就用 `>=`，绝不自己替换；
+    c) 题面没提到应 raise ValueError 时，永远不要写 raise 分支（哪怕 Reviewer 建议加也要忽略）。
+13. 不要输出报错文本、占位符或解释；若有不确定，仍返回你认为最可能通过测试的完整实现。"""
 
 
 def sanitize_code_output(code: str) -> str:
@@ -977,17 +988,21 @@ def main():
     parser.add_argument("--output", type=str, default="results/multi_benchmark.json",
                         help="输出 JSON 文件路径")
     parser.add_argument("--disable-gsm8k-frozen-history", action="store_true",
-                        help="关闭 GSM8K 同轮 frozen-history 修复")
+                        help="关闭 GSM8K 同轮 frozen-history 修复（默认开启）")
+    parser.add_argument("--enable-math-role-weights", action="store_true",
+                        help="打开数学角色权重补偿（Planner/Solver/Verifier），默认关闭")
     parser.add_argument("--disable-math-role-weights", action="store_true",
-                        help="关闭数学角色权重补偿（Planner/Solver/Verifier）")
+                        help="关闭数学角色权重补偿（默认已关闭）；与 --enable 不能同时指定")
+    parser.add_argument("--enable-gsm8k-reasoning-guard", action="store_true",
+                        help="打开 GSM8K 轻量推理守护，默认关闭")
     parser.add_argument("--disable-gsm8k-reasoning-guard", action="store_true",
-                        help="关闭 GSM8K 轻量推理守护")
+                        help="关闭 GSM8K 轻量推理守护（默认已关闭）；与 --enable 不能同时指定")
     parser.add_argument("--disable-humaneval-digest", action="store_true",
                         help="关闭 HumanEval reviewer digest fallback（默认已关闭）")
     parser.add_argument("--enable-humaneval-digest", action="store_true",
                         help="打开 HumanEval reviewer digest fallback（默认关闭）")
     parser.add_argument("--disable-mbpp-early-stop", action="store_true",
-                        help="关闭 MBPP 一轮 probe early stopping")
+                        help="关闭 MBPP 一轮 probe early stopping（默认开启）")
     args = parser.parse_args()
 
     offline = not args.online
@@ -1003,18 +1018,31 @@ def main():
         print("Error: 请设置 DEEPSEEK_API_KEY 环境变量")
         sys.exit(1)
 
-    if args.enable_humaneval_digest and args.disable_humaneval_digest:
-        print("Error: 不能同时指定 --enable-humaneval-digest 和 --disable-humaneval-digest")
-        sys.exit(1)
+    def resolve_flag(name, enable_arg, disable_arg):
+        if enable_arg and disable_arg:
+            print(f"Error: 不能同时指定 --enable-{name} 和 --disable-{name}")
+            sys.exit(1)
+        if enable_arg or disable_arg:
+            return bool(enable_arg)
+        cfg_default = getattr(ExperimentConfig(), f"enable_{name}")
+        return cfg_default
 
     experiment_config = ExperimentConfig(
         enable_gsm8k_frozen_history=not args.disable_gsm8k_frozen_history,
-        enable_math_role_weights=not args.disable_math_role_weights,
-        enable_gsm8k_reasoning_guard=not args.disable_gsm8k_reasoning_guard,
-        enable_humaneval_digest=(
-            args.enable_humaneval_digest
-            if (args.enable_humaneval_digest or args.disable_humaneval_digest)
-            else False
+        enable_math_role_weights=resolve_flag(
+            "math_role_weights",
+            args.enable_math_role_weights,
+            args.disable_math_role_weights,
+        ),
+        enable_gsm8k_reasoning_guard=resolve_flag(
+            "gsm8k_reasoning_guard",
+            args.enable_gsm8k_reasoning_guard,
+            args.disable_gsm8k_reasoning_guard,
+        ),
+        enable_humaneval_digest=resolve_flag(
+            "humaneval_digest",
+            args.enable_humaneval_digest,
+            args.disable_humaneval_digest,
         ),
         enable_mbpp_early_stop=not args.disable_mbpp_early_stop,
     )

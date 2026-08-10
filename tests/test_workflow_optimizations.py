@@ -198,9 +198,17 @@ def test_harness_default_config_disables_humaneval_digest():
     options = harness._workflow_options_for_sample(sample)
 
     assert harness.experiment_config.enable_humaneval_digest is False
+    assert harness.experiment_config.enable_math_role_weights is False
+    assert harness.experiment_config.enable_gsm8k_reasoning_guard is False
+    assert harness.experiment_config.enable_gsm8k_frozen_history is True
+    assert harness.experiment_config.enable_mbpp_early_stop is True
     assert options["enable_digest_fallback"] is False
     assert options["required_roles_first_step"] == ["Coder", "Reviewer"]
     assert options["first_step_min_approvals"] == 2
+    gsm8k_sample = TaskSample(task_id="GSM8K/test", dataset_name="GSM8K", prompt="math")
+    gsm8k_options = harness._workflow_options_for_sample(gsm8k_sample)
+    assert gsm8k_sample.dataset_name == "GSM8K"
+    assert gsm8k_options["same_round_history_mode"] == "frozen"
 
 
 def test_mbpp_early_stop_uses_probe_when_first_round_passes(monkeypatch):
