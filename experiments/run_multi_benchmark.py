@@ -136,6 +136,8 @@ class TaskResult:
     vib_prompt_tokens: int = 0
     vib_completion_tokens: int = 0
     error_msg: Optional[str] = None
+    full_early_stopped: bool = False
+    vib_early_stopped: bool = False
 
 
 @dataclass
@@ -521,6 +523,16 @@ def build_final_code_prompt(prompt: str, history: list) -> str:
 {history_text}
 
 【极其重要的输出要求】:
+0. 【第 0 步 强制算法过滤器，优先级高于 1-13 条，不接受例外】：严格按下列 4 小步执行，一步都不能跳：
+   第 1 小步：先从【题面可见示例】中把所有 doctest / Input-Output / ➞ / => / == 对全部抄下来，做成一张明确的「输入 → 期望输出」映射表。
+   第 2 小步：从【团队讨论历史】中把所有明确提到过的候选算法 / 实现方案全部列出来（例如 A=set() 比较字符种类、B=Counter() 比较字符频次、C=sorted() 比较、D=牛顿法、E=二分法、F=加 raise ValueError、G=不加 raise 等）。
+   第 3 小步：对第 2 小步中的**每一个候选方案**，逐个对第 1 小步映射表中的**每一对 输入→期望输出**做一次**具体数值/语义代入计算**（不能只看表面描述）：
+      - 若该候选在任何一对上计算出的结果 ≠ 期望输出 → 该候选被**永久淘汰**（哪怕该候选在其余所有对都正确，也必须直接排除，不能再考虑）。
+      - 若该候选在**全部**输入对上计算出的结果都 == 期望 → 保留为"全通候选"。
+   第 4 小步：根据保留下来的"全通候选"集合作最终决策：
+      - 若全通候选 **只剩 1 个** → 直接选择该候选，**完全忽略**讨论中支持任何已淘汰候选的所有文字（哪怕 Reviewer / Architect 反复强调已淘汰的方案多少次，你也只选这一个全通方案）。
+      - 若全通候选 ≥ 2 个 → 再按下面规则 11 的多数派 / 仲裁优先级裁决。
+      - 若全通候选为 0 个 → 选择通过示例最多的那个候选。
 1. 仅输出最终可执行的 Python 代码实现。
 2. 必须包含完整的函数定义并直接可被调用。
 3. 不要包含任何 markdown 说明文字或解说，直接写代码。
@@ -553,19 +565,112 @@ def sanitize_code_output(code: str) -> str:
 
 
 def generate_final_code(client: DeepSeekClient, prompt: str, history: list) -> str:
-    """根据讨论历史生成最终代码"""
+    """根据讨论历史生成最终代码。对代码题型（HumanEval/MBPP 等）内置两层自修复：
+    1. Prompt 级【第 0 步强制算法过滤器】（见 build_final_code_prompt 规则 0）。
+    2. 运行级 doctest 自修复循环：若候选代码在题面可见 doctest 上有任何真实失败，
+       则把失败明细追加到 retry prompt 中再合成，最多重试 2 次。
+    """
     prompt_text = build_final_code_prompt(prompt, history)
+    visible_examples = extract_visible_examples(prompt)
     last_code = ""
-    for _ in range(3):
+    _doctest_failures_text = ""
+
+    for attempt in range(3):
+        if attempt == 0:
+            current_prompt = prompt_text
+        else:
+            retry_hint = f"""
+【上一版失败的具体 doctest 明细（真实 Python 执行结果，不是讨论）】：
+上一版代码如下（请直接推翻或修改它）：
+```python
+{last_code}
+```
+上一版代码在题面 doctest 上的真实执行失败：
+{_doctest_failures_text or "（上一版为 API 错误或空代码，还没产生 doctest 结果）"}
+
+请严格参考【极其重要的输出要求】第 0 步规则，上一版实现显然是【被永久淘汰】的候选。请立刻换一种能通过全部 doctest 的实现方案。
+"""
+            current_prompt = prompt_text + retry_hint
+
         res = client.chat(
-            messages=[{"role": "user", "content": prompt_text}],
+            messages=[{"role": "user", "content": current_prompt}],
             max_tokens=1024, temperature=0.1
         )
         code = sanitize_code_output(res["content"])
         last_code = code
-        if code and not code.startswith("[API Error:"):
-            return code
+        if not code or code.startswith("[API Error:"):
+            continue
+
+        if attempt < 2 and visible_examples:
+            failures = _run_visible_doctest_against_code(code, prompt)
+            if failures:
+                _doctest_failures_text = "\n".join(
+                    f"  * 输入 {f['args_repr']} → 你的代码输出 {f['got_repr']}，但题面期望 {f['want_repr']}（即 doctest 行 {f['doctest_line_repr']} 失败）"
+                    for f in failures
+                )
+                continue
+        return code
     return last_code
+
+
+def _run_visible_doctest_against_code(code: str, prompt: str) -> List[Dict[str, str]]:
+    """真实 exec 执行 prompt 里的所有可见 doctest，返回失败明细列表（空 = 全通）。"""
+    failures: List[Dict[str, str]] = []
+    visible_examples = extract_visible_examples(prompt)
+    if not visible_examples:
+        return failures
+
+    try:
+        m = re.search(r"def\s+(\w+)\s*\(", prompt)
+        if not m:
+            return failures
+        func_name = m.group(1)
+    except Exception:
+        return failures
+
+    ns: Dict[str, Any] = {}
+    try:
+        exec(code, ns)
+    except Exception:
+        return failures
+    if func_name not in ns:
+        return failures
+    func = ns[func_name]
+
+    for ex in visible_examples:
+        want_match = re.search(r"#\s*期望[:：]?\s*(.+)", ex)
+        if want_match:
+            args_str = ex.split("#")[0].strip()
+            want_str = want_match.group(1).strip()
+        else:
+            doctest_match = re.match(r"^>>>\s+(.+?)\s*$", ex, re.M)
+            if not doctest_match:
+                continue
+            call_line = doctest_match.group(1).strip()
+            next_line_idx = ex.find(doctest_match.group(0)) + len(doctest_match.group(0))
+            rest = ex[next_line_idx:].lstrip("\n")
+            first_non_ws = re.match(r"(\S.*)", rest)
+            if not first_non_ws:
+                continue
+            want_str = first_non_ws.group(1).strip()
+            args_str = call_line
+        try:
+            got_obj = eval(args_str, {"__builtins__": __builtins__}, {func_name: func, **ns})
+            want_obj = eval(want_str, {"__builtins__": __builtins__}, ns)
+        except Exception:
+            continue
+        try:
+            equal = (got_obj == want_obj)
+        except Exception:
+            equal = False
+        if not equal:
+            failures.append({
+                "args_repr": args_str,
+                "want_repr": want_str,
+                "got_repr": repr(got_obj),
+                "doctest_line_repr": ex[:200].replace("\n", " ↵ "),
+            })
+    return failures
 
 
 def generate_final_answer(client: DeepSeekClient, prompt: str, history: list) -> str:
@@ -771,7 +876,9 @@ class MultiDatasetHarness:
                 full_prompt_tokens=full_token_stats["total_prompt_tokens"],
                 full_completion_tokens=full_token_stats["total_completion_tokens"],
                 vib_prompt_tokens=vib_token_stats["total_prompt_tokens"],
-                vib_completion_tokens=vib_token_stats["total_completion_tokens"]
+                vib_completion_tokens=vib_token_stats["total_completion_tokens"],
+                full_early_stopped=bool(full_result.get("early_stopped")),
+                vib_early_stopped=bool(vib_result.get("early_stopped"))
             )
             return {
                 "task_result": task_result,
@@ -835,7 +942,22 @@ class MultiDatasetHarness:
                 "full_completion_tokens": 0, "vib_completion_tokens": 0,
                 "full_only": 0, "vib_only": 0,
                 "both_pass": 0, "both_fail": 0,
-                "same_msg_count": 0
+                "same_msg_count": 0,
+                "early_stop_both": 0,
+                "early_stop_any": 0,
+                "es_full_passed": 0, "es_vib_passed": 0,
+                "es_full_msgs": 0, "es_vib_msgs": 0,
+                "es_full_tokens": 0, "es_vib_tokens": 0,
+                "es_full_prompt_tokens": 0, "es_vib_prompt_tokens": 0,
+                "es_full_completion_tokens": 0, "es_vib_completion_tokens": 0,
+                "es_same_msg_count": 0,
+                "mr_full_passed": 0, "mr_vib_passed": 0,
+                "mr_full_msgs": 0, "mr_vib_msgs": 0,
+                "mr_full_tokens": 0, "mr_vib_tokens": 0,
+                "mr_full_prompt_tokens": 0, "mr_vib_prompt_tokens": 0,
+                "mr_full_completion_tokens": 0, "mr_vib_completion_tokens": 0,
+                "mr_same_msg_count": 0,
+                "mr_total": 0
             }
 
             dataset_start = time.time()
@@ -864,6 +986,37 @@ class MultiDatasetHarness:
                 stats["full_completion_tokens"] += res.full_completion_tokens
                 stats["vib_completion_tokens"] += res.vib_completion_tokens
                 stats["same_msg_count"] += int(res.full_messages == res.vib_messages)
+
+                # MBPP early-stop 拆分统计（对其他数据集为 all-0，保持结构统一）
+                es = bool(res.full_early_stopped or res.vib_early_stopped)
+                if es:
+                    stats["early_stop_any"] += 1
+                    stats["es_full_passed"] += int(res.full_passed)
+                    stats["es_vib_passed"] += int(res.vib_passed)
+                    stats["es_full_msgs"] += res.full_messages
+                    stats["es_vib_msgs"] += res.vib_messages
+                    stats["es_full_tokens"] += res.full_tokens
+                    stats["es_vib_tokens"] += res.vib_tokens
+                    stats["es_full_prompt_tokens"] += res.full_prompt_tokens
+                    stats["es_vib_prompt_tokens"] += res.vib_prompt_tokens
+                    stats["es_full_completion_tokens"] += res.full_completion_tokens
+                    stats["es_vib_completion_tokens"] += res.vib_completion_tokens
+                    stats["es_same_msg_count"] += int(res.full_messages == res.vib_messages)
+                    if res.full_early_stopped and res.vib_early_stopped:
+                        stats["early_stop_both"] += 1
+                else:
+                    stats["mr_total"] += 1
+                    stats["mr_full_passed"] += int(res.full_passed)
+                    stats["mr_vib_passed"] += int(res.vib_passed)
+                    stats["mr_full_msgs"] += res.full_messages
+                    stats["mr_vib_msgs"] += res.vib_messages
+                    stats["mr_full_tokens"] += res.full_tokens
+                    stats["mr_vib_tokens"] += res.vib_tokens
+                    stats["mr_full_prompt_tokens"] += res.full_prompt_tokens
+                    stats["mr_vib_prompt_tokens"] += res.vib_prompt_tokens
+                    stats["mr_full_completion_tokens"] += res.full_completion_tokens
+                    stats["mr_vib_completion_tokens"] += res.vib_completion_tokens
+                    stats["mr_same_msg_count"] += int(res.full_messages == res.vib_messages)
 
                 if res.full_passed and res.vib_passed:
                     stats["both_pass"] += 1
@@ -935,6 +1088,40 @@ class MultiDatasetHarness:
                 "both_pass_count": stats["both_pass"],
                 "both_fail_count": stats["both_fail"]
             }
+
+            # MBPP / 或任何存在 early-stop 行为的数据集：额外拆 early-stop vs multi-round
+            if ds_name == "MBPP" or stats["early_stop_any"] > 0:
+                es_count = stats["early_stop_any"]
+                mr_count = stats["mr_total"]
+
+                def _safe_pct(numer: int, denom: int) -> float:
+                    return round((numer / denom) * 100, 2) if denom > 0 else 0.0
+
+                es_mc = _safe_pct(stats["es_full_msgs"] - stats["es_vib_msgs"], stats["es_full_msgs"])
+                mr_mc = _safe_pct(stats["mr_full_msgs"] - stats["mr_vib_msgs"], stats["mr_full_msgs"])
+                es_ts = _safe_pct(stats["es_full_tokens"] - stats["es_vib_tokens"], stats["es_full_tokens"])
+                mr_ts = _safe_pct(stats["mr_full_tokens"] - stats["mr_vib_tokens"], stats["mr_full_tokens"])
+
+                summary[ds_name].update({
+                    "early_stopped_count": es_count,
+                    "early_stopped_pct": round(es_count / total * 100, 2),
+                    "early_stopped_both_agree_count": stats["early_stop_both"],
+                    "multi_round_count": mr_count,
+                    "multi_round_pct": round(mr_count / total * 100, 2),
+                    "early_stopped_full_pass_rate": _safe_pct(stats["es_full_passed"], es_count),
+                    "early_stopped_vib_pass_rate": _safe_pct(stats["es_vib_passed"], es_count),
+                    "early_stopped_pass_delta_pp": round(_safe_pct(stats["es_vib_passed"], es_count) - _safe_pct(stats["es_full_passed"], es_count), 2),
+                    "early_stopped_msg_compression_pct": es_mc,
+                    "early_stopped_token_saving_pct": es_ts,
+                    "early_stopped_same_message_ratio": round(stats["es_same_msg_count"] / max(1, es_count), 4),
+                    "multi_round_full_pass_rate": _safe_pct(stats["mr_full_passed"], mr_count),
+                    "multi_round_vib_pass_rate": _safe_pct(stats["mr_vib_passed"], mr_count),
+                    "multi_round_pass_delta_pp": round(_safe_pct(stats["mr_vib_passed"], mr_count) - _safe_pct(stats["mr_full_passed"], mr_count), 2),
+                    "multi_round_msg_compression_pct": mr_mc,
+                    "multi_round_token_saving_pct": mr_ts,
+                    "multi_round_same_message_ratio": round(stats["mr_same_msg_count"] / max(1, mr_count), 4),
+                })
+
             all_results[ds_name] = [asdict(r) for r in results if r is not None]
             trace_results[ds_name] = [trace for trace in traces if trace is not None]
 
@@ -966,7 +1153,29 @@ class MultiDatasetHarness:
                   f"{metrics['msg_compression_pct']:>11.2f}% | "
                   f"{metrics['token_saving_pct']:>11.2f}%")
 
+        print(f"\n{'='*80}")
+        print(" 📋 数据集内部分组统计（仅针对存在 early-stop 或分组拆分的数据集）")
         print(f"{'='*80}")
+        for ds_name, metrics in summary.items():
+            if "multi_round_count" not in metrics:
+                continue
+            es = metrics["early_stopped_count"]
+            mr = metrics["multi_round_count"]
+            print(f"\n  ▸ {ds_name} ({metrics['total_tasks']} 题):")
+            print(f"    · Early-Stopped Probe 通过: {es} 题 "
+                  f"({metrics['early_stopped_pct']:.2f}%) — "
+                  f"Full {metrics['early_stopped_full_pass_rate']:.2f}% / "
+                  f"VIB {metrics['early_stopped_vib_pass_rate']:.2f}% "
+                  f"(Δ {metrics['early_stopped_pass_delta_pp']:+.2f}pp), "
+                  f"Msg Compress {metrics['early_stopped_msg_compression_pct']:.2f}%")
+            print(f"    · Need Multi-Round: {mr} 题 "
+                  f"({metrics['multi_round_pct']:.2f}%) — "
+                  f"Full {metrics['multi_round_full_pass_rate']:.2f}% / "
+                  f"VIB {metrics['multi_round_vib_pass_rate']:.2f}% "
+                  f"(Δ {metrics['multi_round_pass_delta_pp']:+.2f}pp), "
+                  f"Msg Compress {metrics['multi_round_msg_compression_pct']:.2f}%, "
+                  f"Token Saving {metrics['multi_round_token_saving_pct']:.2f}%")
+        print(f"\n{'='*80}")
 
 
 # ============================================

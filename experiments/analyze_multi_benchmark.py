@@ -46,6 +46,7 @@ def analyze_dataset(dataset_name: str, rows: list, summary_metrics: dict) -> dic
         "avg_token_delta": round(sum(token_deltas) / max(1, len(token_deltas)), 4),
         "full_only_examples": full_only[:10],
         "vib_only_examples": vib_only[:10],
+        "summary": summary_metrics,
     }
 
     if "prompt_saving_pct" in summary_metrics:
@@ -106,9 +107,64 @@ def render_markdown(result_path: Path, analyses: list, trace_context: dict) -> s
         "- `full_only_count` 表示 `Full 成功但 VIB 失败`；`vib_only_count` 表示 `VIB 成功但 Full 失败`。",
         "- `mcnemar_pvalue` 越小，说明两种设置在同一批任务上的差异越不像随机波动。",
         "",
+        "## Pareto 概览 (Msg Compression vs Pass@1 Δ)",
+        "",
+        "横轴是该数据集的消息压缩率，纵轴是 VIB 相对于 Full 的 Pass@1 变化。",
+        "",
+        "| Dataset | Total | Full Pass@1 | VIB Pass@1 | Δ Pass@1 (pp) | Msg Compress | Token Saving | McNemar p |",
+        "|---|---|---|---|---|---|---|---|",
+    ]
+    for item in analyses:
+        s = item["summary"]
+        lines.append(
+            f"| {item['dataset']} | {item['total_tasks']} | "
+            f"{s.get('full_pass_rate', 'N/A')}% | "
+            f"{s.get('vib_pass_rate', 'N/A')}% | "
+            f"{item['pass_delta_pp']:+.2f} | "
+            f"{s.get('msg_compression_pct', 'N/A')}% | "
+            f"{s.get('token_saving_pct', 'N/A')}% | "
+            f"{item['mcnemar_pvalue']} |"
+        )
+
+    # MBPP / early-stop 拆分表
+    split_rows = [
+        item for item in analyses
+        if item["summary"].get("multi_round_count") is not None
+    ]
+    if split_rows:
+        lines.extend([
+            "",
+            "## 数据集内部分组拆分（Early-Stopped vs Multi-Round）",
+            "",
+            "| Dataset | Group | Count | Full Pass@1 | VIB Pass@1 | Δ (pp) | Msg Compress | Token Saving |",
+            "|---|---|---|---|---|---|---|---|",
+        ])
+        for item in split_rows:
+            s = item["summary"]
+            lines.append(
+                f"| {item['dataset']} | Early-Stopped | "
+                f"{s['early_stopped_count']} ({s['early_stopped_pct']}%) | "
+                f"{s['early_stopped_full_pass_rate']}% | "
+                f"{s['early_stopped_vib_pass_rate']}% | "
+                f"{s['early_stopped_pass_delta_pp']:+.2f} | "
+                f"{s['early_stopped_msg_compression_pct']}% | "
+                f"{s['early_stopped_token_saving_pct']}% |"
+            )
+            lines.append(
+                f"| {item['dataset']} | Multi-Round | "
+                f"{s['multi_round_count']} ({s['multi_round_pct']}%) | "
+                f"{s['multi_round_full_pass_rate']}% | "
+                f"{s['multi_round_vib_pass_rate']}% | "
+                f"{s['multi_round_pass_delta_pp']:+.2f} | "
+                f"{s['multi_round_msg_compression_pct']}% | "
+                f"{s['multi_round_token_saving_pct']}% |"
+            )
+
+    lines.extend([
+        "",
         "## Trace 可用性",
         "",
-    ]
+    ])
 
     if trace_context:
         for dataset_name, trace_info in trace_context.items():

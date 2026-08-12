@@ -199,3 +199,163 @@ def test_generate_final_code_retries_on_api_error():
 
     assert client.calls == 3
     assert code == "def foo():\n    return 1"
+
+
+def test_benchmark_summary_splits_early_stopped_and_multi_round(monkeypatch):
+    module = load_run_multi_benchmark_module()
+
+    samples = [
+        module.TaskSample(task_id="MBPP/es1", dataset_name="MBPP", prompt="p1", reference_answer="a1"),
+        module.TaskSample(task_id="MBPP/es2", dataset_name="MBPP", prompt="p2", reference_answer="a2"),
+        module.TaskSample(task_id="MBPP/mr1", dataset_name="MBPP", prompt="p3", reference_answer="a3"),
+    ]
+
+    class FakeAdapter:
+        def load(self, limit=-1):
+            return samples
+
+    monkeypatch.setattr(module.DatasetFactory, "get_adapter", lambda name: FakeAdapter())
+
+    harness = module.MultiDatasetHarness(api_key="dummy", workers=1)
+
+    fake_results = [
+        module.TaskResult(
+            task_id="MBPP/es1", dataset_name="MBPP",
+            full_passed=True, vib_passed=True,
+            full_messages=3, vib_messages=3,
+            full_tokens=300, vib_tokens=300,
+            execution_time=1.0,
+            full_prompt_tokens=200, full_completion_tokens=100,
+            vib_prompt_tokens=200, vib_completion_tokens=100,
+            full_early_stopped=True, vib_early_stopped=True,
+        ),
+        module.TaskResult(
+            task_id="MBPP/es2", dataset_name="MBPP",
+            full_passed=False, vib_passed=True,
+            full_messages=4, vib_messages=3,
+            full_tokens=400, vib_tokens=350,
+            execution_time=1.0,
+            full_prompt_tokens=250, full_completion_tokens=150,
+            vib_prompt_tokens=220, vib_completion_tokens=130,
+            full_early_stopped=False, vib_early_stopped=True,
+        ),
+        module.TaskResult(
+            task_id="MBPP/mr1", dataset_name="MBPP",
+            full_passed=True, vib_passed=True,
+            full_messages=6, vib_messages=4,
+            full_tokens=800, vib_tokens=700,
+            execution_time=1.0,
+            full_prompt_tokens=500, full_completion_tokens=300,
+            vib_prompt_tokens=430, vib_completion_tokens=270,
+            full_early_stopped=False, vib_early_stopped=False,
+        ),
+    ]
+
+    def _fake_run(sample):
+        idx = next(i for i, s in enumerate(samples) if s.task_id == sample.task_id)
+        res = fake_results[idx]
+        empty_wf = {
+            "history": [],
+            "workflow_stats": {"total_approved": res.full_messages},
+            "output": "ok",
+            "passed": res.full_passed,
+            "token_stats": {"total_prompt_tokens": res.full_prompt_tokens,
+                            "total_completion_tokens": res.full_completion_tokens,
+                            "total_tokens": res.full_tokens},
+        }
+        empty_wv = {
+            "history": [],
+            "workflow_stats": {"total_approved": res.vib_messages},
+            "output": "ok",
+            "passed": res.vib_passed,
+            "token_stats": {"total_prompt_tokens": res.vib_prompt_tokens,
+                            "total_completion_tokens": res.vib_completion_tokens,
+                            "total_tokens": res.vib_tokens},
+        }
+        return {"task_result": res, "full": empty_wf, "vib": empty_wv}
+
+    monkeypatch.setattr(harness, "run_single_task_with_trace", _fake_run)
+    report = harness.run_benchmark(["mbpp"], limit=3)
+    summary = report["summary"]["mbpp"]
+
+    assert summary["early_stopped_count"] == 2
+    assert summary["early_stopped_pct"] == round(2 / 3 * 100, 2)
+    assert summary["early_stopped_both_agree_count"] == 1
+    assert summary["multi_round_count"] == 1
+    assert summary["multi_round_pct"] == round(1 / 3 * 100, 2)
+    assert summary["early_stopped_full_pass_rate"] == 50.0
+    assert summary["early_stopped_vib_pass_rate"] == 100.0
+    assert summary["early_stopped_pass_delta_pp"] == +50.0
+    assert summary["multi_round_msg_compression_pct"] == round((6 - 4) / 6 * 100, 2)
+    assert summary["multi_round_token_saving_pct"] == round((800 - 700) / 800 * 100, 2)
+    assert summary["early_stopped_same_message_ratio"] == round(1 / 2, 4)
+    assert summary["multi_round_same_message_ratio"] == 0.0
+
+
+SAME_CHARS_54_PROMPT = '''
+def same_chars(s0: str, s1: str):
+    """
+    Check if two words have the same characters.
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')
+    True
+    >>> same_chars('abcd', 'dddddddabc')
+    True
+    >>> same_chars('dddddddabc', 'abcd')
+    True
+    >>> same_chars('eabcd', 'dddddddabc')
+    False
+    >>> same_chars('abcd', 'dddddddabce')
+    False
+    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')
+    False
+    """
+'''
+
+
+def test_run_visible_doctest_detects_counter_vs_set_mismatch_on_humaneval_54():
+    module = load_run_multi_benchmark_module()
+    counter_code = '''def same_chars(s0: str, s1: str):
+    from collections import Counter
+    return Counter(s0) == Counter(s1)'''
+    set_code = '''def same_chars(s0: str, s1: str):
+    return set(s0) == set(s1)'''
+    counter_failures = module._run_visible_doctest_against_code(counter_code, SAME_CHARS_54_PROMPT)
+    set_failures = module._run_visible_doctest_against_code(set_code, SAME_CHARS_54_PROMPT)
+    assert len(set_failures) == 0
+    assert len(counter_failures) == 3
+    assert any("eabcdzzzz" in f["args_repr"] and f["want_repr"] == "True" for f in counter_failures)
+    assert any("'abcd', 'dddddddabc'" in f["args_repr"] or "('abcd', 'dddddddabc')" in f["args_repr"] for f in counter_failures)
+
+
+def test_build_final_code_prompt_includes_step0_doctest_filter_and_permanent_elimination():
+    module = load_run_multi_benchmark_module()
+    p = module.build_final_code_prompt(SAME_CHARS_54_PROMPT, [
+        "[Reviewer]: 该实现需确保字符多重集合相等，而非仅字符种类相同。建议使用 Counter 比较。",
+    ])
+    assert "第 0 步 强制算法过滤器" in p
+    assert "永久淘汰" in p
+    assert "全通候选" in p
+    assert "具体数值/语义代入计算" in p
+
+
+def test_generate_final_code_retries_when_visible_doctest_fails(monkeypatch):
+    module = load_run_multi_benchmark_module()
+    monkeypatch.setattr(module, "_run_visible_doctest_against_code", lambda code, prompt: [
+        {"args_repr": "same_chars('a','a')", "want_repr": "True", "got_repr": "False",
+         "doctest_line_repr": "same_chars('a','a') -> True"},
+    ] if "Counter" in code else [])
+
+    class FakeClient:
+        def __init__(self):
+            self.calls = 0
+
+        def chat(self, **kwargs):
+            self.calls += 1
+            if self.calls == 1:
+                return {"content": "```python\ndef same_chars(s0, s1):\n  from collections import Counter\n  return Counter(s0) == Counter(s1)\n```"}
+            return {"content": "```python\ndef same_chars(s0, s1):\n  return set(s0) == set(s1)\n```"}
+
+    client = FakeClient()
+    code = module.generate_final_code(client, SAME_CHARS_54_PROMPT, [])
+    assert client.calls == 2
+    assert "set(s0) == set(s1)" in code
