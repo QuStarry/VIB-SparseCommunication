@@ -181,20 +181,12 @@ def _apply_backfill_split(
 
 
 def _evaluate_code(task_id: str, reference_tests: List[str], code: str, entry_point: str) -> bool:
-    """参考 MultiDatasetHarness 的代码评测逻辑，尽量保持一致。"""
-    try:
-        ns: Dict[str, Any] = {}
-        exec(code, ns)
-        if entry_point not in ns:
-            return False
-        for test in reference_tests or []:
-            try:
-                exec(test, ns)
-            except Exception:
-                return False
-        return True
-    except Exception:
+    """复用 run_multi_benchmark.CodeEvaluator 的子进程 + timeout 沙箱，避免主进程直接 exec。"""
+    if not reference_tests:
         return False
+    return mb.CodeEvaluator.evaluate(
+        code, list(reference_tests), entry_point=entry_point or None, timeout=5.0
+    )
 
 
 def _process_variant(
@@ -315,7 +307,34 @@ def main():
     for t in threads:
         t.join()
 
-    # 刷新 summary（passed 统计重新计算，消息/Token 统计保持不变）
+    # 刷新 summary / detailed_results（与 refreshed trace.passed 重新对齐，消息/Token 保持不变）
+    new_summary: Dict[str, Any] = {}
+    new_detailed: Dict[str, Any] = {}
+    last_task_results: List[Any] = []
+    mb._last_task_results_list = last_task_results
+    try:
+        for ds in ("humaneval", "mbpp", "gsm8k"):
+            traces = trace_results.get(ds) or []
+            if not traces:
+                continue
+            tpl = data.get("summary", {}).get(ds) or {}
+            summary, task_results, detailed_rows = _rebuild_dataset_summary_from_refreshed_trace(
+                mb, ds, traces, tpl
+            )
+            last_task_results.clear()
+            last_task_results.extend(task_results)
+            if ds == "mbpp":
+                _apply_backfill_split(mb, "MBPP", summary, detailed_rows, traces, split_mode="or")
+            new_summary[ds] = summary
+            new_detailed[ds] = detailed_rows
+    finally:
+        try:
+            delattr(mb, "_last_task_results_list")
+        except AttributeError:
+            pass
+
+    data["summary"] = new_summary
+    data["detailed_results"] = new_detailed
     data["refreshed_synthesis"] = True
     data["refreshed_synthesis_source"] = str(args.input)
     data["refreshed_summary"] = _summary_changed.copy()
@@ -341,24 +360,29 @@ def _resplit_mode(args):
     class _HackRef:
         pass
     mb._last_task_results_list = last_task_results  # 临时挂载，供 _apply_backfill_split 同步
-
-    for ds in ("humaneval", "mbpp", "gsm8k"):
-        traces = trace_results.get(ds) or []
-        if not traces:
-            continue
-        tpl = base_summary.get(ds) or {}
-        summary, task_results, detailed_rows = _rebuild_dataset_summary_from_refreshed_trace(
-            mb, ds, traces, tpl
-        )
-        last_task_results.clear()
-        last_task_results.extend(task_results)
-        for mode in ("and", "or"):
-            sum_mode = dict(summary)
-            rows_mode = [dict(r) for r in detailed_rows]
-            if ds == "mbpp":
-                _apply_backfill_split(mb, "MBPP", sum_mode, rows_mode, traces, split_mode=mode)
-            new_summaries[mode][ds] = sum_mode
-            new_detailed[mode][ds] = rows_mode
+    try:
+        for ds in ("humaneval", "mbpp", "gsm8k"):
+            traces = trace_results.get(ds) or []
+            if not traces:
+                continue
+            tpl = base_summary.get(ds) or {}
+            summary, task_results, detailed_rows = _rebuild_dataset_summary_from_refreshed_trace(
+                mb, ds, traces, tpl
+            )
+            last_task_results.clear()
+            last_task_results.extend(task_results)
+            for mode in ("and", "or"):
+                sum_mode = dict(summary)
+                rows_mode = [dict(r) for r in detailed_rows]
+                if ds == "mbpp":
+                    _apply_backfill_split(mb, "MBPP", sum_mode, rows_mode, traces, split_mode=mode)
+                new_summaries[mode][ds] = sum_mode
+                new_detailed[mode][ds] = rows_mode
+    finally:
+        try:
+            delattr(mb, "_last_task_results_list")
+        except AttributeError:
+            pass
 
     for mode, out_path in (("and", args.output_and), ("or", args.output_or)):
         out_data = dict(data)

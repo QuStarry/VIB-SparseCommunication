@@ -27,14 +27,15 @@ def _safe_pct(numer: float, denom: float) -> float:
 def backfill_dataset_split(dataset_name: str, summary: Dict[str, Any],
                            detailed_rows: List[Dict[str, Any]],
                            trace_rows: List[Dict[str, Any]],
-                           split_mode: str = "and") -> None:
+                           split_mode: str = "or") -> None:
     """
     split_mode:
-      - "and" (default, 论文默认推荐)：两侧 full AND vib 都 early_stopped 才算 ES 子集，
+      - "or" (default，与主脚本 run_benchmark 第991行的 ES 判断口径保持一致)：
+              任一侧 full OR vib early_stopped 就算 ES 子集，只有两侧都没 early_stopped
+              才算 MR。MR 样本通常更小，但更"纯多轮"。
+      - "and"：两侧 full AND vib 都 early_stopped 才算 ES 子集，
               其余（至少一侧进入多轮）统一归入 Multi-Round。Multi-Round 是更"有压缩
-              空间"的"难/需要讨论"的题子集。
-      - "or"：任一侧 early_stopped 就算 ES 子集，只有两侧都没 early_stopped 才算 MR。
-              MR 样本通常更小，但更"纯多轮"。
+              空间"的"难/需要讨论"的题子集。论文 split 敏感性分析中使用。
     """
     assert split_mode in ("and", "or")
     trace_map = {t["task_id"]: t for t in trace_rows}
@@ -160,8 +161,8 @@ def main():
     p = argparse.ArgumentParser(description="离线回填 benchmark JSON 的 split summary")
     p.add_argument("--input", required=True, help="输入 benchmark JSON")
     p.add_argument("--output", default=None, help="输出 JSON（默认 *_with_split.json）")
-    p.add_argument("--split-mode", choices=("and", "or"), default="and",
-                   help="ES=两侧都 early-stop (and) / 任一侧 early-stop (or)，默认 and")
+    p.add_argument("--split-mode", choices=("and", "or"), default="or",
+                   help="ES=两侧都 early-stop (and) / 任一侧 early-stop (or)，默认 or（与主脚本口径一致）")
     args = p.parse_args()
 
     in_path = Path(args.input)

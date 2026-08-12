@@ -567,13 +567,15 @@ def sanitize_code_output(code: str) -> str:
 def generate_final_code(client: DeepSeekClient, prompt: str, history: list) -> str:
     """根据讨论历史生成最终代码。对代码题型（HumanEval/MBPP 等）内置两层自修复：
     1. Prompt 级【第 0 步强制算法过滤器】（见 build_final_code_prompt 规则 0）。
-    2. 运行级 doctest 自修复循环：若候选代码在题面可见 doctest 上有任何真实失败，
-       则把失败明细追加到 retry prompt 中再合成，最多重试 2 次。
+    2. 运行级 doctest 自修复循环：每次 attempt 都真实运行题面可见 doctest，若失败
+       则把失败明细追加到 retry prompt 再合成，最多 3 次 attempt；若 3 次仍有失败，
+       从所有历史 attempt 中选 doctest 失败次数最少的代码返回（不盲信最后一次）。
     """
     prompt_text = build_final_code_prompt(prompt, history)
     visible_examples = extract_visible_examples(prompt)
     last_code = ""
     _doctest_failures_text = ""
+    candidate_history: List[Tuple[int, str]] = []
 
     for attempt in range(3):
         if attempt == 0:
@@ -598,43 +600,66 @@ def generate_final_code(client: DeepSeekClient, prompt: str, history: list) -> s
         )
         code = sanitize_code_output(res["content"])
         last_code = code
+
         if not code or code.startswith("[API Error:"):
+            candidate_history.append((10**9, code))
             continue
 
-        if attempt < 2 and visible_examples:
+        if visible_examples:
             failures = _run_visible_doctest_against_code(code, prompt)
             if failures:
+                candidate_history.append((len(failures), code))
                 _doctest_failures_text = "\n".join(
                     f"  * 输入 {f['args_repr']} → 你的代码输出 {f['got_repr']}，但题面期望 {f['want_repr']}（即 doctest 行 {f['doctest_line_repr']} 失败）"
                     for f in failures
                 )
-                continue
-        return code
+                if attempt < 2:
+                    continue
+            else:
+                candidate_history.append((0, code))
+                return code
+        else:
+            candidate_history.append((0, code))
+            return code
+
+    if candidate_history:
+        best_idx = 0
+        best_fail_count = candidate_history[0][0]
+        for i in range(1, len(candidate_history)):
+            fc = candidate_history[i][0]
+            if fc <= best_fail_count:
+                best_fail_count = fc
+                best_idx = i
+        return candidate_history[best_idx][1]
     return last_code
 
 
-def _run_visible_doctest_against_code(code: str, prompt: str) -> List[Dict[str, str]]:
-    """真实 exec 执行 prompt 里的所有可见 doctest，返回失败明细列表（空 = 全通）。"""
+def _visible_doctest_sandbox_worker(code: str, prompt: str, result_queue) -> None:
+    """子进程 worker：执行 code + eval 每个 doctest 用例，把 failures 列表通过 Queue 回传。"""
     failures: List[Dict[str, str]] = []
     visible_examples = extract_visible_examples(prompt)
     if not visible_examples:
-        return failures
-
+        result_queue.put(failures)
+        return
     try:
         m = re.search(r"def\s+(\w+)\s*\(", prompt)
         if not m:
-            return failures
+            result_queue.put(failures)
+            return
         func_name = m.group(1)
     except Exception:
-        return failures
+        result_queue.put(failures)
+        return
 
     ns: Dict[str, Any] = {}
     try:
         exec(code, ns)
     except Exception:
-        return failures
+        result_queue.put(failures)
+        return
     if func_name not in ns:
-        return failures
+        result_queue.put(failures)
+        return
     func = ns[func_name]
 
     for ex in visible_examples:
@@ -664,13 +689,50 @@ def _run_visible_doctest_against_code(code: str, prompt: str) -> List[Dict[str, 
         except Exception:
             equal = False
         if not equal:
+            try:
+                got_repr = repr(got_obj)
+            except Exception:
+                got_repr = "<unrepresentable>"
             failures.append({
                 "args_repr": args_str,
                 "want_repr": want_str,
-                "got_repr": repr(got_obj),
+                "got_repr": got_repr,
                 "doctest_line_repr": ex[:200].replace("\n", " ↵ "),
             })
-    return failures
+    result_queue.put(failures)
+
+
+def _run_visible_doctest_against_code(code: str, prompt: str, timeout: float = 3.0) -> List[Dict[str, str]]:
+    """在子进程 + timeout 沙箱里真实执行 prompt 的可见 doctest，返回失败明细列表（空 = 全通）。
+    避免 LLM 生成恶意代码直接在主进程 exec/eval。"""
+    visible_examples = extract_visible_examples(prompt)
+    if not visible_examples:
+        return []
+    try:
+        if not re.search(r"def\s+(\w+)\s*\(", prompt):
+            return []
+    except Exception:
+        return []
+
+    result_queue = multiprocessing.get_context("fork").Queue()
+    proc = multiprocessing.get_context("fork").Process(
+        target=_visible_doctest_sandbox_worker,
+        args=(code, prompt, result_queue),
+    )
+    proc.start()
+    proc.join(timeout)
+    if proc.is_alive():
+        proc.terminate()
+        proc.join()
+        return []
+    if not result_queue.empty():
+        try:
+            res = result_queue.get(timeout=1.0)
+        except Exception:
+            res = None
+        if isinstance(res, list):
+            return res
+    return []
 
 
 def generate_final_answer(client: DeepSeekClient, prompt: str, history: list) -> str:

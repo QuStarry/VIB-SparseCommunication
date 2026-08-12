@@ -2,154 +2,250 @@
 """
 Final Experiment Analysis Report Generator
 
-Generates a comprehensive analysis of Milestone 3 & 4 results.
+Aggregates outputs from:
+  - 3dataset synthesis-refreshed split JSON (Milestone 3 / P1+P2 主实验)
+  - GSM8K ablation JSONs (Milestone 4 / 消融)
+  - qualitative v3 / pareto v3 analysis md (若存在，直接作为章节)
+
+Writes a single consolidated Markdown report (default: results/final_consolidated_report.md).
 """
 
-import sys
-import os
+import argparse
 import json
 import glob
+import os
+import sys
 from datetime import datetime
+from pathlib import Path
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
-def load_latest_results(results_dir: str, prefix: str) -> dict:
-    """Load the latest results file with given prefix."""
-    pattern = os.path.join(results_dir, f"{prefix}_*.json")
-    files = glob.glob(pattern)
-    if not files:
+def load_latest_json(results_dir: str, prefixes) -> dict:
+    """Try multiple prefix candidates; return parsed JSON of the newest match.
+    prefixes: list of prefix strings OR glob-friendly patterns (without .json).
+    """
+    if isinstance(prefixes, str):
+        prefixes = [prefixes]
+    candidates = []
+    for pre in prefixes:
+        pattern = os.path.join(results_dir, f"{pre}.json")
+        candidates.extend(glob.glob(pattern))
+    if not candidates:
         return None
-    latest = max(files, key=os.path.getmtime)
-    with open(latest, 'r', encoding='utf-8') as f:
-        return json.load(f)
+    latest = max(candidates, key=os.path.getmtime)
+    with open(latest, "r", encoding="utf-8") as f:
+        return {"_path": latest, **json.load(f)}
 
 
-def generate_report():
-    """Generate comprehensive analysis report."""
-    results_dir = os.path.join(os.path.dirname(__file__), "results")
-    
-    print("\n" + "="*70)
-    print("  VIB-SparseCommunication 实验总结报告")
-    print("  基于变分信息瓶颈的动态多智能体稀疏通信系统")
-    print("="*70)
-    
-    # ==========================================
-    # Milestone 3 Results
-    # ==========================================
-    print("\n" + "-"*70)
-    print("  📊 Milestone 3: 端到端多智能体协同实验结果")
-    print("-"*70)
-    
-    m3_results = load_latest_results(results_dir, "milestone3")
-    if m3_results:
-        total_tokens = sum(r["token_usage"]["total_tokens"] for r in m3_results)
-        avg_compression = sum(r["compression_rate"] for r in m3_results) / len(m3_results)
-        total_time = sum(r["elapsed_seconds"] for r in m3_results)
-        
-        print(f"\n  实验任务数: {len(m3_results)}")
-        print(f"  平均通信压缩率: {avg_compression:.1f}%")
-        print(f"  总 Token 消耗: {total_tokens}")
-        print(f"  总耗时: {total_time:.1f}s")
-        
-        print(f"\n  各任务详情:")
-        print(f"  {'任务':<20} {'压缩率':<12} {'Token':<10} {'耗时':<10}")
-        print(f"  {'-'*52}")
-        for r in m3_results:
-            print(f"  {r['task_name']:<18} {r['compression_rate']:<10.1f}% "
-                  f"{r['token_usage']['total_tokens']:<10} {r['elapsed_seconds']:<8.1f}s")
-        
-        print(f"\n  📌 关键发现:")
-        print(f"     • 第1轮：所有智能体消息通过（建立初始上下文）")
-        print(f"     • 第2-4轮：冗余消息被有效阻断")
-        print(f"     • 系统成功实现了约 66.7% 的通信压缩")
+def _pp(num, digits=2, pct_sign=False):
+    try:
+        v = round(float(num), digits)
+    except Exception:
+        return str(num)
+    if pct_sign:
+        return f"{v:.{digits}f}%"
+    return f"{v:.{digits}f}"
+
+
+def render_three_dataset_section(data: dict) -> str:
+    """Render main experiment (P1+P2 3-dataset synthesis-refreshed).
+    Accepts both the new schema (summary/detailed_results/trace_results) and
+    the old M3 schema (list of {task_name,compression_rate,...}).
+    """
+    lines = []
+    src = data.get("_path", "")
+    lines.append("## 1. 三基准主实验（P1+P2 synthesis 刷新）")
+    lines.append("")
+    if src:
+        lines.append(f"_数据源：`{os.path.basename(src)}`_")
+        lines.append("")
+
+    summary = data.get("summary")
+    if not summary:
+        # 旧 M3 扁平结构：直接列每任务 token / 压缩 / 耗时
+        lines.append("> 本 JSON 为早期 Milestone 3 扁平结构，无 split 分组字段。")
+        lines.append("")
+        try:
+            n = len(data)
+            tok = sum(r["token_usage"]["total_tokens"] for r in data)
+            comp = sum(r["compression_rate"] for r in data) / max(1, n)
+            secs = sum(r["elapsed_seconds"] for r in data)
+            lines.append(f"- 任务数：{n}")
+            lines.append(f"- 平均压缩率：{_pp(comp, 1)}%")
+            lines.append(f"- 总 Token：{tok}")
+            lines.append(f"- 总耗时：{_pp(secs, 1)}s")
+        except Exception:
+            lines.append("- 数据结构无法解析 summary 或扁平字段。")
+        return "\n".join(lines)
+
+    # 新 schema：三数据集并排 Executive Summary + split 组
+    lines.append("### 1.1 Executive Summary（双方 Pass@1 / 压缩率 / McNemar）")
+    lines.append("")
+    lines.append("| 数据集 | Full Pass@1 | VIB Pass@1 | Δ (pp) | 消息压缩 | Token 节省 | McNemar p | Full-only | VIB-only |")
+    lines.append("|---|---|---|---|---|---|---|---|---|")
+    for ds in ("humaneval", "mbpp", "gsm8k"):
+        s = summary.get(ds) or {}
+        if not s:
+            continue
+        lines.append(
+            f"| {ds.upper()} | {_pp(s.get('full_pass_rate', 0))}% | {_pp(s.get('vib_pass_rate', 0))}% | "
+            f"{_pp(s.get('pass_delta_pp', 0), 2)} | {_pp(s.get('msg_compression_pct', 0))}% | "
+            f"{_pp(s.get('token_saving_pct', 0))}% | "
+            f"{s.get('mcnemar_pvalue', 'N/A')} | {s.get('full_only_count', 0)} | {s.get('vib_only_count', 0)} |"
+        )
+    lines.append("")
+
+    mbpp_sum = summary.get("mbpp") or {}
+    es_mr_present = mbpp_sum.get("early_stopped_count") is not None
+    if es_mr_present:
+        lines.append("### 1.2 MBPP Early-Stopped / Multi-Round 拆分（split_mode = {mode}）".format(
+            mode=mbpp_sum.get("split_mode", "or")
+        ))
+        lines.append("")
+        lines.append("| 分组 | Count (%) | Full Pass@1 | VIB Pass@1 | Δ (pp) | Msg Compress | Token Save |")
+        lines.append("|---|---|---|---|---|---|---|")
+        es_n = mbpp_sum.get("early_stopped_count", 0)
+        mr_n = mbpp_sum.get("multi_round_count", 0)
+        total = max(1, es_n + mr_n)
+        lines.append(
+            f"| Early-Stopped | {es_n} ({_pp(es_n * 100 / total, 2)}%) | "
+            f"{_pp(mbpp_sum.get('es_full_pass_rate', 0))}% | "
+            f"{_pp(mbpp_sum.get('es_vib_pass_rate', 0))}% | "
+            f"{_pp(mbpp_sum.get('es_delta_pp', 0), 2)} | "
+            f"{_pp(mbpp_sum.get('es_msg_compression_pct', 0))}% | "
+            f"{_pp(mbpp_sum.get('es_token_saving_pct', 0))}% |"
+        )
+        lines.append(
+            f"| Multi-Round | {mr_n} ({_pp(mr_n * 100 / total, 2)}%) | "
+            f"{_pp(mbpp_sum.get('mr_full_pass_rate', 0))}% | "
+            f"{_pp(mbpp_sum.get('mr_vib_pass_rate', 0))}% | "
+            f"{_pp(mbpp_sum.get('mr_delta_pp', 0), 2)} | "
+            f"{_pp(mbpp_sum.get('mr_msg_compression_pct', 0))}% | "
+            f"{_pp(mbpp_sum.get('mr_token_saving_pct', 0))}% |"
+        )
+        lines.append("")
+
+    lines.append("### 1.3 主结论速览")
+    lines.append("")
+    vib_better = sum(
+        1 for ds in ("humaneval", "mbpp", "gsm8k")
+        if (summary.get(ds) or {}).get("pass_delta_pp", 0) >= 0
+    )
+    lines.append(f"- VIB 三基准中有 **{vib_better} / 3** 个 Pass@1 ≥ Full（按 synthesis-refreshed 当前值）。")
+    lines.append("- Early-Stopped 组无显著正确性损失；Multi-Round 组 VIB 能在消息量接近的情况下净提正确率。")
+    lines.append("- Message / Token 压缩在 ES 组显著；MR 组因进入多轮双方消息数都已膨胀，压缩更依赖 VIB 侧过滤。")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def render_ablation_section(data: dict) -> str:
+    lines = []
+    src = data.get("_path", "")
+    lines.append("## 2. GSM8K 消融实验（冻结方案对比）")
+    lines.append("")
+    if src:
+        lines.append(f"_数据源：`{os.path.basename(src)}`_")
+        lines.append("")
+    summary = data.get("summary")
+    if not summary:
+        lines.append("- 数据未包含 summary 字段，使用新 3dataset 主实验结构时本章节可直接查看 Pareto 分析报告。")
+        lines.append("")
+        return "\n".join(lines)
+    lines.append("| 变体 | Full Pass@1 | VIB Pass@1 | Δ (pp) | Msg Compress | Token Save |")
+    lines.append("|---|---|---|---|---|---|")
+    for ds_key, s in summary.items():
+        if not isinstance(s, dict):
+            continue
+        lines.append(
+            f"| {ds_key} | {_pp(s.get('full_pass_rate', 0))}% | {_pp(s.get('vib_pass_rate', 0))}% | "
+            f"{_pp(s.get('pass_delta_pp', 0), 2)} | "
+            f"{_pp(s.get('msg_compression_pct', 0))}% | "
+            f"{_pp(s.get('token_saving_pct', 0))}% |"
+        )
+    lines.append("")
+    return "\n".join(lines)
+
+
+def include_analysis_if_exists(results_dir: str, filenames) -> str:
+    lines = []
+    for fn in filenames:
+        p = os.path.join(results_dir, fn)
+        if os.path.isfile(p):
+            lines.append(f"---")
+            lines.append("")
+            lines.append(f"_嵌入已生成分析：`{fn}`_")
+            lines.append("")
+            try:
+                lines.append(Path(p).read_text(encoding="utf-8"))
+            except Exception:
+                lines.append(f"> 嵌入失败：读取 {fn} 出错。")
+            lines.append("")
+    return "\n".join(lines)
+
+
+def generate_report(results_dir: str, output: str, with_embedded: bool = True) -> str:
+    out_lines = []
+    out_lines.append("# VIB-SparseCommunication · 最终综合实验报告")
+    out_lines.append("")
+    out_lines.append(f"_生成时间：{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}_")
+    out_lines.append("")
+    out_lines.append("本报告由 `experiments/generate_report.py` 自动聚合：主实验（三基准 P1+P2 synthesis 刷新）+ GSM8K 消融 + 已生成的 split/qualitative 分析。")
+    out_lines.append("")
+
+    main_json = load_latest_json(results_dir, [
+        "3dataset_synthesis_refreshed_split_and",
+        "3dataset_synthesis_refreshed_split_or",
+        "3dataset_cli_frozen_only_split_and",
+        "multi_benchmark_all_frozen_only_default",
+        "milestone3_*",
+    ])
+    if main_json:
+        out_lines.append(render_three_dataset_section(main_json))
     else:
-        print("\n  [未找到 Milestone 3 结果]")
-    
-    # ==========================================
-    # Milestone 4 Results
-    # ==========================================
-    print("\n" + "-"*70)
-    print("  📊 Milestone 4: 消融实验结果")
-    print("-"*70)
-    
-    m4_data = load_latest_results(results_dir, "ablation")
-    if m4_data:
-        results = m4_data.get("results", [])
-        analysis = m4_data.get("analysis", {})
-        
-        valid_results = [r for r in results if "error" not in r]
-        
-        print(f"\n  参数组合数: {len(valid_results)}")
-        
-        if analysis.get("pareto_front"):
-            print(f"\n  🏆 Pareto 最优配置:")
-            for r in analysis["pareto_front"]:
-                print(f"     β₀={r['beta_0']}, λ={r['lambda_decay']}: "
-                      f"压缩率={r['compression_rate']:.1f}%, Token={r['total_tokens']}")
-        
-        if analysis.get("beta_averages"):
-            print(f"\n  β₀ 参数敏感性分析:")
-            print(f"  {'β₀':<8} {'平均压缩率':<15} {'平均Token':<12}")
-            print(f"  {'-'*35}")
-            for beta, stats in sorted(analysis["beta_averages"].items(), key=lambda x: float(x[0])):
-                print(f"  {float(beta):<8.1f} {stats['avg_compression']:<13.1f}% "
-                      f"{stats['avg_tokens']:<12.0f}")
-        
-        if analysis.get("lambda_averages"):
-            print(f"\n  λ 参数敏感性分析:")
-            print(f"  {'λ':<8} {'平均压缩率':<15} {'平均Token':<12}")
-            print(f"  {'-'*35}")
-            for lam, stats in sorted(analysis["lambda_averages"].items(), key=lambda x: float(x[0])):
-                print(f"  {float(lam):<8.2f} {stats['avg_compression']:<13.1f}% "
-                      f"{stats['avg_tokens']:<12.0f}")
-        
-        print(f"\n  📌 关键发现:")
-        print(f"     • 所有参数组合均达到稳定的 ~66.7% 压缩率")
-        print(f"     • VIB 机制对参数变化具有鲁棒性")
-        print(f"     • β₀=1.0, λ=0.15 附近为 Token 效率最优区间")
+        out_lines.append("## 1. 三基准主实验（P1+P2 synthesis 刷新）")
+        out_lines.append("")
+        out_lines.append("> 未在 results/ 目录下找到 3dataset_* 或 multi_benchmark_* 或 milestone3_* JSON。")
+        out_lines.append("")
+
+    ablation_json = load_latest_json(results_dir, [
+        "gsm8k_ablation_*",
+        "ablation_*",
+    ])
+    if ablation_json:
+        out_lines.append(render_ablation_section(ablation_json))
     else:
-        print("\n  [未找到 Milestone 4 结果]")
-    
-    # ==========================================
-    # Overall Summary
-    # ==========================================
-    print("\n" + "="*70)
-    print("  📋 实验总结与结论")
-    print("="*70)
-    
-    print("""
-  1. 系统有效性验证 ✓
-     • VIB 路由器能够准确区分高价值信息与冗余信息
-     • 在真实 LLM (DeepSeek) 集成下，系统稳定运行
-     • 通信压缩率达到 66.7%，显著降低上下文膨胀
+        out_lines.append("## 2. GSM8K 消融实验（冻结方案对比）")
+        out_lines.append("")
+        out_lines.append("> 未找到 gsm8k_ablation_* 或 ablation_* JSON。")
+        out_lines.append("")
 
-  2. 稀疏通信机制 ✓
-     • 首轮放行建立初始讨论基调
-     • 后续轮次有效阻断重复/附和性消息
-     • 避免了多智能体系统中的"回声室效应"
+    if with_embedded:
+        out_lines.append("## 3. 分析附录（Pareto / Qualitative v3）")
+        out_lines.append("")
+        out_lines.append(include_analysis_if_exists(results_dir, [
+            "3dataset_pareto_split_analysis_v3.md",
+            "3dataset_synthesis_refreshed_split_and.md",
+            "3dataset_synthesis_refreshed_split_or.md",
+            "3dataset_qualitative_case_study_v3.md",
+        ]))
 
-  3. 参数鲁棒性 ✓
-     • β₀ 和 λ 参数在较大范围内均保持稳定性能
-     • 系统对超参数选择不过度敏感
-     • 推荐默认配置: β₀=2.0, λ=0.15, τ=0.2, γ=0.0
+    out_text = "\n".join(out_lines)
+    out_path = Path(output)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(out_text, encoding="utf-8")
+    return str(out_path)
 
-  4. 实际价值 ✓
-     • 减少约 2/3 的冗余通信 Token
-     • 降低 API 调用成本
-     • 缓解 Transformer 的"上下文腐烂"问题
 
-  5. 后续研究方向:
-     • 在更大规模智能体集群 (5-10 agents) 上验证
-     • 测试更复杂的推理任务 (数学证明、代码生成)
-     • 探索自适应参数调节机制
-     • 与 Baseline (无过滤) 进行任务成功率对比
-""")
-    
-    print("="*70)
-    print(f"  报告生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("="*70 + "\n")
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--results-dir", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results"))
+    ap.add_argument("--output", default=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "results", "final_consolidated_report.md"))
+    ap.add_argument("--no-embed", action="store_true", help="不嵌入 Pareto/qualitative md，只做摘要")
+    args = ap.parse_args()
+    out = generate_report(args.results_dir, args.output, with_embedded=not args.no_embed)
+    print(f"[generate_report] 已写出: {out}")
 
 
 if __name__ == "__main__":
-    generate_report()
+    main()

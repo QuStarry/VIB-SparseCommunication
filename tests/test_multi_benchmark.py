@@ -359,3 +359,106 @@ def test_generate_final_code_retries_when_visible_doctest_fails(monkeypatch):
     code = module.generate_final_code(client, SAME_CHARS_54_PROMPT, [])
     assert client.calls == 2
     assert "set(s0) == set(s1)" in code
+
+
+def test_generate_final_code_injects_doctest_failures_into_retry_prompt(monkeypatch):
+    module = load_run_multi_benchmark_module()
+
+    def _fake_doctest(code, prompt):
+        if "BadCounter" in code and "AlsoBad" not in code:
+            return [{"args_repr": "same_chars('a','b')", "want_repr": "False", "got_repr": "True",
+                     "doctest_line_repr": "same_chars('a','b') -> False"}]
+        if "AlsoBad" in code:
+            return [{"args_repr": "same_chars('a','a')", "want_repr": "True", "got_repr": "False",
+                     "doctest_line_repr": "same_chars('a','a') -> True"}]
+        return []
+
+    monkeypatch.setattr(module, "_run_visible_doctest_against_code", _fake_doctest)
+
+    class FakeClient:
+        def __init__(self):
+            self.calls = 0
+            self.message_contents = []
+
+        def chat(self, **kwargs):
+            self.calls += 1
+            msgs = kwargs.get("messages") or []
+            content = msgs[-1].get("content", "") if msgs else ""
+            self.message_contents.append(content)
+            if self.calls == 1:
+                return {"content": "```python\ndef same_chars(s0, s1):\n  return BadCounter(s0)==BadCounter(s1)\n```"}
+            if self.calls == 2:
+                return {"content": "```python\ndef same_chars(s0, s1):\n  return AlsoBad(s0)==AlsoBad(s1)\n```"}
+            return {"content": "```python\ndef same_chars(s0, s1):\n  return set(s0)==set(s1)\n```"}
+
+    client = FakeClient()
+    code = module.generate_final_code(client, SAME_CHARS_54_PROMPT, [])
+    assert client.calls >= 2
+    # 第 2 次 prompt 必须包含第 1 次 doctest 的真实失败明细（BadCounter→same_chars('a','b') 那一条）
+    second_prompt = client.message_contents[1]
+    assert "上一版代码在题面 doctest 上的真实执行失败" in second_prompt
+    assert "same_chars('a','b')" in second_prompt
+    assert "你的代码输出 True" in second_prompt
+    assert "题面期望 False" in second_prompt
+    # 第 3 次 prompt 必须包含 AlsoBad 的失败明细（same_chars('a','a') 那条）
+    if len(client.message_contents) >= 3:
+        third_prompt = client.message_contents[2]
+        assert "same_chars('a','a')" in third_prompt
+    assert "set(s0)==set(s1)" in code
+
+
+def test_generate_final_code_runs_doctest_on_all_3_attempts(monkeypatch):
+    """HIGH-5 修复后：每次 attempt（包括第 3 次 = attempt=2）都必须调用 doctest 验证。"""
+    module = load_run_multi_benchmark_module()
+    doctest_call_count = {"n": 0}
+    always_fail = [{"args_repr": "f()", "want_repr": "1", "got_repr": "2", "doctest_line_repr": "f()->1"}]
+
+    def _spying_fail_code(code, prompt):
+        doctest_call_count["n"] += 1
+        return list(always_fail)
+
+    monkeypatch.setattr(module, "_run_visible_doctest_against_code", _spying_fail_code)
+
+    class FakeClient:
+        def __init__(self):
+            self.calls = 0
+        def chat(self, **kwargs):
+            self.calls += 1
+            return {"content": f"```python\ndef same_chars(s0,s1):\n  return #{self.calls}-bad\n```"}
+
+    client = FakeClient()
+    module.generate_final_code(client, SAME_CHARS_54_PROMPT, [])
+    assert client.calls == 3
+    # 3 次 attempt 每次都应触发 doctest 检查
+    assert doctest_call_count["n"] == 3
+
+
+def test_generate_final_code_picks_best_candidate_when_all_3_fail(monkeypatch):
+    """HIGH-5：当 3 次 attempt 全部 doctest 失败时，返回失败次数最少（最优）的那次代码，而非盲信最后一次。"""
+    module = load_run_multi_benchmark_module()
+    fail_counts_per_attempt = [3, 1, 4]
+    generated_codes = []
+
+    def _varied_failure(code, prompt):
+        attempt_idx = len(generated_codes) - 1
+        fails = fail_counts_per_attempt[attempt_idx]
+        return [{"args_repr": f"f{i}()", "want_repr": "1", "got_repr": "0",
+                 "doctest_line_repr": f"f{i}()->1"} for i in range(fails)]
+
+    monkeypatch.setattr(module, "_run_visible_doctest_against_code", _varied_failure)
+
+    class FakeClient:
+        def __init__(self):
+            self.calls = 0
+        def chat(self, **kwargs):
+            self.calls += 1
+            code = f"def same_chars(s0,s1):\n    return ATTEMPT_{self.calls}_CODE\n"
+            generated_codes.append(code)
+            return {"content": f"```python\n{code}\n```"}
+
+    client = FakeClient()
+    result = module.generate_final_code(client, SAME_CHARS_54_PROMPT, [])
+    assert client.calls == 3
+    # 3 次 attempt 的 doctest 失败数：[3, 1, 4] → 最少是第 2 次（attempt=1）
+    assert "ATTEMPT_2_CODE" in result
+    assert "ATTEMPT_3_CODE" not in result

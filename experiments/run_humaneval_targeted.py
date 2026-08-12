@@ -31,7 +31,7 @@ def load_target_samples(task_ids: list[str]) -> list[TaskSample]:
                     task_id=obj["task_id"],
                     dataset_name="HumanEval",
                     prompt=obj["prompt"],
-                    test_cases=obj["test"],
+                    test_cases=[obj["test"]],
                     entry_point=obj["entry_point"],
                     metadata={}
                 )
