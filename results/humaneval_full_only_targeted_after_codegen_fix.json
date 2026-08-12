@@ -1,0 +1,382 @@
+[
+  {
+    "task_id": "HumanEval/130",
+    "full_passed": false,
+    "vib_passed": false,
+    "full_messages": 6,
+    "vib_messages": 6,
+    "full_output": "def tri(n):\n    if n == 0:\n        return [1]\n    result = [0] * (n + 1)\n    result[0] = 1\n    result[1] = 3\n    for i in range(2, n + 1):\n        if i % 2 == 0:\n            result[i] = 1 + i // 2\n        else:\n            result[i] = result[i - 1] + result[i - 2] + result[i + 1]\n    return result",
+    "vib_output": "def tri(n):\n    if n == 0:\n        return [1]\n    result = [0] * (n + 1)\n    result[0] = 1\n    result[1] = 3\n    for i in range(2, n + 1):\n        if i % 2 == 0:\n            result[i] = 1 + i // 2\n        else:\n            result[i] = result[i - 1] + result[i - 2] + result[i + 1]\n    return result",
+    "full_history": [
+      "[Architect]: 该问题需注意递归定义中奇数项依赖未来值tri(n+1)，因此不能直接自顶向下递归，而应自底向上迭代计算。建议从tri(0)=1开始，按n递增顺序维护已计算值，偶数项直接计算，奇数项用已知的tri(n-1)、tri(n-2)和tri(n+1)（此时n+1为偶数，可先算出）来求解。最终返回列表长度为n+1，索引从0到n。",
+      "[Coder]: 根据定义，奇数项依赖于后续偶数项，因此需要从大到小或使用记忆化递归计算。建议用字典缓存已计算结果，避免重复计算，时间复杂度可优化到O(n)。",
+      "[Reviewer]: 该实现存在严重边界问题：当n为奇数时，递归调用tri(n+1)会超出目标范围，且tri(1)=3与示例中tri(3)=[1,3,2,8]的首元素1矛盾。建议先明确序列索引从0还是1开始，并修正奇数项的递推方向（例如改为tri(n)=tri(n-1)+tri(n-2)+tri(n-3)的Tribonacci标准定义，或显式处理n=0和n=1的基准值）。",
+      "[Architect]: 明确序列索引从0开始，基准值tri(0)=1、tri(1)=3，偶数项直接计算，奇数项依赖的tri(n+1)（偶数）可先于奇数项计算，因此按n递增顺序迭代即可，无需递归或缓存。最终列表长度n+1，索引0到n，与示例tri(3)=[1,3,2,8]完全一致。",
+      "[Coder]: 基于定义，奇数项依赖偶数项，因此采用自底向上迭代：先计算所有偶数项，再按奇数索引顺序用已知值求解。基准值tri(0)=1，tri(1)=3，最终返回[tri(0)..tri(n)]，确保索引从0开始且长度正确。",
+      "[Reviewer]: 建议采用自底向上迭代：初始化tri(0)=1, tri(1)=3，对每个偶数n直接计算tri(n)=1+n/2，对每个奇数n（n≥3）先计算tri(n+1)（偶数）再反推tri(n)=tri(n-1)+tri(n-2)+tri(n+1)，这样无需递归且严格在O(n)内完成。同时需验证tri(3)应等于8，与示例输出[1,3,2,8]一致，但注意tri(1)=3与列表首元素1的索引差异需在返回时明确处理。"
+    ],
+    "vib_history": [
+      "[Architect]: 基于递归定义，直接实现会导致大量重复计算，建议采用自底向上的动态规划，按n从0到目标值顺序构建列表。注意奇数项依赖n+1，需先计算偶数项或使用记忆化递归，但迭代时需特殊处理顺序。",
+      "[Coder]: 根据定义，奇数项依赖后续偶数项，因此需从n=1开始迭代计算，并缓存所有已求值结果以避免重复递归。建议使用自底向上的动态规划，按n递增顺序填充列表，偶数项直接计算，奇数项用公式`tri(n-1)+tri(n-2)+tri(n+1)`，其中`tri(n+1)`在迭代时已先于`tri(n)`计算（因为n+1为偶数）。",
+      "[Reviewer]: 该实现存在严重边界问题：当n为奇数时，递归调用tri(n+1)会超出目标范围，且tri(0)未定义但示例中tri(3)返回列表包含索引0的值1，需明确基础条件。建议先修正递归定义，确保n=0时返回1，并避免对n+1的无限递归（例如通过缓存或迭代计算）。",
+      "[Architect]: 建议采用迭代法从n=0开始构建列表，将tri(0)定义为1，偶数项直接计算，奇数项在迭代到n-1时预计算tri(n+1)并缓存，确保所有依赖项已就绪。最终返回长度为n+1的列表，避免递归深度和越界问题。",
+      "[Coder]: 建议采用迭代法从n=0开始构建列表，初始化`[1, 3]`，对每个偶数n直接计算，对奇数n使用已缓存的`tri(n-1)`、`tri(n-2)`和`tri(n+1)`（其中`tri(n+1)`为偶数项，已在上一轮迭代中计算），确保顺序正确且无递归开销。",
+      "[Reviewer]: 必须明确基础条件：tri(0)=1，且奇数项递归依赖tri(n+1)时，n+1可能超出目标范围，需在迭代中先计算所有偶数项再处理奇数项。建议采用自底向上动态规划，按n递增顺序填充列表，偶数项直接计算，奇数项用已缓存的tri(n-1)、tri(n-2)和tri(n+1)（若n+1≤目标值）计算，否则需调整定义或限制n范围。"
+    ],
+    "full_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 6,
+      "total_blocked": 0,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    },
+    "vib_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 6,
+      "total_blocked": 0,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    }
+  },
+  {
+    "task_id": "HumanEval/135",
+    "full_passed": false,
+    "vib_passed": false,
+    "full_messages": 6,
+    "vib_messages": 4,
+    "full_output": "def can_arrange(arr):\n    for i in range(len(arr) - 1, 0, -1):\n        if arr[i] < arr[i - 1]:\n            return i\n    return -1",
+    "vib_output": "def can_arrange(arr):\n    for i in range(len(arr) - 1, 0, -1):\n        if arr[i] < arr[i - 1]:\n            return i\n    return -1",
+    "full_history": [
+      "[Architect]: 该函数需从右向左遍历数组，返回首个满足`arr[i] < arr[i-1]`的索引`i`；若遍历完未找到则返回-1。由于数组无重复值，条件可简化为严格小于，时间复杂度O(n)，空间复杂度O(1)。",
+      "[Coder]: 可以直接从数组末尾向前遍历，找到第一个满足 `arr[i] < arr[i-1]` 的索引并返回，这样时间复杂度为 O(n) 且无需额外空间。注意题目要求“不大于或等于”即严格小于，且数组无重复值，因此条件可简化为 `arr[i] < arr[i-1]`。",
+      "[Reviewer]: 该实现需注意“不大于或等于”即严格小于前驱元素，且数组无重复值，因此条件可简化为`arr[i] < arr[i-1]`。边界情况：空数组或单元素数组应返回-1，遍历应从索引1开始，避免越界。逻辑上需确保返回的是最大索引，建议从末尾向前遍历以提前终止。",
+      "[Architect]: 建议采用从右向左的遍历方式，并在循环中直接比较`arr[i] < arr[i-1]`，一旦满足立即返回`i`，这样能保证返回最大索引且最坏情况只需一次遍历。同时需明确处理空数组和单元素数组的边界条件，直接返回-1，避免索引越界。",
+      "[Coder]: 从末尾向前遍历时，若找到满足条件的索引即可立即返回，无需继续检查更小的索引，因为末尾方向保证了最大性。同时，空数组和单元素数组直接返回-1，避免索引越界。",
+      "[Reviewer]: 边界条件需覆盖空数组与单元素数组，二者均应返回-1；遍历时从`len(arr)-1`递减至1，确保`i-1`不越界。逻辑上严格小于条件已正确，但需验证示例中`[1,2,4,3,5]`返回3（因`arr[3]=3 < arr[2]=4`），且`[1,2,3]`无逆序对返回-1，符合预期。"
+    ],
+    "vib_history": [
+      "[Architect]: 该函数需从右向左遍历数组，返回首个满足 `arr[i] < arr[i-1]` 的索引，否则返回 -1。时间复杂度 O(n)，空间 O(1)，无需额外处理重复值（题目已保证无重复）。",
+      "[Coder]: 可以直接从数组末尾向前遍历，找到第一个满足 `arr[i] < arr[i-1]` 的索引并返回，这样能保证是最大索引且时间复杂度为 O(n)。如果遍历完都没找到，则返回 -1。",
+      "[Architect]: 边界条件已明确：数组为空或长度为1时直接返回-1，因为不存在前驱元素。实现时建议使用`range(len(arr)-1, 0, -1)`循环，避免索引越界，并保持代码简洁。",
+      "[Coder]: 实现时注意边界条件：当数组长度小于2时直接返回-1，因为不存在前驱元素。循环从 `len(arr)-1` 开始递减到1，一旦发现 `arr[i] < arr[i-1]` 立即返回 `i`，否则循环结束后返回-1。"
+    ],
+    "full_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 6,
+      "total_blocked": 0,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    },
+    "vib_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 4,
+      "total_blocked": 2,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 2,
+          "blocked": 1,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 2,
+          "blocked": 1,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    }
+  },
+  {
+    "task_id": "HumanEval/144",
+    "full_passed": false,
+    "vib_passed": false,
+    "full_messages": 6,
+    "vib_messages": 4,
+    "full_output": "def simplify(x, n):\n    x_num, x_den = map(int, x.split('/'))\n    n_num, n_den = map(int, n.split('/'))\n    return (x_num * n_num) % (x_den * n_den) == 0",
+    "vib_output": "def simplify(x, n):\n    x_num, x_den = map(int, x.split('/'))\n    n_num, n_den = map(int, n.split('/'))\n    return (x_num * n_num) % (x_den * n_den) == 0",
+    "full_history": [
+      "[Architect]: 该问题本质是判断两个分数相乘后是否为整数，即分子乘积能否被分母乘积整除。最佳策略是直接计算 `int(x.split('/')[0]) * int(n.split('/')[0])` 与 `int(x.split('/')[1]) * int(n.split('/')[1])`，然后检查前者是否能被后者整除，无需约分或浮点运算，避免精度问题。",
+      "[Coder]: 直接解析两个分数并相乘，检查分子是否能被分母整除即可，无需化简分数本身。",
+      "[Reviewer]: 该实现需注意分数乘法后判断是否为整数，可通过交叉相乘避免浮点误差：检查 `x分子 * n分子` 是否能被 `x分母 * n分母` 整除。同时需考虑分子分母可能较大，使用整数运算而非浮点数比较。",
+      "[Architect]: 直接使用整数除法取模判断即可，无需约分或浮点运算，但需注意Python中`%`对负数的行为，此处分子分母均为正数，因此无影响。建议实现时先计算分子乘积和分母乘积，再返回`(num_product % den_product == 0)`。",
+      "[Coder]: 直接使用整数运算判断 `(x_num * n_num) % (x_den * n_den) == 0` 即可，无需约分或浮点转换。注意分子分母可能很大，但Python整数无溢出问题，此方法完全安全且高效。",
+      "[Reviewer]: 边界条件需覆盖分子或分母为1的情况，例如 `simplify(\"1/1\", \"1/1\")` 应返回True，而 `simplify(\"2/3\", \"3/2\")` 应返回True，但需确保整除判断使用 `%` 而非浮点比较。另外，输入字符串可能包含多余空格，建议先 `strip()` 再解析，避免意外错误。"
+    ],
+    "vib_history": [
+      "[Architect]: 该问题本质是判断两个分数相乘后是否为整数，等价于验证分子乘积能否被分母乘积整除。建议直接解析字符串为整数，计算 `(x_num * n_num) % (x_den * n_den) == 0`，无需约分或浮点运算，避免精度损失。",
+      "[Coder]: 直接解析两个分数并相乘，检查分子乘积能否被分母乘积整除即可，无需约分。实现时用整数运算避免浮点误差。",
+      "[Reviewer]: 该实现需注意分数乘法后判断是否为整数，建议直接交叉相乘避免浮点误差：`int(x.split('/')[0]) * int(n.split('/')[0]) % (int(x.split('/')[1]) * int(n.split('/')[1])) == 0`。同时需验证输入格式中分子分母均为正整数，但题目已保证，可省略额外检查。",
+      "[Coder]: 直接按分子乘积对分母乘积取模判断即可，但需注意Python中`%`对正数结果非负，因此`==0`判断安全。可进一步优化为提前约分（如用`math.gcd`）减少大数运算，但题目未要求性能，保持简洁实现即可。"
+    ],
+    "full_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 6,
+      "total_blocked": 0,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    },
+    "vib_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 4,
+      "total_blocked": 2,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 1,
+          "blocked": 2,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    }
+  },
+  {
+    "task_id": "HumanEval/54",
+    "full_passed": false,
+    "vib_passed": false,
+    "full_messages": 6,
+    "vib_messages": 5,
+    "full_output": "from collections import Counter\n\ndef same_chars(s0: str, s1: str):\n    \"\"\"\n    Check if two words have the same characters.\n    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')\n    True\n    >>> same_chars('abcd', 'dddddddabc')\n    True\n    >>> same_chars('dddddddabc', 'abcd')\n    True\n    >>> same_chars('eabcd', 'dddddddabc')\n    False\n    >>> same_chars('abcd', 'dddddddabce')\n    False\n    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')\n    False\n    \"\"\"\n    return Counter(s0) == Counter(s1)",
+    "vib_output": "from collections import Counter\n\ndef same_chars(s0: str, s1: str):\n    \"\"\"\n    Check if two words have the same characters.\n    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddeddabc')\n    True\n    >>> same_chars('abcd', 'dddddddabc')\n    True\n    >>> same_chars('dddddddabc', 'abcd')\n    True\n    >>> same_chars('eabcd', 'dddddddabc')\n    False\n    >>> same_chars('abcd', 'dddddddabce')\n    False\n    >>> same_chars('eabcdzzzz', 'dddzzzzzzzddddabc')\n    False\n    \"\"\"\n    return Counter(s0) == Counter(s1)",
+    "full_history": [
+      "[Architect]: 建议直接比较排序后的字符列表，即 `sorted(s0) == sorted(s1)`，时间复杂度O(n log n)，实现最简洁且完全符合示例语义。若需优化到O(n)，可用Counter统计字符频率，但当前场景下排序法更直观可靠。",
+      "[Coder]: 直接比较排序后的字符列表即可，但需注意去除重复字符。建议使用 `set(s0) == set(s1)` 判断字符集合是否相同，简洁且符合示例逻辑。",
+      "[Reviewer]: 该实现需确保字符多重集合相等，而非仅字符种类相同。建议使用`collections.Counter`比较，并注意空字符串边界。当前示例中`'eabcd'`与`'dddddddabc'`因缺少`e`而应返回`False`，逻辑需严格匹配计数。",
+      "[Architect]: 建议采用`Counter`比较字符频率，确保多重集合相等，同时处理空字符串边界。排序法虽简洁但O(n log n)，而`Counter`在O(n)内完成且语义更精确。",
+      "[Coder]: 直接使用 `sorted(s0) == sorted(s1)` 即可，无需去重，因为示例要求比较字符多重集合。若担心性能，可改用 `Counter(s0) == Counter(s1)`，但当前场景下排序法更简洁且不易出错。",
+      "[Reviewer]: 排序法会因重复字符计数错误，例如`'aab'`与`'abb'`排序后不相等但字符集合相同，必须用`Counter`或排序后逐字符比较。同时需处理空字符串边界，`Counter('') == Counter('')`应返回`True`。"
+    ],
+    "vib_history": [
+      "[Architect]: 建议直接比较排序后的字符集合，即 `sorted(s0) == sorted(s1)`，时间复杂度O(n log n)，实现最简洁且完全符合示例语义。若需优化到O(n)，可用Counter统计字符频率后比较，但当前场景无需过度设计。",
+      "[Reviewer]: 该实现需确保字符集合与频次完全一致，而非仅比较去重后的字符。建议使用`Counter`或排序后比较，并注意空字符串边界。",
+      "[Architect]: 采纳Reviewer意见，明确使用`Counter(s0) == Counter(s1)`可同时校验字符种类与频次，且对空字符串天然成立。若追求极致性能，可先比较长度再计数，但当前示例规模下排序法已足够清晰。",
+      "[Coder]: 建议采用 `Counter` 实现，既保证字符频次一致，又避免排序开销，且天然处理空字符串边界。代码为 `from collections import Counter; return Counter(s0) == Counter(s1)`，简洁且符合所有示例。",
+      "[Reviewer]: 排序后比较会忽略字符频次差异，例如`sorted('aab') != sorted('abb')`，但示例中`'eabcd'`与`'dddddddabc'`返回False正是因频次不同，因此必须用`Counter`或排序后逐字符比较。另外需注意空字符串与单字符输入的边界，`Counter`实现可自然处理。"
+    ],
+    "full_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 6,
+      "total_blocked": 0,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    },
+    "vib_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 5,
+      "total_blocked": 1,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 2,
+          "blocked": 1,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    }
+  },
+  {
+    "task_id": "HumanEval/65",
+    "full_passed": false,
+    "vib_passed": false,
+    "full_messages": 6,
+    "vib_messages": 6,
+    "full_output": "def circular_shift(x, shift):\n    s = str(x)\n    if shift > len(s):\n        return s[::-1]\n    shift = shift % len(s)\n    return s[-shift:] + s[:-shift] if shift else s",
+    "vib_output": "def circular_shift(x, shift):\n    s = str(x)\n    n = len(s)\n    if shift < 0:\n        return s\n    if shift >= n:\n        return s[::-1]\n    shift = shift % n\n    if shift == 0:\n        return s\n    return s[-shift:] + s[:-shift]",
+    "full_history": [
+      "[Architect]: 该函数需处理整数转字符串、右移及边界条件（shift超过位数时反转）。建议先转为字符串，用取模处理移位，并单独判断反转场景。",
+      "[Coder]: 将整数转为字符串后，用取模运算处理移位量，避免多余反转；若移位量超过位数则直接反转字符串。实现时注意处理负数符号，但按示例仅考虑正整数。",
+      "[Reviewer]: 该实现需注意shift为负值时的行为未定义，建议明确处理或限制为非负整数。另外，当shift等于数字长度时，循环移位结果应与原数相同，但当前逻辑会直接反转，需确认是否符合预期。",
+      "[Architect]: 建议明确约定shift为非负整数，并在文档字符串中说明；当shift等于数字长度时，按循环移位定义应返回原字符串，而非反转，需调整条件判断为shift > len(s)时才反转。",
+      "[Coder]: 建议将shift先对数字长度取模，再执行右移操作，这样当shift等于长度时结果自然与原数一致，无需单独反转分支。同时可明确限制shift为非负整数，并在文档字符串中补充说明。",
+      "[Reviewer]: 补充边界测试：shift为0时应返回原数字字符串；shift为负数时建议抛出ValueError或按绝对值处理，避免隐式错误。同时确认当shift等于位数时，按题意“shift > 位数”才反转，因此等于时应正常循环移位而非反转。"
+    ],
+    "vib_history": [
+      "[Architect]: 该函数需处理整数转字符串、右移位数取模及边界条件（shift≥位数时反转）。建议先统一转为字符串，再根据移位量分情况处理，避免冗余逻辑。",
+      "[Coder]: 实现该函数时，先将整数转为字符串，若移位量大于等于位数则直接反转；否则用切片实现右移，注意移位量对位数取模以处理重复移位。",
+      "[Reviewer]: 该实现需注意`shift`为负数或零时的边界情况：若`shift <= 0`应直接返回原数字字符串，否则按位右移可能产生错误。另外，当`shift`恰好等于数字位数时，按定义应返回原序而非反转，需明确条件判断。",
+      "[Architect]: 补充一点：当`shift`大于等于位数时，按题意应反转，但若`shift`恰好等于位数，反转结果与原序相同，因此可直接统一处理为反转，无需特判。同时建议对`shift`取模后再切片，以支持任意非负整数移位。",
+      "[Coder]: 建议将`shift`先对位数取模，再判断是否为零，这样可统一处理`shift`大于位数和等于位数的情况，避免额外分支。同时用`[::-1]`反转字符串，切片右移时注意`shift`为0时直接返回原串。",
+      "[Reviewer]: 需补充对`shift`为负数的处理：若`shift < 0`，应视为左移或直接返回原字符串，避免切片索引异常。同时，当`shift`等于位数时，按定义应返回原序，但若`shift`大于位数则反转，需用`if shift >= len(s)`区分，而非`>`。"
+    ],
+    "full_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 6,
+      "total_blocked": 0,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    },
+    "vib_workflow_stats": {
+      "total_candidates": 6,
+      "total_approved": 6,
+      "total_blocked": 0,
+      "total_digests": 0,
+      "total_role_rescues": 0,
+      "steps_completed": 2,
+      "history_per_step": [
+        {
+          "step": 1,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        },
+        {
+          "step": 2,
+          "candidates": 3,
+          "approved": 3,
+          "blocked": 0,
+          "digests": 0,
+          "role_rescues": 0
+        }
+      ]
+    }
+  }
+]
