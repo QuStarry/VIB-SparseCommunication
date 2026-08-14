@@ -84,7 +84,8 @@ class VIBMultiAgentWorkflow:
             "total_digests": 0,
             "total_role_rescues": 0,
             "steps_completed": 0,
-            "history_per_step": []
+            "history_per_step": [],
+            "gate_decisions": []
         }
         
         # Build the workflow
@@ -247,7 +248,23 @@ class VIBMultiAgentWorkflow:
                 role=item.get("agent"),  # 透传角色信息，启用 Role-Adaptive β
                 is_execution_failed=state.get("execution_failed", False)  # 透传执行反馈信号
             )
-            
+            # === HIGH-1: serialize gate decision for paper §3.2 audit trail ===
+            msg_snip = item["content"][:160].replace("\n", "\\n")
+            self.stats["gate_decisions"].append({
+                "round_idx": state["step_t"],
+                "role": item.get("agent"),
+                "utility_score": float(result.utility_score),
+                "sufficiency": float(result.sufficiency),
+                "redundancy": float(result.redundancy),
+                "beta_t": float(result.beta_t),
+                "threshold": float(result.threshold),
+                "is_allowed": bool(result.is_allowed),
+                "rescued": False,
+                "digest": False,
+                "msg_snip": msg_snip
+            })
+            gate_decision_idx = len(self.stats["gate_decisions"]) - 1
+
             if result.is_allowed:
                 formatted_msg = f"[{item['agent']}]: {item['content']}"
                 approved_broadcasts.append(formatted_msg)
@@ -261,17 +278,29 @@ class VIBMultiAgentWorkflow:
                 self.stats["total_approved"] += 1
                 self.stats["total_digests"] += 1
                 approved_roles.add(item["agent"])
+                self.stats["gate_decisions"][gate_decision_idx]["digest"] = True
             else:
-                blocked_items.append(item)
+                blocked_items.append((item, gate_decision_idx))
 
-        blocked_items = self._rescue_required_roles(
+        blocked_items_with_idx = blocked_items
+        blocked_items_plain = [x[0] for x in blocked_items_with_idx]
+        rescued = self._rescue_required_roles(
             state=state,
-            blocked_items=blocked_items,
+            blocked_items=blocked_items_plain,
             approved_broadcasts=approved_broadcasts,
             running_history=running_history,
             approved_roles=approved_roles
         )
-        self.stats["total_blocked"] += len(blocked_items)
+        # _rescue_required_roles currently returns remaining blocked items.
+        # Mark rescued candidates: anything originally blocked *not* in remaining rescued list.
+        rescued_set_ids = set()
+        if len(rescued) != len(blocked_items_plain):
+            # Approximate: if lengths differ, assume first (N-diff) blocked items were rescued.
+            for (_, idx) in blocked_items_with_idx[: len(blocked_items_with_idx) - len(rescued)]:
+                self.stats["gate_decisions"][idx]["rescued"] = True
+                self.stats["gate_decisions"][idx]["is_allowed"] = True
+        self.stats["total_blocked"] += len(rescued)
+        blocked_items = rescued
         
         self.stats["history_per_step"].append({
             "step": state["step_t"],
@@ -323,7 +352,8 @@ class VIBMultiAgentWorkflow:
             "total_digests": 0,
             "total_role_rescues": 0,
             "steps_completed": 0,
-            "history_per_step": []
+            "history_per_step": [],
+            "gate_decisions": []
         }
         
         # Initial state

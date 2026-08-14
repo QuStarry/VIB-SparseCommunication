@@ -1,0 +1,17 @@
+{
+  "summary": {},
+  "detailed_results": {},
+  "trace_results": {},
+  "experiment_config": {
+    "enable_gsm8k_frozen_history": true,
+    "enable_math_role_weights": false,
+    "enable_gsm8k_reasoning_guard": false,
+    "enable_humaneval_digest": false,
+    "enable_humaneval_first_round_role_guard": true,
+    "enable_mbpp_early_stop": true
+  },
+  "meta": {
+    "mode": "vanilla_single_agent_synthesis_direct",
+    "description": "full/vib 双列写入同一 vanilla 结果，便于复用 analyze/generate_report"
+  }
+}

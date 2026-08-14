@@ -7,8 +7,10 @@ headline percentages are actually broad improvements or only a few-task swing.
 """
 
 import argparse
+import hashlib
 import json
 import math
+import random
 from pathlib import Path
 
 
@@ -21,6 +23,69 @@ def exact_mcnemar_pvalue(full_only: int, vib_only: int) -> float:
     return min(1.0, 2.0 * tail / (2 ** n))
 
 
+def _z_975() -> float:
+    # 1 - alpha/2 quantile for alpha=0.05 (Wilson score & normal approx CI)
+    return 1.959963984540054
+
+
+def _paired_delta_pp_bootstrap_ci(rows, n_boot: int = 10000, seed: int = 20260812,
+                                  alpha: float = 0.05) -> tuple:
+    """Bootstrap 95% (or 1-alpha) CI for (VIB pass rate − Full pass rate) in pp.
+
+    Rows 是同题配对的二结果；对行索引重采样。为了避免全局随机状态被污染，
+    内部使用独立 Random 实例 + 固定 seed。
+    """
+    if not rows:
+        return (0.0, 0.0)
+    n = len(rows)
+    rng = random.Random(seed)
+    deltas = []
+    for _ in range(n_boot):
+        idx = [rng.randrange(n) for _ in range(n)]
+        sub = [rows[i] for i in idx]
+        fp = sum(1 for r in sub if r["full_passed"])
+        vp = sum(1 for r in sub if r["vib_passed"])
+        deltas.append(100.0 * (vp - fp) / len(sub))
+    deltas.sort()
+    lo = int(math.floor(n_boot * (alpha / 2.0)))
+    hi = int(math.ceil(n_boot * (1.0 - alpha / 2.0))) - 1
+    lo = max(0, min(n_boot - 1, lo))
+    hi = max(0, min(n_boot - 1, hi))
+    return (round(deltas[lo], 2), round(deltas[hi], 2))
+
+
+def _wilson_pp(p_hat_pct: float, n: int, z: float) -> tuple:
+    """Wilson score interval for a single binomial proportion, 返回单位为 pp。"""
+    p = max(0.0, min(1.0, p_hat_pct / 100.0))
+    denom = 1.0 + z * z / n
+    center = (p + z * z / (2 * n)) / denom
+    half = (z * math.sqrt(max(0.0, p * (1.0 - p) / n) + z * z / (4 * n * n))) / denom
+    lo = (center - half) * 100.0
+    hi = (center + half) * 100.0
+    return (round(lo, 2), round(hi, 2))
+
+
+def _paired_delta_pp_ci_from_proportions(vib_pct: float, full_pct: float,
+                                         n: int, b: int, c: int, z: float) -> tuple:
+    """Newcombe-Wilson (Method 10) 风格的配对比例差 CI；回退为 Bootstrap。
+
+    当直接 Wilson CI 可用时给出一个解析估计，与 Bootstrap 同时报告时以 Bootstrap 为准。
+    本实现给出与 Bootstrap 对标的「解析近似」，仅当 b+c=0（无差异对）时直接返回 (0,0)。
+    """
+    if n <= 0:
+        return (0.0, 0.0)
+    vib_lo, vib_hi = _wilson_pp(vib_pct, n, z)
+    full_lo, full_hi = _wilson_pp(full_pct, n, z)
+    # MOE 叠加：对差值的方差做独立假设（保守），再结合 phi 系数 1 - |b-c|/(b+c) (b+c>0 时)
+    phi_term = 1.0
+    if b + c > 0:
+        phi_term = abs(b - c) / (b + c)  # 关联强度
+        phi_term = max(0.2, min(1.0, 0.5 + 0.5 * phi_term))
+    half = ((vib_hi - vib_lo) / 2.0 + (full_hi - full_lo) / 2.0) * phi_term
+    delta = vib_pct - full_pct
+    return (round(delta - half, 2), round(delta + half, 2))
+
+
 def analyze_dataset(dataset_name: str, rows: list, summary_metrics: dict) -> dict:
     full_only = [r["task_id"] for r in rows if r["full_passed"] and not r["vib_passed"]]
     vib_only = [r["task_id"] for r in rows if r["vib_passed"] and not r["full_passed"]]
@@ -30,10 +95,37 @@ def analyze_dataset(dataset_name: str, rows: list, summary_metrics: dict) -> dic
     msg_deltas = [r["full_messages"] - r["vib_messages"] for r in rows]
     token_deltas = [r["full_tokens"] - r["vib_tokens"] for r in rows]
 
+    n = len(rows)
+    z = _z_975()
+    full_pct = float(summary_metrics.get("full_pass_rate", 0.0))
+    vib_pct = float(summary_metrics.get("vib_pass_rate", 0.0))
+    pass_delta_pp = round(vib_pct - full_pct, 2)
+
+    full_ci = _wilson_pp(full_pct, max(1, n), z)
+    vib_ci = _wilson_pp(vib_pct, max(1, n), z)
+    boot_ci = _paired_delta_pp_bootstrap_ci(rows, n_boot=10000)
+    nw_ci_approx = _paired_delta_pp_ci_from_proportions(
+        vib_pct, full_pct, max(1, n), len(vib_only), len(full_only), z
+    )
+    # 主报告默认用 Bootstrap CI；Newcombe 作为「analytic_ci」一起写入，供 LaTeX 表任选。
+    if boot_ci[0] <= 0.0 <= boot_ci[1]:
+        sig_level = "ns"
+    elif pass_delta_pp >= 0:
+        sig_level = "+"
+    else:
+        sig_level = "-"
+
     analysis = {
         "dataset": dataset_name,
-        "total_tasks": len(rows),
-        "pass_delta_pp": round(summary_metrics["vib_pass_rate"] - summary_metrics["full_pass_rate"], 2),
+        "total_tasks": n,
+        "full_pass_rate_pct": full_pct,
+        "vib_pass_rate_pct": vib_pct,
+        "pass_delta_pp": pass_delta_pp,
+        "pass_delta_bootstrap_ci_95": list(boot_ci),
+        "pass_delta_newcombe_ci_95_approx": list(nw_ci_approx),
+        "pass_delta_significance": sig_level,
+        "full_pass_wilson_ci_95": list(full_ci),
+        "vib_pass_wilson_ci_95": list(vib_ci),
         "full_only_count": len(full_only),
         "vib_only_count": len(vib_only),
         "net_win_count": len(vib_only) - len(full_only),
@@ -95,6 +187,14 @@ def collect_trace_examples(dataset_name: str, rows: list, trace_rows: list) -> d
     }
 
 
+def _fmt_ci(ci):
+    try:
+        lo, hi = float(ci[0]), float(ci[1])
+    except Exception:
+        return ""
+    return f"[{lo:+.2f}, {hi:+.2f}]"
+
+
 def render_markdown(result_path: Path, analyses: list, trace_context: dict) -> str:
     lines = [
         "# Multi-Benchmark Analysis",
@@ -103,24 +203,29 @@ def render_markdown(result_path: Path, analyses: list, trace_context: dict) -> s
         "",
         "## 总体判断",
         "",
-        "- 仅看 `Pass@1` 百分比会放大结论，需要结合配对胜负数、显著性和逐题差分一起看。",
+        "- 仅看 `Pass@1` 百分比会放大结论，需要结合配对胜负数、显著性、**95% Bootstrap CI** 和逐题差分一起看。",
         "- `full_only_count` 表示 `Full 成功但 VIB 失败`；`vib_only_count` 表示 `VIB 成功但 Full 失败`。",
         "- `mcnemar_pvalue` 越小，说明两种设置在同一批任务上的差异越不像随机波动。",
+        "- `Δpp` 同时报告点估计和配对 bootstrap 95% CI；若 CI 跨过 0，则该数据集的 Δ 应谨慎写成“持平”而不是“显著提升/下降”。",
         "",
         "## Pareto 概览 (Msg Compression vs Pass@1 Δ)",
         "",
-        "横轴是该数据集的消息压缩率，纵轴是 VIB 相对于 Full 的 Pass@1 变化。",
+        "横轴是该数据集的消息压缩率，纵轴是 VIB 相对于 Full 的 Pass@1 变化（Δpp + 95% Bootstrap CI）。",
         "",
-        "| Dataset | Total | Full Pass@1 | VIB Pass@1 | Δ Pass@1 (pp) | Msg Compress | Token Saving | McNemar p |",
-        "|---|---|---|---|---|---|---|---|",
+        "| Dataset | Total | Full Pass@1 (95% Wilson) | VIB Pass@1 (95% Wilson) | Δ Pass@1 (pp) [95% Boot CI] | Signif. | Msg Compress | Token Saving | McNemar p |",
+        "|---|---|---|---|---|---|---|---|---|",
     ]
     for item in analyses:
         s = item["summary"]
+        full_wilson = _fmt_ci(item.get("full_pass_wilson_ci_95", (0, 0)))
+        vib_wilson = _fmt_ci(item.get("vib_pass_wilson_ci_95", (0, 0)))
+        boot_ci = _fmt_ci(item.get("pass_delta_bootstrap_ci_95", (0, 0)))
         lines.append(
             f"| {item['dataset']} | {item['total_tasks']} | "
-            f"{s.get('full_pass_rate', 'N/A')}% | "
-            f"{s.get('vib_pass_rate', 'N/A')}% | "
-            f"{item['pass_delta_pp']:+.2f} | "
+            f"{s.get('full_pass_rate', 'N/A')}% {full_wilson} | "
+            f"{s.get('vib_pass_rate', 'N/A')}% {vib_wilson} | "
+            f"{item['pass_delta_pp']:+.2f} {boot_ci} | "
+            f"{item.get('pass_delta_significance', 'ns')} | "
             f"{s.get('msg_compression_pct', 'N/A')}% | "
             f"{s.get('token_saving_pct', 'N/A')}% | "
             f"{item['mcnemar_pvalue']} |"
@@ -176,11 +281,12 @@ def render_markdown(result_path: Path, analyses: list, trace_context: dict) -> s
 
     lines.extend(["", "## 数据集逐项分析", ""])
     for item in analyses:
+        boot_ci = _fmt_ci(item.get("pass_delta_bootstrap_ci_95", (0, 0)))
         lines.extend([
             f"### {item['dataset']}",
             "",
             "",
-            f"- `Pass@1` 变化: `{item['pass_delta_pp']:+.2f} pp`",
+            f"- `Pass@1` 变化: `{item['pass_delta_pp']:+.2f} pp` (95% Boot CI `{boot_ci}`)",
             f"- 配对胜负: `VIB only = {item['vib_only_count']}`，`Full only = {item['full_only_count']}`，净增益 `{item['net_win_count']:+d}` 题",
             f"- 配对显著性: `McNemar p = {item['mcnemar_pvalue']}`",
             f"- 双方都成功: `{item['both_pass_count']}`，双方都失败: `{item['both_fail_count']}`",

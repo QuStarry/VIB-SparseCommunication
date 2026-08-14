@@ -47,6 +47,18 @@ def _rebuild_dataset_summary_from_refreshed_trace(
         "both_pass": 0, "both_fail": 0,
         "same_msg_count": 0,
     }
+    # -------- PAPER-GAP6 补充字段：ES / MR 自算统计（即使没调 offline_backfill 也能正确渲染） --------
+    es_stats: Dict[str, int] = {
+        "count": 0, "full_passed": 0, "vib_passed": 0,
+        "full_msgs": 0, "vib_msgs": 0,
+        "full_tokens": 0, "vib_tokens": 0,
+    }
+    mr_stats: Dict[str, int] = {
+        "count": 0, "full_passed": 0, "vib_passed": 0,
+        "full_msgs": 0, "vib_msgs": 0,
+        "full_tokens": 0, "vib_tokens": 0,
+    }
+    # 兼容 split_mode 判定：优先用 trace 自带 early_stopped 标签；否则 fallback 到历史字段（若存在）
     for t in traces:
         fres = t["full"] or {}
         vres = t["vib"] or {}
@@ -58,34 +70,40 @@ def _rebuild_dataset_summary_from_refreshed_trace(
         vmsgs = int(vwf.get("total_approved", 0))
         fp = bool(fres.get("passed"))
         vp = bool(vres.get("passed"))
-        res = tr(
-            task_id=t["task_id"],
-            dataset_name=t.get("dataset_name", dataset_name),
-            full_passed=fp,
-            vib_passed=vp,
-            full_messages=fmsgs,
-            vib_messages=vmsgs,
-            full_tokens=int(fts.get("total_tokens", 0)),
-            vib_tokens=int(vts.get("total_tokens", 0)),
-            execution_time=0.0,
-            full_prompt_tokens=int(fts.get("total_prompt_tokens", 0)),
-            full_completion_tokens=int(fts.get("total_completion_tokens", 0)),
-            vib_prompt_tokens=int(vts.get("total_prompt_tokens", 0)),
-            vib_completion_tokens=int(vts.get("total_completion_tokens", 0)),
-            full_early_stopped=bool(fres.get("early_stopped")),
-            vib_early_stopped=bool(vres.get("early_stopped")),
-        )
-        task_results.append(res)
-        detailed_rows.append({
+        f_es = bool(fres.get("early_stopped", False))
+        v_es = bool(vres.get("early_stopped", False))
+        row = {
             "task_id": t["task_id"],
-            "dataset_name": res.dataset_name,
+            "dataset_name": t.get("dataset_name", dataset_name),
             "full_passed": fp,
             "vib_passed": vp,
             "full_messages": fmsgs,
             "vib_messages": vmsgs,
             "full_tokens": int(fts.get("total_tokens", 0)),
             "vib_tokens": int(vts.get("total_tokens", 0)),
-        })
+            # 让 downstream offline_backfill 不必重复猜测：直接写出每行自身的 early_stopped 标签
+            "full_early_stopped": f_es,
+            "vib_early_stopped": v_es,
+        }
+        res = tr(
+            task_id=t["task_id"],
+            dataset_name=row["dataset_name"],
+            full_passed=fp,
+            vib_passed=vp,
+            full_messages=fmsgs,
+            vib_messages=vmsgs,
+            full_tokens=row["full_tokens"],
+            vib_tokens=row["vib_tokens"],
+            execution_time=0.0,
+            full_prompt_tokens=int(fts.get("total_prompt_tokens", 0)),
+            full_completion_tokens=int(fts.get("total_completion_tokens", 0)),
+            vib_prompt_tokens=int(vts.get("total_prompt_tokens", 0)),
+            vib_completion_tokens=int(vts.get("total_completion_tokens", 0)),
+            full_early_stopped=f_es,
+            vib_early_stopped=v_es,
+        )
+        task_results.append(res)
+        detailed_rows.append(row)
         stats["full_passed"] += int(fp)
         stats["vib_passed"] += int(vp)
         stats["full_msgs"] += fmsgs
@@ -106,9 +124,36 @@ def _rebuild_dataset_summary_from_refreshed_trace(
             stats["both_fail"] += 1
         if fmsgs == vmsgs:
             stats["same_msg_count"] += 1
+        # PAPER-GAP6：按 early_stopped 聚合（Full 侧 early_stopped 当作本组判定锚；若两侧不一致，仍只锚定 Full，保持与 offline_backfill 的 OR 语义一致）
+        bucket = es_stats if f_es else mr_stats
+        bucket["count"] += 1
+        bucket["full_passed"] += int(fp)
+        bucket["vib_passed"] += int(vp)
+        bucket["full_msgs"] += fmsgs
+        bucket["vib_msgs"] += vmsgs
+        bucket["full_tokens"] += row["full_tokens"]
+        bucket["vib_tokens"] += row["vib_tokens"]
 
     def _safe(numer, denom) -> float:
         return round((numer / denom) * 100, 2) if denom > 0 else 0.0
+
+    def _split_block(prefix: str, s: Dict[str, int], total_count: int) -> Dict[str, Any]:
+        n = s["count"]
+        return {
+            f"{prefix}_count": n,
+            f"{prefix}_pct": _safe(n, total_count),
+            f"{prefix}_full_pass_rate": _safe(s["full_passed"], n),
+            f"{prefix}_vib_pass_rate": _safe(s["vib_passed"], n),
+            f"{prefix}_pass_delta_pp": round(
+                _safe(s["vib_passed"], n) - _safe(s["full_passed"], n), 2
+            ),
+            f"{prefix}_msg_compression_pct": _safe(
+                s["full_msgs"] - s["vib_msgs"], s["full_msgs"]
+            ),
+            f"{prefix}_token_saving_pct": _safe(
+                s["full_tokens"] - s["vib_tokens"], s["full_tokens"]
+            ),
+        }
 
     summary: Dict[str, Any] = {
         "total_tasks": total,
@@ -134,6 +179,11 @@ def _rebuild_dataset_summary_from_refreshed_trace(
         "both_pass_count": stats["both_pass"],
         "both_fail_count": stats["both_fail"],
     }
+    # PAPER-GAP6：无条件写入 early_stopped_* 与 multi_round_* 两套字段，与主脚本 L1167-L1184 命名完全一致；
+    # 后续 offline_backfill 如调用了 _apply_backfill_split，会覆盖更新为 split_mode 精算结果；
+    # 未调用时（如 HumanEval / GSM8K）也仍有「按 trace 自带 early_stopped 标签聚合」的默认值。
+    summary.update(_split_block("early_stopped", es_stats, total))
+    summary.update(_split_block("multi_round", mr_stats, total))
     try:
         from statsmodels.stats.contingency_tables import mcnemar
         import numpy as np

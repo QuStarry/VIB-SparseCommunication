@@ -110,19 +110,19 @@ def render_three_dataset_section(data: dict) -> str:
         total = max(1, es_n + mr_n)
         lines.append(
             f"| Early-Stopped | {es_n} ({_pp(es_n * 100 / total, 2)}%) | "
-            f"{_pp(mbpp_sum.get('es_full_pass_rate', 0))}% | "
-            f"{_pp(mbpp_sum.get('es_vib_pass_rate', 0))}% | "
-            f"{_pp(mbpp_sum.get('es_delta_pp', 0), 2)} | "
-            f"{_pp(mbpp_sum.get('es_msg_compression_pct', 0))}% | "
-            f"{_pp(mbpp_sum.get('es_token_saving_pct', 0))}% |"
+            f"{_pp(mbpp_sum.get('early_stopped_full_pass_rate', 0))}% | "
+            f"{_pp(mbpp_sum.get('early_stopped_vib_pass_rate', 0))}% | "
+            f"{_pp(mbpp_sum.get('early_stopped_pass_delta_pp', 0), 2)} | "
+            f"{_pp(mbpp_sum.get('early_stopped_msg_compression_pct', 0))}% | "
+            f"{_pp(mbpp_sum.get('early_stopped_token_saving_pct', 0))}% |"
         )
         lines.append(
             f"| Multi-Round | {mr_n} ({_pp(mr_n * 100 / total, 2)}%) | "
-            f"{_pp(mbpp_sum.get('mr_full_pass_rate', 0))}% | "
-            f"{_pp(mbpp_sum.get('mr_vib_pass_rate', 0))}% | "
-            f"{_pp(mbpp_sum.get('mr_delta_pp', 0), 2)} | "
-            f"{_pp(mbpp_sum.get('mr_msg_compression_pct', 0))}% | "
-            f"{_pp(mbpp_sum.get('mr_token_saving_pct', 0))}% |"
+            f"{_pp(mbpp_sum.get('multi_round_full_pass_rate', 0))}% | "
+            f"{_pp(mbpp_sum.get('multi_round_vib_pass_rate', 0))}% | "
+            f"{_pp(mbpp_sum.get('multi_round_pass_delta_pp', 0), 2)} | "
+            f"{_pp(mbpp_sum.get('multi_round_msg_compression_pct', 0))}% | "
+            f"{_pp(mbpp_sum.get('multi_round_token_saving_pct', 0))}% |"
         )
         lines.append("")
 

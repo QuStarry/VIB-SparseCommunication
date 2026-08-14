@@ -57,6 +57,53 @@ class TestVIBRouterBasic:
         assert abs(beta_5 - expected_beta_5) < 1e-6
 
 
+class TestVIBRouterAuditDefaults:
+    """
+    HIGH-2 (Gap1-d audit): 锁定 VIBSparseCommRouter 默认超参，防止未来 PR 改值造成
+    paper/paper.md §2.2 Method 段的声明 / 主实验结果数值漂移。任何默认值变更应先
+    改 paper 数字 & 重跑对应 JSON，再改本测试的期望值。
+    """
+
+    def test_default_init_values_match_paper_section_2_2(self):
+        r = VIBSparseCommRouter()
+        assert r.beta_0 == 2.0, f"paper §2.2 claims β_0=2.0, got {r.beta_0}"
+        assert r.lambda_decay == 0.15, f"paper §2.2 claims λ=0.15, got {r.lambda_decay}"
+        assert r.tau == 0.2, f"paper §2.2 claims τ=0.2 (InfoNCE temp), got {r.tau}"
+        assert r.gamma == 0.0, f"paper §2.2 claims γ=0.0 (base admission threshold), got {r.gamma}"
+        assert r.model_name == "all-MiniLM-L6-v2", (
+            f"paper §2.2 declares all-MiniLM-L6-v2 sentence-transformer (384d, Reimers&Gurevych 2019); "
+            f"got model_name={r.model_name!r}. If actually switching to bge-small-* / DashScope etc., "
+            f"MUST update both paper.md §2.2 AND this assertion before merging."
+        )
+
+    def test_role_beta_map_keys_and_range_present(self):
+        r = VIBSparseCommRouter()
+        expected_roles = {"Architect", "Coder", "Reviewer", "Planner", "Solver", "Verifier"}
+        missing = expected_roles - set(r.role_beta_map.keys())
+        assert not missing, f"role_beta_map missing roles used by workflow (§2.2): {sorted(missing)}"
+        # Range sanity: role priors should be strictly positive and in [1.0, 10.0]
+        # to avoid β_t decay degenerate at t=0.
+        for role, val in r.role_beta_map.items():
+            assert 1.0 <= val <= 10.0, (
+                f"role_beta_map[{role!r}]={val} out of paper §2.2 declared [1, 10] band; "
+                f"if intentional update this assertion after rerunning 3dataset JSON."
+            )
+
+    def test_router_mode_flags_have_stable_defaults(self):
+        """The two feature flags toggled by ablation JSONs should have stable defaults
+        (both ON by default: enables GSM8K reasoning guard + role weights).
+        Any flip must be reflected in Table 3 / Figure 3-b ablations."""
+        r = VIBSparseCommRouter()
+        assert r.enable_math_role_weights is True, (
+            "role weights should default ON (matches gsm8k_ablation_frozen_plus_role.json default); "
+            "if flipping, rerun gsm8k ablation with matching CLI flag & regenerate Table 3."
+        )
+        assert r.enable_reasoning_guard is True, (
+            "reasoning guard should default ON. Flipping default requires rerun GSM8K main benchmark."
+        )
+
+
+
 class TestVIBRouterMilestone1:
     """
     Milestone 1 Validation: Test cases from PRD.

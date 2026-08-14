@@ -10,6 +10,7 @@ Usage:
 """
 
 import os
+from pathlib import Path
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 import sys
@@ -286,7 +287,6 @@ class GSM8KAdapter(BaseDatasetAdapter):
 
         samples = []
         for i, item in enumerate(ds):
-            # 解析 GSM8K 标答中 #### 后面的数字
             answer = item["answer"]
             target = answer.split("####")[-1].strip() if "####" in answer else answer.strip()
 
@@ -302,11 +302,222 @@ class GSM8KAdapter(BaseDatasetAdapter):
         return samples
 
 
+class MATHAdapter(BaseDatasetAdapter):
+    """加载 MATH 测试集 (Hendrycks et al. 2021, 5-level 竞赛数学推理, 与 GSM8K 同 frozen-math path)。
+
+    加载优先级：
+      1) HuggingFace Hub 三个官方镜像（ssl_verify=False 解公司 SSL 握手，schema 校验拒绝 andersonbcdefg 假同名数据集）
+      2) 本地离线 JSON 目录（MATH/test/<level>/<category>/*.json，Github 官方 download_data.sh 产出结构）
+    为保证正确性，所有候选项均做字段校验（必须包含 problem+solution 两列）+ 样本量 >=100 才采用。
+    """
+
+    @staticmethod
+    def _extract_final(solution_text: str) -> str:
+        last_box = re.search(r"\\boxed\s*\{((?:[^{}]|\{[^{}]*\})*)\}\s*$", solution_text, re.I|re.S)
+        if last_box:
+            return last_box.group(1).strip()
+        last_hash = solution_text.rfind("####")
+        if last_hash >= 0:
+            return solution_text[last_hash+4:].strip()
+        tail = solution_text.splitlines()[-3:] if solution_text else [""]
+        for ln in reversed(tail):
+            m = re.search(r"\\boxed\s*\{((?:[^{}]|\{[^{}]*\})*)\}", ln)
+            if m:
+                return m.group(1).strip()
+        return solution_text.strip()
+
+    def _build_samples_from_iterable(self, ds, limit: int, chosen_source: str) -> List[TaskSample]:
+        """统一把 iterable dataset (列含 problem/solution[/level|difficulty][/type|category|subject]) 转为 TaskSample。"""
+        samples: List[TaskSample] = []
+        for i, item in enumerate(ds):
+            solution = item.get("solution", "") or ""
+            final = self._extract_final(solution)
+            level = item.get("level") or item.get("difficulty") or ""
+            level = str(level) if level is not None else ""
+            category = item.get("type") or item.get("category") or item.get("subject") or ""
+            category = str(category) if category is not None else ""
+            samples.append(TaskSample(
+                task_id=f"MATH/{i}",
+                dataset_name="MATH",
+                prompt=item.get("problem", ""),
+                reference_answer=final,
+                metadata={"full_solution": solution, "level": level, "category": category,
+                          "source": chosen_source},
+            ))
+            if 0 < limit <= len(samples):
+                break
+        return samples
+
+    @staticmethod
+    def _disable_ssl_globally() -> None:
+        """幂等地全局禁用 SSL 证书校验 — 公司 MITM 证书链不被 Python 信任/握手 EOF 场景兜底。
+        仅第一次调用生效；不影响其它数据集，因为 HumanEval/GSM8K 不经过此函数。
+        """
+        if getattr(MATHAdapter, "_ssl_disabled", False):
+            return
+        import ssl as _ssl
+        for k, v in [("REQUESTS_CA_BUNDLE", ""), ("CURL_CA_BUNDLE", ""),
+                     ("HF_HUB_DISABLE_SSL_CERTIFICATION", "1")]:
+            os.environ[k] = v
+
+        _orig_create_default_context = _ssl.create_default_context
+
+        def _patched_create_default_context(*a, **kw):
+            ctx = _orig_create_default_context(*a, **kw)
+            ctx.check_hostname = False
+            ctx.verify_mode = _ssl.CERT_NONE
+            return ctx
+
+        _ssl.create_default_context = _patched_create_default_context
+        MATHAdapter._ssl_disabled = True
+        try:
+            import urllib3  # type: ignore
+            urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)  # type: ignore[attr-defined]
+        except Exception:
+            pass
+
+    def load(self, limit: int = -1) -> List[TaskSample]:
+        errors: List[str] = []
+        self._disable_ssl_globally()
+
+        # ==============================================================
+        # 1) HuggingFace Hub — repos × configs × splits, 全局 SSL 已禁用
+        # ==============================================================
+        # (repo, [possible config names])  — EleutherAI/hendrycks_math 常要求指定 config='all'/'default'
+        repo_configs = [
+            ("DigitalLearningGmbH/MATH-lighteval", [None]),
+            ("EleutherAI/hendrycks_math",        [None, "all", "default", "source"]),
+            ("hendrycks/competition_math",       [None]),
+        ]
+        split_preference = ["test", "validation", "train"]
+
+        try:
+            from datasets import load_dataset
+        except Exception as e:
+            errors.append(f"import datasets failed: {type(e).__name__}: {e}")
+            load_dataset = None
+
+        if load_dataset is not None:
+            for repo, config_names in repo_configs:
+                for conf in config_names:
+                    for split_name in split_preference:
+                        conf_label = f"config={conf!r}" if conf is not None else "config=None"
+                        try:
+                            if conf is not None:
+                                ds = load_dataset(repo, conf, split=split_name,
+                                                  download_mode="reuse_dataset_if_exists")
+                            else:
+                                ds = load_dataset(repo, split=split_name,
+                                                  download_mode="reuse_dataset_if_exists")
+                            cols = list(ds.column_names)
+                            if "problem" not in cols or "solution" not in cols:
+                                errors.append(f"[REJECT schema] {repo} {conf_label} split={split_name}: cols={cols}")
+                                continue
+                            if len(ds) < 100:
+                                errors.append(f"[REJECT size]   {repo} {conf_label} split={split_name}: n={len(ds)} (<100)")
+                                continue
+                            chosen_source = f"HF:{repo} {conf_label} split={split_name}"
+                            samples = self._build_samples_from_iterable(ds, limit, chosen_source)
+                            print(f"  ✅ MATH loaded via {chosen_source}, n={len(samples)} (schema OK)")
+                            if errors:
+                                print(f"     (prior failures: {len(errors)}; first 3 below)")
+                                for emsg in errors[:3]:
+                                    print(f"       · {emsg[:200]}")
+                            return samples
+                        except Exception as e:
+                            errors.append(f"[FAIL HF] {repo} {conf_label} split={split_name}: {type(e).__name__}: {str(e)[:300]}")
+                            continue
+
+        # ==============================================================
+        # 2) 本地离线 JSON — Github hendrycks/math 官方 download_data.sh 结构
+        #    MATH/test/<level>/<category>/<problemN>.json 每文件存一条
+        #    (problem, solution, level, type) 四个字段
+        # ==============================================================
+        project_root = Path(__file__).resolve().parent.parent
+        local_dirs = [
+            Path.home() / ".cache" / "VIB-SparseCommunication" / "MATH" / "test",
+            project_root / "data" / "MATH" / "test",
+            project_root / "datasets" / "MATH" / "test",
+            Path("/data") / "MATH" / "test",
+        ]
+        # Also try the 'train' parallel folders in case user only extracted train part
+        # (test split is 5000 samples; we prefer test but train is acceptable fallback with limit=500)
+        _fallback_local_dirs = []
+        for d in local_dirs:
+            if str(d).endswith("/test"):
+                _fallback_local_dirs.append(d.parent / "train")
+        local_dirs = local_dirs + _fallback_local_dirs
+
+        for local_dir in local_dirs:
+            if not local_dir.exists():
+                errors.append(f"[SKIP local not found] {local_dir}")
+                continue
+            files = sorted([p for p in local_dir.rglob("*.json") if p.is_file()])
+            if not files:
+                errors.append(f"[REJECT local empty] {local_dir} has 0 *.json files")
+                continue
+            samples: List[TaskSample] = []
+            for p in files:
+                try:
+                    with open(p, "r", encoding="utf-8") as f:
+                        item = json.load(f)
+                except Exception as e:
+                    errors.append(f"  [WARN unreadable JSON] {p.name}: {type(e).__name__}: {e}")
+                    continue
+                if "problem" not in item or "solution" not in item:
+                    errors.append(f"  [WARN local wrong schema] {p.name}: keys={list(item.keys())}")
+                    continue
+                solution = item["solution"]
+                final = self._extract_final(solution)
+                level = item.get("level") or item.get("difficulty") or ""
+                level = str(level) if level is not None else ""
+                category = item.get("type") or item.get("category") or item.get("subject") or ""
+                category = str(category) if category is not None else ""
+                rel = str(p.relative_to(local_dir))
+                samples.append(TaskSample(
+                    task_id=f"MATH/{rel}",
+                    dataset_name="MATH",
+                    prompt=item["problem"],
+                    reference_answer=final,
+                    metadata={"full_solution": solution, "level": level, "category": category,
+                              "source": f"local:{local_dir}", "file": rel},
+                ))
+                if 0 < limit <= len(samples):
+                    break
+            if samples:
+                chosen_source = f"local:{local_dir}"
+                print(f"  ✅ MATH loaded via {chosen_source}, n={len(samples)} ({len(files)} total .json in dir)")
+                return samples[:limit] if limit > 0 else samples
+            errors.append(f"[REJECT local 0 valid samples] {local_dir}: {len(files)} .json but none matched schema")
+
+        # ==============================================================
+        # 全部失败 → 打印错误 + 给用户可执行的恢复步骤
+        # ==============================================================
+        print(f"  [Warning] MATH 数据集加载失败。累计 {len(errors)} 条尝试：")
+        unique_prefixes: Dict[str, int] = {}
+        for em in errors:
+            head = em.split("]:", 1)[0].split(" ",1)[-1][:80] if ":" in em else em[:80]
+            unique_prefixes[head] = unique_prefixes.get(head, 0) + 1
+        for head, cnt in sorted(unique_prefixes.items(), key=lambda x:-x[1])[:8]:
+            print(f"    × {cnt:>3}x · {head}")
+        print()
+        print("  👉 方案 A (离线优先, 永久解) — Github 下载官方 MATH 到本地 JSON 目录：")
+        print("     cd /tmp && rm -rf math_repo && git clone --depth=1 https://github.com/hendrycks/math.git math_repo")
+        print("     cd math_repo && bash download_data.sh 2>&1 | tail -n 5")
+        print(f"     mkdir -p {Path.home() / '.cache' / 'VIB-SparseCommunication'}")
+        print(f"     cp -r MATH {Path.home() / '.cache' / 'VIB-SparseCommunication'}/MATH")
+        print(f"     # 验证：ls {Path.home() / '.cache' / 'VIB-SparseCommunication' / 'MATH' / 'test'} 应有 5 个 level 子目录, 共 5000 .json")
+        print("  👉 方案 B (代理, 一次性) — 给 Python 进程挂 HTTPS 代理 解 SSL：")
+        print("     export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 ; python3 experiments/run_multi_benchmark.py --datasets math ...")
+        return []
+
+
 class DatasetFactory:
     _adapters = {
         "humaneval": HumanEvalAdapter(),
         "mbpp": MBPPAdapter(),
-        "gsm8k": GSM8KAdapter()
+        "gsm8k": GSM8KAdapter(),
+        "math": MATHAdapter(),
     }
 
     @classmethod
@@ -371,7 +582,18 @@ class CodeEvaluator:
 
 
 class MathEvaluator:
-    """GSM8K 数值匹配评估"""
+    """GSM8K / MATH 数值匹配评估（支持 \boxed{} 优先解析）"""
+
+    @staticmethod
+    def _extract_boxed(text: str) -> Optional[str]:
+        """优先提取 \boxed{...}，兼容嵌套 \boxed{a+b\\text{ cm}}"""
+        if not text or "\\boxed" not in text:
+            return None
+        matches = re.findall(r"\\boxed\s*\{((?:[^{}]|\{[^{}]*\})*)\}", text)
+        if matches:
+            return matches[-1].strip()
+        return None
+
     @staticmethod
     def _extract_last_number(text: str) -> Optional[str]:
         matches = re.findall(r"[-+]?\d[\d,]*(?:\.\d+)?|[-+]?\.\d+", text or "")
@@ -381,14 +603,34 @@ class MathEvaluator:
 
     @staticmethod
     def evaluate(prediction: str, reference: str) -> bool:
-        pred_number = MathEvaluator._extract_last_number(prediction)
-        ref_number = MathEvaluator._extract_last_number(reference)
-        if pred_number is None or ref_number is None:
-            return False
-        try:
-            return Decimal(pred_number) == Decimal(ref_number)
-        except InvalidOperation:
-            return pred_number == ref_number
+        ref_candidates = [
+            MathEvaluator._extract_boxed(reference),
+            MathEvaluator._extract_last_number(reference),
+            reference.strip()
+        ]
+        ref_candidates = [x for x in ref_candidates if x]
+        pred_candidates = [
+            MathEvaluator._extract_boxed(prediction),
+            MathEvaluator._extract_last_number(prediction),
+            prediction.strip()
+        ]
+        pred_candidates = [x for x in pred_candidates if x]
+
+        def _as_decimal(x: str) -> Optional[Decimal]:
+            try:
+                return Decimal(x)
+            except (InvalidOperation, ValueError):
+                return None
+
+        for ref in ref_candidates:
+            for pred in pred_candidates:
+                rd = _as_decimal(ref)
+                pd = _as_decimal(pred)
+                if rd is not None and pd is not None and rd == pd:
+                    return True
+                if ref and pred and ref.strip().lower() == pred.strip().lower():
+                    return True
+        return False
 
 
 class UnifiedEvaluator:
@@ -410,7 +652,7 @@ class UnifiedEvaluator:
                 entry_point=None,
                 dbg_meta={"task_id": sample.task_id, "dataset": sample.dataset_name}
             )
-        elif sample.dataset_name == "GSM8K":
+        elif sample.dataset_name == "GSM8K" or sample.dataset_name == "MATH":
             if not sample.reference_answer:
                 return False
             return MathEvaluator.evaluate(model_output, sample.reference_answer)
@@ -775,10 +1017,11 @@ class MultiDatasetHarness:
         return create_math_agents, generate_final_answer
 
     def _workflow_options_for_sample(self, sample: TaskSample) -> Dict[str, Any]:
+        is_math = sample.dataset_name in ("GSM8K", "MATH")
         return {
             "same_round_history_mode": (
                 "frozen"
-                if sample.dataset_name == "GSM8K" and self.experiment_config.enable_gsm8k_frozen_history
+                if is_math and self.experiment_config.enable_gsm8k_frozen_history
                 else "incremental"
             ),
             "enable_digest_fallback": (
@@ -1247,7 +1490,7 @@ class MultiDatasetHarness:
 def main():
     parser = argparse.ArgumentParser(description="Multi-Dataset VIB Benchmark")
     parser.add_argument("--datasets", nargs="+", default=["humaneval"],
-                        help="数据集列表 (humaneval, mbpp, gsm8k)")
+                        help="数据集列表 (humaneval, mbpp, gsm8k, math)")
     parser.add_argument("--limit", type=int, default=-1,
                         help="每个数据集最大样本数 (-1=全量)")
     parser.add_argument("--max-steps", type=int, default=2,

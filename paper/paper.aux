@@ -1,0 +1,112 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand*\HyPL@Entry[1]{}
+\citation{madaan2023selfrefine}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{chen2021evaluating,austin2021program}
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}This work}{2}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Contributions and main results}{2}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Method}{2}{section.2}\protected@file@percent }
+\newlabel{sec:method}{{2}{2}{Method}{section.2}{}}
+\newlabel{sec:method@cref}{{[section][2][]2}{[1][2][]2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Task setup and multi-agent pipeline}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Vanilla single-agent baseline.}{2}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Full-communication 3-agent team.}{2}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{VIB-Sparse 3-agent team.}{2}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}VIB gating: formulation}{2}{subsection.2.2}\protected@file@percent }
+\citation{reimers2019sentence}
+\@writefile{toc}{\contentsline {paragraph}{VIB objective.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Variational estimates.}{3}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Utility score and schedule.}{3}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Tail-case mechanism: why VIB wins on MBPP Multi-Round}{3}{subsection.2.3}\protected@file@percent }
+\citation{deepseek2024deepseekv3}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces VIB router latency per candidate message as shared history length grows ($|H| \in \{1, 4, 8, 16, 32\}$). Left axis (blue): p50 ms, solid line; orange error bars: p95 ms. Right axis (green dashed): p95/p50 tail-fat ratio, which peaks at $4.40\times $ for $|H|=16$ and drops to $1.45\times $ for $|H|=32$ (InfoNCE vectorisation kicks in). Measured offline on Apple M2 Pro after a 100-call warm-up of the frozen sentence encoder.}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:routerlatency}{{1}{4}{VIB router latency per candidate message as shared history length grows ($|H| \in \{1, 4, 8, 16, 32\}$). Left axis (blue): p50 ms, solid line; orange error bars: p95 ms. Right axis (green dashed): p95/p50 tail-fat ratio, which peaks at $4.40\times $ for $|H|=16$ and drops to $1.45\times $ for $|H|=32$ (InfoNCE vectorisation kicks in). Measured offline on Apple M2 Pro after a 100-call warm-up of the frozen sentence encoder}{figure.1}{}}
+\newlabel{fig:routerlatency@cref}{{[figure][1][]1}{[1][3][]4}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Experiments}{4}{section.3}\protected@file@percent }
+\newlabel{sec:experiments}{{3}{4}{Experiments}{section.3}{}}
+\newlabel{sec:experiments@cref}{{[section][3][]3}{[1][4][]4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Main results --- three methods $\times $ three benchmarks}{4}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reading \Cref  {tab:main_results} top-to-bottom.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}MBPP Early-Stopped vs Multi-Round split}{4}{subsubsection.3.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}Pareto overview}{4}{subsubsection.3.1.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Main Pass@1 results (Vanilla single-agent baseline vs full-communication 3-agent vs VIB-Sparse, this work). We report $\Delta _{\text  {VIB-Full}}$ both as a point estimate and with 95\% paired-bootstrap CI; $\dagger $ marks CIs that do not cross zero, $\ddagger $ marks paired McNemar $p<0.05$. MBPP message compression is near zero because max\_steps$=2$ caps each side at 6 candidate turns (saturated), see \S  3. }}{5}{table.1}\protected@file@percent }
+\newlabel{tab:main_results}{{1}{5}{Main Pass@1 results (Vanilla single-agent baseline vs full-communication 3-agent vs VIB-Sparse, this work). We report $\Delta _{\text {VIB-Full}}$ both as a point estimate and with 95\% paired-bootstrap CI; $\dagger $ marks CIs that do not cross zero, $\ddagger $ marks paired McNemar $p<0.05$. MBPP message compression is near zero because max\_steps$=2$ caps each side at 6 candidate turns (saturated), see \S 3}{table.1}{}}
+\newlabel{tab:main_results@cref}{{[table][1][]1}{[1][4][]5}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces MBPP split: Early-Stopped (probe synthesis passes at round 1) vs Multi-Round (requires further inter-agent discussion). For the single-agent Vanilla baseline, ``Early-Stopped'' is exactly ``one-shot synthesis passes'', matching the main script's probe protocol. }}{5}{table.2}\protected@file@percent }
+\newlabel{tab:mbpp_split}{{2}{5}{MBPP split: Early-Stopped (probe synthesis passes at round 1) vs Multi-Round (requires further inter-agent discussion). For the single-agent Vanilla baseline, ``Early-Stopped'' is exactly ``one-shot synthesis passes'', matching the main script's probe protocol}{table.2}{}}
+\newlabel{tab:mbpp_split@cref}{{[table][2][]2}{[1][4][]5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Case studies --- the 2 MBPP Multi-Round solves VIB unlocked}{5}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:cases}{{3.2}{5}{Case studies --- the 2 MBPP Multi-Round solves VIB unlocked}{subsection.3.2}{}}
+\newlabel{sec:cases@cref}{{[subsection][2][3]3.2}{[1][5][]5}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Pareto front---message compression vs $\Delta $ Pass@1 (VIB $-$ Full), three benchmarks; bubble size $\propto \sqrt  {N}$; error bars $=$ 95\% paired-bootstrap CI.}}{5}{figure.2}\protected@file@percent }
+\newlabel{fig:pareto}{{2}{5}{Pareto front---message compression vs $\Delta $ Pass@1 (VIB $-$ Full), three benchmarks; bubble size $\propto \sqrt {N}$; error bars $=$ 95\% paired-bootstrap CI}{figure.2}{}}
+\newlabel{fig:pareto@cref}{{[figure][2][]2}{[1][4][]5}}
+\@writefile{toc}{\contentsline {paragraph}{Case MBPP/260.}{5}{section*.9}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces GSM8K ablation ($N=200$ sub-sample): VIB with / without role-aware weights (\S  2.2). With role weights off (``frozen\_only''), VIB already saves $+30.25\%$ messages; with role weights on (``frozen+role''), compression drops slightly to $+25.17\%$ but the accuracy gap vs Full closes to exactly 0.00 pp, showing VIB is robust to both history modes. }}{6}{table.3}\protected@file@percent }
+\newlabel{tab:gsm8k_ablation}{{3}{6}{GSM8K ablation ($N=200$ sub-sample): VIB with / without role-aware weights (\S 2.2). With role weights off (``frozen\_only''), VIB already saves $+30.25\%$ messages; with role weights on (``frozen+role''), compression drops slightly to $+25.17\%$ but the accuracy gap vs Full closes to exactly 0.00 pp, showing VIB is robust to both history modes}{table.3}{}}
+\newlabel{tab:gsm8k_ablation@cref}{{[table][3][]3}{[1][6][]6}}
+\@writefile{toc}{\contentsline {paragraph}{Case MBPP/285.}{6}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Ablation --- GSM8K frozen-history $\times $ role-aware weights}{6}{subsection.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces GSM8K ablation ($N=200$). Left group $=$ frozen-history only VIB; right group $=$ $+$ role-aware weights. Blue bars (left axis): $\Delta $ Pass@1 (VIB $-$ Full) with paired-bootstrap 95\% CI. Orange bars (right axis): message compression \%.}}{6}{figure.3}\protected@file@percent }
+\newlabel{fig:ablation}{{3}{6}{GSM8K ablation ($N=200$). Left group $=$ frozen-history only VIB; right group $=$ $+$ role-aware weights. Blue bars (left axis): $\Delta $ Pass@1 (VIB $-$ Full) with paired-bootstrap 95\% CI. Orange bars (right axis): message compression \%}{figure.3}{}}
+\newlabel{fig:ablation@cref}{{[figure][3][]3}{[1][6][]6}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{6}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Strengths.}{6}{section*.11}\protected@file@percent }
+\citation{qian2023chatdev}
+\citation{hong2023metagpt}
+\citation{yang2024sweagent}
+\citation{wang2024opendevin}
+\citation{du2023agentcoder}
+\citation{liu2023dylan}
+\citation{jiang2023llmlingua}
+\citation{zhang2024agentprune}
+\citation{alemi2017variational}
+\citation{tishby2015deep}
+\citation{alemi2017variational}
+\citation{wang2021infobert}
+\@writefile{toc}{\contentsline {paragraph}{Limitations and future work.}{7}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Related Work}{7}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Multi-agent code generation.}{7}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Sparse / structured communication.}{7}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Information bottleneck in deep learning.}{7}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Long-context compression.}{7}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Qualitative VIB gate trace --- MBPP/260 and MBPP/285}{7}{appendix.A}\protected@file@percent }
+\newlabel{app:gate_trace}{{A}{7}{Qualitative VIB gate trace --- MBPP/260 and MBPP/285}{appendix.A}{}}
+\newlabel{app:gate_trace@cref}{{[appendix][1][2147483647]A}{[1][7][]7}}
+\@writefile{toc}{\contentsline {paragraph}{MBPP/260 (\texttt  {newman\_prime}).}{7}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{MBPP/285 (\texttt  {text\_match\_two\_three}).}{7}{section*.18}\protected@file@percent }
+\bibstyle{apalike}
+\bibdata{refs}
+\bibcite{alemi2017variational}{{1}{2017}{{Alemi et~al.}}{{}}}
+\bibcite{austin2021program}{{2}{2021}{{Austin et~al.}}{{}}}
+\bibcite{chen2021evaluating}{{3}{2021}{{Chen et~al.}}{{}}}
+\bibcite{deepseek2024deepseekv3}{{4}{2024}{{DeepSeek-AI}}{{}}}
+\bibcite{du2023agentcoder}{{5}{2023}{{Du et~al.}}{{}}}
+\bibcite{hong2023metagpt}{{6}{2023}{{Hong et~al.}}{{}}}
+\bibcite{jiang2023llmlingua}{{7}{2023}{{Jiang et~al.}}{{}}}
+\bibcite{liu2023dylan}{{8}{2023}{{Liu et~al.}}{{}}}
+\bibcite{madaan2023selfrefine}{{9}{2023}{{Madaan et~al.}}{{}}}
+\bibcite{qian2023chatdev}{{10}{2024}{{Qian et~al.}}{{}}}
+\bibcite{reimers2019sentence}{{11}{2019}{{Reimers and Gurevych}}{{}}}
+\bibcite{tishby2015deep}{{12}{2015}{{Tishby and Zaslavsky}}{{}}}
+\bibcite{wang2021infobert}{{13}{2021}{{Wang et~al.}}{{}}}
+\bibcite{wang2024opendevin}{{14}{2024}{{Wang et~al.}}{{}}}
+\bibcite{yang2024sweagent}{{15}{2024}{{Yang et~al.}}{{}}}
+\bibcite{zhang2024agentprune}{{16}{2024}{{Zhang et~al.}}{{}}}
+\gdef \@abspage@last{9}

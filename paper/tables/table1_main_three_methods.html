@@ -1,0 +1,74 @@
+<table class="booktabs span-all">
+<caption><span class="caption-label">Table 1.</span>Main Pass@1 results (Vanilla single-agent baseline vs full-communication 3-agent vs VIB-Sparse, this work).
+We report $\Delta_{\text{VIB-Full}}$ both as a point estimate and with 95\% paired-bootstrap CI; $\dagger$ marks CIs that do not cross zero, $\ddagger$ marks paired McNemar $p<0.05$.
+MBPP message compression is near zero because $\text{max\_steps}=2$ caps each side at 6 candidate turns (saturated), see §3.
+</caption>
+<thead>
+<tr class="toprule">
+<th class="num">Dataset</th>
+<th class="num">N</th>
+<th class="num">Vanilla</th>
+<th class="num">Full</th>
+<th class="num">VIB (Ours)</th>
+<th class="num" colspan="2">$\Delta_{\text{VIB-Vanilla}}$</th>
+<th class="num" colspan="2">$\Delta_{\text{VIB-Full}}$</th>
+<th class="num">Msg ↓</th>
+<th class="num">Tok ↓</th>
+</tr>
+<tr class="midrule">
+<th></th>
+<th></th>
+<th class="num" colspan="3">Pass@1 (\%)</th>
+<th class="num">pp</th>
+<th class="num">95\% CI</th>
+<th class="num">pp</th>
+<th class="num">95\% CI</th>
+<th class="num">(\%)</th>
+<th class="num">(\%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HumanEval</td>
+<td class="num">164</td>
+<td class="num">93.90</td>
+<td class="num">100.00 [+97.71, +100.00]</td>
+<td class="num">100.00 [+97.71, +100.00]</td>
+<td class="num">+6.10</td>
+<td class="num">—</td>
+<td class="num">0.00</td>
+<td class="num">[+0.00, +0.00]</td>
+<td class="num">+21.14</td>
+<td class="num">+3.88</td>
+</tr>
+<tr>
+<td>MBPP</td>
+<td class="num">257</td>
+<td class="num">89.88</td>
+<td class="num">90.66 [+86.48, +93.64]</td>
+<td class="num">91.44 [+87.38, +94.28]</td>
+<td class="num">+1.56</td>
+<td class="num">—</td>
+<td class="num">+0.78</td>
+<td class="num">[−1.17, +2.72]</td>
+<td class="num">−0.12</td>
+<td class="num">−0.05</td>
+</tr>
+<tr class="bottomrule">
+<td>GSM8K</td>
+<td class="num">1319</td>
+<td class="num">59.29</td>
+<td class="num">95.30 [+94.02, +96.32]</td>
+<td class="num">95.22 [+93.93, +96.25]</td>
+<td class="num">+35.93</td>
+<td class="num">—</td>
+<td class="num">−0.08</td>
+<td class="num">[−0.83, +0.68]</td>
+<td class="num">+30.49</td>
+<td class="num">+4.96</td>
+</tr>
+</tbody>
+</table>
+<p class="notes"><b>Notes.</b> All CIs are at the 95% level. Single-proportion intervals use the Wilson score; $\Delta$ intervals use 10 000 paired bootstraps (seed 20260812).
+Vanilla denotes a single-agent direct synthesis (no team discussion, temperature$=0.1$, max_tokens$=1024$); synthesis hyperparameters are identical across Vanilla / Full / VIB to guarantee apples-to-apples comparison.
+MBPP message compression is near zero because at max_steps$=2$ each 3-agent side is capped at ≈ 6 turns, saturating discussion bandwidth; VIB gains are concentrated on GSM8K ($+30.49\%$ messages saved) and HumanEval ($+21.14\%$).</p>

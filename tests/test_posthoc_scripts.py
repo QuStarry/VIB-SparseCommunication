@@ -125,7 +125,9 @@ def test_render_markdown_contains_pareto_and_split_sections():
     md = mod.render_markdown(Path("results/fake.json"), analyses, {})
 
     assert "## Pareto 概览" in md
-    assert "| Dataset | Total | Full Pass@1 | VIB Pass@1" in md
+    assert "| Dataset | Total | Full Pass@1" in md
+    assert "95% Wilson" in md
+    assert "[95% Boot CI]" in md
     assert "## 数据集内部分组拆分" in md
     assert "| MBPP | Early-Stopped |" in md
     assert "| MBPP | Multi-Round |" in md

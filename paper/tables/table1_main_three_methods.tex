@@ -1,0 +1,34 @@
+\begin{table*}[t]
+\centering
+\caption{Pass@1 主结果对比（Vanilla 单智能体基线 vs Full-Comm 三智能体 vs VIB-Sparse 本文方法）。
+VIB 相对 Full 的 Δ 同时报告点估计与配对 Bootstrap 95\%~CI；$\dagger$ 表示 CI 不跨零，$\ddagger$ 表示配对 McNemar 检验 $p<0.05$。
+MBPP 压缩率因 max\_steps$=2$ 三智能体消息天花板接近 6 条而接近零（详见 §3 Findings）。MATH（Hendrycks et al., 2021）与 GSM8K 同样走 frozen-history Planner-Solver-Verifier 路径，消息压缩率同量级。
+\label{tab:main_results}}
+\setlength{\tabcolsep}{5.5pt}
+\small
+\begin{tabular}{l r rrr rr rr r r}
+\toprule
+\textbf{Dataset} & \textbf{N} &
+\textbf{Vanilla} & \textbf{Full} & \textbf{VIB (Ours)} &
+\multicolumn{2}{c}{\textbf{$\Delta_{\mathrm{VIB-Vanilla}}$}} &
+\multicolumn{2}{c}{\textbf{$\Delta_{\mathrm{VIB-Full}}$}} &
+\textbf{Msg $\downarrow$} & \textbf{Tok $\downarrow$} \\
+\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+& & \multicolumn{3}{c}{Pass@1 (\%)} &
+\multicolumn{1}{c}{pp} & \multicolumn{1}{c}{95\%CI} &
+\multicolumn{1}{c}{pp} & \multicolumn{1}{c}{95\%CI} &
+\multicolumn{1}{c}{(\%)} & \multicolumn{1}{c}{(\%)} \\
+\midrule
+
+HumanEval       &   164 &   93.90 & 100.00~[+97.71,\,+100.00] & 100.00~[+97.71,\,+100.00] &  +6.10 & --- & 0.00       & [+0.00,\,+0.00] & +21.14 &  +3.88 \\
+MBPP            &   257 &   89.88 & 90.66~[+86.48,\,+93.64] & 91.44~[+87.38,\,+94.28] &  +1.56 & --- & +0.78       & [-1.17,\,+2.72] &  -0.12 &  -0.05 \\
+GSM8K           &  1319 &   59.29 & 95.30~[+94.02,\,+96.32] & 95.22~[+93.93,\,+96.25] & +35.93 & --- & -0.08       & [-0.83,\,+0.68] & +30.49 &  +4.96 \\
+MATH            &  5000 &   49.10 & 80.08~[+78.95,\,+81.16] & 79.16~[+78.01,\,+80.26] & +30.06 & --- & -0.92$^\dagger$$^\ddagger$ & [-1.78,\,-0.04] & +25.59 &  +4.42 \\
+\bottomrule
+\end{tabular}
+\vspace{0.5em}
+\parbox{0.95\textwidth}{\footnotesize
+\textbf{Notes.} 所有置信区间均为 95\% 水平。单比例区间使用 Wilson score，两方法差值区间使用 10k 次配对 Bootstrap（seed=20260812）。
+Vanilla 为单智能体直接 synthesis（无团队讨论，temperature$=0.1$，max\_tokens$=1024$），与 Full/VIB 的 synthesis 阶段参数完全一致，保证 apples-to-apples。
+MBPP 消息压缩率接近 0 是因为三智能体 max\_steps$=2$ 时每侧总消息上限约 6 条，讨论空间已饱和；VIB 的收益主要体现在 GSM8K（+30.49\%）与 HumanEval（+21.14\%）两大数据集。}
+\end{table*}

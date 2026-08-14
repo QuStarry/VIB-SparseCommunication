@@ -1,0 +1,180 @@
+/* NeurIPS-style two-column (11pt, US letter) — approximation via CSS
+   Used to print paper_clean.md → paper.pdf in Playwright when no TeX engine is present locally. */
+@page {
+  size: letter;
+  margin: 1.0in;
+}
+:root {
+  --neurips-blue: #2563eb;
+}
+html, body {
+  font-size: 11pt;
+  line-height: 1.32;
+  font-family: 'Times New Roman', Times, serif;
+  color: #111;
+  margin: 0;
+  padding: 0;
+}
+body {
+  padding: 0;
+  column-count: 2;
+  column-gap: 0.25in;
+  column-fill: balance;
+  orphans: 3;
+  widows: 3;
+}
+h1, h2, h3, h4 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #111;
+  column-span: none;
+  line-height: 1.18;
+  margin-top: 1.0em;
+  margin-bottom: 0.4em;
+  font-weight: 600;
+}
+h1 { font-size: 14pt; }
+h2 { font-size: 12.5pt; }
+h3 { font-size: 11.5pt; }
+h4 { font-size: 11pt; }
+p {
+  margin: 0 0 0.5em 0;
+  hyphens: auto;
+  text-align: justify;
+}
+a, a:visited { color: var(--neurips-blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Title block (make it span the whole page width, centred) */
+.title-block {
+  column-span: all;
+  text-align: center;
+  margin-bottom: 1em;
+  padding-bottom: 0.6em;
+  border-bottom: 0.4pt solid #999;
+}
+.title-block h1.title {
+  font-size: 18pt;
+  font-weight: 700;
+  margin: 0.2em 0 0.3em 0;
+}
+.title-block .authors {
+  font-size: 11pt;
+  color: #333;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Abstract: single column, indented, italic-ish */
+.abstract {
+  column-span: all;
+  border-top: 0.4pt solid #ccc;
+  border-bottom: 0.4pt solid #ccc;
+  padding: 0.6em 1.0em;
+  margin: 0.6em 0 1.2em 0;
+  background: #fafafa;
+  font-size: 10.5pt;
+}
+.abstract h2 {
+  text-align: center;
+  font-size: 12pt;
+  margin: 0 0 0.4em 0;
+}
+.abstract p {
+  margin: 0 0 0.4em 0;
+}
+
+/* Figures: span within column (default) or span all via figure.span-all */
+figure {
+  margin: 0.6em 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  text-align: center;
+}
+figure.span-all {
+  column-span: all;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+figcaption {
+  font-size: 9.5pt;
+  line-height: 1.25;
+  margin-top: 0.3em;
+  color: #222;
+  text-align: justify;
+}
+figcaption::before {
+  content: attr(data-caption-label) ". ";
+  font-weight: bold;
+}
+
+/* Tables: small, \small equivalent ≈ 9.5pt, booktabs-ish rules */
+table {
+  width: 100%;
+  font-size: 9.5pt;
+  border-collapse: collapse;
+  margin: 0.6em 0;
+  break-inside: avoid;
+}
+table.span-all {
+  column-span: all;
+}
+thead, tr.toprule { border-top: 1.2pt solid #000; }
+tfoot, tr.bottomrule { border-bottom: 1.2pt solid #000; }
+tr.midrule { border-top: 0.5pt solid #000; }
+th, td {
+  padding: 2.4pt 4.2pt;
+  text-align: left;
+  vertical-align: baseline;
+}
+th { font-weight: 600; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+th.num, td.num { text-align: right; font-variant-numeric: tabular-nums; }
+caption {
+  caption-side: top;
+  font-size: 9.5pt;
+  line-height: 1.25;
+  margin: 0 0 0.3em 0;
+  color: #222;
+  text-align: justify;
+}
+caption .caption-label { font-weight: bold; }
+table .notes {
+  font-size: 8.8pt;
+  line-height: 1.25;
+  padding-top: 4pt;
+  border-top: none;
+}
+
+/* Math — KaTeX/MathJax default styling we keep, but shrink display equations slightly */
+.katex-display { margin: 0.3em 0; }
+
+/* Lists — tighter spacing */
+ul, ol {
+  margin: 0.2em 0 0.5em 1.4em;
+  padding-left: 0;
+}
+li { margin: 0 0 0.15em 0; }
+
+/* Bold paragraphs for case studies / limitations bullet numbering (§4) */
+b.lead { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+
+/* page break hint — use class="pagebreak" */
+.pagebreak { page-break-before: always; }
+
+/* Tighten pandoc-citeproc References list (≈9.5pt, compressed leading) so
+   that 14 entries fit inside ~0.6 of a column instead of spilling to page 9.
+   NeurIPS official refs style is also \small so this is visually consistent. */
+#references + div.references,
+#refs.references,
+div.references.csl-bib-body {
+  font-size: 9.5pt;
+  line-height: 1.22;
+}
+div.references.csl-bib-body .csl-entry {
+  margin: 0 0 0.12em 0;
+}
+div.references.csl-bib-body .hanging-indent {
+  /* keep pandoc default 2em hanging indent; no change needed */
+}
