@@ -29,7 +29,7 @@ from typing import List, Dict, Any, Optional, Tuple
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from llm_client import DeepSeekClient, resolve_deepseek_api_key
+from llm_client import DeepSeekClient, resolve_deepseek_api_key, build_client, list_known_provider_aliases
 from llm_agents import LLMAgent
 from vib_router import VIBSparseCommRouter, VIBEvaluationResult
 from workflow import VIBMultiAgentWorkflow
@@ -1004,12 +1004,24 @@ def generate_final_answer(client: DeepSeekClient, prompt: str, history: list) ->
 # ============================================
 
 class MultiDatasetHarness:
-    def __init__(self, api_key: str, max_steps: int = 2, workers: int = 1, experiment_config: Optional[ExperimentConfig] = None):
+    def __init__(self, api_key: str, max_steps: int = 2, workers: int = 1, experiment_config: Optional[ExperimentConfig] = None,
+                 llm_model: str = "deepseek-chat", llm_provider: Optional[str] = None, llm_temperature: float = 0.1,
+                 llm_max_tokens: int = 1024,
+                 router_beta0: Optional[float] = None,
+                 router_lambda: Optional[float] = None,
+                 router_gamma: Optional[float] = None):
         self.api_key = api_key
         self.max_steps = max_steps
         self.workers = max(1, workers)
         self._print_lock = threading.Lock()
         self.experiment_config = experiment_config or ExperimentConfig()
+        self.llm_model = llm_model
+        self.llm_provider = llm_provider
+        self.llm_temperature = llm_temperature
+        self.llm_max_tokens = llm_max_tokens
+        self.router_beta0 = router_beta0
+        self.router_lambda = router_lambda
+        self.router_gamma = router_gamma
 
     def _select_task_components(self, sample: TaskSample) -> Tuple[Any, Any]:
         if sample.dataset_name in ("HumanEval", "MBPP"):
@@ -1041,13 +1053,11 @@ class MultiDatasetHarness:
 
     def _create_vib_router(self) -> VIBSparseCommRouter:
         return VIBSparseCommRouter(
-            beta_0=3.2,
-            lambda_decay=0.08,
+            beta_0      = self.router_beta0   if self.router_beta0   is not None else 3.2,
+            lambda_decay= self.router_lambda  if self.router_lambda  is not None else 0.08,
             temp_tau=0.5,
-            gamma=-0.4,
-            adaptive=True,
-            alpha=0.35,
-            tau_min=-1.0,
+            gamma       = self.router_gamma   if self.router_gamma   is not None else -0.4,
+            adaptive=True, alpha=0.35, tau_min=-1.0,
             enable_math_role_weights=self.experiment_config.enable_math_role_weights,
             enable_reasoning_guard=self.experiment_config.enable_gsm8k_reasoning_guard,
         )
@@ -1060,7 +1070,13 @@ class MultiDatasetHarness:
         router,
         max_steps_override: Optional[int] = None
     ) -> Dict[str, Any]:
-        client = DeepSeekClient(api_key=self.api_key, max_tokens=256)
+        client = build_client(
+            self.llm_model,
+            self.llm_provider,
+            temperature=self.llm_temperature,
+            max_tokens=self.llm_max_tokens,
+            log=False,
+        )
         agents = create_agents_fn(client)
         workflow_options = self._workflow_options_for_sample(sample)
         workflow = VIBMultiAgentWorkflow(
@@ -1517,7 +1533,33 @@ def main():
                         help="打开 HumanEval reviewer digest fallback（默认关闭）")
     parser.add_argument("--disable-mbpp-early-stop", action="store_true",
                         help="关闭 MBPP 一轮 probe early stopping（默认开启）")
+    parser.add_argument("--model", default="deepseek-chat",
+                        help="逻辑模型名称（会被 pro.env 里的 alias 解析）。"
+                             "例如 --model deepseek-v4-flash 会自动解析为 deepseek-v4-flash-0817 "
+                             "并路由到私有 gateway。默认 deepseek-chat。")
+    parser.add_argument("--provider", default=None, choices=sorted(["deepseek", "private"]),
+                        help="强制指定后端提供方。默认根据 model 名推断。")
+    parser.add_argument("--temperature", type=float, default=0.1,
+                        help="LLM 采样温度（synthesis 阶段与 VIB Full/Van 全链路保持一致）。默认 0.1。")
+    parser.add_argument("--max-tokens", type=int, default=1024,
+                        help="单次 LLM 调用的最大输出 token 数。默认 1024。")
+    parser.add_argument("--list-models", action="store_true",
+                        help="打印当前 pro.env 可解析的模型 alias 并退出。")
+    parser.add_argument("--router-beta0", type=float, default=None,
+                        help="Override VIBSparseCommRouter beta_0 (paper default=3.2).")
+    parser.add_argument("--router-lambda", type=float, default=None, dest="router_lambda",
+                        help="Override VIBSparseCommRouter lambda_decay (paper default=0.08).")
+    parser.add_argument("--router-gamma", type=float, default=None,
+                        help="Override VIBSparseCommRouter gamma admission threshold (paper default=-0.4).")
     args = parser.parse_args()
+
+    if args.list_models:
+        aliases = list_known_provider_aliases()
+        for provider, names in aliases.items():
+            print(f"\n--provider={provider}:")
+            for name in names:
+                print(f"  · {name}")
+        sys.exit(0)
 
     offline = not args.online
     os.environ["HF_HUB_OFFLINE"] = "1" if offline else "0"
@@ -1527,9 +1569,21 @@ def main():
     mode_text = "OFFLINE" if offline else "ONLINE"
     print(f"[HF Mode] {mode_text} (HF_HUB_OFFLINE={os.environ['HF_HUB_OFFLINE']}, HF_DATASETS_OFFLINE={os.environ['HF_DATASETS_OFFLINE']})")
 
-    api_key = resolve_deepseek_api_key()
-    if not api_key:
-        print("Error: 请设置 DEEPSEEK_API_KEY 环境变量")
+    # --- Resolve LLM endpoint + validate credentials (single point) -----
+    try:
+        probe = build_client(
+            args.model,
+            args.provider,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens,
+            log=True,
+        )
+        llm_model = probe.model
+        llm_provider = probe.provider
+        api_key = probe.api_key
+        del probe
+    except (ValueError, KeyError) as exc:
+        print(f"Error: LLM provider 初始化失败：{exc}")
         sys.exit(1)
 
     def resolve_flag(name, enable_arg, disable_arg):
@@ -1565,7 +1619,14 @@ def main():
         api_key=api_key,
         max_steps=args.max_steps,
         workers=args.workers,
-        experiment_config=experiment_config
+        experiment_config=experiment_config,
+        llm_model=llm_model,
+        llm_provider=llm_provider,
+        llm_temperature=args.temperature,
+        llm_max_tokens=args.max_tokens,
+        router_beta0=getattr(args, "router_beta0", None),
+        router_lambda=getattr(args, "router_lambda", None),
+        router_gamma=getattr(args, "router_gamma", None),
     )
     report = harness.run_benchmark(datasets=args.datasets, limit=args.limit)
 
