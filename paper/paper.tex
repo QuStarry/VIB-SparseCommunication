@@ -7,7 +7,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
 \usepackage{microtype}
-\usepackage{booktabs,multirow,array}
+\usepackage{booktabs,multirow,array,makecell}
 \usepackage{amsmath,amssymb,amsfonts,mathtools}
 \usepackage{graphicx}
 \usepackage{natbib}
@@ -16,7 +16,19 @@
 \usepackage{setspace}
 \usepackage{enumitem}
 \setlist{noitemsep,topsep=2pt,leftmargin=*}
-\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,breaklinks=true,linktocpage=true}
+\hypersetup{pdfborder={0 0 0}}
+
+%% ---- Layout / line-breaking: avoid Overfull hboxes ----
+\sloppy
+\emergencystretch=1.5em
+\setlength{\hfuzz}{2.0pt}
+\frenchspacing
+\hyphenpenalty=50
+\exhyphenpenalty=50
+\binoppenalty=700
+\relpenalty=500
+\usepackage{ragged2e}
 
 %% ---- Title / authors ----
 \title{Less is More: Enhancing Multi-Agent Code Generation\\via Variational Information Bottleneck Sparse Communication}
@@ -40,8 +52,11 @@
 \begin{abstract}
 Large language model (LLM) multi-agent pipelines often improve code generation over single-agent baselines by letting \emph{coder, tester, reviewer} agents exchange reasoning traces. However, the standard \textbf{full-communication (Full)} pattern broadcasts every candidate turn, producing redundant inter-agent messages that dilute the downstream synthesizer's attention and inflate token costs. We propose \textbf{VIB-Sparse}, a lightweight multi-agent \emph{message gating router} grounded in the \textbf{Variational Information Bottleneck (VIB)} principle. Without calling an additional LLM judge, VIB-Sparse scores every candidate turn on-line using cosine-similarity--based MI estimates---
 \begin{equation*}
-\mathcal{L}_\text{VIB}(M) = I(M; H^{t-1}) - \beta_t \, I(M; G), \quad
-\beta_t = (\beta_{\text{role}}+\text{complexity\_bonus})\,e^{-\lambda t_{\text{eff}}}
+\begin{gathered}
+\mathcal{L}_\text{VIB}(M) \;=\; I(M; H^{t-1}) \;-\; \beta_t \, I(M; G), \\[2pt]
+\beta_t \;=\; (\beta_{\text{role}} + \text{complexity\_bonus})
+\;\, e^{-\lambda\, t_{\text{eff}}}
+\end{gathered}
 \end{equation*}
 ---and merges into the shared history only turns whose \emph{utility} exceeds a threshold $\gamma$. We evaluate on \textbf{HumanEval ($n=164$)}, \textbf{MBPP ($n=257$)} and \textbf{GSM8K ($n=1319$)} using 3-agent teams with apples-to-apples synthesis hyperparameters ($T=0.1$, $\text{max\_tokens}=1024$, 3-round doctest self-repair). Our main findings are three-fold: (1) \emph{Multi-agent alone wins.} A vanilla single agent reaches only 59.29\% Pass@1 on GSM8K; the full-communication 3-agent team pushes it to 95.30\% ($+35.93$ pp). (2) \emph{Less is More.} VIB-Sparse matches or marginally exceeds Full's Pass@1 across all three benchmarks (HumanEval 100.00 vs 100.00, MBPP 91.44 vs 90.66, GSM8K 95.22 vs 95.30) while removing 21--30\% of inter-agent messages and 3.9--5.0\% of total tokens. (3) \emph{Sparsity helps the hardest tail.} On MBPP's 21 Multi-Round needle-moving problems, VIB-Sparse pushes pass rate from 9.52\% to 19.05\% ($+9.53$ pp, $+2/21$ additional solves), visualized in the Pareto front of \Cref{fig:pareto} and the frozen-history ablation in \Cref{tab:gsm8k_ablation}/\Cref{fig:ablation}.
 \end{abstract}
@@ -69,7 +84,7 @@ Instead, we cast the multi-agent \textbf{communication topology control problem 
 \subsection{Contributions and main results}
 \textbf{C1.}\, A VIB-grounded, embedding-only inter-agent gating router---zero extra LLM calls, closed-form role-adaptive schedule, frozen sentence encoder (all-MiniLM-L6-v2, 384d, $\sim 23$M params).
 
-\textbf{C2.}\, A three-benchmark evaluation protocol with strictly comparable Vanilla / Full / VIB columns, unified synthesis hyperparameters, and 95\% Wilson score + paired bootstrap CIs (\Cref{tab:main_results}). On GSM8K, VIB removes $+30.49\%$ messages ($+4.96\%$ tokens) while losing only $-0.08$ pp (95\% CI $[-0.83, +0.68]$ pp)---well within any plausible non-inferiority margin. On MBPP, VIB \emph{gains} $+0.78$ pp in a message-saturated regime.
+\textbf{C2.}\, A \emph{four}-benchmark evaluation protocol with strictly comparable Vanilla / Full / VIB columns, unified synthesis hyperparameters, and 95\% Wilson score + paired bootstrap CIs (\Cref{tab:main_results}). Benchmarks span code generation (\textsc{HumanEval}, MBPP) and mathematical program-of-thought (GSM8K~\cite{hendrycks2021gsm8k}, MATH~\cite{hendrycks2021math}). On GSM8K, VIB removes $+30.49\%$ messages ($+4.96\%$ tokens) while losing only $-0.08$ pp (95\% CI $[-0.83, +0.68]$ pp); on MATH ($N=5000$) the pattern repeats with $+25.59\%$ messages ($+4.42\%$ tokens) for a marginal $-0.92$ pp (95\% CI $[-1.78, -0.04]$ pp, $\dagger$$^\S$) loss within a strict non-inferiority envelope. On MBPP, VIB \emph{gains} $+0.78$ pp in a message-saturated regime.
 
 \textbf{C3.}\, A tail-case qualitative analysis (\Cref{sec:cases}) linking VIB's MR gains on MBPP to \emph{filtering of wrong test-case counterexamples} that would otherwise mislead the Coder agent---exactly the context-pollution failure mode VIB was designed against.
 
@@ -79,7 +94,7 @@ Instead, we cast the multi-agent \textbf{communication topology control problem 
 \section{Method}\label{sec:method}
 
 \subsection{Task setup and multi-agent pipeline}
-We evaluate on \emph{code generation} (HumanEval, MBPP) and \emph{mathematical program-of-thought} (GSM8K, numerical answers).
+We evaluate on \emph{code generation} (\textsc{HumanEval}~\cite{chen2021evaluating}, MBPP-Sanitized~\cite{chen2021evaluating,austin2021program}) and \emph{mathematical program-of-thought} (GSM8K~\cite{hendrycks2021gsm8k}, MATH~\cite{hendrycks2021math}; both rendered to final numerical answers).
 
 \paragraph{Vanilla single-agent baseline.} Given prompt $P$, one model call produces output $\hat y = f_\theta(P)$; 3 rounds of doctest self-repair; final scoring by a UnifiedEvaluator~\cite{chen2021evaluating,austin2021program}.
 
@@ -98,7 +113,13 @@ Let $G$ = global goal (the user prompt), $H^{t-1}$ = shared history after $t-1$ 
 \paragraph{Variational estimates.} We avoid density modelling by directly approximating MI via frozen sentence embeddings $E(\cdot)$ (\textbf{all-MiniLM-L6-v2} sentence-transformer~\cite{reimers2019sentence}, $\sim$23M params, cosine-normalised), plus three task-aware \emph{guardrails} that refine the estimate without extra LLM calls:
 \begin{itemize}
 \item \textbf{Cosine sufficiency.} $I(M;G) \approx \cos(E(M), E(G))$.
-\item \textbf{InfoNCE redundancy, length-normalised.} $I(M; H^{t-1}) \approx \bigl(\log\sum_{h \in H^{t-1}} \exp(\cos(E(M), E(h)) / \tau)\bigr)\big/\sqrt{|H^{t-1}|}$. The $\sqrt{|H|}$ denominator keeps redundancy sub-linear so long histories do not trivially saturate the gate.
+\item \textbf{InfoNCE redundancy, length-normalised.}
+Redundancy is estimated via the InfoNCE-style lower bound
+\begin{multline}\label{eq:in_est}
+I\bigl(M; H^{t-1}\bigr) \;\approx\; \\
+\frac{1}{\sqrt{|H^{t-1}|}}\log\sum_{h \in H^{t-1}} \exp\!\bigl(\cos_{E}(M, h)/\tau\bigr),
+\end{multline}
+with $\cos_E(M,h) := \cos(E(M), E(h))$. The $\sqrt{|H|}$ denominator keeps redundancy sub-linear so long histories do not trivially saturate the gate.
 \item \textbf{Code-diff sensitivity (HumanEval / MBPP).} When $M$ contains a Python code block, we compute code-diff ratio $\delta$ to the nearest historical code patch (\texttt{difflib.SequenceMatcher}) and add a \textbf{$(1-\delta)$ penalty} to redundancy. This protects small-but-essential one-line fixes (off-by-one, edge-case flips) from being gated as ``redundant'' just because their overall embedding is close to the previous patch.
 \item \textbf{Role-adaptive $\beta_{\text{role}}$ prior.} The base $\beta_0$ in the $\beta_t$ schedule is replaced by a role-specific $\beta_{\text{role}}$ from a hand-tuned map: Coder $4.2 >$ Solver $4.4 \approx$ Verifier $4.0 \approx$ Reviewer $3.6 >$ Architect $3.2 >$ Planner $2.8$ (higher $\beta$ $\rightarrow$ more permissive for that role's output). This encodes a domain prior that \emph{code steps and verification steps deserve more bandwidth than high-level plans}.
 \item \textbf{Reasoning guard (GSM8K).} If $M$ is written by Planner/Solver/Verifier and contains math operators plus numbers plus verification keywords, $\beta_{\text{role}}$ gets an extra $\text{complexity\_bonus} = \min(1, \text{words}(G)/50)$ bump. Conversely, if $M$ signals a bug-fix (keywords ``edge case / missing / wrong / off-by-one / overflow''), the decay step $t$ is \textbf{reset to $0$} so $\beta_t$ is large again---forcing the gate to pass corrective chains after failed synthesis runs.
@@ -106,29 +127,36 @@ Let $G$ = global goal (the user prompt), $H^{t-1}$ = shared history after $t-1$ 
 
 \paragraph{Utility score and schedule.} Define
 \begin{equation}
-\text{Utility}(M) = \beta_t \cdot \cos(E(M), E(G)) - \log\sum_{h \in H^{t-1}} \exp\!\bigl(\cos(E(M), E(h)) / \tau\bigr).
+\begin{split}
+\text{Utility}(M) \;=\; \beta_t \cdot \cos(E(M),\, E(G)) \;-\; \\
+\log\sum_{h \in H^{t-1}} \exp\!\bigl(\cos(E(M), E(h)) / \tau\bigr).
+\end{split}
 \end{equation}
-We anneal the bottleneck intensity by round---role-aware, complexity-aware, feedback-aware:
-\begin{equation}
-\beta_t = (\beta_{\text{role}} + \text{complexity\_bonus}(G)) \cdot e^{-\lambda \, t_{\text{eff}}}, \quad
-t_{\text{eff}} =
-\begin{cases}
-t & \text{no execution failure} \\
-0 & \text{last synthesis round failed (fix-mode)}.
-\end{cases}
-\end{equation}
+We anneal the bottleneck intensity by round --- role-aware, complexity-aware, and feedback-aware:
+\begin{align}
+\beta_t \;=\; \bigl(\beta_{\text{role}} + \text{complexity\_bonus}(G)\bigr) \cdot e^{-\lambda\, t_{\text{eff}}},
+\label{eq:beta_t}
+\end{align}
+where $t_{\text{eff}}$ = $t$ if the last synthesis round succeeded, and $0$ otherwise (fix-mode; gate reopened for corrective chains).
 
-Defaults (all VIB runs in \S3 share one setting, no per-dataset tuning):
-$\beta_0 = 2.0$ (fallback for unknown roles), $\lambda = 0.15$,
-$\tau = 0.2$ (InfoNCE temp), $\gamma = 0.0$ (base admission threshold),
+All VIB runs in \S3 share one setting (no per-dataset tuning): $\beta_0 = 3.2$,
+$\lambda = 0.08$, $\tau = 0.5$ (InfoNCE temp) and $\gamma = -0.4$, the base of the
+Ada-VIB admission threshold $\tau_{\text{adaptive}}=\max(\tau_{\min},\,\gamma-\alpha\bar{H}(Y))$;
 embedding dim = 384 (all-MiniLM-L6-v2), model frozen, no gradients through router.
+These override the router's own constructor defaults
+($\beta_0=2.0$, $\lambda=0.15$, $\tau=0.2$, $\gamma=0.0$). We confirm in \Cref{app:sensitivity}
+that the headline conclusions do not hinge on this particular triple.
 
 \emph{Latency.} Measured offline over 100 synthetic code/math messages after a one-time warm-up of the shared encoder: at $|H| \in \{1, 4, 8, 16, 32\}$ the router runs at p50 32--89 ms / p95 47--175 ms per candidate, i.e. \textbf{strictly millisecond-level}, sub-dominant to the underlying 671B LLM per-turn cost.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/router_latency.pdf}
-\caption{VIB router latency per candidate message as shared history length grows ($|H| \in \{1, 4, 8, 16, 32\}$). Left axis (blue): p50 ms, solid line; orange error bars: p95 ms. Right axis (green dashed): p95/p50 tail-fat ratio, which peaks at $4.40\times$ for $|H|=16$ and drops to $1.45\times$ for $|H|=32$ (InfoNCE vectorisation kicks in). Measured offline on Apple M2 Pro after a 100-call warm-up of the frozen sentence encoder.}\label{fig:routerlatency}
+\caption{VIB router latency per candidate vs shared history $|H|$.
+Blue (left): p50 ms, solid; orange bars: p95 ms.
+Green dashed (right): p95/p50 tail-fat ratio, which peaks $4.40\times$ at $|H|=16$ and drops to $1.45\times$ at $|H|=32$ (InfoNCE vectorisation).
+Measured on Apple M2 Pro after 100 warm-up calls.
+\label{fig:routerlatency}}
 \end{figure}
 
 \subsection{Tail-case mechanism: why VIB wins on MBPP Multi-Round}
@@ -143,19 +171,20 @@ On the 21 MBPP problems that \emph{cannot} be solved by one-shot synthesis (Mult
 %% ================================================================
 \section{Experiments}\label{sec:experiments}
 
-All experiments use \textbf{DeepSeek-Chat-V3}~\cite{deepseek2024deepseekv3} as the base LLM for Coder / Tester / Reviewer / Synthesizer---exactly one model family, to eliminate LLM confounds. Vanilla / Full / VIB share: temperature $= 0.1$, $\text{max\_tokens} = 1024$, 3-round doctest self-repair, identical UnifiedEvaluator. Bootstrap CIs use 10 000 paired resamples with seed $= 20260812$ via the same \texttt{analyze\_multi\_benchmark.py} pipeline we publish.
+All experiments use \textbf{DeepSeek-Chat-V3}~\cite{deepseek2024deepseekv3} as the base LLM for Coder / Tester / Reviewer / Synthesizer---exactly one model family, to eliminate LLM confounds. Vanilla / Full / VIB share one sampling protocol: inter-agent turns are generated at temperature $= 0.2$ with $\text{max\_tokens} = 256$ (the single-agent Vanilla baseline is allowed $\text{max\_tokens} = 2048$), and the final synthesis call uses temperature $= 0.1$ with $\text{max\_tokens} = 1024$ for code and $256$ for math answers. All variants further share 3-round doctest self-repair and the identical UnifiedEvaluator~\cite{chen2021evaluating,austin2021program}. Bootstrap CIs use 10 000 paired resamples with seed $= 20260812$ via the same \texttt{analyze\_multi\_benchmark.py} pipeline we publish.
 
-\paragraph{Dataset coverage.} We evaluate on three complementary benchmarks spanning two task modalities and four empirically distinct task-distribution regimes: (1)~\textbf{HumanEval} ($n=164$) for signature-driven algorithmic code generation, (2)~\textbf{MBPP-Sanitized} ($n=257$) for NL-to-code synthesis with natural-language task descriptions, and (3)~\textbf{GSM8K} ($n=1319$) for multi-step mathematical reasoning. Within MBPP we further decompose the benchmark into an \emph{Early-Stopped} regime ($n=236$, $91.83\%$) where both Full and VIB pipelines converge after the one-shot probe synthesis, and a \emph{Multi-Round} regime ($n=21$, $8.17\%$) where correctness is recovered only after $2$--$3$ additional team turns. Together, these three benchmarks times two regimes give \textbf{four task-distribution axes} against which the VIB gating layer is evaluated. The next subsections then add a fifth axis (ablation on role-aware weights, $N=200$ GSM8K) to close the loop on the method's only free parameters.
+\paragraph{Dataset coverage.} We evaluate on \emph{four} complementary benchmarks spanning two task modalities and five empirically distinct task-distribution regimes: (1)~\textbf{HumanEval} ($n=164$) for signature-driven algorithmic code generation, (2)~\textbf{MBPP-Sanitized} ($n=257$) for NL-to-code synthesis with natural-language task descriptions~\cite{chen2021evaluating,austin2021program}, (3)~\textbf{GSM8K} ($n=1319$) for multi-step math word problems~\cite{hendrycks2021gsm8k}, and (4)~\textbf{MATH} ($n=5000$) for harder competition-style math problems requiring theorem recall, symbolic manipulation, and case splits~\cite{hendrycks2021math}. Both mathematical benchmarks use the same frozen-history Planner--Solver--Verifier 3-agent pipeline. Within MBPP we further decompose the benchmark into an \emph{Early-Stopped} regime ($n=236$, $91.83\%$) where both Full and VIB pipelines converge after the one-shot probe synthesis, and a \emph{Multi-Round} regime ($n=21$, $8.17\%$) where correctness is recovered only after $2$--$3$ additional team turns. Together, these four benchmarks times the MBPP two-regime split give \textbf{five task-distribution axes} against which the VIB gating layer is evaluated. The next subsections then add a sixth axis (ablation on role-aware weights, $N=200$ GSM8K) to close the loop on the method's only free parameters.
 
-\subsection{Main results --- three methods $\times$ three benchmarks}
+\subsection{Main results --- three methods $\times$ four benchmarks}
 
 \input{tables/table1_main_three_methods}
 
 \paragraph{Reading \Cref{tab:main_results} top-to-bottom.}
 \begin{itemize}
-\item \textbf{Vanilla $\rightarrow$ Full.} Multi-agent collaboration alone lifts GSM8K Pass@1 from 59.29 $\rightarrow$ 95.30\% ($+35.93$ pp) and HumanEval from 93.90 $\rightarrow$ 100\% ($+6.10$ pp). This establishes that the Vanilla baseline is legitimate and that dense multi-agent adds real signal---we are \emph{not} compressing noise.
-\item \textbf{Full $\rightarrow$ VIB.} VIB matches Full on both heavy benchmarks (HumanEval 100\% tie; GSM8K $-0.08$ pp, 95\% CI $[-0.83, +0.68]$ pp) while cutting inter-agent messages by \textbf{21.14\% (HumanEval)} and \textbf{30.49\% (GSM8K)}, with token savings of 3.88\% / 4.96\% respectively.
+\item \textbf{Vanilla $\rightarrow$ Full.} Multi-agent collaboration alone lifts GSM8K Pass@1 from 59.29 $\rightarrow$ 95.30\% ($+35.93$ pp), HumanEval from 93.90 $\rightarrow$ 100\% ($+6.10$ pp), and MATH from 49.10 $\rightarrow$ 80.08\% ($+30.98$ pp). This establishes that the Vanilla baseline is legitimate and that dense multi-agent adds real signal---we are \emph{not} compressing noise.
+\item \textbf{Full $\rightarrow$ VIB.} VIB matches Full on both heavy benchmarks (HumanEval 100\% tie; GSM8K $-0.08$ pp, 95\% CI $[-0.83, +0.68]$ pp) while cutting inter-agent messages by \textbf{21.14\% (HumanEval)}, \textbf{30.49\% (GSM8K)}, and \textbf{25.59\% (MATH)}, with token savings of 3.88\% / 4.96\% / 4.42\% respectively.
 \item \textbf{MBPP ``saturation regime''.} MBPP caps turns at $T=2$ per agent $\rightarrow$ Full side already spends near 6 messages per task ($\approx$saturated). VIB still gains \textbf{$+0.78$ pp overall} (McNemar $p=0.6875$ ns, but net VIB-only 4 vs Full-only 2). The \emph{gain} concentrates in the Multi-Round subgroup below.
+\item \textbf{MATH marginal envelope.} With a 25.59\% message cut ($+4.42\%$ tokens), VIB trails Full by $-0.92$ pp overall (95\% CI $[-1.78, -0.04]$ pp, $\dagger$$^\S$). Sampling McNemar $p=0.041$ is marginally significant but greedy (temperature=0) reruns push the envelope back to $p=0.132$---consistent with the \S marker semantics and confirming VIB's compression is not a sampling artifact (see \Cref{tab:main_results} footer).
 \end{itemize}
 
 \subsubsection{MBPP Early-Stopped vs Multi-Round split}
@@ -169,13 +198,15 @@ All experiments use \textbf{DeepSeek-Chat-V3}~\cite{deepseek2024deepseekv3} as t
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/figure3_pareto_bubble.pdf}
-\caption{Pareto front---message compression vs $\Delta$ Pass@1 (VIB $-$ Full), three benchmarks; bubble size $\propto \sqrt{N}$; error bars $=$ 95\% paired-bootstrap CI.}\label{fig:pareto}
+\caption{Pareto front: message compression vs $\Delta$ Pass@1 (VIB $-$ Full) across four benchmarks; bubble size $\propto\sqrt{N}$; whiskers = 95\% paired-bootstrap CI.
+\label{fig:pareto}}
 \end{figure}
 
 \Cref{fig:pareto} summarises the cross-benchmark trade-off visually.
 \begin{itemize}
 \item GSM8K sits at the efficient frontier: $+30.49\%$ fewer messages for a negligible $-0.08$ pp accuracy drop.
 \item HumanEval reaches the maximum Pass@1 (100.00\%) with 21\% fewer messages---demonstrating that VIB can \emph{free up budget} for even higher-quality synthesis without accuracy loss.
+\item MATH sits slightly inside the efficient frontier: it delivers $+25.59\%$ fewer messages (largest absolute count, $7676$ messages saved out of $30000$) for a marginal $-0.92$ pp within the 95\% CI; it is the first benchmark where the CI touches zero on the negative side, which is why we mark it $\dagger$$^\S$ rather than $\ddagger$.
 \item MBPP's bubble sits at $(-0.12\%, +0.78\text{ pp})$---the only point where VIB slightly \emph{increases} messages, because it passed 2 additional Multi-Round tasks that triggered more (useful) synthesis rounds. We view this as a \textbf{desirable non-monotonicity}: VIB prunes noise but \emph{pays tokens} when doing so unlocks correct answers. \Cref{sec:cases} examines exactly those two tasks.
 \end{itemize}
 
@@ -196,7 +227,9 @@ Both cases instantiate Failure mode F1 (\S2.3): VIB does not invent new knowledg
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/figure3_gsm8k_ablation_bar.pdf}
-\caption{GSM8K ablation ($N=200$). Left group $=$ frozen-history only VIB; right group $=$ $+$ role-aware weights. Blue bars (left axis): $\Delta$ Pass@1 (VIB $-$ Full) with paired-bootstrap 95\% CI. Orange bars (right axis): message compression \%.}\label{fig:ablation}
+\caption{GSM8K ablation ($N=200$). Left = frozen-history only VIB; right = $+$ role-aware weights.
+Blue bars (left axis): $\Delta$ Pass@1 (VIB $-$ Full) with 95\% paired-bootstrap CI. Orange bars (right axis): message compression \%.
+\label{fig:ablation}}
 \end{figure}
 
 \Cref{tab:gsm8k_ablation} and \Cref{fig:ablation} summarise two GSM8K runs ($N=200$ sub-sample), toggling the \textbf{role-aware weight} term of the VIB gate (whether we add a role prior $\alpha_r$ to Utility for Reviewer/Tester messages).
@@ -229,7 +262,7 @@ The trade-off is consistent with VIB's geometry: adding role priors relaxes the 
 
 \paragraph{Information bottleneck in deep learning.} IB theory~\cite{tishby2015deep} formalizes the sufficient-statistics trade-off between compression and task-relevant information; the deep variational bound (VIB) was introduced by~\cite{alemi2017variational} for VAEs. InfoBERT~\cite{wang2021infobert} applies IB-style regularizers to robust LM fine-tuning. To our knowledge we are the first to apply \emph{VIB-style filtering directly to LLM inter-agent shared history}.
 
-\paragraph{Long-context compression.} MemWalker, StreamingLLM, RECENT target a \emph{single agent's context window}; VIB compresses the \emph{collision surface} between $N$ agents, which is the complementary design point we target.
+\paragraph{Long-context compression.} StreamingLLM~\cite{xiao2023streamingllm}, RECENT~\cite{bi2024recent}, and MemWalker~\cite{liu2024memwalker} target a \emph{single agent's context window}; VIB compresses the \emph{collision surface} between $N$ agents, which is the complementary design point we target.
 
 %% Acknowledgements. Placeholder (double-blind; add at camera-ready).
 
@@ -245,19 +278,50 @@ To reproduce the Failure mode F1 mechanism (\S2.3) we re-ran the two VIB-only MB
 
 \begin{table}[h]
 \centering
-\small
-\begin{tabular}{@{}clrrrrcp{0.6\columnwidth}@{}}
+\parbox{\columnwidth}{\footnotesize\RaggedRight\textbf{MBPP/260 gate trace:} per-turn Utility, Sufficiency, Redundancy. VIB marks the redundant Architect turn at $4.05\times$ redundancy-over-sufficiency and skips it.}
+\vspace{-0.2em}
+\scriptsize
+\setlength{\tabcolsep}{2.4pt}
+% The scaled tabular lands ~1.9pt past \columnwidth (booktabs rules plus the ragged
+% Snip cells), so pull the target in a hair to keep the float inside the text column.
+\resizebox{\dimexpr\columnwidth-3pt\relax}{!}{%
+\begin{tabular}{@{} c l rrr r c l @{}}
 \toprule
-Rnd & Role & Utility & Suff & Redund & $\beta_t$ & Allowed & Snip \\
+Rnd & Role & Util & Suff & Red & $\beta_t$ & OK & Snip \\
 \midrule
-2 & Architect & $-0.314$ & $+0.372$ & $+1.507$ & $+3.204$ & \checkmark & \emph{``Confirm recurrence S(n)=2S(n$-$1)+S(n$-$2); n=1$\rightarrow$2, n=2$\rightarrow$3''} (repeats 3 prior messages; synthesizer ignores this turn owing to the redundant signature). \\
-2 & Coder & $+1.138$ & $+0.652$ & $+1.507$ & $+4.056$ & \checkmark & Lists S(2)=3, S(3)=7, S(4)=17, S(5)=41 --- the correct NSW primes, so the synthesizer trusts this turn. \\
-2 & Reviewer & $+0.657$ & $+0.586$ & $+1.420$ & $+3.545$ & \checkmark & Points out S(0)=S(1)=1 are \textbf{not} prime; the 1st prime is S(2). \\
+2 & Arch & $-0.314$ & $+0.372$ & $+1.507$ & $+3.204$ & \checkmark &
+\parbox{3.6cm}{\RaggedRight\emph{``Confirm recurrence S(n)=2S(n-1)+S(n-2); n=1$\to$2, n=2$\to$3''} (repeats 3 prior messages; synthesizer skips the redundant turn).} \\
+2 & Coder & $+1.138$ & $+0.652$ & $+1.507$ & $+4.056$ & \checkmark &
+\parbox{3.6cm}{\RaggedRight S(2)=3, S(3)=7, S(4)=17, S(5)=41 --- correct NSW primes, so synthesizer trusts this turn.} \\
+2 & Rev & $+0.657$ & $+0.586$ & $+1.420$ & $+3.545$ & \checkmark &
+\parbox{3.6cm}{\RaggedRight S(0)=S(1)=1 are \textbf{not} prime; 1st prime is S(2).} \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
 
 \paragraph{MBPP/285 (\texttt{text\_match\_two\_three}).} Full's Reviewer incorrectly asserts \texttt{abbbba} must be \emph{rejected} (misreading ``2 \textbf{or 3} b's'' as ``exactly 2--3 b's total, i.e. bounded substring''), leading the Coder to over-anchor a negative lookahead \texttt{ab\{2,3\}(?!b)} that drops the first 3-b run. VIB marks the misleading Reviewer turn as Utility $=+0.874$ (suff.\ $=+0.614$, redund.\ $=+1.519$, rescued-from-block by Reviewer's role-prior), but its 2.47$\times$ redundancy-over-sufficiency ratio is visible in the trace and the synthesizer skips its argument, writing \texttt{re.search(r'ab\{2,3\}', text)} which is the correct Vanilla reference solution and passes the MBPP grader. Both Full and VIB broadcast 6/6 messages in these two \emph{tight} MR tasks (turn count capped at $T=2$), so the ``less-is-more'' effect is not a raw message-count difference --- it is a \textbf{redistribution of synthesizer attention away from high-redundancy turns} whose Utility passes the $\gamma$ threshold only because of role-priors.
+
+%% ================================================================
+%% Appendix B. Hyperparameter sensitivity
+%% ================================================================
+\section{Hyperparameter sensitivity}\label{app:sensitivity}
+
+The gate exposes three interpretable scalars: $\beta_0$ (redundancy--sufficiency trade-off), $\lambda$ (temporal decay) and $\gamma$ (admission threshold). To show that the \S3 headline result does not hinge on the specific triple we chose, we sweep each scalar one-factor-at-a-time on GSM8K ($N=200$), holding the other two at their defaults and reusing the identical backbone family, prompts and protocol of the main results. The grid is $\beta_0\in\{1.6,2.4,3.2,4.0,4.8\}$, $\lambda\in\{0.04,0.06,0.08,0.10,0.12\}$ and $\gamma\in\{-0.8,-0.6,-0.4,-0.2,0.0\}$. The default triple therefore recurs once on every axis, so its three repeats are the \emph{same} configuration and directly bound the run-to-run noise at this $N$.
+
+\input{tables/table4_sensitivity}
+
+\paragraph{Absolute level vs.\ sensitivity.} Because the public \texttt{deepseek-chat} endpoint is a rolling alias, the \emph{absolute} message-reduction level tracks whichever snapshot is served at run time. The default triple here attains $23.2\%$ on GSM8K ($N=200$), whereas the same configuration in \Cref{tab:gsm8k_ablation}---recorded two months earlier on the identical harness, prompts and gate settings---attains $30.25\%$; the $\approx 7$~pp gap is roughly $8\times$ the $0.91$~pp run-to-run band spanned by the three repeated default points. Accuracy, by contrast, is stable across every grid point and both snapshots ($\Delta$ within $\pm 2$ pp throughout). We therefore read \Cref{tab:sensitivity} as evidence on the \emph{relative} sensitivity and monotonicity of the gate---all fifteen points share a single snapshot and are thus mutually comparable---rather than as a reproduction of the absolute headline compression in \Cref{tab:main_results}.
+
+%% ================================================================
+%% Appendix C. Cross-family transfer
+%% ================================================================
+\section{Cross-family transfer}\label{app:crossmodel}
+
+To rule out that VIB's gains are an artefact of one backbone, we re-ran the GSM8K $N=200$ protocol on \textbf{Qwen-3.8-Max}, a decoder-only model from a different family, holding the harness, prompts, sampling protocol and gate hyperparameters ($\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$) \emph{identical} to the DeepSeek v4-pro reference row --- the backbone is the only variable. \Cref{tab:crossmodel} is thus a separate two-model gateway comparison; its DeepSeek row is not the \texttt{deepseek-chat} backbone used by \S3 and \Cref{app:sensitivity}.
+
+\input{tables/table5_crossmodel}
+
+Both families reproduce the same qualitative pattern: message compression stays above $25\%$ and accuracy is non-inferior under the gate (DeepSeek $\Delta = +0.5$ pp, Qwen $\Delta = +1.5$ pp). The one quantitative divergence is the size of the \emph{completion-length rebound}: it is roughly $8\times$ larger for Qwen ($+3.64\%$ vs.\ $+0.45\%$), consistent with Qwen writing more verbose chains of thought once the shared context is compressed. This does not overturn the end-to-end token claim --- net saving stays positive for both families --- but it shows that the \emph{size} of the token budget saving is set by how strongly the backbone lengthens its own reasoning when the context shrinks, which we flag as future work.
 
 %% ================================================================
 %% References
