@@ -1,0 +1,29 @@
+\begin{table}[t]
+\centering
+\caption{Cross-family transfer on GSM8K ($N=200$).
+Both rows run under the \emph{identical} harness configuration (paper defaults $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$,
+temperature $0.1$), so the backbone family is the only variable. VIB's compression and its non-inferior accuracy
+transfer from DeepSeek v4-pro to Qwen-3.8-Max: message reduction stays above $25\%$ and accuracy does not drop for either family.
+\label{tab:crossmodel}}
+\setlength{\tabcolsep}{3.2pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{3.3cm} r r r r r r @{}}
+\toprule
+\textbf{Backbone} & \textbf{Full} & \textbf{VIB} & \textbf{$\Delta_{\text{V-F}}$} &
+\textbf{Msg$\downarrow$} & \textbf{Prompt$\downarrow$} & \textbf{Tok$\downarrow$} \\
+\midrule
+
+DeepSeek v4-pro & 96.50 & 97.00 & +0.50 & +27.14 & +4.58 & +1.69 \\
+Qwen-3.8-Max & 97.50 & 99.00 & +1.50 & +25.50 & +5.15 & +1.20 \\
+\bottomrule
+\end{tabular}}
+
+\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
+\textbf{Reading the token column.} VIB compresses the \emph{shared context}, not the model's output:
+prompt tokens fall by $4.6$--$5.2\%$, but steering both backbones on a shorter history makes them emit a
+\emph{longer} chain-of-thought, so completion tokens rise ($+0.45\%$ DeepSeek, $+3.64\%$ Qwen) and the
+\emph{net} token saving ($1.2$--$1.7\%$) trails the message/prompt reduction.
+The mechanism is therefore best read as \textbf{context compression}; the end-to-end token saving is real
+but bounded by how much the backbone lengthens its own reasoning once the context shrinks.}
+\end{table}

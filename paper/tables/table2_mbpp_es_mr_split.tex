@@ -1,21 +1,22 @@
 \begin{table}[t]
 \centering
-\caption{MBPP 内部 Early-Stopped / Multi-Round 分组拆分（Early-Stopped：第 1 轮 probe synthesis 直接通过即早停；Multi-Round：进入后续多轮）。
-Vanilla 单 agent 中 early\_stopped 直接等价于「1 次 synthesis 就通过」，与主脚本 probe 协议一致。
+\caption{MBPP internal Early-Stopped / Multi-Round split.
+ES = early-stopped when the 1st-round probe synthesis passes immediately; MR = multi-round discussion required.
 \label{tab:mbpp_split}}
-\setlength{\tabcolsep}{5.5pt}
-\small
-\begin{tabular}{l r rrr r r}
+\setlength{\tabcolsep}{2.8pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{2.2cm} r rrr r r @{}}
 \toprule
-\textbf{Group} & \textbf{N (\%)} &
-\textbf{Vanilla} & \textbf{Full} & \textbf{VIB (Ours)} &
-\textbf{$\Delta_{\mathrm{VIB-Full}}$} &
-\textbf{Msg $\downarrow$} \\
+\textbf{Group} & \textbf{\makecell{N\\(\%)}} &
+\textbf{Van.} & \textbf{Full} & \textbf{VIB} &
+\textbf{$\Delta_{\text{V-F}}$} &
+\textbf{Msg$\downarrow$} \\
 & & \multicolumn{3}{c}{Pass@1 (\%)} & (pp) & (\%) \\
 \midrule
 
 Early-Stopped & 236 (91.83\%) & 100.00 &  97.88 &  97.88 &   0.00 &   0.00 \\
 Multi-Round    & 21 (8.17\%) &   0.00 &   9.52 &  19.05 &  +9.53 &  +1.59 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}

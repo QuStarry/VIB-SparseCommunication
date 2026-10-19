@@ -1,0 +1,49 @@
+\begin{table}[t]
+\centering
+\caption{One-factor-at-a-time sensitivity to the three interpretable VIB scalars on GSM8K ($N=200$, \texttt{deepseek-chat}).
+Each block varies one parameter while the other two stay at the paper defaults
+$\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$ (bolded rows); these three bolded rows are the \emph{same}
+configuration, so their agreement is a direct run-to-run noise bound at this $N$.
+Columns: VIB$-$Full Pass@1 $\Delta$pp, inter-agent message reduction, total-token reduction;
+$\Delta$~ok marks rows whose accuracy gap stays within $\pm1$ pp of the default.
+\label{tab:sensitivity}}
+\setlength{\tabcolsep}{3.2pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} l r r r r c @{}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{$\Delta$pp} & \textbf{Msg$\downarrow$\%} &
+\textbf{Tok$\downarrow$\%} & \textbf{$\Delta$~ok} \\
+\midrule
+
+$\beta_0$ & 1.60 & +1.00 & 47.58 & 8.25 & \checkmark \\
+$\beta_0$ & 2.40 & -1.00 & 37.50 & 6.13 &  \\
+$\beta_0$ & \textbf{3.20} & \textbf{0.00} & \textbf{23.58} & \textbf{4.31} & \checkmark \\
+$\beta_0$ & 4.00 & +1.00 & 13.17 & 2.52 & \checkmark \\
+$\beta_0$ & 4.80 & -0.50 & 7.67 & 1.49 & \checkmark \\
+$\lambda$ & 0.04 & 0.00 & 19.58 & 2.96 & \checkmark \\
+$\lambda$ & 0.06 & 0.00 & 20.08 & 3.81 & \checkmark \\
+$\lambda$ & \textbf{0.08} & \textbf{0.00} & \textbf{23.17} & \textbf{4.09} & \checkmark \\
+$\lambda$ & 0.10 & -1.00 & 25.92 & 4.48 &  \\
+$\lambda$ & 0.12 & +0.50 & 29.17 & 5.10 & \checkmark \\
+$\gamma$ & -0.80 & +1.00 & 5.92 & 1.31 & \checkmark \\
+$\gamma$ & -0.60 & +2.00 & 12.33 & 2.13 &  \\
+$\gamma$ & \textbf{-0.40} & \textbf{+1.00} & \textbf{22.67} & \textbf{3.77} & \checkmark \\
+$\gamma$ & -0.20 & 0.00 & 35.67 & 6.32 & \checkmark \\
+$\gamma$ & 0.00 & -1.00 & 42.33 & 7.63 &  \\
+\bottomrule
+\end{tabular}}
+\vspace{0.3em}
+\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
+\textbf{Interpretation.} VIB accuracy is insensitive to all three scalars: across the 15 grid points
+the VIB$-$Full $\Delta$ deviates from the default by at most $1.67$ pp, so the headline result is not
+an artefact of a lucky hyperparameter choice. Message reduction is governed by the two scalars that
+set how aggressively the gate trades sufficiency against redundancy: $\beta_0$ spans
+$7.7$\%--$47.6$\% (decreasing as it grows) and $\gamma$ spans $5.9$\%--$42.3$\% (increasing), whereas
+$\lambda$ shifts it only over $19.6$\%--$29.2$\% across a threefold range. Because accuracy is
+flat throughout, either $\beta_0$ or $\gamma$ serves as a deployment dial for the sparsity/cost
+budget; we keep the defaults $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$ used in all main results
+and leave per-budget retuning to future work. The three bolded default rows are the \emph{same}
+configuration and agree to within $1.00$ pp in $\Delta$ and $0.91$ pp in message reduction --- a
+direct run-to-run noise bound at $N=200$.}
+\end{table}

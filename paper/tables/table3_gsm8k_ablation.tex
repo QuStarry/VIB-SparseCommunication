@@ -1,19 +1,21 @@
 \begin{table}[t]
 \centering
-\caption{GSM8K 消融：在 200 条 GSM8K 样本上分别开启/关闭 role-aware 权重（§3 Method）。
-关闭 role 权重（frozen\_only）时 VIB 已有 30.25\% 消息压缩；开启 role 权重（frozen+role）在 Full 基线略降 1pp 的前提下仍维持 25.17\% 压缩，说明 VIB 对两种历史模式均鲁棒。
+\caption{GSM8K ablation on $N=200$ sub-sample toggling role-aware weights (Section 3, Method).
+Frozen-history-only VIB already achieves $+30.25\%$ message compression;
+adding role-aware weights (frozen+role) still holds $+25.17\%$ compression while Full baseline drops 1~pp --- VIB is robust to both history regimes.
 \label{tab:gsm8k_ablation}}
-\setlength{\tabcolsep}{5.5pt}
-\small
-\begin{tabular}{l r rrr rr rr}
+\setlength{\tabcolsep}{3.2pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{3.1cm} r r r r r r @{}}
 \toprule
 \textbf{Ablation} & \textbf{N} &
-\textbf{Full} & \textbf{VIB} & \textbf{$\Delta_{\mathrm{VIB-Full}}$} &
-\textbf{Msg $\downarrow$} & \textbf{Tok $\downarrow$} \\
+\textbf{Full} & \textbf{VIB} & \textbf{$\Delta_{\text{V-F}}$} &
+\textbf{Msg$\downarrow$} & \textbf{Tok$\downarrow$} \\
 \midrule
 
-GSM8K · frozen\_only       &  200 &  97.00 &  96.50 &  -0.50 & +30.25 &  +3.91 \\
-GSM8K · frozen+role        &  200 &  96.00 &  96.00 &   0.00 & +25.17 &  +4.17 \\
+GSM8K $\cdot$ frozen\_only &  200 &  97.00 &  96.50 &  -0.50 & +30.25 &  +3.91 \\
+GSM8K $\cdot$ frozen+role  &  200 &  96.00 &  96.00 &   0.00 & +25.17 &  +4.17 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \end{table}
