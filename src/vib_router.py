@@ -149,7 +149,8 @@ class VIBSparseCommRouter:
         alpha: float = 0.2,
         tau_min: float = -0.5,
         enable_math_role_weights: bool = True,
-        enable_reasoning_guard: bool = True
+        enable_reasoning_guard: bool = True,
+        enable_math_critical_guard: bool = True
     ):
         self.beta_0 = beta_0
         self.lambda_decay = lambda_decay
@@ -163,6 +164,7 @@ class VIBSparseCommRouter:
         self.tau_min = tau_min
         self.enable_math_role_weights = enable_math_role_weights
         self.enable_reasoning_guard = enable_reasoning_guard
+        self.enable_math_critical_guard = enable_math_critical_guard
         
         # Bugfix-Aware: 通用代码修正与边界条件敏感词汇表（泛化设计，不依赖特定题库）
         self.fix_keywords = [
@@ -351,6 +353,31 @@ class VIBSparseCommRouter:
         has_number = bool(re.search(r"\d", message))
         has_equation_shape = bool(re.search(r"(\d+\s*[%*/+\-=]\s*\d+|=\s*\d+)", message))
         return has_keyword or (has_number and has_equation_shape)
+
+    def _detect_math_critical(self, message: str, role: Optional[str] = None) -> bool:
+        """检测数学消息是否含「结论 / 纠错」关键锚点（推理链节点，误剪代价最高）。
+
+        MATH 回归分析显示折损集中在高难度题与几何类，根因是语义余弦相似度把
+        「关键推导步骤」误判为冗余。此信号对两类高价值消息给予更强保护：
+          1) 结论锚点：最终答案 / 推导结论（\\boxed、####、\\therefore、答案...）
+          2) 纠错锚点：Verifier 指出错误（incorrect、should be、错误、应为...）
+        """
+        if not self.enable_reasoning_guard or not self.enable_math_critical_guard or role not in self.math_roles:
+            return False
+
+        msg_lower = message.lower()
+        conclusion = any(m in msg_lower for m in [
+            "\\boxed", "####", "\\therefore", "final answer", "the answer is",
+            "answer:", "答案", "最终答案", "综上",
+        ])
+        if conclusion:
+            return True
+        correction = any(m in msg_lower for m in [
+            "incorrect", "wrong", "should be", "must be", "recheck", "re-check",
+            "error", "mistake", "missed",
+            "错误", "不对", "应为", "应该", "检查", "遗漏", "有误",
+        ])
+        return correction and role == "Verifier"
     
     def _compute_complexity_bonus(self, goal: str) -> float:
         """
@@ -612,9 +639,17 @@ class VIBSparseCommRouter:
         # 当检测到修复信号时，对冗余度惩罚给予 0.25 折扣（保护关键补丁）
         omega_fix = 0.25 if (has_fix_signal and role in ("Reviewer", "Coder")) else 1.0
 
-        # === Reasoning Chain Guardrails: 保护 GSM8K 中间推导/校验链 ===
+        # === Reasoning Chain Guardrails: 保护 GSM8K/MATH 中间推导/校验链 ===
+        # MATH 回归分析: 折损集中在高难度/几何，根因是语义相似度把关键推导误判为冗余。
+        # 结论/纠错锚点(推理链节点)给予最强保护，普通推理链中等保护，其余无保护。
         has_reasoning_signal = self._detect_reasoning_signal(candidate_msg, role)
-        omega_reasoning = 0.65 if has_reasoning_signal else 1.0
+        has_math_critical = self._detect_math_critical(candidate_msg, role)
+        if has_math_critical:
+            omega_reasoning = 0.4    # 结论/纠错锚点: 最强保护
+        elif has_reasoning_signal:
+            omega_reasoning = 0.65   # 普通推理链: 中等保护
+        else:
+            omega_reasoning = 1.0
         
         # 综合冗余度修正: Redundancy_adjusted = Redundancy * code_discount * omega_fix
         # Token-Aware: 对长文本施加温和长度惩罚，平衡 Token 压缩比

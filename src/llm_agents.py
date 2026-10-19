@@ -119,7 +119,7 @@ class LLMAgent:
         self.tokens_used += result["total_tokens"]
         self.calls_made += 1
         
-        return result["content"].strip()
+        return (result["content"] or "").strip()
     
     def to_agent_dict(self) -> Dict:
         """Convert to agent dict format for workflow."""
