@@ -227,3 +227,19 @@ experiments/HumanEval.jsonl.gz
 configs/pro.env
 
 docs/chatHistory.md
+
+# macOS
+.DS_Store
+
+# Ad-hoc scratch files (one-off dumps, probes)
+_tmp_*
+
+# LaTeX build artifacts (paper/paper.pdf is the tracked deliverable)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.out
+paper/*.log
+paper/*.xdv
+paper/*.synctex.gz
+paper/paper_latex_v*.pdf
