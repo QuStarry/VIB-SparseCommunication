@@ -556,6 +556,155 @@ direct run-to-run noise bound at $N=200$.}""" % (
 
 
 # ---------------------------------------------------------------
+# Table 6: naive-gating controls (Appendix D)
+# ---------------------------------------------------------------
+
+GATING_POINT_COUNT = 6  # 1 VIB anchor + 1 random-drop + 4 diversity top-k
+
+
+def _gating_ready(sweep: Dict[str, Any]) -> str:
+    """Return "" when the gating sweep is complete, else a reason to skip."""
+    if sweep.get("aborted"):
+        return "gating_summary.json 标记 aborted，未跑完"
+    rows = sweep.get("rows") or []
+    if len(rows) != GATING_POINT_COUNT:
+        return f"仅 {len(rows)}/{GATING_POINT_COUNT} 个点"
+    empty = [r["name"] for r in rows if not (r.get("summary") or {}).get("total_tasks")]
+    if empty:
+        return f"{len(empty)} 个点缺少 summary: {', '.join(empty[:3])}"
+    return ""
+
+
+def _detailed_rows(point: Dict[str, Any]) -> List[Dict[str, Any]]:
+    return (point.get("detailed_results") or {}).get("gsm8k") or []
+
+
+def _paired_vs_anchor(anchor: Dict[str, bool], arm: Dict[str, bool],
+                      n_boot: int = 10000, seed: int = 20260812):
+    """Paired bootstrap CI for (arm − anchor) in pp over the shared task ids.
+
+    Reuses the manuscript's single bootstrap implementation: the helper consumes
+    ``full_passed``/``vib_passed`` keys, so the anchor is mapped onto the former
+    and the comparison arm onto the latter.
+    """
+    shared = [t for t in anchor if t in arm]
+    if not shared:
+        return (0.0, 0.0)
+    rows = [{"full_passed": anchor[t], "vib_passed": arm[t]} for t in shared]
+    return an._paired_delta_pp_bootstrap_ci(rows, n_boot=n_boot, seed=seed)
+
+
+def render_table6_gating(sweep: Dict[str, Any], gating_dir: Path) -> str:
+    rows = sweep["rows"]
+    by_arm = {r["arm"]: r for r in rows}
+    anchor = by_arm["vib"]
+
+    anchor_json = load(gating_dir / f"{anchor['name']}.json")
+    anchor_vib = {r["task_id"]: bool(r["vib_passed"]) for r in _detailed_rows(anchor_json)}
+    anchor_full = {r["task_id"]: bool(r["full_passed"]) for r in _detailed_rows(anchor_json)}
+    n = len(anchor_vib)
+
+    keep_rate = float(sweep.get("matched_keep_rate") or 0.0)
+    model = sweep.get("model") or "unknown"
+
+    # (label, msg-down%, tok-down%, pass%, delta_pp, ci)
+    body_rows = []
+
+    full_pct = float(anchor["summary"]["full_pass_rate"])
+    full_delta = float(anchor["summary"]["pass_delta_pp"]) * -1.0
+    full_ci = _paired_vs_anchor(anchor_vib, anchor_full)
+    body_rows.append(("No gate (Full)", None, None, full_pct, full_delta, full_ci, False))
+
+    vib_pct = float(anchor["summary"]["vib_pass_rate"])
+    body_rows.append(("VIB (anchor)", float(anchor["summary"]["msg_compression_pct"]),
+                      float(anchor["summary"]["token_saving_pct"]), vib_pct, 0.0, (0.0, 0.0), True))
+
+    naive_labels = {
+        "random": f"Random drop ($p={keep_rate:.3f}$)",
+    }
+    for r in rows:
+        if r["arm"] == "vib":
+            continue
+        point = load(gating_dir / f"{r['name']}.json")
+        arm_map = {d["task_id"]: bool(d["vib_passed"]) for d in _detailed_rows(point)}
+        label = naive_labels.get(r["arm"]) or f"Diversity top-$k$ ($\\theta={float(r['knob']):.2f}$)"
+        # Use the same shared-task convention as the paired CI below, so the point
+        # estimate and its interval cannot disagree about which tasks they summarise.
+        shared = [t for t in anchor_vib if t in arm_map]
+        delta = 100.0 * sum(arm_map[t] - anchor_vib[t] for t in shared) / max(1, len(shared))
+        body_rows.append((
+            label,
+            float(r["summary"]["msg_compression_pct"]),
+            float(r["summary"]["token_saving_pct"]),
+            float(r["summary"]["vib_pass_rate"]),
+            delta,
+            _paired_vs_anchor(anchor_vib, arm_map),
+            False,
+        ))
+
+    def _pct_cell(x):
+        return "--" if x is None else _pct(x)
+
+    def _delta_cell(delta, ci):
+        return f"${delta:+.2f}$~$[{ci[0]:+.2f}, {ci[1]:+.2f}]$"
+
+    body = []
+    for label, msg, tok, pct, delta, ci, is_anchor in body_rows:
+        if is_anchor:
+            cells = (r"\textbf{%s}" % label, r"\textbf{%s}" % _pct(msg),
+                     r"\textbf{%s}" % _pct(tok), r"\textbf{%s}" % _pct(pct),
+                     r"\textbf{%s}" % _delta_cell(delta, ci))
+        else:
+            cells = (label, _pct_cell(msg), _pct_cell(tok), _pct(pct), _delta_cell(delta, ci))
+        body.append(" & ".join(cells) + r" \\")
+
+    # Report the realised budget match rather than asserting it by hand: the naive
+    # arms are calibrated offline, so the compression they actually pay can drift
+    # from the anchor's by a little. Only the arms deliberately pinned to the
+    # anchor's budget count here -- the random drop and the nearest top-k point.
+    # The wider top-k settings remove less on purpose and trace the trend instead.
+    vib_comp = float(anchor["summary"]["msg_compression_pct"])
+    naive = [r for r in rows
+             if r["arm"] != "vib" and (r.get("summary") or {}).get("total_tasks")]
+    topk = [r for r in naive if r["arm"] == "topk"]
+    matched = [r for r in naive if r["arm"] != "topk"]
+    if topk:
+        matched.append(min(topk, key=lambda r: abs(
+            float(r["summary"]["msg_compression_pct"]) - vib_comp)))
+    budget_span = max((abs(float(r["summary"]["msg_compression_pct"]) - vib_comp)
+                       for r in matched), default=0.0)
+
+    header = r"""\begin{table}[t]
+\centering
+\caption{Is the VIB utility signal doing the work? All arms share one backbone snapshot
+(\texttt{__MODEL__}), one $200$-problem GSM8K subset and the identical harness, so only the
+admission policy varies. \emph{Random drop} keeps each candidate with probability $p$ calibrated
+to the VIB anchor's own admission rate, and \emph{diversity top-$k$} drops any candidate whose
+maximum cosine against the already-broadcast history exceeds $\theta$ --- it reuses the same frozen
+encoder but has no goal term, no $\beta_t$ schedule, no role prior and no guards.
+$\Delta$ is the paired (arm$-$VIB) Pass@1 difference in pp with a $10\,000$-resample bootstrap 95\% CI;
+negative means the arm is worse than VIB. The arms pinned to the anchor's message budget --- the random
+drop and the nearest top-$k$ --- realise a reduction within $__BUDGET__$~pp of the anchor's; the
+remaining top-$k$ settings remove strictly less and only trace the budget/accuracy trade-off.
+\label{tab:gating_controls}}
+\setlength{\tabcolsep}{3.0pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} l r r r r @{}}
+\toprule
+\textbf{Gate} & \textbf{Msg$\downarrow$\%} & \textbf{Tok$\downarrow$\%} & \textbf{Pass@1} &
+\textbf{$\Delta$ vs VIB (pp)} \\
+\midrule
+""".replace("__MODEL__", model).replace("__BUDGET__", f"{budget_span:.1f}")
+
+    footer = r"""\bottomrule
+\end{tabular}}
+\end{table}
+"""
+    return header + "\n".join(body) + "\n" + footer
+
+
+# ---------------------------------------------------------------
 # README
 # ---------------------------------------------------------------
 
@@ -568,11 +717,13 @@ README = r"""
     \input{paper/tables/table3_gsm8k_ablation}
     \input{paper/tables/table4_sensitivity}   % Appendix B: hyperparameter sensitivity
     \input{paper/tables/table5_crossmodel}    % Appendix C: cross-family transfer
+    \input{paper/tables/table6_gating_controls}  % Appendix D: naive-gating controls
 
 若需重生成：
     python3 scripts/export_latex_tables.py
 
 table4 需要 results/sweep_v1/sweep_summary.json 覆盖全部 15 个网格点，否则自动跳过。
+table6 需要 results/gating_sweep/ 下 6 个点 (anchor + random + 4×top-k) 全部跑完，否则自动跳过。
 """
 
 
@@ -639,6 +790,9 @@ def main():
     p.add_argument("--sweep", default="results/sweep_v1/sweep_summary.json",
                    help="Table 4: OFAT 灵敏度 sweep 汇总 (run_hyper_sweep.py 产出)，"
                         "底座须与正文主表一致 (deepseek-chat)")
+    p.add_argument("--gating", default="results/gating_sweep/gating_summary.json",
+                   help="Table 6: 朴素门控对照 sweep 汇总 (run_gating_baseline_sweep.py 产出)；"
+                        "各点原始 JSON 需与其同目录，用于配对 bootstrap")
     args = p.parse_args()
 
     outdir = Path(args.outdir)
@@ -711,8 +865,22 @@ def main():
             (outdir / "table4_sensitivity.tex").write_text(render_table4_sensitivity(sweep))
             written.append("table4_sensitivity.tex")
 
-    preview_table1_plain(rows)
+    # Table 6 is a control experiment: a half-finished sweep would understate the
+    # naive arms, so require every point to be present and un-aborted.
+    gating_p = Path(args.gating)
+    if not gating_p.exists():
+        print(f"⚠️  Table 6 跳过: 缺少 {gating_p}")
+    else:
+        gating = load(gating_p)
+        reason = _gating_ready(gating)
+        if reason:
+            print(f"⚠️  Table 6 跳过: {reason}")
+        else:
+            (outdir / "table6_gating_controls.tex").write_text(
+                render_table6_gating(gating, gating_p.parent))
+            written.append("table6_gating_controls.tex")
 
+    preview_table1_plain(rows)
     print(f"\n✅ 已生成 {len(written)} 张 .tex + 1 README to {outdir.resolve()}:")
     for name in written:
         f = outdir / name
