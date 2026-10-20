@@ -83,10 +83,11 @@ def _broken_task_count(out: Path) -> int:
     return sum(1 for t in traces if t.get("error_msg"))
 
 
-def _is_valid(summary: dict, out: Path) -> bool:
+def _is_valid(summary: dict, out: Path,
+              min_full_pass_rate: float = MIN_FULL_PASS_RATE) -> bool:
     if not summary or not summary.get("total_tasks"):
         return False
-    if float(summary.get("full_pass_rate") or 0.0) < MIN_FULL_PASS_RATE:
+    if float(summary.get("full_pass_rate") or 0.0) < min_full_pass_rate:
         return False
     return _broken_task_count(out) <= MAX_INVALID_TASKS
 
