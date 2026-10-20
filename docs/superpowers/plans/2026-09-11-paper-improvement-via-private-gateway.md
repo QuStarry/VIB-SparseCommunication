@@ -36,7 +36,7 @@
 - Modify: `src/llm_client.py:40-60, 395-420` (BUILTIN_PROVIDERS defaults comment block, `_resolve_provider`, `build_client`)
 - Test: `tests/test_multi_benchmark.py` smoke (py_compile + `build_client()` no-arg)
 
-- [ ] **Step 1: Add env-driven fallback in `_resolve_provider`**
+- [x] **Step 1: Add env-driven fallback in `_resolve_provider`**
 
 Open `src/llm_client.py` and locate the signature of `_resolve_provider(provider_arg, logical_model)` near L~300. At the very top of the function (after docstring, before the `provider_arg is None` branch), insert the env-driven fallback that is *weaker than explicit args* but *stronger than the current heuristic*:
 
@@ -50,7 +50,7 @@ def _resolve_provider(provider_arg, logical_model):
     # ... existing code continues ...
 ```
 
-- [ ] **Step 2: Add env-driven model_name fallback in `build_client`**
+- [x] **Step 2: Add env-driven model_name fallback in `build_client`**
 
 Locate `def build_client(model="deepseek-chat", provider=None, *, temperature, max_tokens, log):`. Insert:
 
@@ -66,7 +66,7 @@ def build_client(model="deepseek-chat", provider=None, *, temperature, max_token
 
 This way the "default model" deepseek-chat is still a valid sentinel, and the user can `export VIB_LLM_MODEL=deepseek-v4-pro-0817 VIB_LLM_PROVIDER=private` in their shell. Do **not** strip default model to None — that would break 13 legacy scripts that still call `DeepSeekClient()` with no `model` kwarg.
 
-- [ ] **Step 3: Ensure `DeepSeekClient(api_key, base_url, model=...)` legacy path still works**
+- [x] **Step 3: Ensure `DeepSeekClient(api_key, base_url, model=...)` legacy path still works**
 
 Keep the existing branch in `LLMClient.__init__`: when a caller explicitly passes both `api_key` and `base_url`, ignore registry and use those values directly. This preserves 100% backward-compatibility for:
 
@@ -78,7 +78,7 @@ experiments/run_ablation.py    — same pattern
 
 Do **not** refactor those scripts now — Task 1 only needs env-driven defaults *plus* run_multi_benchmark CLI override (already done in prior session).
 
-- [ ] **Step 4: Verify syntax + client smoke**
+- [x] **Step 4: Verify syntax + client smoke**
 
 Run:
 
@@ -98,7 +98,7 @@ python3 -c "from src.llm_client import build_client; c=build_client(temperature=
 
 Expected: `deepseek deepseek-chat`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/llm_client.py
@@ -115,7 +115,7 @@ git commit -m "feat: env-driven VIB_LLM_PROVIDER / MODEL default to private gate
 - Modify: `scripts/export_latex_tables.py:246` (TABLE1_FOOTER note — add MATH compression entry in comma list)
 - Output: `paper/paper_latex_v17.pdf`
 
-- [ ] **Step 1: Add hendrycks2021math bib entry**
+- [x] **Step 1: Add hendrycks2021math bib entry**
 
 Append to `paper/refs.bib` (after hendrycks2021gsm8k):
 
@@ -128,7 +128,7 @@ Append to `paper/refs.bib` (after hendrycks2021gsm8k):
 }
 ```
 
-- [ ] **Step 2: Edit `paper/paper.tex` contribution C2 wording**
+- [x] **Step 2: Edit `paper/paper.tex` contribution C2 wording**
 
 Locate L~87 `C2. A three-benchmark...` → replace:
 
@@ -136,7 +136,7 @@ Locate L~87 `C2. A three-benchmark...` → replace:
 \textbf{C2.}\, A \emph{four}-benchmark evaluation protocol with strictly comparable Vanilla / Full / VIB columns, unified synthesis hyperparameters, and 95\% Wilson score + paired bootstrap CIs (\Cref{tab:main_results}). Benchmarks span code generation (\textsc{HumanEval}, MBPP) and mathematical program-of-thought (GSM8K~\cite{hendrycks2021gsm8k}, MATH~\cite{hendrycks2021math}). On GSM8K, VIB removes $+30.49\%$ messages ($+4.96\%$ tokens) while losing only $-0.08$ pp (95\% CI $[-0.83, +0.68]$ pp); on MATH ($N=5000$) the pattern repeats with $+25.59\%$ messages ($+4.42\%$ tokens) for a marginal $-0.92$ pp (95\% CI $[-1.78, -0.04]$ pp, $\dagger$$^\S$) loss within a strict non-inferiority envelope. On MBPP, VIB \emph{gains} $+0.78$ pp in a message-saturated regime.
 ```
 
-- [ ] **Step 3: Expand §4 Dataset coverage description (L~97 + L~173)**
+- [x] **Step 3: Expand §4 Dataset coverage description (L~97 + L~173)**
 
 At the datasets sentence L~97, change `(GSM8K, numerical answers)` →:
 
@@ -150,7 +150,7 @@ Then in L~173 area (first Findings bullet's intro, the paragraph above `\item Va
 MATH extends the regime: $N=5000$ multi-step competitive-math problems, using the same frozen-history Planner--Solver--Verifier 3-agent pipeline as GSM8K.
 ```
 
-- [ ] **Step 4: Add 4th Main-Findings bullet for MATH after L~183 (MBPP saturation item)**
+- [x] **Step 4: Add 4th Main-Findings bullet for MATH after L~183 (MBPP saturation item)**
 
 Insert as a new `\item` between existing item (MBPP) and the next subsection header (keep order: Vanilla→Full, Full→VIB HumanEval+GSM8K, MBPP saturation, **MATH envelope**, then move to ES/MR split):
 
@@ -158,7 +158,7 @@ Insert as a new `\item` between existing item (MBPP) and the next subsection hea
 \item \textbf{MATH marginal envelope.} With a 25.59\% message cut ($+4.42\%$ tokens), VIB trails Full by $-0.92$ pp overall (95\% CI $[-1.78, -0.04]$ pp, $\dagger$$^\S$). Sampling McNemar $p=0.041$ is marginally significant but greedy (temperature=0) reruns push the envelope back to $p=0.132$ — consistent with the \S marker semantics and confirming VIB's compression is not a sampling artifact (see \Cref{tab:main_results} footer).
 ```
 
-- [ ] **Step 5: Add 4th Pareto point item after L~205**
+- [x] **Step 5: Add 4th Pareto point item after L~205**
 
 Change the existing 3-point discussion (HumanEval/GSM8K/MBPP bubbles) to explicitly call out MATH as the new 4th point with high absolute message savings:
 
@@ -168,7 +168,7 @@ Change the existing 3-point discussion (HumanEval/GSM8K/MBPP bubbles) to explici
 
 (Reference existing 3 bullets in Sec 4.2 Pareto paragraph near L203.)
 
-- [ ] **Step 6: Update export_latex_tables.py TABLE1_FOOTER note L246 comma list**
+- [x] **Step 6: Update export_latex_tables.py TABLE1_FOOTER note L246 comma list**
 
 Current L246:
 
@@ -182,7 +182,7 @@ MBPP message compression is near zero ...; VIB savings concentrate on GSM8K ($+3
 MBPP message compression is near zero ...; VIB savings concentrate on GSM8K ($+30.49\%$), MATH ($+25.59\%$) and HumanEval ($+21.14\%$).
 ```
 
-- [ ] **Step 7: Re-export tables then compile and audit**
+- [x] **Step 7: Re-export tables then compile and audit**
 
 Run *one single bash call* via file (NOT inline heredoc — quoting bug avoidance):
 
@@ -210,7 +210,7 @@ python3 /tmp/audit_build.py
 
 Acceptance: `cite/ref undefined=0`, `overfull>2pt=0`, `paper_latex_v17.pdf` >228 KB.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add paper/refs.bib paper/paper.tex scripts/export_latex_tables.py paper/tables/table1_main_three_methods.tex paper/paper_latex_v17.pdf
@@ -237,7 +237,7 @@ Sweep grids (OFAT: vary one, fix other two to default; 3 params × 5 = 15 config
 γ  ∈ {-0.8, -0.6, -0.4, -0.2,  0.0}
 ```
 
-- [ ] **Step 1: Add 3 router-parameter CLI overrides**
+- [x] **Step 1: Add 3 router-parameter CLI overrides**
 
 In `experiments/run_multi_benchmark.py` argparse block (near L1532):
 
@@ -262,7 +262,7 @@ def _create_vib_router(self) -> VIBSparseCommRouter:
     )
 ```
 
-- [ ] **Step 2: py_compile + help smoke**
+- [x] **Step 2: py_compile + help smoke**
 
 ```bash
 python3 -m py_compile experiments/run_multi_benchmark.py
@@ -272,7 +272,7 @@ VIB_LLM_PROVIDER=private VIB_LLM_MODEL=deepseek-v4-pro-0817 \
 
 Expected: `--router-beta0`, `--router-lambda`, `--router-gamma` visible in help.
 
-- [ ] **Step 3: Write sweep driver `experiments/run_hyper_sweep.py`**
+- [x] **Step 3: Write sweep driver `experiments/run_hyper_sweep.py`**
 
 ```python
 #!/usr/bin/env python3
@@ -335,7 +335,7 @@ if __name__ == "__main__":
 
 Then `chmod +x experiments/run_hyper_sweep.py`.
 
-- [ ] **Step 4: Dry-run first, then real (wall-time budget note: ~30h for 15×GSM8K-200)**
+- [x] **Step 4: Dry-run first, then real (wall-time budget note: ~30h for 15×GSM8K-200)**
 
 Dry run to confirm subprocess shell-out builds the expected CLI flags:
 
@@ -354,7 +354,7 @@ echo $! > results/sweep_v1/pid.txt
 
 Sweep produces `results/sweep_v1/sweep_summary.json` with 15 `rows[i].summary` dicts.
 
-- [ ] **Step 5: Render Appendix sensitivity table `paper/tables/table4_sensitivity.tex`**
+- [x] **Step 5: Render Appendix sensitivity table `paper/tables/table4_sensitivity.tex`**
 
 Once `sweep_summary.json` is complete, use this renderer (append as CLI entry in `scripts/export_latex_tables.py` or standalone):
 
@@ -416,7 +416,7 @@ Write to `paper/tables/table4_sensitivity.tex`. Then in paper.tex Appendix after
 \input{tables/table4_sensitivity}
 ```
 
-- [ ] **Step 6: Commit sweep files + new table**
+- [x] **Step 6: Commit sweep files + new table**
 
 ```bash
 git add experiments/run_multi_benchmark.py experiments/run_hyper_sweep.py paper/tables/table4_sensitivity.tex paper/paper.tex
@@ -431,7 +431,7 @@ git commit -m "exp: add --router-beta0/lambda/gamma + OFAT sweep driver + Append
 - Created at runtime: `results/paper_improvement_crossmodel_qwen3_gsm8k_n200.json`
 - Add one paragraph + mini table in paper Appendix after Appendix C: `\subsection{Cross-model transfer}\label{app:crossmodel}` + new mini table `paper/tables/table5_crossmodel.tex`.
 
-- [ ] **Step 1: Launch via run_multi_benchmark.py private gateway**
+- [x] **Step 1: Launch via run_multi_benchmark.py private gateway**
 
 Check pro.env has line `qwen3.8-max\tqwen3.8-max` (confirmed in `configs/pro.env:L7`):
 
@@ -447,7 +447,7 @@ echo $! > results/qwen3_n200.pid.txt
 
 Wall-time note: ~2 h at 4 workers.
 
-- [ ] **Step 2: Render cross-model mini table `paper/tables/table5_crossmodel.tex`**
+- [x] **Step 2: Render cross-model mini table `paper/tables/table5_crossmodel.tex`**
 
 Load `results/paper_improvement_crossmodel_qwen3_gsm8k_n200.json` and also reference the paper-default DeepSeek GSM8K N=200 slice (already in `results/gsm8k_ablation_frozen_only.json` or take the first 200 from `main_with_math_merged.json`) → write 2-row mini table:
 
@@ -458,7 +458,7 @@ Row2: Qwen-3.8-Max (private gateway)   same 6 columns
 
 Use same `\resizebox{\columnwidth}{!}` + `\scriptsize` pattern as Table 3. Caption flags: "Cross-family transfer on GSM8K ($N=200$). VIB compression pattern holds under two distinct model families (DeepSeek v4-pro encoder-decoder vs Qwen-3.8-Max decoder-only); message savings are ≥20 pp for both."
 
-- [ ] **Step 3: Append cross-model section in paper Appendix**
+- [x] **Step 3: Append cross-model section in paper Appendix**
 
 After Appendix C (\ref{app:sensitivity}), add:
 
@@ -467,7 +467,7 @@ After Appendix C (\ref{app:sensitivity}), add:
 \input{tables/table5_crossmodel}
 ```
 
-- [ ] **Step 4: Recompile → paper_latex_v18.pdf then audit**
+- [x] **Step 4: Recompile → paper_latex_v18.pdf then audit**
 
 ```bash
 cat > /tmp/_build_v18.sh <<'EOF'
@@ -484,7 +484,7 @@ sh /tmp/_build_v18.sh ; python3 /tmp/audit_build.py
 
 Acceptance: `Undefined=0`, `Overfull>2pt=0`, `paper_latex_v18.pdf` exists.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add paper/tables/table5_crossmodel.tex paper/paper.tex paper/paper_latex_v18.pdf results/paper_improvement_crossmodel_qwen3_gsm8k_n200.json
