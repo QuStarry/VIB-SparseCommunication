@@ -1009,7 +1009,11 @@ class MultiDatasetHarness:
                  llm_max_tokens: int = 1024,
                  router_beta0: Optional[float] = None,
                  router_lambda: Optional[float] = None,
-                 router_gamma: Optional[float] = None):
+                 router_gamma: Optional[float] = None,
+                 router_gating_mode: str = "vib",
+                 router_keep_rate: Optional[float] = None,
+                 router_sim_threshold: Optional[float] = None,
+                 router_random_seed: int = 20260812):
         self.api_key = api_key
         self.max_steps = max_steps
         self.workers = max(1, workers)
@@ -1022,6 +1026,10 @@ class MultiDatasetHarness:
         self.router_beta0 = router_beta0
         self.router_lambda = router_lambda
         self.router_gamma = router_gamma
+        self.router_gating_mode = router_gating_mode
+        self.router_keep_rate = router_keep_rate
+        self.router_sim_threshold = router_sim_threshold
+        self.router_random_seed = router_random_seed
 
     def _select_task_components(self, sample: TaskSample) -> Tuple[Any, Any]:
         if sample.dataset_name in ("HumanEval", "MBPP"):
@@ -1051,7 +1059,13 @@ class MultiDatasetHarness:
             ),
         }
 
-    def _create_vib_router(self) -> VIBSparseCommRouter:
+    def _create_vib_router(self, task_salt: Optional[str] = None) -> VIBSparseCommRouter:
+        seed = self.router_random_seed
+        if task_salt is not None and self.router_gating_mode == "random":
+            # A router is built per task, so a constant seed would replay one
+            # fixed keep/drop pattern on every task instead of the independent
+            # Bernoulli draw the random baseline is defined as.
+            seed = VIBSparseCommRouter.derive_task_seed(seed, task_salt)
         return VIBSparseCommRouter(
             beta_0      = self.router_beta0   if self.router_beta0   is not None else 3.2,
             lambda_decay= self.router_lambda  if self.router_lambda  is not None else 0.08,
@@ -1060,6 +1074,10 @@ class MultiDatasetHarness:
             adaptive=True, alpha=0.35, tau_min=-1.0,
             enable_math_role_weights=self.experiment_config.enable_math_role_weights,
             enable_reasoning_guard=self.experiment_config.enable_gsm8k_reasoning_guard,
+            gating_mode=self.router_gating_mode,
+            keep_rate=self.router_keep_rate if self.router_keep_rate is not None else 0.5,
+            sim_threshold=self.router_sim_threshold if self.router_sim_threshold is not None else 0.85,
+            random_seed=seed,
         )
 
     def _run_variant(
@@ -1153,7 +1171,7 @@ class MultiDatasetHarness:
                     sample=sample,
                     create_agents_fn=create_agents_fn,
                     generate_fn=generate_fn,
-                    router=self._create_vib_router(),
+                    router=self._create_vib_router(sample.task_id),
                     max_steps_override=1
                 )
                 if probe_vib["passed"]:
@@ -1164,7 +1182,7 @@ class MultiDatasetHarness:
                         sample=sample,
                         create_agents_fn=create_agents_fn,
                         generate_fn=generate_fn,
-                        router=self._create_vib_router()
+                        router=self._create_vib_router(sample.task_id)
                     )
             else:
                 full_result = self._run_variant(
@@ -1178,7 +1196,7 @@ class MultiDatasetHarness:
                     sample=sample,
                     create_agents_fn=create_agents_fn,
                     generate_fn=generate_fn,
-                    router=self._create_vib_router()
+                    router=self._create_vib_router(sample.task_id)
                 )
             exec_time = time.time() - task_start
             full_token_stats = full_result["token_stats"]
@@ -1551,6 +1569,17 @@ def main():
                         help="Override VIBSparseCommRouter lambda_decay (paper default=0.08).")
     parser.add_argument("--router-gamma", type=float, default=None,
                         help="Override VIBSparseCommRouter gamma admission threshold (paper default=-0.4).")
+    parser.add_argument("--router-gating-mode", default="vib", choices=["vib", "random", "topk"],
+                        help="Replace the VIB gate in the sparse arm with a naive control: "
+                             "'random' (Bernoulli keep at --router-keep-rate) or "
+                             "'topk' (cosine diversity gate at --router-sim-threshold). "
+                             "Default 'vib' keeps the paper configuration.")
+    parser.add_argument("--router-keep-rate", type=float, default=None,
+                        help="Admission probability for --router-gating-mode random. Default 0.5.")
+    parser.add_argument("--router-sim-threshold", type=float, default=None,
+                        help="Max cosine-to-history for --router-gating-mode topk. Default 0.85.")
+    parser.add_argument("--router-random-seed", type=int, default=20260812,
+                        help="RNG seed for --router-gating-mode random. Default 20260812.")
     args = parser.parse_args()
 
     if args.list_models:
@@ -1627,6 +1656,10 @@ def main():
         router_beta0=getattr(args, "router_beta0", None),
         router_lambda=getattr(args, "router_lambda", None),
         router_gamma=getattr(args, "router_gamma", None),
+        router_gating_mode=args.router_gating_mode,
+        router_keep_rate=args.router_keep_rate,
+        router_sim_threshold=args.router_sim_threshold,
+        router_random_seed=args.router_random_seed,
     )
     report = harness.run_benchmark(datasets=args.datasets, limit=args.limit)
 

@@ -104,6 +104,73 @@ class TestVIBRouterAuditDefaults:
 
 
 
+class TestVIBRouterNaiveGatingBaselines:
+    """
+    Control conditions for the paper's gating ablation: the VIB utility must be
+    compared against gates of equal cost, not only against Full communication.
+    These tests pin the two naive policies so that a stray edit cannot silently
+    turn a reported control arm into something else.
+    """
+
+    def test_default_gating_mode_is_vib(self):
+        """Every paper table must keep running the real VIB utility by default."""
+        assert VIBSparseCommRouter().gating_mode == "vib"
+
+    def test_unknown_gating_mode_is_rejected(self):
+        with pytest.raises(ValueError):
+            VIBSparseCommRouter(gating_mode="llm-judge")
+
+    def test_random_mode_honours_keep_rate_and_seed(self):
+        router = VIBSparseCommRouter(gating_mode="random", keep_rate=0.7, random_seed=1)
+        draws = [router._evaluate_naive(f"msg-{i}", []).is_allowed for i in range(20_000)]
+        assert abs(sum(draws) / len(draws) - 0.7) < 0.02
+
+        replay = VIBSparseCommRouter(gating_mode="random", keep_rate=0.7, random_seed=1)
+        assert draws[:50] == [replay._evaluate_naive(f"msg-{i}", []).is_allowed
+                              for i in range(50)]
+
+    def test_task_seed_derivation_differs_per_task_and_is_stable(self):
+        """A per-task salt must give each task its own stream, reproducibly.
+
+        Regression guard: the harness builds one router per task, so reusing the
+        bare base seed made the random arm drop the same positions on every task
+        (a fixed-position policy) instead of drawing independently.
+        """
+        base = 20260812
+        seeds = [VIBSparseCommRouter.derive_task_seed(base, f"gsm8k-{i}") for i in range(50)]
+        assert len(set(seeds)) == len(seeds), "distinct tasks must get distinct seeds"
+        assert seeds[0] == VIBSparseCommRouter.derive_task_seed(base, "gsm8k-0")
+        assert seeds != [base] * len(seeds)
+
+    def test_random_decisions_vary_across_tasks(self):
+        """Two tasks must not replay the same keep/drop pattern."""
+        def pattern(salt):
+            seed = VIBSparseCommRouter.derive_task_seed(20260812, salt)
+            router = VIBSparseCommRouter(gating_mode="random", keep_rate=0.7,
+                                         random_seed=seed)
+            return [router._evaluate_naive(f"m-{i}", []).is_allowed for i in range(40)]
+
+        first, second = pattern("gsm8k-0"), pattern("gsm8k-1")
+        assert first != second
+
+    def test_topk_admits_when_history_is_empty(self):
+        router = VIBSparseCommRouter(gating_mode="topk", sim_threshold=0.9)
+        assert router._evaluate_naive("any message", []).is_allowed is True
+
+    def test_topk_drops_redundant_and_admits_novel(self):
+        router = VIBSparseCommRouter(gating_mode="topk", sim_threshold=0.9)
+        history = ["[Planner]: Janet has 3 apples and eats 1."]
+
+        duplicate = router._evaluate_naive("[Planner]: Janet has 3 apples and eats 1.", history)
+        assert duplicate.is_allowed is False
+        assert duplicate.redundancy > 0.9
+
+        novel = router._evaluate_naive(
+            "[Solver]: Use the quadratic formula on x^2 - 5x + 6 = 0.", history)
+        assert novel.is_allowed is True
+        assert novel.redundancy < 0.9
+
+
 class TestVIBRouterMilestone1:
     """
     Milestone 1 Validation: Test cases from PRD.

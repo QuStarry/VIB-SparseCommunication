@@ -17,11 +17,22 @@ Ada-VIB (Adaptive Uncertainty-Guided VIB):
     - When agent output has high uncertainty (high entropy), threshold is lowered
       to allow more detailed intermediate reasoning to pass through
     - When confidence is high (low entropy), threshold stays high for strong pruning
+
+Naive gating baselines (gating_mode != "vib"):
+    - "random": keep each candidate independently with probability keep_rate,
+      calibrated to the VIB arm's observed admission rate (matched budget).
+    - "topk": cosine diversity gate. A candidate is kept iff its maximum cosine
+      similarity against the already-broadcast history stays below sim_threshold,
+      i.e. the k least-redundant candidates of a round are admitted. This uses the
+      same shared encoder as the VIB arm but none of its learned/prior machinery,
+      which isolates the contribution of the utility formulation itself.
 """
 
 import math
+import random
 import re
 import threading
+import zlib
 import numpy as np
 from typing import List, Tuple, Optional
 from dataclasses import dataclass
@@ -127,6 +138,10 @@ class VIBSparseCommRouter:
         adaptive: Enable Ada-VIB adaptive threshold mode. Default: False
         alpha: Adaptive sensitivity coefficient (how strongly entropy affects threshold). Default: 0.2
         tau_min: Minimum threshold floor to prevent degeneration to Full Comm. Default: -0.5
+        gating_mode: "vib" (default) or a naive baseline ("random", "topk").
+        keep_rate: Admission probability for gating_mode="random". Default: 0.5
+        sim_threshold: Max admissible cosine-to-history for gating_mode="topk". Default: 0.85
+        random_seed: Seed of the RNG used by gating_mode="random" (reproducibility). Default: 20260812
     """
     
     _shared_encoder_cache = {}
@@ -150,8 +165,16 @@ class VIBSparseCommRouter:
         tau_min: float = -0.5,
         enable_math_role_weights: bool = True,
         enable_reasoning_guard: bool = True,
-        enable_math_critical_guard: bool = True
+        enable_math_critical_guard: bool = True,
+        gating_mode: str = "vib",
+        keep_rate: float = 0.5,
+        sim_threshold: float = 0.85,
+        random_seed: int = 20260812
     ):
+        if gating_mode not in ("vib", "random", "topk"):
+            raise ValueError(
+                f"Unknown gating_mode {gating_mode!r}; expected 'vib', 'random' or 'topk'."
+            )
         self.beta_0 = beta_0
         self.lambda_decay = lambda_decay
         self.tau = temp_tau
@@ -165,6 +188,12 @@ class VIBSparseCommRouter:
         self.enable_math_role_weights = enable_math_role_weights
         self.enable_reasoning_guard = enable_reasoning_guard
         self.enable_math_critical_guard = enable_math_critical_guard
+
+        # Naive gating baselines (control conditions for the VIB utility)
+        self.gating_mode = gating_mode
+        self.keep_rate = keep_rate
+        self.sim_threshold = sim_threshold
+        self._rng = random.Random(random_seed)
         
         # Bugfix-Aware: 通用代码修正与边界条件敏感词汇表（泛化设计，不依赖特定题库）
         self.fix_keywords = [
@@ -556,6 +585,70 @@ class VIBSparseCommRouter:
         result = self.evaluate_detailed(candidate_msg, history, goal, step_t)
         return result.is_allowed
     
+    @staticmethod
+    def derive_task_seed(base_seed: int, task_salt: str) -> int:
+        """Mix a task identifier into the base seed of the random baseline.
+
+        The harness builds one router per task, so seeding every router with the
+        bare base seed would replay a single fixed keep/drop pattern on every
+        task -- a deterministic fixed-position policy rather than the independent
+        Bernoulli draw this arm is defined as. Salting with the task id gives
+        each task its own stream while keeping the whole run reproducible.
+        ``zlib.crc32`` is used instead of ``hash`` because the latter is salted
+        per process and would break run-to-run reproducibility.
+        """
+        return (int(base_seed) + zlib.crc32(task_salt.encode("utf-8"))) % (2 ** 32)
+
+    def _evaluate_naive(
+        self,
+        candidate_msg: str,
+        history: List[str]
+    ) -> VIBEvaluationResult:
+        """
+        Naive gating baselines used as control conditions for the VIB utility.
+
+        Both modes deliberately ignore the task goal, the role priors, the
+        dynamic β schedule and every guard, so that any measured advantage of the
+        VIB arm can be attributed to the utility formulation rather than to the
+        shared encoder or the message budget.
+
+        Returns:
+            VIBEvaluationResult whose ``is_allowed`` is the baseline decision;
+            ``utility_score`` carries the raw signal (1/0 for random, the
+            least-redundant margin for topk) for auditability.
+        """
+        if self.gating_mode == "random":
+            keep = self._rng.random() < self.keep_rate
+            return VIBEvaluationResult(
+                utility_score=1.0 if keep else 0.0,
+                sufficiency=0.0,
+                redundancy=0.0,
+                beta_t=1.0,
+                is_allowed=keep,
+                threshold=self.keep_rate,
+            )
+
+        # gating_mode == "topk": cosine diversity gate on the broadcast history.
+        if not history:
+            # No history yet -> nothing can be redundant, so the first messages pass.
+            return VIBEvaluationResult(
+                utility_score=1.0, sufficiency=0.0, redundancy=0.0,
+                beta_t=1.0, is_allowed=True, threshold=self.sim_threshold
+            )
+
+        emb_m = self.get_embedding(candidate_msg)
+        max_sim = max(
+            self._cosine_similarity(emb_m, self.get_embedding(h)) for h in history
+        )
+        return VIBEvaluationResult(
+            utility_score=1.0 - max_sim,
+            sufficiency=0.0,
+            redundancy=max_sim,
+            beta_t=1.0,
+            is_allowed=max_sim < self.sim_threshold,
+            threshold=self.sim_threshold,
+        )
+
     def evaluate_detailed(
         self, 
         candidate_msg: str, 
@@ -592,6 +685,9 @@ class VIBSparseCommRouter:
         Returns:
             VIBEvaluationResult with all computed metrics
         """
+        if self.gating_mode != "vib":
+            return self._evaluate_naive(candidate_msg, history)
+
         # 冷启动：全局+增量历史完全为空时，计算与 Goal 的相关度
         if not history:
             emb_m = self.get_embedding(candidate_msg)
