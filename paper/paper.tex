@@ -58,7 +58,7 @@ Large language model (LLM) multi-agent pipelines often improve code generation o
 \;\, e^{-\lambda\, t_{\text{eff}}}
 \end{gathered}
 \end{equation*}
----and merges into the shared history only turns whose \emph{utility} exceeds a threshold $\gamma$. We evaluate on \textbf{HumanEval ($n=164$)}, \textbf{MBPP ($n=257$)} and \textbf{GSM8K ($n=1319$)} using 3-agent teams with apples-to-apples synthesis hyperparameters ($T=0.1$, $\text{max\_tokens}=1024$, 3-round doctest self-repair). Our main findings are three-fold: (1) \emph{Multi-agent alone wins.} A vanilla single agent reaches only 59.29\% Pass@1 on GSM8K; the full-communication 3-agent team pushes it to 95.30\% ($+35.93$ pp). (2) \emph{Less is More.} VIB-Sparse matches or marginally exceeds Full's Pass@1 across all three benchmarks (HumanEval 100.00 vs 100.00, MBPP 91.44 vs 90.66, GSM8K 95.22 vs 95.30) while removing 21--30\% of inter-agent messages and 3.9--5.0\% of total tokens. (3) \emph{Sparsity helps the hardest tail.} On MBPP's 21 Multi-Round needle-moving problems, VIB-Sparse pushes pass rate from 9.52\% to 19.05\% ($+9.53$ pp, $+2/21$ additional solves), visualized in the Pareto front of \Cref{fig:pareto} and the frozen-history ablation in \Cref{tab:gsm8k_ablation}/\Cref{fig:ablation}.
+---and merges into the shared history only turns whose \emph{utility} exceeds a threshold $\gamma$. We evaluate on \textbf{HumanEval ($n=164$)}, \textbf{MBPP ($n=257$)}, \textbf{GSM8K ($n=1319$)} and \textbf{MATH ($n=5000$)} using 3-agent teams with apples-to-apples synthesis hyperparameters ($T=0.1$, $\text{max\_tokens}=1024$, 3-round doctest self-repair). Our main findings are three-fold: (1) \emph{Multi-agent alone wins.} A vanilla single agent reaches only 59.29\% Pass@1 on GSM8K; the full-communication 3-agent team pushes it to 95.30\% ($+35.93$ pp). (2) \emph{Less is More.} VIB-Sparse matches Full's Pass@1 within a tight non-inferiority band across all four benchmarks (HumanEval 100.00 vs 100.00, MBPP 91.44 vs 90.66, GSM8K 95.22 vs 95.30, MATH 79.16 vs 80.08) while removing 21--30\% of inter-agent messages and 3.9--5.0\% of total tokens. (3) \emph{Sparsity helps the hardest tail.} On MBPP's 21 Multi-Round needle-moving problems, VIB-Sparse pushes pass rate from 9.52\% to 19.05\% ($+9.53$ pp, $+2/21$ additional solves), visualized in the Pareto front of \Cref{fig:pareto} and the frozen-history ablation in \Cref{tab:gsm8k_ablation}/\Cref{fig:ablation}.
 \end{abstract}
 
 %% ================================================================
@@ -244,7 +244,7 @@ The trade-off is consistent with VIB's geometry: adding role priors relaxes the 
 %% 4. Discussion
 %% ================================================================
 \section{Discussion}
-\paragraph{Strengths.} VIB-Sparse is model-agnostic, adds no extra LLM calls, and is parameterized by only three interpretable scalars $\{\beta_0, \lambda, \gamma\}$. Its Pareto gains are robust across two algorithmic code benchmarks and one numerical reasoning benchmark.
+\paragraph{Strengths.} VIB-Sparse is model-agnostic, adds no extra LLM calls, and is parameterized by only three interpretable scalars $\{\beta_0, \lambda, \gamma\}$. Its Pareto gains are robust across two algorithmic code benchmarks and two mathematical reasoning benchmarks.
 
 \paragraph{Limitations and future work.}
 (1) \emph{Scaling to $>3$ agents.} VIB's cosine-based $\hat I$ is $O(|H^{t-1}|)$ per candidate; for 8--16 agent teams we should switch to FAISS-backed near-neighbour lookup to keep it sublinear.
