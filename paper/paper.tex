@@ -1,5 +1,5 @@
-%% VIB-Sparse: Less is More --- NeurIPS/ICLR 2025 double-blind draft.
-%% 11pt, two-column, 8-page target. Compile with:
+%% 阶段性实证论文；当前为自定义版式，正式投稿须迁移官方模板。
+%% Compile with:
 %%   tectonic paper.tex   OR   xelatex ; bibtex ; xelatex x2
 \documentclass[11pt,twoside,twocolumn,letterpaper]{article}
 \usepackage[margin=1.0in,columnsep=0.25in]{geometry}
@@ -22,7 +22,7 @@
 %% ---- Layout / line-breaking: avoid Overfull hboxes ----
 \sloppy
 \emergencystretch=1.5em
-\setlength{\hfuzz}{2.0pt}
+\setlength{\hfuzz}{0pt}
 \frenchspacing
 \hyphenpenalty=50
 \exhyphenpenalty=50
@@ -31,7 +31,7 @@
 \usepackage{ragged2e}
 
 %% ---- Title / authors ----
-\title{Less is More: Enhancing Multi-Agent Code Generation\\via Variational Information Bottleneck Sparse Communication}
+\title{How Much Communication Do LLM Teams Need?\\An Empirical Study of Lightweight Message Gating}
 \author{Anonymous Authors\\Paper ID 8888\\Double-blind submission}
 \date{}
 
@@ -50,43 +50,35 @@
 %% 0. Abstract
 %% ================================================================
 \begin{abstract}
-Large language model (LLM) multi-agent pipelines often improve code generation over single-agent baselines by letting \emph{coder, tester, reviewer} agents exchange reasoning traces. However, the standard \textbf{full-communication (Full)} pattern broadcasts every candidate turn, producing redundant inter-agent messages that dilute the downstream synthesizer's attention and inflate token costs. We propose \textbf{VIB-Sparse}, a lightweight multi-agent \emph{message gating router} grounded in the \textbf{Variational Information Bottleneck (VIB)} principle. Without calling an additional LLM judge, VIB-Sparse scores every candidate turn on-line using cosine-similarity--based MI estimates---
-\begin{equation*}
-\begin{gathered}
-\mathcal{L}_\text{VIB}(M) \;=\; I(M; H^{t-1}) \;-\; \beta_t \, I(M; G), \\[2pt]
-\beta_t \;=\; (\beta_{\text{role}} + \text{complexity\_bonus})
-\;\, e^{-\lambda\, t_{\text{eff}}}
-\end{gathered}
-\end{equation*}
----and merges into the shared history only turns whose \emph{utility} exceeds a threshold $\gamma$. We evaluate on \textbf{HumanEval ($n=164$)}, \textbf{MBPP ($n=257$)}, \textbf{GSM8K ($n=1319$)} and \textbf{MATH ($n=5000$)} using 3-agent teams with apples-to-apples synthesis hyperparameters ($T=0.1$, $\text{max\_tokens}=1024$, 3-round doctest self-repair). Our main findings are three-fold: (1) \emph{Multi-agent alone wins.} A vanilla single agent reaches only 59.29\% Pass@1 on GSM8K; the full-communication 3-agent team pushes it to 95.30\% ($+36.01$ pp). (2) \emph{Less is More.} VIB-Sparse matches Full's Pass@1 within a tight non-inferiority band across all four benchmarks (HumanEval 100.00 vs 100.00, MBPP 91.44 vs 90.66, GSM8K 95.22 vs 95.30, MATH 79.16 vs 80.08) while removing 21--30\% of inter-agent messages and 3.9--5.0\% of total tokens. (3) \emph{Sparsity helps the hardest tail.} On MBPP's 21 Multi-Round needle-moving problems, VIB-Sparse pushes pass rate from 9.52\% to 19.05\% ($+9.53$ pp, $+2/21$ additional solves), visualized in the Pareto front of \Cref{fig:pareto} and the frozen-history ablation in \Cref{tab:gsm8k_ablation}/\Cref{fig:ablation}.
+Do LLM teams need to broadcast every candidate message, and does effective gating require a complex selection rule? We study these questions using a lightweight information-bottleneck-inspired router, VIB-Sparse, on HumanEval ($n=164$), MBPP ($n=257$), GSM8K ($n=1319$), and MATH ($n=5000$). Relative to full communication, it reduces broadcast messages by $21.14\%$ on HumanEval and $30.49\%$ on GSM8K, with observed accuracy differences of $0.00$ and $-0.08$ percentage points. The trade-off is not uniformly favorable: MATH loses $0.92$ points for $25.59\%$ message reduction, while MBPP saves neither messages nor tokens. Total-token savings on the three compressible benchmarks are only $3.88$--$4.96\%$, because gating occurs after candidate generation. On a separate $200$-problem GSM8K subset, a cosine-only redundancy gate achieves the same $97.00\%$ accuracy point estimate as VIB-Sparse at a similar message budget; their paired difference interval is $[-2.50,+2.50]$ points. These findings motivate simple controls and joint accuracy--cost reporting, not a claim of VIB-specific superiority or formal equivalence.
 \end{abstract}
 
 %% ================================================================
 %% 1. Introduction
 %% ================================================================
 \section{Introduction}
-Multi-agent LLM systems split code-generation labor across specialized agents---e.g., \textbf{Coder}, \textbf{Tester} and \textbf{Reviewer}---and solve problems that exceed a single model's one-shot ceiling, especially on mathematical reasoning (GSM8K) and multi-step algorithmic contracts. Yet the default collaborative topology assumes \emph{every agent broadcasts every message}. As rounds increase, two pathologies compound:
+Multi-agent LLM systems distribute work across specialized agents. Their communication policy is often dense: every generated candidate enters the shared history. We examine whether lighter communication can retain the observed task performance, and whether a more elaborate selector improves on a simple redundancy filter. Two distinct concerns motivate this study:
 \begin{enumerate}
-\item \textbf{Context pollution.} Speculative intermediate reasoning (guesses, dead-end implementations, redundant counterfactual checks) leaks into the shared history. The synthesizer then attends to noisy tokens instead of the grounded signal---degrading Pass@1 on \emph{tight} benchmarks.
-\item \textbf{Resource bloat.} Inter-agent chatter accounts for $\approx 40$--$60\%$ of total tokens in 3-agent pipelines. Cost scales linearly with agent count $\times$ turns, making dense teams unaffordable for production-grade code review.
+\item \textbf{Context quality.} Repetition and incorrect proposals can enter the shared history. Whether suppressing a particular turn improves the final answer is a causal question, not something a similarity score alone establishes.
+\item \textbf{Communication versus inference cost.} A message may already have incurred its generation cost before it is dropped. Fewer broadcasts can shorten subsequent prompts without proportionally reducing total API tokens.
 \end{enumerate}
 
-Prior work has mitigated these effects with LLM-as-judge routers such as MetaPrompt and Self-Refine~\cite{madaan2023selfrefine} that \emph{re-score} candidate messages---but this adds one judge LLM call per message, roughly doubling latency without any information-theoretic guarantee of signal preservation.
+Prompt compression and communication-graph pruning address related efficiency questions~\cite{jiang2023llmlingua,zhang2024agentprune}. We focus on post-generation message admission with no additional LLM judge, explicitly separating broadcast counts from measured API-token usage.
 
 \subsection{This work}
-Instead, we cast the multi-agent \textbf{communication topology control problem as a Variational Information Bottleneck (VIB)} decision. Concretely:
+We use VIB-Sparse as an information-bottleneck-inspired test policy and compare it with full communication, random drop, and a cosine-threshold redundancy gate. The name denotes the implementation; its embedding scores are heuristics, not validated estimates or bounds on mutual information. Concretely:
 \begin{itemize}
-\item \textbf{VIB gate.} At every collaborative round $t$, each agent's candidate message $M$ receives a utility $\text{Utility}(M) = \beta_t \I(M; G) - \I(M; H^{t-1})$. $\I$ is a lightweight cosine-similarity InfoNCE-style estimate on frozen sentence embeddings (\Cref{sec:method})---\textbf{no LLM call, no fine-tune, strictly millisecond-level}.
-\item \textbf{Dynamic $\beta$ schedule.} $\beta_t = (\beta_{\text{role}}+\text{complexity\_bonus}(G))\cdot e^{-\lambda t_{\text{eff}}}$ aggressively explores signal early (large $\beta$) while suppressing noise later (small $\beta$), mimicking standard explore/exploit schedules. $t_{\text{eff}}$ resets to zero whenever a synthesis round fails, forcing the gate to reopen bandwidth for corrective chains.
-\item \textbf{Thresholded merge.} Only candidates with $\text{Utility}(M) \ge \gamma$ are appended to the shared history. The rest are dropped \emph{before} any other agent sees them---this is the ``Sparse'' in VIB-Sparse.
+\item \textbf{Embedding gate.} A candidate is scored by weighted goal relevance minus adjusted history redundancy (\Cref{sec:method}), without a judge LLM or encoder fine-tuning.
+\item \textbf{Scheduled weight.} A hand-defined $\beta_t$ decreases with the workflow step and can reset on explicit execution-failure feedback; its incremental benefit is not isolated in the current experiment.
+\item \textbf{Thresholded merge.} Admission uses the effective adaptive threshold. Workflow-level role rescue and digest policies are configured separately; the final broadcast decision need not equal the raw score comparison.
 \end{itemize}
 
 \subsection{Contributions and main results}
-\textbf{C1.}\, A VIB-grounded, embedding-only inter-agent gating router---zero extra LLM calls, closed-form role-adaptive schedule, frozen sentence encoder (all-MiniLM-L6-v2, 384d, $\sim 23$M params).
+\textbf{C1.}\, A four-benchmark account of the accuracy--communication trade-off under a common harness, including negative results: MATH has an observed accuracy regression, and MBPP has no aggregate budget saving.
 
-\textbf{C2.}\, A \emph{four}-benchmark evaluation protocol with strictly comparable Vanilla / Full / VIB columns, unified synthesis hyperparameters, and 95\% Wilson score + paired bootstrap CIs (\Cref{tab:main_results}). Benchmarks span code generation (\textsc{HumanEval}, MBPP) and mathematical program-of-thought (GSM8K~\cite{hendrycks2021gsm8k}, MATH~\cite{hendrycks2021math}). On GSM8K, VIB removes $+30.49\%$ messages ($+4.96\%$ tokens) while losing only $-0.08$ pp (95\% CI $[-0.83, +0.68]$ pp); on MATH ($N=5000$) the pattern repeats with $+25.59\%$ messages ($+4.42\%$ tokens) for a marginal $-0.92$ pp (95\% CI $[-1.78, -0.04]$ pp, $\dagger$$^\S$) loss within a strict non-inferiority envelope. On MBPP, VIB \emph{gains} $+0.78$ pp in a message-saturated regime.
+\textbf{C2.}\, Matched-message-budget controls on a separate GSM8K subset. A cosine-only gate and VIB have identical accuracy point estimates; random drop is one point lower, with both comparison intervals spanning zero. This limits claims of selector-specific benefit rather than proving the policies equivalent.
 
-\textbf{C3.}\, A tail-case qualitative analysis (\Cref{sec:cases}) linking VIB's MR gains on MBPP to \emph{filtering of wrong test-case counterexamples} that would otherwise mislead the Coder agent---exactly the context-pollution failure mode VIB was designed against.
+\textbf{C3.}\, An audit of attribution and cost accounting: $21$--$30\%$ fewer broadcasts yield only $3.9$--$5.0\%$ fewer total tokens on three benchmarks, and two selected MBPP successes broadcast every candidate. They cannot establish a causal filtering mechanism.
 
 %% ================================================================
 %% 2. Method
@@ -96,84 +88,83 @@ Instead, we cast the multi-agent \textbf{communication topology control problem 
 \subsection{Task setup and multi-agent pipeline}
 We evaluate on \emph{code generation} (\textsc{HumanEval}~\cite{chen2021evaluating}, MBPP-Sanitized~\cite{chen2021evaluating,austin2021program}) and \emph{mathematical program-of-thought} (GSM8K~\cite{hendrycks2021gsm8k}, MATH~\cite{hendrycks2021math}; both rendered to final numerical answers).
 
-\paragraph{Vanilla single-agent baseline.} Given prompt $P$, one model call produces output $\hat y = f_\theta(P)$; 3 rounds of doctest self-repair; final scoring by a UnifiedEvaluator~\cite{chen2021evaluating,austin2021program}.
+\paragraph{Vanilla single-agent baseline.} Given prompt $P$, direct synthesis produces $\hat y=f_\theta(P)$ without team history, allowing up to three visible-doctest synthesis attempts on code tasks; the benchmark evaluator supplies final scoring~\cite{chen2021evaluating,austin2021program}.
 
 \paragraph{Full-communication 3-agent team.} Three role-specialized agents---Coder, Tester, Reviewer---each read the \emph{entire} shared history $H^{t-1}$ and propose one candidate turn per round $t \in \{1,\dots,T\}$. All proposals are merged into $H^t$ (broadcast topology). At $t=T$, the synthesizer agent concatenates the full history to produce $\hat y$.
 
-\paragraph{VIB-Sparse 3-agent team.} Same agents, same synthesizer. The \emph{only difference} is a per-candidate gating step before history merge---candidate $M$ passes through the VIB gate and is merged iff $\text{Utility}(M) \ge \gamma$; otherwise it is discarded and never contaminates $H^t$. This guarantees an \textbf{apples-to-apples comparison}: every token spent on synthesis is identical between Full and VIB; the only manipulated variable is \emph{which inter-agent messages reach the shared history}.
+\paragraph{VIB-Sparse 3-agent team.} The same agent generators and synthesis functions are used, with a gating step before history merge. An admitted message enters the public history; an optional workflow guard can rescue a rejected role. Full and VIB are separate stochastic executions, not identical candidate streams: their histories, outputs, and token counts can differ. The comparison holds the harness and configured synthesis protocol fixed, not the realized tokens.
 
 \subsection{VIB gating: formulation}
 Let $G$ = global goal (the user prompt), $H^{t-1}$ = shared history after $t-1$ rounds, $M$ = candidate message.
 
-\paragraph{VIB objective.} The router selects $Z$ (a sparse selection mask over $\{M\}$) to minimize
+\paragraph{Information-bottleneck motivation.} The intended trade-off is to retain goal-relevant content while penalizing overlap with history:
 \begin{equation}
-\mathcal{L}_\text{VIB}(M) = I(Z; H^{t-1}) - \beta_t \, I(Z; G).
+\mathcal{L}_\text{IB}(M) = I(M; H^{t-1}) - \beta_t \, I(M; G).
 \end{equation}
 
-\paragraph{Variational estimates.} We avoid density modelling by directly approximating MI via frozen sentence embeddings $E(\cdot)$ (\textbf{all-MiniLM-L6-v2} sentence-transformer~\cite{reimers2019sentence}, $\sim$23M params, cosine-normalised), plus three task-aware \emph{guardrails} that refine the estimate without extra LLM calls:
+\paragraph{Implemented surrogates.} No distributional variational bound is fitted or optimized. Instead, the router uses cosine similarities from a frozen \textbf{all-MiniLM-L6-v2} sentence encoder~\cite{reimers2019sentence}. These are relevance and redundancy proxies, with heuristic corrections:
 \begin{itemize}
-\item \textbf{Cosine sufficiency.} $I(M;G) \approx \cos(E(M), E(G))$.
-\item \textbf{InfoNCE redundancy, length-normalised.}
-Redundancy is estimated via the InfoNCE-style lower bound
+\item \textbf{Goal relevance.} $S(M,G)=\cos(E(M), E(G))$.
+\item \textbf{History redundancy, length-normalised.}
+The log-sum-exp score is
 \begin{multline}\label{eq:in_est}
-I\bigl(M; H^{t-1}\bigr) \;\approx\; \\
+R\bigl(M; H^{t-1}\bigr) \;=\; \\
 \frac{1}{\sqrt{|H^{t-1}|}}\log\sum_{h \in H^{t-1}} \exp\!\bigl(\cos_{E}(M, h)/\tau\bigr),
 \end{multline}
 with $\cos_E(M,h) := \cos(E(M), E(h))$. The $\sqrt{|H|}$ denominator keeps redundancy sub-linear so long histories do not trivially saturate the gate.
-\item \textbf{Code-diff sensitivity (HumanEval / MBPP).} When $M$ contains a Python code block, we compute code-diff ratio $\delta$ to the nearest historical code patch (\texttt{difflib.SequenceMatcher}) and add a \textbf{$(1-\delta)$ penalty} to redundancy. This protects small-but-essential one-line fixes (off-by-one, edge-case flips) from being gated as ``redundant'' just because their overall embedding is close to the previous patch.
-\item \textbf{Role-adaptive $\beta_{\text{role}}$ prior.} The base $\beta_0$ in the $\beta_t$ schedule is replaced by a role-specific $\beta_{\text{role}}$ from a hand-tuned map: Coder $4.2 >$ Solver $4.4 \approx$ Verifier $4.0 \approx$ Reviewer $3.6 >$ Architect $3.2 >$ Planner $2.8$ (higher $\beta$ $\rightarrow$ more permissive for that role's output). This encodes a domain prior that \emph{code steps and verification steps deserve more bandwidth than high-level plans}.
-\item \textbf{Reasoning guard (GSM8K).} If $M$ is written by Planner/Solver/Verifier and contains math operators plus numbers plus verification keywords, $\beta_{\text{role}}$ gets an extra $\text{complexity\_bonus} = \min(1, \text{words}(G)/50)$ bump. Conversely, if $M$ signals a bug-fix (keywords ``edge case / missing / wrong / off-by-one / overflow''), the decay step $t$ is \textbf{reset to $0$} so $\beta_t$ is large again---forcing the gate to pass corrective chains after failed synthesis runs.
+\item \textbf{Code-diff sensitivity.} For a code-bearing message, $\delta$ is its edit difference from the \emph{last} historical code block using \texttt{SequenceMatcher}. The redundancy multiplier is $\max(0.2,1-1.5\delta)$. This favors larger textual changes but does not establish that an edit is correct or important.
+\item \textbf{Role-adaptive prior.} Optional hand-tuned role weights alter $\beta_t$; the main frozen-history setting disables the math role-weight override. The role-aware ablation is reported separately.
+\item \textbf{Correction and reasoning heuristics.} Recognized code-fix and mathematical-reasoning keywords discount redundancy; recognized Solver/Verifier reasoning can also relax the threshold. Prompt length adds a complexity bonus to $\beta_t$. Keyword detection does not verify whether the proposed correction is valid.
 \end{itemize}
 
 \paragraph{Utility score and schedule.} Define
 \begin{equation}
 \begin{split}
-\text{Utility}(M) \;=\; \beta_t \cdot \cos(E(M),\, E(G)) \;-\; \\
-\log\sum_{h \in H^{t-1}} \exp\!\bigl(\cos(E(M), E(h)) / \tau\bigr).
+\text{Utility}(M) &= \beta_t S(M,G)-R_{\text{adj}}(M),\\
+R_{\text{adj}}(M) &= R(M;H^{t-1})\,c_{\text{code}}\,c_{\text{fix}}\,c_{\text{reason}}\\
+&\quad{}\cdot\bigl(1+0.05\log(1+w(M))\bigr).
 \end{split}
 \end{equation}
-We anneal the bottleneck intensity by round --- role-aware, complexity-aware, and feedback-aware:
+Here $w(M)$ is whitespace-separated message length; the three $c$ factors are code-change, correction-keyword, and reasoning-keyword discounts. They are heuristics rather than learned reliability estimates. We anneal the relevance weight by round:
 \begin{align}
 \beta_t \;=\; \bigl(\beta_{\text{role}} + \text{complexity\_bonus}(G)\bigr) \cdot e^{-\lambda\, t_{\text{eff}}},
 \label{eq:beta_t}
 \end{align}
-where $t_{\text{eff}}$ = $t$ if the last synthesis round succeeded, and $0$ otherwise (fix-mode; gate reopened for corrective chains).
+where $t_{\text{eff}}$ resets on explicit execution-failure feedback. The current harness synthesizes after team discussion, so this feedback-reset feature is not evidence of a multi-cycle repair effect in the reported runs.
 
 All VIB runs in \S3 share one setting (no per-dataset tuning): $\beta_0 = 3.2$,
-$\lambda = 0.08$, $\tau = 0.5$ (InfoNCE temp) and $\gamma = -0.4$, the base of the
+$\lambda = 0.08$, $\tau = 0.5$ (similarity temperature) and $\gamma = -0.4$, the base of the
 Ada-VIB admission threshold $\tau_{\text{adaptive}}=\max(\tau_{\min},\,\gamma-\alpha\bar{H}(Y))$;
 embedding dim = 384 (all-MiniLM-L6-v2), model frozen, no gradients through router.
 These override the router's own constructor defaults
-($\beta_0=2.0$, $\lambda=0.15$, $\tau=0.2$, $\gamma=0.0$). We confirm in \Cref{app:sensitivity}
-that the headline conclusions do not hinge on this particular triple.
+($\beta_0=2.0$, $\lambda=0.15$, $\tau=0.2$, $\gamma=0.0$). \Cref{app:sensitivity}
+reports the observed one-factor sensitivity on a separate subset, not a guarantee of robustness.
 
-\emph{Latency.} Measured offline over 100 synthetic code/math messages after a one-time warm-up of the shared encoder: at $|H| \in \{1, 4, 8, 16, 32\}$ the router runs at p50 32--89 ms / p95 47--175 ms per candidate, i.e. \textbf{strictly millisecond-level}, sub-dominant to the underlying 671B LLM per-turn cost.
+\emph{Latency.} An offline synthetic-message benchmark reports p50 $32$--$89$ ms and p95 $47$--$175$ ms per candidate at $|H|\in\{1,4,8,16,32\}$. It is not an end-to-end API-latency or P99 evaluation.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/router_latency.pdf}
 \caption{VIB router latency per candidate vs shared history $|H|$.
 Blue (left): p50 ms, solid; orange bars: p95 ms.
-Green dashed (right): p95/p50 tail-fat ratio, which peaks $4.40\times$ at $|H|=16$ and drops to $1.45\times$ at $|H|=32$ (InfoNCE vectorisation).
+Green dashed (right): measured p95/p50 ratio, peaking at $4.40\times$ for $|H|=16$ and $1.45\times$ for $|H|=32$; no causal explanation of that variation is established.
 Measured on Apple M2 Pro after 100 warm-up calls.
 \label{fig:routerlatency}}
 \end{figure}
 
-\subsection{Tail-case mechanism: why VIB wins on MBPP Multi-Round}
-On the 21 MBPP problems that \emph{cannot} be solved by one-shot synthesis (Multi-Round group, \Cref{sec:experiments}), VIB-Sparse's history filter addresses a concrete failure mode:
-
-\textbf{Failure mode F1 --- ``test-case hallucination''.} The Tester agent, pressed to produce \emph{some} failing example against the Coder's v1 draft, generates a doctest assertion that is actually \emph{inconsistent} with the problem spec (e.g. asserting $\text{newman\_prime}(3){=}11$ when the problem says it is 7). Full communication broadcasts this false test; the Coder then overfits to it, failing the hidden grader. VIB gates it out because the false doctest has \emph{high cosine similarity with the Coder's already-rejected draft} (high redundancy) but \emph{no new alignment with $G$}.
-
-\Cref{sec:cases} verifies this mechanism end-to-end on exactly MBPP/260 and MBPP/285.
+\subsection{What a gate trace can establish}
+A gate log records admission decisions, not the synthesizer's attention or a causal contribution to correctness. Scores are stored in workflow statistics; the synthesizer receives approved message text, not those scores. A case where all messages are admitted therefore cannot demonstrate that filtering removed an incorrect counterexample. We apply this constraint to the MBPP examples in \Cref{sec:cases}.
 
 %% ================================================================
 %% 3. Experiments
 %% ================================================================
 \section{Experiments}\label{sec:experiments}
 
-All experiments use \textbf{DeepSeek-Chat-V3}~\cite{deepseek2024deepseekv3} as the base LLM for Coder / Tester / Reviewer / Synthesizer---exactly one model family, to eliminate LLM confounds. Vanilla / Full / VIB share one sampling protocol: the final synthesis call---shared verbatim by all three variants---uses temperature $= 0.1$ with $\text{max\_tokens} = 1024$ for code and $256$ for math answers, and inter-agent turns (present only in Full and VIB) are generated at temperature $= 0.2$ with $\text{max\_tokens} = 256$; the single-agent Vanilla baseline has no inter-agent turns and therefore executes the identical synthesis call. All variants further share 3-round doctest self-repair and the identical UnifiedEvaluator~\cite{chen2021evaluating,austin2021program}. Bootstrap CIs use 10 000 paired resamples with seed $= 20260812$ via the same \texttt{analyze\_multi\_benchmark.py} pipeline we publish.
+The headline results use the public \texttt{deepseek-chat} alias, historically associated with DeepSeek models~\cite{deepseek2024deepseekv3}; its immutable served snapshot is not recoverable from these artifacts. Cross-family and naive-control runs use separate gateway model IDs, disclosed in their tables. Synthesis uses temperature $0.1$, with maximum output $1024$ tokens for code and $256$ for math; team turns use temperature $0.2$ and maximum output $256$ tokens. Code synthesis allows up to three visible-doctest attempts. Vanilla uses the same task-specific synthesis function without team history, but has less inference budget than the team. Bootstrap intervals use $10\,000$ paired task resamples with seed $20260812$.
 
-\paragraph{Dataset coverage.} We evaluate on \emph{four} complementary benchmarks spanning two task modalities and five empirically distinct task-distribution regimes: (1)~\textbf{HumanEval} ($n=164$) for signature-driven algorithmic code generation, (2)~\textbf{MBPP-Sanitized} ($n=257$) for NL-to-code synthesis with natural-language task descriptions~\cite{chen2021evaluating,austin2021program}, (3)~\textbf{GSM8K} ($n=1319$) for multi-step math word problems~\cite{hendrycks2021gsm8k}, and (4)~\textbf{MATH} ($n=5000$) for harder competition-style math problems requiring theorem recall, symbolic manipulation, and case splits~\cite{hendrycks2021math}. Both mathematical benchmarks use the same frozen-history Planner--Solver--Verifier 3-agent pipeline. Within MBPP we further decompose the benchmark into an \emph{Early-Stopped} regime ($n=236$, $91.83\%$) where both Full and VIB pipelines converge after the one-shot probe synthesis, and a \emph{Multi-Round} regime ($n=21$, $8.17\%$) where correctness is recovered only after $2$--$3$ additional team turns. Together, these four benchmarks times the MBPP two-regime split give \textbf{five task-distribution axes} against which the VIB gating layer is evaluated. The next subsections then add a sixth axis (ablation on role-aware weights, $N=200$ GSM8K) to close the loop on the method's only free parameters.
+\paragraph{Dataset coverage and early stopping.} The result artifacts contain HumanEval ($164$), MBPP-Sanitized ($257$), GSM8K ($1319$), and MATH ($5000$). Mathematical tasks use Planner--Solver--Verifier teams. MBPP is descriptively split into Early-Stopped ($236$) and Multi-Round ($21$) tasks using the recorded OR rule: either arm marked early-stopped selects the first group. This is an outcome-dependent partition, not a preassigned difficulty stratum. In the current harness a probe is a \emph{one-round team workflow plus synthesis}, not one-shot single-agent synthesis. Its stop decision invokes the benchmark evaluator, including reference tests. Such reference-assisted stopping is an oracle benchmark procedure, not a deployable policy; the historical MBPP results require this qualification.
+
+\paragraph{Statistical scope.} Intervals quantify paired task-outcome uncertainty for the recorded executions. They do not measure all provider or sampling variation. No accuracy-loss margin was prespecified, so a confidence interval spanning zero is not a formal non-inferiority or equivalence result. HumanEval's $[0,0]$ paired bootstrap interval arises because all recorded pairs passed and does not imply zero population uncertainty. Answer matching is string-based, and the numerical extractor handles comma-separated multi-value answers ($9.7\%$ of MATH references) unreliably, so part of an observed paired difference can reflect output formatting rather than team communication.
 
 \subsection{Main results --- three methods $\times$ four benchmarks}
 
@@ -181,44 +172,40 @@ All experiments use \textbf{DeepSeek-Chat-V3}~\cite{deepseek2024deepseekv3} as t
 
 \paragraph{Reading \Cref{tab:main_results} top-to-bottom.}
 \begin{itemize}
-\item \textbf{Vanilla $\rightarrow$ Full.} Multi-agent collaboration alone lifts GSM8K Pass@1 from 59.29 $\rightarrow$ 95.30\% ($+36.01$ pp), HumanEval from 93.90 $\rightarrow$ 100\% ($+6.10$ pp), and MATH from 49.10 $\rightarrow$ 80.08\% ($+30.98$ pp). This establishes that the Vanilla baseline is legitimate and that dense multi-agent adds real signal---we are \emph{not} compressing noise.
-\item \textbf{Full $\rightarrow$ VIB.} VIB matches Full on both heavy benchmarks (HumanEval 100\% tie; GSM8K $-0.08$ pp, 95\% CI $[-0.83, +0.68]$ pp) while cutting inter-agent messages by \textbf{21.14\% (HumanEval)}, \textbf{30.49\% (GSM8K)}, and \textbf{25.59\% (MATH)}, with token savings of 3.88\% / 4.96\% / 4.42\% respectively.
-\item \textbf{MBPP ``saturation regime''.} MBPP caps turns at $T=2$ per agent $\rightarrow$ Full side already spends near 6 messages per task ($\approx$saturated). VIB still gains \textbf{$+0.78$ pp overall} (McNemar $p=0.6875$ ns, but net VIB-only 4 vs Full-only 2). The \emph{gain} concentrates in the Multi-Round subgroup below.
-\item \textbf{MATH marginal envelope.} With a 25.59\% message cut ($+4.42\%$ tokens), VIB trails Full by $-0.92$ pp overall (95\% CI $[-1.78, -0.04]$ pp, $\dagger$$^\S$). Sampling McNemar $p=0.041$ is marginally significant but greedy (temperature=0) reruns push the envelope back to $p=0.132$---consistent with the \S marker semantics and confirming VIB's compression is not a sampling artifact (see \Cref{tab:main_results} footer).
+\item \textbf{Vanilla $\rightarrow$ Full.} Recorded gains are $+36.01$ pp on GSM8K, $+6.10$ pp on HumanEval, and $+30.98$ pp on MATH. These compare systems with different inference budgets; without a budget-matched single-agent control they do not isolate the benefit of multi-agent organization.
+\item \textbf{Full $\rightarrow$ VIB.} HumanEval has a $100\%$ observed tie; GSM8K has $\Delta=-0.08$ pp (95\% CI $[-0.83,+0.68]$). Message reductions are $21.14\%$, $30.49\%$, and $25.59\%$ on HumanEval, GSM8K, and MATH, with total-token savings of $3.88\%$, $4.96\%$, and $4.42\%$ respectively.
+\item \textbf{MBPP exception.} The observed $+0.78$ pp difference is not statistically significant (McNemar $p=0.6875$). Messages increase by $0.12\%$ and total tokens by $0.05\%$. This benchmark does not support an aggregate compression claim.
+\item \textbf{MATH regression.} Message reduction is $25.59\%$, but accuracy falls by $0.92$ pp (95\% CI $[-1.78,-0.04]$; McNemar $p=0.041$). A greedy rerun also has a negative point estimate ($-0.72$ pp, $p=0.132$). The different significance decisions do not erase the regression in the sampling run. An audit of the $265$ Full-only outcomes finds $11$ ($4.2\%$) where the sparse arm's output is equivalent to the reference under format normalization and $71$ ($26.8\%$) with no reduction in broadcasts, leaving $183$ outcomes for which gating could contribute.
 \end{itemize}
 
 \subsubsection{MBPP Early-Stopped vs Multi-Round split}
 
 \input{tables/table2_mbpp_es_mr_split}
 
-\Cref{tab:mbpp_split} isolates MBPP's two regimes (\texttt{split\_mode} = OR: ``probe synthesis passes $\rightarrow$ Early-Stopped group''). Strikingly, \textbf{all VIB's $+0.78$ pp margin on MBPP comes from the 8.2\% hardest tail}: Multi-Round 21 tasks jump from Full 9.52\% $\rightarrow$ VIB 19.05\% ($\Delta +9.53$ pp). In the Early-Stopped 91.8\% subset---where the probe synthesis already passes and no inter-agent discussion is needed---VIB and Full trivially tie at 97.88\%; the compressor has nothing to do.
+\Cref{tab:mbpp_split} describes the recorded OR partition. The $21$ Multi-Round tasks have Full $9.52\%$ versus VIB $19.05\%$ accuracy, an observed net difference of two solves. The other $236$ tasks tie at $97.88\%$. Because subgroup membership depends on the arms' outcomes and the small tail was inspected after execution, this is exploratory evidence, not a confirmatory effect on a preidentified hard population.
 
 \subsubsection{Pareto overview}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/figure3_pareto_bubble.pdf}
-\caption{Pareto front: message compression vs $\Delta$ Pass@1 (VIB $-$ Full) across four benchmarks; bubble size $\propto\sqrt{N}$; whiskers = 95\% paired-bootstrap CI.
+\caption{Observed trade-offs: message compression vs $\Delta$ Pass@1 (VIB $-$ Full) across four benchmarks; bubble size $\propto\sqrt{N}$; whiskers = 95\% paired-bootstrap CI. Points from different datasets do not define a common within-task Pareto frontier.
 \label{fig:pareto}}
 \end{figure}
 
 \Cref{fig:pareto} summarises the cross-benchmark trade-off visually.
 \begin{itemize}
 \item GSM8K sits at the efficient frontier: $+30.49\%$ fewer messages for a negligible $-0.08$ pp accuracy drop.
-\item HumanEval reaches the maximum Pass@1 (100.00\%) with 21\% fewer messages---demonstrating that VIB can \emph{free up budget} for even higher-quality synthesis without accuracy loss.
-\item MATH sits slightly inside the efficient frontier: it delivers $+25.59\%$ fewer messages (largest absolute count, $7676$ messages saved out of $30000$) for a marginal $-0.92$ pp within the 95\% CI; it is the first benchmark where the CI touches zero on the negative side, which is why we mark it $\dagger$$^\S$ rather than $\ddagger$.
-\item MBPP's bubble sits at $(-0.12\%, +0.78\text{ pp})$---the only point where VIB slightly \emph{increases} messages, because it passed 2 additional Multi-Round tasks that triggered more (useful) synthesis rounds. We view this as a \textbf{desirable non-monotonicity}: VIB prunes noise but \emph{pays tokens} when doing so unlocks correct answers. \Cref{sec:cases} examines exactly those two tasks.
+\item HumanEval has $164/164$ observed passes in both arms with $21.14\%$ fewer broadcasts. We do not test reinvestment of the saved budget.
+\item MATH saves $7676$ of $30000$ broadcasts while its accuracy difference interval remains entirely below zero. This is an accuracy--budget trade-off, not a demonstrated accuracy-preserving Pareto improvement.
+\item MBPP has almost unchanged communication and token cost. Selected differing outcomes do not by themselves explain that aggregate difference.
 \end{itemize}
 
-\subsection{Case studies --- the 2 MBPP Multi-Round solves VIB unlocked}\label{sec:cases}
+\subsection{Selected MBPP outcomes and attribution limits}\label{sec:cases}
 
-We manually inspected the two Multi-Round MBPP tasks where VIB passes but Full fails --- \textbf{MBPP/260} (\emph{newman\_prime}, Newman--Shanks--Williams prime recurrence) and \textbf{MBPP/285} (\emph{text\_match\_two\_three}, regex $ab{\{2,3\}}$).
+The archived results contain two selected Multi-Round tasks where VIB passes and Full fails: \textbf{MBPP/260} (\emph{newman\_prime}) and \textbf{MBPP/285} (\emph{text\_match\_two\_three}). In both tasks, however, each arm broadcasts $6/6$ candidates. The historical artifact has no per-candidate \texttt{gate\_decisions} records for either task, although the current workflow supports that serializer.
 
-\paragraph{Case MBPP/260.} The Full pipeline's Tester proposes, in round 2, an incorrect doctest asserting $\text{newman\_prime}(3) = 11$. Because it is a doctest-style code block, the Coder treats it as ground truth and edits the recurrence to $3f(n-1)+f(n-2)$, which fails the real grader. In VIB's trace, that false doctest candidate (Architect r2) receives \emph{high redundancy} (InfoNCE $\hat I(M;H) = 1.507$ vs sufficiency $\cos = 0.372$ at $\beta_t = 3.204$, threshold $\gamma = -0.559$), yielding Utility $= -0.314$, so the gate lets it pass the threshold but the \emph{redundancy-over-sufficiency ratio} of $4.05\times$ pushes the synthesizer to downweight it; the synthesizer then converges to the true recurrence $f(n) = 2f(n-1) + f(n-2)$, passing all tests. (Per-turn gate trace emitted by the \texttt{gate\_decisions} serializer in \texttt{src/workflow.py}.)
-
-\paragraph{Case MBPP/285.} The Full team's Reviewer writes a false counter-example claiming \texttt{abbbba} should fail because it contains \emph{four} \texttt{b}'s (misreading the problem which accepts 2 \textbf{or 3}, i.e. \emph{match any run}). Full's Coder overcorrects to \texttt{ab\{2,3\}\$} (tail-only match), dropping the leading \texttt{abbb} run and failing the reference assertion. In VIB's trace, the misleading Reviewer proposal (r1, $\beta_{\text{role}}=3.896$) scores Utility $= +0.874$, with sufficiency $= 0.614$ (Tester already restated the spec, so Reviewer's output adds cos-redundancy $= 1.519$), and is \textbf{rescued by the mandatory role-list}, but its \emph{high-redundancy signal} is visible in the trace and is used by the downstream synthesiser to skip that turn's arguments, writing the correct \texttt{re.search(r'ab\{2,3\}', text)}.
-
-Both cases instantiate Failure mode F1 (\S2.3): VIB does not invent new knowledge---it \emph{blocks pollution}, letting the synthesizer recover the Vanilla / reference solution. This is the paper's titular \textbf{``Less is More''} mechanism \emph{in vivo}.
+Consequently, these examples illustrate different stochastic outcomes without observed message removal. They do not show that VIB suppressed a false test, nor that a logged score altered the synthesizer's attention. A causal attribution experiment would hold candidate text and synthesis protocol fixed, intervene on message admission, repeat synthesis, and assess the resulting answer distribution. That experiment has not been run here.
 
 \subsection{Ablation --- GSM8K frozen-history $\times$ role-aware weights}
 
@@ -234,36 +221,37 @@ Blue bars (left axis): $\Delta$ Pass@1 (VIB $-$ Full) with 95\% paired-bootstrap
 
 \Cref{tab:gsm8k_ablation} and \Cref{fig:ablation} summarise two GSM8K runs ($N=200$ sub-sample), toggling the \textbf{role-aware weight} term of the VIB gate (whether we add a role prior $\alpha_r$ to Utility for Reviewer/Tester messages).
 \begin{itemize}
-\item \textbf{Frozen-history only (no role weights):} VIB compresses \textbf{$+30.25\%$ messages} ($\Delta$pp $= -0.50$, 95\% CI $[-1.50, 0.00]$) --- already within a non-inferiority corridor.
+\item \textbf{Frozen-history only (no role weights):} Message reduction is $30.25\%$, with observed $\Delta=-0.50$ pp and 95\% CI $[-1.50,0.00]$; no prespecified non-inferiority claim is made.
 \item \textbf{$+$ Role-weights:} Role prior shifts weight onto Tester proposals; message compression drops to $+25.17\%$ but the accuracy gap closes to exactly 0.00 pp.
 \end{itemize}
 
-The trade-off is consistent with VIB's geometry: adding role priors relaxes the InfoNCE penalty \emph{selectively} on useful group members, improving retention at the cost of some compression. For the GSM8K leaderboard submission we therefore use the \textbf{frozen-history only} configuration (more compression, negligible $\Delta$pp loss).
+The role-prior setting retains more messages, but these separate runs do not establish a selective accuracy benefit. The headline runs use frozen-history settings; no leaderboard submission or tuning on a held-out calibration split is claimed.
 
 %% ================================================================
 %% 4. Discussion
 %% ================================================================
 \section{Discussion}
-\paragraph{Strengths.} VIB-Sparse is model-agnostic, adds no extra LLM calls, and is parameterized by only three interpretable scalars $\{\beta_0, \lambda, \gamma\}$. Its Pareto gains are robust across two algorithmic code benchmarks and two mathematical reasoning benchmarks.
+\paragraph{Stage-one finding.} Lightweight post-generation gating can reduce broadcasts substantially in three tested regimes, but total-token reductions are smaller, and accuracy preservation is not universal. The matched-budget subset provides no statistically resolved VIB advantage over simpler rules. This motivates a simpler default baseline rather than a universal recommendation for any one gate.
 
 \paragraph{Limitations and future work.}
-(1) \emph{Scaling to $>3$ agents.} VIB's cosine-based $\hat I$ is $O(|H^{t-1}|)$ per candidate; for 8--16 agent teams we should switch to FAISS-backed near-neighbour lookup to keep it sublinear.
-(2) \emph{Differentiable schedule.} We hand-tune $\beta_0, \lambda$; a future version could differentiate through a straight-through gate on a small held-out calibration set.
-(3) \emph{Failure mode audit surface.} 17/21 MBPP Multi-Round tasks still fail for both Full and VIB---these are not \emph{communication} bottlenecks but synthesis-capability ones. A paradigmatic example is \textbf{MBPP/437} (\texttt{remove\_odd(s)}: drop chars at \emph{odd} 1-indexed positions, i.e. 0-indexed even-offset \texttt{s[1::2]}): the Vanilla single agent outputs exactly \texttt{return s[1::2]} and passes, but both Full and VIB's synthesiser output the off-by-one mirror \texttt{return s[::2]}, independent of inter-agent traffic. Replacing the base synthesiser with a larger DeepSeek-V3-671B / GPT-4o-scale model may reveal a different Pareto surface on which VIB continues to compress.
-(4) \emph{Security.} VIB operates on shared embeddings; it cannot filter adversarial spec-unfaithful messages that are cosine-close to the goal but semantically wrong---this is an orthogonal problem and needs guardrails on the agents, not the router.
-(5) \emph{Attribution of the gain.} The naive-gating controls (\Cref{app:gating_controls}) show that on the $200$-problem GSM8K subset a redundancy-only top-$k$ gate matches VIB at the same message budget, so we do \emph{not} attribute the GSM8K accuracy to the VIB objective itself: there the win is bought by removing redundant traffic, and the gaps between gating policies sit inside the run-to-run noise band. The utility signal's separable value is argued, not measured, on the MBPP Multi-Round tail (\Cref{sec:cases}), where a redundancy-only rule would retain the wrong test-case counterexamples that the gate suppresses. A top-$k$ control on the MBPP tail is the natural next experiment and is left to future work.
+(1) \emph{External validity.} Teams have three agents and short discussions. A subset result cannot establish that a simple gate suffices on harder, longer, or different-model tasks.
+(2) \emph{Method attribution.} The router combines embedding surrogates with several code, role, and keyword heuristics. Neither their separate contribution nor a variational-information interpretation is established by these results.
+(3) \emph{Tail selection.} The MBPP partition is outcome-dependent, uses reference-assisted stopping, and contains only $21$ Multi-Round tasks. The selected $6/6$-message successes are not causal evidence of filtering.
+(4) \emph{Inference budget.} Vanilla is not a cost-matched single-agent competitor. Generation is paid before message admission; reported counts exclude local encoder energy and may omit discarded early-stop probes.
+(5) \emph{Statistical claims.} No equivalence margin was prespecified. Sampling significance, same-day Full-arm spread, and task-bootstrap intervals are different quantities; none warrants a claim that every accuracy gap is harmless noise.
+(6) \emph{Next-stage questions.} Priorities are controlled message interventions on semantically similar but causally important corrections, matched-token multi-agent versus single-agent comparisons, and pre-generation scheduling. Each requires held-out tasks, explicit cost limits, and stronger simple baselines before a claim of method superiority.
 
 %% ================================================================
 %% 5. Related Work
 %% ================================================================
 \section{Related Work}
-\paragraph{Multi-agent code generation.} ChatDev~\cite{qian2023chatdev}, MetaGPT~\cite{hong2023metagpt}, SWE-agent~\cite{yang2024sweagent}, and OpenDevin~\cite{wang2024opendevin} propose increasingly sophisticated multi-agent software engineering loops. Closest to our topology is the AgentCoder~\cite{du2023agentcoder} triple-role pattern, which we adopt verbatim as our \emph{Full} baseline---the key novelty of VIB-Sparse is the orthogonal \textbf{inter-agent gating} layer inserted before history merge.
+\paragraph{Agent-based code generation.} ChatDev~\cite{qian2023chatdev}, MetaGPT~\cite{hong2023metagpt}, SWE-agent~\cite{yang2024sweagent}, and OpenDevin~\cite{wang2024opendevin} study agent-based software workflows. AgentCoder~\cite{du2023agentcoder} uses programmer, test designer, and test executor roles; our generator-and-synthesizer harness is related but not a verbatim reproduction.
 
-\paragraph{Sparse / structured communication.} DyLAN~\cite{liu2023dylan} learns \emph{when} agents should communicate via policy gradients; \citet{jiang2023llmlingua} and \citet{zhang2024agentprune} propose token-level prompt compression and message-graph pruning as parallel work on message-aware token reduction. VIB differentiates itself by (a) \emph{zero} additional LLM calls, (b) a closed-form information-theoretic objective grounded in VIB~\cite{alemi2017variational}, (c) a hand-interpretable role-adaptive $\beta_t$ schedule.
+\paragraph{Sparse / structured communication.} DyLAN~\cite{liu2023dylan}, LLMLingua~\cite{jiang2023llmlingua}, and AgentPrune~\cite{zhang2024agentprune} address agent selection, prompt compression, or communication pruning. AgentDropout~\cite{wang2025agentdropout} removes redundant agents and communication across rounds. These works preclude treating sparse communication itself as novel. Our narrower focus is an audited comparison of lightweight admission policies and their realized accuracy--token trade-offs; we have not reproduced their headline results under our harness.
 
-\paragraph{Information bottleneck in deep learning.} IB theory~\cite{tishby2015deep} formalizes the sufficient-statistics trade-off between compression and task-relevant information; the deep variational bound (VIB) was introduced by~\cite{alemi2017variational} for VAEs. InfoBERT~\cite{wang2021infobert} applies IB-style regularizers to robust LM fine-tuning. To our knowledge we are the first to apply \emph{VIB-style filtering directly to LLM inter-agent shared history}.
+\paragraph{Information bottleneck in deep learning.} IB theory~\cite{tishby2015deep} motivates compression subject to task relevance, and deep VIB~\cite{alemi2017variational} supplies a variational training formulation. InfoBERT~\cite{wang2021infobert} studies information-theoretic regularization for language models. Our deterministic cosine heuristics are inspired by that trade-off but do not implement or prove such a variational bound. A claim of priority over all message-gating methods would require a broader current-literature review.
 
-\paragraph{Long-context compression.} StreamingLLM~\cite{xiao2023streamingllm}, RECENT~\cite{bi2024recent}, and MemWalker~\cite{liu2024memwalker} target a \emph{single agent's context window}; VIB compresses the \emph{collision surface} between $N$ agents, which is the complementary design point we target.
+\paragraph{Long-context and evaluation.} StreamingLLM~\cite{xiao2023streamingllm} studies long-stream inference, while MemWalker~\cite{liu2024memwalker} navigates a summary tree for interactive reading. These differ from our short-team admission setting. \citet{zhang2025stopovervaluing} find that multi-agent debate can underperform strong single-agent baselines despite greater inference computation, reinforcing the need for budget-matched controls before attributing a gain to collaboration.
 
 %% Acknowledgements. Placeholder (double-blind; add at camera-ready).
 
@@ -271,71 +259,48 @@ The trade-off is consistent with VIB's geometry: adding role priors relaxes the 
 %% Appendix A. Qualitative VIB gate trace
 %% ================================================================
 \appendix
-\section{Qualitative VIB gate trace --- MBPP/260 and MBPP/285}\label{app:gate_trace}
+\section{Audit of selected MBPP cases}\label{app:gate_trace}
 
-To reproduce the Failure mode F1 mechanism (\S2.3) we re-ran the two VIB-only MBPP Multi-Round solves with the router's \texttt{gate\_decisions} trace serializer enabled (implemented in \texttt{src/workflow.py}; the two task IDs are MBPP/260 and MBPP/285).
+The source is the MBPP task trace in the merged main-result JSON, joined by \texttt{task\_id}. For MBPP/260 and MBPP/285, Full fails, VIB passes, and both histories contain six approved messages. Neither archived case has per-candidate gate-score records. We therefore remove numerical utility claims that cannot be traced to the published artifact and do not reconstruct them using a later router version.
 
-\paragraph{MBPP/260 (\texttt{newman\_prime}).} Full broadcasts a doctest hallucination but VIB suppresses the resulting red-herring patch by marking the redundant Architect turn as 4.05$\times$ redundancy-over-sufficiency.
-
-\begin{table}[h]
-\centering
-\parbox{\columnwidth}{\footnotesize\RaggedRight\textbf{MBPP/260 gate trace:} per-turn Utility, Sufficiency, Redundancy. VIB marks the redundant Architect turn at $4.05\times$ redundancy-over-sufficiency and skips it.}
-\vspace{-0.2em}
-\scriptsize
-\setlength{\tabcolsep}{2.4pt}
-% The scaled tabular lands ~1.9pt past \columnwidth (booktabs rules plus the ragged
-% Snip cells), so pull the target in a hair to keep the float inside the text column.
-\resizebox{\dimexpr\columnwidth-3pt\relax}{!}{%
-\begin{tabular}{@{} c l rrr r c l @{}}
-\toprule
-Rnd & Role & Util & Suff & Red & $\beta_t$ & OK & Snip \\
-\midrule
-2 & Arch & $-0.314$ & $+0.372$ & $+1.507$ & $+3.204$ & \checkmark &
-\parbox{3.6cm}{\RaggedRight\emph{``Confirm recurrence S(n)=2S(n-1)+S(n-2); n=1$\to$2, n=2$\to$3''} (repeats 3 prior messages; synthesizer skips the redundant turn).} \\
-2 & Coder & $+1.138$ & $+0.652$ & $+1.507$ & $+4.056$ & \checkmark &
-\parbox{3.6cm}{\RaggedRight S(2)=3, S(3)=7, S(4)=17, S(5)=41 --- correct NSW primes, so synthesizer trusts this turn.} \\
-2 & Rev & $+0.657$ & $+0.586$ & $+1.420$ & $+3.545$ & \checkmark &
-\parbox{3.6cm}{\RaggedRight S(0)=S(1)=1 are \textbf{not} prime; 1st prime is S(2).} \\
-\bottomrule
-\end{tabular}}
-\end{table}
-
-\paragraph{MBPP/285 (\texttt{text\_match\_two\_three}).} Full's Reviewer incorrectly asserts \texttt{abbbba} must be \emph{rejected} (misreading ``2 \textbf{or 3} b's'' as ``exactly 2--3 b's total, i.e. bounded substring''), leading the Coder to over-anchor a negative lookahead \texttt{ab\{2,3\}(?!b)} that drops the first 3-b run. VIB marks the misleading Reviewer turn as Utility $=+0.874$ (suff.\ $=+0.614$, redund.\ $=+1.519$, rescued-from-block by Reviewer's role-prior), but its 2.47$\times$ redundancy-over-sufficiency ratio is visible in the trace and the synthesizer skips its argument, writing \texttt{re.search(r'ab\{2,3\}', text)} which is the correct Vanilla reference solution and passes the MBPP grader. Both Full and VIB broadcast 6/6 messages in these two \emph{tight} MR tasks (turn count capped at $T=2$), so the ``less-is-more'' effect is not a raw message-count difference --- it is a \textbf{redistribution of synthesizer attention away from high-redundancy turns} whose Utility passes the $\gamma$ threshold only because of role-priors.
+The current serializer records role, utility, relevance, adjusted redundancy, threshold, admission, rescue, and message snippet. It does not forward these scores to synthesis. Future mechanism experiments must preserve complete candidates, distinguish raw gate decisions from workflow rescues, and pair candidate-level interventions with repeated synthesis; a later rerun is a new experiment, not missing historical evidence.
 
 %% ================================================================
 %% Appendix B. Hyperparameter sensitivity
 %% ================================================================
 \section{Hyperparameter sensitivity}\label{app:sensitivity}
 
-The gate exposes three interpretable scalars: $\beta_0$ (redundancy--sufficiency trade-off), $\lambda$ (temporal decay) and $\gamma$ (admission threshold). To show that the \S3 headline result does not hinge on the specific triple we chose, we sweep each scalar one-factor-at-a-time on GSM8K ($N=200$), holding the other two at their defaults and reusing the identical backbone family, prompts and protocol of the main results. The grid is $\beta_0\in\{1.6,2.4,3.2,4.0,4.8\}$, $\lambda\in\{0.04,0.06,0.08,0.10,0.12\}$ and $\gamma\in\{-0.8,-0.6,-0.4,-0.2,0.0\}$. The default triple therefore recurs once on every axis, so its three repeats are the \emph{same} configuration and directly bound the run-to-run noise at this $N$.
+The router has three primary swept scalars in addition to its heuristic settings: $\beta_0$, $\lambda$, and $\gamma$. We vary one at a time on GSM8K ($N=200$), holding the other two fixed. The grid is $\beta_0\in\{1.6,2.4,3.2,4.0,4.8\}$, $\lambda\in\{0.04,0.06,0.08,0.10,0.12\}$, and $\gamma\in\{-0.8,-0.6,-0.4,-0.2,0.0\}$. The default triple recurs on each axis. Its three executions provide an observed range, not a reliable bound on all future sampling variation.
 
 \input{tables/table4_sensitivity}
 
-\paragraph{Absolute level vs.\ sensitivity.} Because the public \texttt{deepseek-chat} endpoint is a rolling alias, the \emph{absolute} message-reduction level tracks whichever snapshot is served at run time. The default triple here attains $23.2\%$ on GSM8K ($N=200$), whereas the same configuration in \Cref{tab:gsm8k_ablation}---recorded two months earlier on the identical harness, prompts and gate settings---attains $30.25\%$; the $\approx 7$~pp gap is roughly $8\times$ the $0.91$~pp run-to-run band spanned by the three repeated default points. Accuracy, by contrast, is stable across every grid point and both snapshots ($\Delta$ within $\pm 2$ pp throughout). We therefore read \Cref{tab:sensitivity} as evidence on the \emph{relative} sensitivity and monotonicity of the gate---all fifteen points share a single snapshot and are thus mutually comparable---rather than as a reproduction of the absolute headline compression in \Cref{tab:main_results}.
+\paragraph{Absolute level vs.\ sensitivity.} The repeated default setting in this sweep gives about $23.2\%$ message reduction, versus $30.25\%$ in the older ablation. The rolling alias and experiment batch are potential confounders; no immutable served snapshot was recorded. We interpret the grid descriptively within its batch, not as a proof that all points share a verified snapshot or a reproduction of the headline compression level.
 
 %% ================================================================
 %% Appendix C. Cross-family transfer
 %% ================================================================
 \section{Cross-family transfer}\label{app:crossmodel}
 
-To rule out that VIB's gains are an artefact of one backbone, we re-ran the GSM8K $N=200$ protocol on \textbf{Qwen-3.8-Max}, a decoder-only model from a different family, holding the harness, prompts, sampling protocol and gate hyperparameters ($\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$) \emph{identical} to the DeepSeek v4-pro reference row --- the backbone is the only variable. \Cref{tab:crossmodel} is thus a separate two-model gateway comparison; its DeepSeek row is not the \texttt{deepseek-chat} backbone used by \S3 and \Cref{app:sensitivity}.
+For an initial transfer check, we ran the GSM8K $N=200$ protocol under the \textbf{Qwen-3.8-Max} gateway ID, with the same configured harness and router hyperparameters ($\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$) as the DeepSeek v4-pro reference. \Cref{tab:crossmodel} is a separate two-model gateway comparison, not the public-alias headline batch; stochastic executions and served model versions remain possible confounders.
 
 \input{tables/table5_crossmodel}
 
-Both families reproduce the same qualitative pattern: message compression stays above $25\%$ and accuracy is non-inferior under the gate (DeepSeek $\Delta = +0.5$ pp, Qwen $\Delta = +1.5$ pp). The one quantitative divergence is the size of the \emph{completion-length rebound}: it is roughly $8\times$ larger for Qwen ($+3.64\%$ vs.\ $+0.45\%$), consistent with Qwen writing more verbose chains of thought once the shared context is compressed. This does not overturn the end-to-end token claim --- net saving stays positive for both families --- but it shows that the \emph{size} of the token budget saving is set by how strongly the backbone lengthens its own reasoning when the context shrinks, which we flag as future work.
+Both gateway runs have message reduction above $25\%$ and positive accuracy point differences (DeepSeek $+0.5$ pp; Qwen $+1.5$ pp). This is a limited transfer observation, not proof of non-inferiority or model-independent superiority. Completion-token growth differs ($+3.64\%$ versus $+0.45\%$), illustrating why shorter input history need not translate proportionally into total-token savings. These gateway IDs are not verified immutable provider snapshots.
 
 %% ================================================================
 %% Appendix D. Naive gating controls
 %% ================================================================
 \section{Naive gating controls}\label{app:gating_controls}
 
-Every comparison in \S3 measures the gate against \emph{Full} communication, i.e.\ against not gating at all. That isolates the effect of gating, but not the effect of \emph{this} gate: a reader may reasonably ask whether any policy that drops the same number of messages would do as well. We therefore run two zero-cost alternatives through the identical harness, backbone snapshot, prompts and sampling protocol, pinning each to the compression ratio the VIB arm itself realises on the same day, so that all arms broadcast the same number of messages.
+Full-versus-VIB comparisons do not establish that VIB-specific selection is necessary. We therefore evaluate random drop and a cosine-threshold redundancy gate on the same $200$ GSM8K tasks, harness, and gateway model ID. Random admission probability is calibrated to the VIB anchor; the measured nearest-budget cosine threshold is $0.75$. Other thresholds describe different budgets. These controls require API inference, but no additional LLM judge.
 
-The first is a \textbf{random drop}: a candidate is kept by an independent Bernoulli draw whose probability is calibrated to the VIB arm's own admission rate. It pays the correct message budget and uses \emph{no} semantic signal whatsoever. The second is a \textbf{diversity top-$k$}: a candidate is dropped when its maximum cosine similarity against the already-broadcast history exceeds a threshold, computed with the \emph{same} frozen encoder the gate uses. This arm can therefore see redundancy, but none of the gate's remaining machinery --- no goal term, no reliability estimate, no temporal decay or schedule, no role prior and no guarded exceptions.
+The \textbf{random drop} uses Bernoulli admission with task-salted reproducible seeds. The \textbf{cosine-threshold gate}, named \texttt{topk} in the implementation, rejects a candidate when its maximum cosine to admitted history reaches $\theta$. It is not a fixed-cardinality top-$k$ ranking. It reuses the encoder but omits the goal term, schedule, and VIB-specific corrections. Workflow-level admission guards, where configured, are separate from either scoring rule.
 
 \input{tables/table6_gating_controls}
 
-\paragraph{What the controls show.} At the message budget VIB itself realises ($29.5\%$ versus $30.17\%$ compression), the diversity top-$k$ arm reaches $97.00\%$ Pass@1 --- identical to the VIB anchor ($\Delta = 0.00$~pp, 95\% CI $[-2.50, +2.50]$) --- while the budget-matched random drop lands $1.00$~pp lower ($96.00\%$, CI $[-4.00, +1.50]$). Paying less compression costs accuracy monotonically, from $97.00\%$ at $\theta=0.75$ down to $95.50\%$ at $\theta=0.85$. Two conclusions follow, and we state both plainly. First, \emph{on this benchmark the gain is bought by removing redundant traffic rather than by which messages are selected}: a rule that sees redundancy but none of the gate's utility machinery already matches VIB, and no alternative --- including the signal-free random drop --- is separated from VIB by more than the run-to-run noise documented in \Cref{app:repro}. The defensible claim here is therefore non-inferiority at a reduced budget, not that the VIB objective is the source of the accuracy. Second, the reverse is not implied either: the random drop's interval also straddles zero, so this subset equally cannot show that \emph{no} selective signal matters. The place where the utility signal is asked to do separable work is the MBPP Multi-Round tail (\Cref{tab:mbpp_split}, \Cref{sec:cases}), where the turns the gate suppresses are \emph{wrong} test-case counterexamples rather than merely repeated ones --- a distinction a redundancy-only policy cannot draw, since a wrong counterexample need not resemble the broadcast history.
+\paragraph{What the controls show.} The nearest-budget cosine gate removes $29.50\%$ of messages versus VIB's $30.17\%$, and both score $97.00\%$ (paired difference $0.00$ pp, CI $[-2.50,+2.50]$). Random drop removes $31.50\%$, scores $96.00\%$, and has difference $-1.00$ pp (CI $[-4.00,+1.50]$). Thus a simpler gate achieves the same accuracy point estimate on this subset, and no selector-specific advantage is resolved. This neither proves equivalence nor falsifies a possible advantage elsewhere. Accuracy across cosine thresholds is not monotonic: the $0.90$ row recovers to $96.00\%$ after $95.50\%$ at $0.85$.
+
+\paragraph{Message budget is not token budget.} Random drop saves $13.08\%$ total tokens, compared with $5.08\%$ for VIB and $4.72\%$ for the nearest-budget cosine gate. Matching aggregate message admission therefore does not match inference cost or per-task history content. A next-stage comparison should predefine a token or monetary budget and evaluate accuracy at that budget, rather than treat message count as interchangeable with API cost.
 
 %% ================================================================
 %% Appendix E. Reproducibility statement
@@ -344,15 +309,17 @@ The first is a \textbf{random drop}: a candidate is kept by an independent Berno
 
 \paragraph{Benchmarks and subsets.} The reported runs cover HumanEval ($164$ problems), MBPP-Sanitized ($257$; $236$ Early-Stopped / $21$ Multi-Round), GSM8K ($1319$, the \S3 headline table) and MATH ($5000$). The GSM8K ablation (\Cref{tab:gsm8k_ablation}), the hyperparameter sweep (\Cref{tab:sensitivity}) and the gating controls (\Cref{app:gating_controls}) share one fixed $200$-problem GSM8K subset, so every arm in those tables is evaluated on exactly the same problems and the comparisons are paired.
 
-\paragraph{Single harness, identical prompts.} \texttt{experiments/run\_multi\_benchmark.py} executes each task twice --- once with the gate disabled (\emph{Full}) and once with the sparse arm --- sharing the task sample, the goal string, the agent personas, the sampling protocol and the evaluator, so that the gate is the only difference between the two arms. The single-agent \emph{Vanilla} column is produced by \texttt{experiments/run\_vanilla\_baseline.py}, which issues the \emph{identical} final-synthesis call as the other two arms: the same synthesis model, the same prompt, and the same \texttt{temperature}$=0.1$ / \texttt{max\_tokens} budget, with no inter-agent turns to begin with.
+\paragraph{Shared harness and synthesis functions.} Full and sparse arms use the same task, configured personas, synthesis functions, and evaluator, but have separate model calls and potentially different histories. Vanilla omits team history and uses the same task-specific synthesis function. Neither the realized prompt nor total inference budget is identical across variants.
 
-\paragraph{Determinism of the gate.} The gate is a frozen $384$-dimensional \texttt{all-MiniLM-L6-v2} encoder~\cite{reimers2019sentence} plus closed-form arithmetic. It makes no LLM calls, runs on CPU, and is deterministic given identical inputs; its latency is profiled in \Cref{fig:routerlatency}. Every decision is serialised per turn (role, utility, sufficiency, redundancy, $\beta_t$, threshold, decision) by the trace serialiser in \texttt{src/workflow.py}, which is the source of the qualitative traces in \Cref{app:gate_trace}.
+\paragraph{Determinism and artifacts.} The current embedding gate uses a frozen $384$-dimensional encoder and CPU arithmetic, with no extra LLM call. Given identical inputs its VIB score is deterministic; random drop uses task-salted seeds. The current workflow can serialize gate decisions, but historical main-result cases lack those records. The artifact limitation is explicitly audited in \Cref{app:gate_trace}.
 
 \paragraph{Statistics and tables.} Single-proportion intervals use the Wilson score interval; method differences use $10\,000$ paired bootstrap resamples under a fixed seed. Every LaTeX table is generated from the raw result JSONs by \texttt{scripts/export\_latex\_tables.py} rather than transcribed by hand, so a table cannot silently drift from the data it reports.
 
+\paragraph{Historical synthesis and accounting.} The merged headline artifact records refreshed synthesis over historical histories. It is not a single newly executed end-to-end batch under a verified model snapshot. For MBPP, the current harness returns the selected retry branch's token counters after a failed probe, so discarded probe costs can be absent from recorded totals. Historical counts remain unchanged here; complete billed cost would require request-level accounting rather than silently adjusting these artifacts.
+
 \paragraph{Known sources of run-to-run variance.}
-(i)~The public \texttt{deepseek-chat} endpoint is a \emph{rolling alias}: the vendor re-points it at newer snapshots without notice. This moves the \emph{absolute} message-reduction level while leaving accuracy essentially flat (\Cref{app:sensitivity}), so each sweep is only interpreted internally, and the gating controls re-measure their own VIB anchor on the same day as the naive arms.
-(ii)~The providers expose no sampling seed, so LLM sampling is not bit-reproducible even at fixed temperature. The only seeded components in the pipeline are the bootstrap resampler and the random-drop control. The size of this effect is not negligible on the $200$-problem subset: four same-day runs of the \emph{identical} ungated \emph{Full} configuration scored $94.5$, $95.5$, $96.5$ and $97.0$ Pass@1, a spread of $2.5$~pp. That spread is the same order as the VIB-versus-Full deltas quoted on that subset, so those subset deltas should be read as lying within the run-to-run noise band rather than as evidence that VIB \emph{beats} Full; the defensible claim, and the one we make, is non-inferiority at a reduced message budget. The full-size headline results in \Cref{tab:main_results} are not affected by this caveat, since they rest on $164$--$5000$ problems with paired bootstrap intervals.
+(i)~The public \texttt{deepseek-chat} endpoint is a rolling alias, so cross-batch differences cannot be cleanly assigned to the gate alone. Gating controls use one named gateway model ID and a same-day anchor, but this does not independently verify the served provider snapshot.
+(ii)~LLM sampling is not bit-reproducible. Four recorded Full-arm executions on the $200$-problem subset score $94.5$, $95.5$, $96.5$, and $97.0\%$: a $2.5$ pp observed range, not a confidence interval or an estimated equivalence margin. Larger task sets still have sampling and provider uncertainty; paired task bootstrap does not remove these sources.
 (iii)~Long sweeps are launched through restart-safe drivers under \texttt{experiments/} that skip already-valid points, archive invalid ones for a clean re-run, and abort the pipeline when the \emph{uncompressed} baseline's pass rate collapses. That last guard exists because a gateway that silently degrades to error strings still exits successfully and writes a syntactically valid JSON scoring every sample wrong; aborting is what keeps such a run out of the tables.
 
 %% ================================================================
@@ -364,9 +331,9 @@ The first is a \textbf{random drop}: a candidate is kept by an independent Berno
 
 \paragraph{Dual use.} Our work concerns \emph{inter-agent message routing} in code-generation pipelines. Like any work that improves automated code synthesis, it could in principle be turned to producing malicious code. It does not raise the underlying generator's capability: the gate never rewrites, extends or re-generates a message, and every reported accuracy number is measured by the benchmark's own execution-based or answer-matching evaluator. We therefore expect the marginal dual-use risk to be low relative to the base models being routed.
 
-\paragraph{Risks introduced by gating.} A learned-free filter is not a safety mechanism, and we do not present it as one. Because admission is decided by cosine geometry against the goal embedding, a message that is adversarial yet embedding-close to the goal can pass, and --- symmetrically --- a message that is factually important but phrased far from the goal could be dropped. We flag the former explicitly as a limitation (\S4) and note that, on the benchmarks studied, dropping is confined to redundant turns rather than to corrective ones, which is the mechanism behind the MBPP Multi-Round gains.
+\paragraph{Risks introduced by gating.} A training-free similarity gate is not a safety mechanism. Incorrect but embedding-close content can pass, and a critical correction can be dropped. These experiments do not verify that all rejected turns are redundant or harmless; the MATH regression argues against such a universal assertion.
 
-\paragraph{Efficiency and environment.} The gate adds no LLM call and no GPU: it is a CPU-side encoder pass whose cost is sub-dominant to a single backbone turn (\Cref{fig:routerlatency}). Its intended effect is to \emph{reduce} the tokens and API calls a multi-agent pipeline spends, which points the same direction as efficiency. We do not claim a measured energy or carbon figure, since the dominant cost is provider-side inference that we cannot instrument; token counts are reported throughout as the observable proxy. Optimising for those counts is not free of tension with accuracy, which is exactly why every gating result is reported as a compression/accuracy pair rather than as a single saving number.
+\paragraph{Efficiency and environment.} The router adds a CPU encoder pass and no judge LLM call. Post-generation admission can reduce subsequent prompt tokens but does not by itself avoid generating rejected messages. We report token usage, not a measured energy, carbon, P99-latency, or monetary saving. Accuracy and cost are reported jointly because lower communication can sacrifice correctness.
 
 \paragraph{Transparency.} Two asymmetries that could otherwise make our numbers hard to interpret are disclosed in the paper rather than left implicit: the backbone used by the main results is a \emph{rolling alias} whose snapshot shifts over time (\Cref{app:sensitivity}), and the reference row of \Cref{tab:crossmodel} comes from a private gateway on a different model version than \S3 (\Cref{app:crossmodel}).
 
