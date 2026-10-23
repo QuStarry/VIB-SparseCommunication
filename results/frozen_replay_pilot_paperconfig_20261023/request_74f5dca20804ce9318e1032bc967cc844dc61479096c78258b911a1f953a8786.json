@@ -1,0 +1,89 @@
+{
+  "request_id": "74f5dca20804ce9318e1032bc967cc844dc61479096c78258b911a1f953a8786",
+  "task_id": "MATH/2767",
+  "repeat": 0,
+  "policy": "cosine",
+  "status": "ok",
+  "charged_proxy_usd": 0.0002784,
+  "admitted_messages": 6,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.47998344898223877,
+      "sufficiency": 0.0,
+      "redundancy": 0.5200165510177612,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.4548347592353821,
+      "sufficiency": 0.0,
+      "redundancy": 0.5451652407646179,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.2726619243621826,
+      "sufficiency": 0.0,
+      "redundancy": 0.7273380756378174,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    }
+  ],
+  "prompt_sha256": "47d1376fa5fedae3ec3a4f03c82ac0d58661f83607da9e12b3e32ace4b1dce5f",
+  "prompt_tokens": 892,
+  "completion_tokens": 9,
+  "usage": {
+    "completion_tokens": 9,
+    "prompt_tokens": 892,
+    "total_tokens": 901,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "2f858aa7ac65708358b9b1a382f843d3-d69f728c",
+  "finish_reason": "stop",
+  "output": "答案: 8√10+16",
+  "passed": false,
+  "elapsed_ms": 1898.8357910420746
+}

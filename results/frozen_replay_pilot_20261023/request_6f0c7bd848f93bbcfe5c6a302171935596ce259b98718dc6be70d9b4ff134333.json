@@ -1,0 +1,34 @@
+{
+  "request_id": "6f0c7bd848f93bbcfe5c6a302171935596ce259b98718dc6be70d9b4ff134333",
+  "task_id": "MATH/2767",
+  "repeat": 0,
+  "policy": "full",
+  "status": "ok",
+  "charged_proxy_usd": 0.0002844,
+  "admitted_messages": 6,
+  "decisions": [],
+  "prompt_sha256": "47d1376fa5fedae3ec3a4f03c82ac0d58661f83607da9e12b3e32ace4b1dce5f",
+  "prompt_tokens": 892,
+  "completion_tokens": 14,
+  "usage": {
+    "completion_tokens": 14,
+    "prompt_tokens": 892,
+    "total_tokens": 906,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 256
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "6481da8966154abda3f305220244ee8c",
+  "finish_reason": "stop",
+  "output": "答案: \\(2\\sqrt{59}+2\\sqrt{35}\\)",
+  "passed": false,
+  "elapsed_ms": 1595.2562500024214
+}

@@ -1,0 +1,84 @@
+{
+  "request_id": "4a411801321c7bf6984a3814dc1714b5dab46912aff4b918c6b86b149553362b",
+  "task_id": "MATH/3164",
+  "repeat": 0,
+  "policy": "random",
+  "status": "ok",
+  "charged_proxy_usd": 0.000132,
+  "admitted_messages": 4,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    }
+  ],
+  "prompt_sha256": "2c2fdd21cd79377a697c61479e84eb0194dff5b381acf4adf01c24766b818ea0",
+  "prompt_tokens": 420,
+  "completion_tokens": 5,
+  "usage": {
+    "completion_tokens": 5,
+    "prompt_tokens": 420,
+    "total_tokens": 425,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-1792720677063148000027c2a6f5#a1",
+  "finish_reason": "stop",
+  "output": "答案: 46",
+  "passed": true,
+  "elapsed_ms": 1450.5531250033528
+}

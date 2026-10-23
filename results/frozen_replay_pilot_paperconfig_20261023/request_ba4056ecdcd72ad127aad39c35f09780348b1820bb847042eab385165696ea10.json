@@ -1,0 +1,89 @@
+{
+  "request_id": "ba4056ecdcd72ad127aad39c35f09780348b1820bb847042eab385165696ea10",
+  "task_id": "MATH/3484",
+  "repeat": 1,
+  "policy": "random",
+  "status": "ok",
+  "charged_proxy_usd": 0.00013890000000000002,
+  "admitted_messages": 4,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    }
+  ],
+  "prompt_sha256": "322a353e48a466caff6787a9f868e8a5eb03ea654fe9b2748c3ecaa5196c6ebd",
+  "prompt_tokens": 443,
+  "completion_tokens": 5,
+  "usage": {
+    "completion_tokens": 5,
+    "prompt_tokens": 443,
+    "total_tokens": 448,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "23d6fc13f5bec9a77228ad38c9a3d644-02b41a70",
+  "finish_reason": "stop",
+  "output": "答案: 43",
+  "passed": true,
+  "elapsed_ms": 1782.1341670351103
+}

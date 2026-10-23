@@ -1,0 +1,89 @@
+{
+  "request_id": "02022563e7ee78a3d96307e06b4139f7e9055531b4e63996cee2f960339683f1",
+  "task_id": "MATH/3363",
+  "repeat": 1,
+  "policy": "random",
+  "status": "ok",
+  "charged_proxy_usd": 0.0001359,
+  "admitted_messages": 4,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    }
+  ],
+  "prompt_sha256": "cd725fba231f9031dbf3fcb5c9c71930353f97c63a4e0065234484272b744999",
+  "prompt_tokens": 433,
+  "completion_tokens": 5,
+  "usage": {
+    "completion_tokens": 5,
+    "prompt_tokens": 433,
+    "total_tokens": 438,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "52eb71b6ddfac9503dfc683b69877b97-a1feb91b",
+  "finish_reason": "stop",
+  "output": "答案: 12",
+  "passed": true,
+  "elapsed_ms": 1428.9305830025114
+}

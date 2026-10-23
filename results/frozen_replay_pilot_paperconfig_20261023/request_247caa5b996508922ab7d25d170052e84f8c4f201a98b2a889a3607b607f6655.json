@@ -1,0 +1,29 @@
+{
+  "request_id": "247caa5b996508922ab7d25d170052e84f8c4f201a98b2a889a3607b607f6655",
+  "task_id": "MATH/4343",
+  "repeat": 0,
+  "policy": "full",
+  "status": "ok",
+  "charged_proxy_usd": 0.00012119999999999999,
+  "admitted_messages": 6,
+  "decisions": [],
+  "prompt_sha256": "e48af97213373109957acdfff6de742480bf8cf92351303915cbae79907f9e8e",
+  "prompt_tokens": 384,
+  "completion_tokens": 5,
+  "usage": {
+    "completion_tokens": 5,
+    "prompt_tokens": 384,
+    "total_tokens": 389,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-17927208042074400000fc396dd7#a1",
+  "finish_reason": "stop",
+  "output": "答案: 132",
+  "passed": true,
+  "elapsed_ms": 1610.185083001852
+}

@@ -1,0 +1,89 @@
+{
+  "request_id": "13fa7392371c8b0e1e47fbafd13cdfd7a6ce56cc06130e717567c8d58bb6a80a",
+  "task_id": "MATH/2767",
+  "repeat": 1,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0002844,
+  "admitted_messages": 6,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.697197924772162,
+      "sufficiency": 0.45062562823295593,
+      "redundancy": 0.0,
+      "beta_t": 3.766314693257474,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.4923810188308813,
+      "sufficiency": 0.3962443768978119,
+      "redundancy": 0.0,
+      "beta_t": 3.766314693257474,
+      "is_allowed": true,
+      "threshold": -0.6131818181818183
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0938015361126692,
+      "sufficiency": 0.2904169261455536,
+      "redundancy": 0.0,
+      "beta_t": 3.766314693257474,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.16171432994418655,
+      "sufficiency": 0.31479382514953613,
+      "redundancy": 1.2561727098010451,
+      "beta_t": 3.4767466589821425,
+      "is_allowed": true,
+      "threshold": -0.6225959450006485
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": -0.498746689819611,
+      "sufficiency": 0.21474891901016235,
+      "redundancy": 1.2453742765082196,
+      "beta_t": 3.4767466589821425,
+      "is_allowed": true,
+      "threshold": -0.6164345160126686
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": -0.3097380565907417,
+      "sufficiency": 0.35385051369667053,
+      "redundancy": 1.539986647864756,
+      "beta_t": 3.4767466589821425,
+      "is_allowed": true,
+      "threshold": -0.5718021714687347
+    }
+  ],
+  "prompt_sha256": "47d1376fa5fedae3ec3a4f03c82ac0d58661f83607da9e12b3e32ace4b1dce5f",
+  "prompt_tokens": 892,
+  "completion_tokens": 14,
+  "usage": {
+    "completion_tokens": 14,
+    "prompt_tokens": 892,
+    "total_tokens": 906,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "ddf2c13083dead441fa1c525f3d3a91c-e59eeb96",
+  "finish_reason": "stop",
+  "output": "答案: \\(2\\sqrt{59}+2\\sqrt{35}\\)",
+  "passed": false,
+  "elapsed_ms": 1650.5094589665532
+}

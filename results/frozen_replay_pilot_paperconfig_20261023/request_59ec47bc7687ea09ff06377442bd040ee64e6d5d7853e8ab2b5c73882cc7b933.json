@@ -1,0 +1,84 @@
+{
+  "request_id": "59ec47bc7687ea09ff06377442bd040ee64e6d5d7853e8ab2b5c73882cc7b933",
+  "task_id": "MATH/245",
+  "repeat": 1,
+  "policy": "cosine",
+  "status": "ok",
+  "charged_proxy_usd": 0.0001671,
+  "admitted_messages": 6,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.48399633169174194,
+      "sufficiency": 0.0,
+      "redundancy": 0.5160036683082581,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.35080158710479736,
+      "sufficiency": 0.0,
+      "redundancy": 0.6491984128952026,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.42495644092559814,
+      "sufficiency": 0.0,
+      "redundancy": 0.5750435590744019,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    }
+  ],
+  "prompt_sha256": "a992941c26391c8d09c6d3ecc6e36d5e7883c7bda38b1ed50bc9fcd001247ffa",
+  "prompt_tokens": 537,
+  "completion_tokens": 5,
+  "usage": {
+    "completion_tokens": 5,
+    "prompt_tokens": 537,
+    "total_tokens": 542,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-1792720613087877000096a1d565#a1",
+  "finish_reason": "stop",
+  "output": "答案: 3",
+  "passed": true,
+  "elapsed_ms": 1511.7488329997286
+}

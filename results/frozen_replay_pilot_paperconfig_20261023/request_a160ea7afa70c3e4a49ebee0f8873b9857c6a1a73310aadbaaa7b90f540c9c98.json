@@ -1,0 +1,89 @@
+{
+  "request_id": "a160ea7afa70c3e4a49ebee0f8873b9857c6a1a73310aadbaaa7b90f540c9c98",
+  "task_id": "MATH/2767",
+  "repeat": 1,
+  "policy": "random",
+  "status": "ok",
+  "charged_proxy_usd": 0.0001647,
+  "admitted_messages": 3,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    }
+  ],
+  "prompt_sha256": "3584eef3edc75f7f2bc145d040593f113f942e241e151224a979b05a9f2bf53e",
+  "prompt_tokens": 509,
+  "completion_tokens": 10,
+  "usage": {
+    "completion_tokens": 10,
+    "prompt_tokens": 509,
+    "total_tokens": 519,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "53859876a1caf5c15c8c920e682e174a-f96d6330",
+  "finish_reason": "stop",
+  "output": "答案: 28 + 4√10",
+  "passed": false,
+  "elapsed_ms": 1775.4202500218526
+}

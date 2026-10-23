@@ -1,0 +1,84 @@
+{
+  "request_id": "ffe814f1d8e5b681bcbd3bd5171038e3d40a03c912588368a1c235648b9b7265",
+  "task_id": "MATH/2767",
+  "repeat": 1,
+  "policy": "random",
+  "status": "ok",
+  "charged_proxy_usd": 0.0001647,
+  "admitted_messages": 3,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    }
+  ],
+  "prompt_sha256": "3584eef3edc75f7f2bc145d040593f113f942e241e151224a979b05a9f2bf53e",
+  "prompt_tokens": 509,
+  "completion_tokens": 10,
+  "usage": {
+    "completion_tokens": 10,
+    "prompt_tokens": 509,
+    "total_tokens": 519,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-17927201770268930000dd75cb7b#a1",
+  "finish_reason": "stop",
+  "output": "答案: 4√10 + 28",
+  "passed": false,
+  "elapsed_ms": 1746.1539590149187
+}

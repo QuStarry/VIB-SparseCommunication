@@ -1,0 +1,89 @@
+{
+  "request_id": "aafb708ac801c83db39fea7fa15b25708c163cfc2672cbeaafba3b590a588ff4",
+  "task_id": "MATH/1194",
+  "repeat": 0,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0001248,
+  "admitted_messages": 4,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0805331460966818,
+      "sufficiency": 0.27869704365730286,
+      "redundancy": 0.0,
+      "beta_t": 3.8770886548238703,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.041874723020616,
+      "sufficiency": 0.26872605085372925,
+      "redundancy": 0.0,
+      "beta_t": 3.8770886548238703,
+      "is_allowed": true,
+      "threshold": -0.617
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.196572543491418,
+      "sufficiency": 0.30862656235694885,
+      "redundancy": 0.0,
+      "beta_t": 3.8770886548238703,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.8573621817960098,
+      "sufficiency": 0.1154889464378357,
+      "redundancy": 1.270697573081273,
+      "beta_t": 3.579003913658088,
+      "is_allowed": false,
+      "threshold": -0.6056936305761338
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": -0.5728956290508771,
+      "sufficiency": 0.2890160381793976,
+      "redundancy": 1.6072851608048964,
+      "beta_t": 3.579003913658088,
+      "is_allowed": false,
+      "threshold": -0.5568859422206879
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": -0.4572347314164612,
+      "sufficiency": 0.26989126205444336,
+      "redundancy": 1.4231766145714346,
+      "beta_t": 3.579003913658088,
+      "is_allowed": true,
+      "threshold": -0.5925105747580528
+    }
+  ],
+  "prompt_sha256": "6120ca60ee5ccdfa912fd19d0ca65814e72d9469ab47feb80020b9f2f4210fc8",
+  "prompt_tokens": 396,
+  "completion_tokens": 5,
+  "usage": {
+    "completion_tokens": 5,
+    "prompt_tokens": 396,
+    "total_tokens": 401,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "f0e522ac1becb2ac97c8694aa25b5682-7fcab092",
+  "finish_reason": "stop",
+  "output": "答案: 28",
+  "passed": true,
+  "elapsed_ms": 2313.805708021391
+}

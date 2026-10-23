@@ -1,0 +1,11 @@
+{
+  "request_id": "4955560a342a1767d0a44ad6b8356fafa1fb4ac297c09cecb4a3587fc256014c",
+  "task_id": "MATH/325",
+  "repeat": 1,
+  "policy": "full",
+  "status": "pending",
+  "charged_proxy_usd": 0.0011625,
+  "admitted_messages": 6,
+  "decisions": [],
+  "prompt_sha256": "06db7953669f98351f438b3cf541c2612b9d068048de919e5d6cdc142fd548c7"
+}

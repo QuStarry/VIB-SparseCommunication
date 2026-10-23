@@ -1,0 +1,34 @@
+{
+  "request_id": "1547c193269475162a7bc6c5842d81852348eedce8783f6f5756892278107a7c",
+  "task_id": "MATH/2767",
+  "repeat": 0,
+  "policy": "full",
+  "status": "ok",
+  "charged_proxy_usd": 0.00028079999999999994,
+  "admitted_messages": 6,
+  "decisions": [],
+  "prompt_sha256": "47d1376fa5fedae3ec3a4f03c82ac0d58661f83607da9e12b3e32ace4b1dce5f",
+  "prompt_tokens": 892,
+  "completion_tokens": 11,
+  "usage": {
+    "completion_tokens": 11,
+    "prompt_tokens": 892,
+    "total_tokens": 903,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "42b37f50102f43c56a1263e948a3cd10-8e91c082",
+  "finish_reason": "stop",
+  "output": "答案: \\(4\\sqrt{10}+28\\)",
+  "passed": false,
+  "elapsed_ms": 1706.7443749983795
+}

@@ -1,0 +1,142 @@
+{
+  "contract_sha256": "2f82aa3c8548cc2e155afa9743db412c159f1416a93cb9e7fdad2206d6fc798a",
+  "valid_requests": 18,
+  "independent_tasks": 3,
+  "proxy_usd": 0.0024485999999999996,
+  "policies": {
+    "full": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1930,
+      "completion_tokens": 21,
+      "proxy_usd": 0.0006041999999999999,
+      "mean_admitted_messages": 6.0,
+      "mean_elapsed_ms": 1864.3568473441217,
+      "synthesis_token_saving_pct": 0.0
+    },
+    "random": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1214,
+      "completion_tokens": 20,
+      "proxy_usd": 0.0003882,
+      "mean_admitted_messages": 3.3333333333333335,
+      "mean_elapsed_ms": 1529.416069330182,
+      "synthesis_token_saving_pct": 36.75038441824705
+    },
+    "cosine": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1881,
+      "completion_tokens": 24,
+      "proxy_usd": 0.0005930999999999999,
+      "mean_admitted_messages": 5.666666666666667,
+      "mean_elapsed_ms": 2010.2747080187935,
+      "synthesis_token_saving_pct": 2.357765248590471
+    },
+    "vib": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1157,
+      "completion_tokens": 20,
+      "proxy_usd": 0.00037109999999999997,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 2199.0622773300856,
+      "synthesis_token_saving_pct": 39.671963095848284
+    },
+    "first_round": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1157,
+      "completion_tokens": 20,
+      "proxy_usd": 0.00037109999999999997,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 1886.5989720021996,
+      "synthesis_token_saving_pct": 39.671963095848284
+    },
+    "direct": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 343,
+      "completion_tokens": 15,
+      "proxy_usd": 0.00012090000000000001,
+      "mean_admitted_messages": 0.0,
+      "mean_elapsed_ms": 1618.340944677281,
+      "synthesis_token_saving_pct": 81.65043567401334
+    }
+  },
+  "paired_comparisons": {
+    "random_minus_full": {
+      "delta_pp": 0.0,
+      "bootstrap_ci95_pp": [
+        0.0,
+        0.0
+      ],
+      "independent_tasks": 3,
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "cosine_minus_full": {
+      "delta_pp": 0.0,
+      "bootstrap_ci95_pp": [
+        0.0,
+        0.0
+      ],
+      "independent_tasks": 3,
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "vib_minus_full": {
+      "delta_pp": 0.0,
+      "bootstrap_ci95_pp": [
+        0.0,
+        0.0
+      ],
+      "independent_tasks": 3,
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "first_round_minus_full": {
+      "delta_pp": 0.0,
+      "bootstrap_ci95_pp": [
+        0.0,
+        0.0
+      ],
+      "independent_tasks": 3,
+      "tasks_better": 0,
+      "tasks_worse": 0
+    },
+    "direct_minus_full": {
+      "delta_pp": 0.0,
+      "bootstrap_ci95_pp": [
+        -100.0,
+        100.0
+      ],
+      "independent_tasks": 3,
+      "tasks_better": 1,
+      "tasks_worse": 1
+    }
+  },
+  "vib_first_round_identical_prompts": 3,
+  "vib_first_round_total_pairs": 3,
+  "scope": "exploratory_integer_subset_receiver_only",
+  "caveats": [
+    "复用历史候选，非独立泛化评测；不覆盖非整数答案。",
+    "重复合成不是新增独立问题；所有区间未经多重比较校正。",
+    "费用只覆盖当前合成，不含历史候选生成，不能当作端到端调度成本。",
+    "VIB与截轮提示词相同时，结果差异不能归因于选择机制。",
+    "direct不是等预算单智能体对照。"
+  ]
+}

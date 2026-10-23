@@ -1,0 +1,74 @@
+{
+  "contract_sha256": "2f82aa3c8548cc2e155afa9743db412c159f1416a93cb9e7fdad2206d6fc798a",
+  "stop_reason": "complete",
+  "proxy_usd": 0.0024485999999999996,
+  "policies": {
+    "full": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1930,
+      "completion_tokens": 21,
+      "proxy_usd": 0.0006041999999999999,
+      "mean_admitted_messages": 6.0,
+      "mean_elapsed_ms": 1864.3568473441217
+    },
+    "random": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1214,
+      "completion_tokens": 20,
+      "proxy_usd": 0.0003882,
+      "mean_admitted_messages": 3.3333333333333335,
+      "mean_elapsed_ms": 1529.416069330182
+    },
+    "cosine": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1881,
+      "completion_tokens": 24,
+      "proxy_usd": 0.0005930999999999999,
+      "mean_admitted_messages": 5.666666666666667,
+      "mean_elapsed_ms": 2010.2747080187935
+    },
+    "vib": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1157,
+      "completion_tokens": 20,
+      "proxy_usd": 0.00037109999999999997,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 2199.0622773300856
+    },
+    "first_round": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 1157,
+      "completion_tokens": 20,
+      "proxy_usd": 0.00037109999999999997,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 1886.5989720021996
+    },
+    "direct": {
+      "requests": 3,
+      "valid_requests": 3,
+      "tasks": 3,
+      "task_mean_accuracy": 0.6666666666666666,
+      "prompt_tokens": 343,
+      "completion_tokens": 15,
+      "proxy_usd": 0.00012090000000000001,
+      "mean_admitted_messages": 0.0,
+      "mean_elapsed_ms": 1618.340944677281
+    }
+  },
+  "cost_scope": "synthesis_only_no_candidate_generation_not_actual_invoice"
+}
