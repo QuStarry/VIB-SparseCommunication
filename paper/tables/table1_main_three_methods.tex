@@ -1,11 +1,11 @@
 \begin{table*}[t]
 \centering
-\caption{Pass@1 main results: Vanilla single-agent baseline vs Full-Comm 3-agent vs VIB-Sparse (ours).
+\caption{Observed accuracy and communication budgets: Vanilla single-agent, Full-Comm 3-agent, and VIB-Sparse.
 Point estimates (pp) and 95\% paired-bootstrap CIs are reported for VIB vs Full; VIB vs Vanilla reports the raw pp difference without CI for brevity.
 $\dagger$: 95\% CI does not span zero;
 $\ddagger$: McNemar $p<0.05$ under both sampling and greedy (temperature$=0$, robust);
 $\S$: sampling $p<0.05$ but greedy $p\ge 0.05$ (marginal, temperature-sensitive).
-MBPP compression is near zero because max\_steps$=2$ caps each side at $\sim 6$ messages saturating discussion; MATH follows the same frozen-history Planner-Solver-Verifier pipeline as GSM8K.
+MBPP has near-zero aggregate savings under its historical reference-assisted early-stop protocol; MATH follows the frozen-history Planner-Solver-Verifier pipeline.
 \label{tab:main_results}}
 \setlength{\tabcolsep}{3.4pt}
 \scriptsize
@@ -31,10 +31,11 @@ MATH            &  5000 &   49.10 & 80.08~[+78.95,\,+81.16] & 79.16~[+78.01,\,+8
 \vspace{0.3em}
 \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
 \textbf{Notes.} All intervals at 95\% level. Single-proportion intervals use Wilson score; method-difference intervals use 10k paired bootstrap draws (seed=20260812).
-Vanilla is single-agent direct synthesis (no team discussion, temperature$=0.1$, max\_tokens$=1024$), sharing synthesis hyperparameters with Full/VIB to keep apples-to-apples comparison.
-MBPP message compression is near zero because the 3-agent max\_steps$=2$ bounds each side to $\approx 6$ messages saturating the discussion budget; VIB savings concentrate on GSM8K ($+30.49\%$), MATH ($+25.59\%$) and HumanEval ($+21.14\%$).
+Vanilla uses direct synthesis without team discussion, with temperature$=0.1$ and task-specific output limits ($1024$ code, $256$ math). It is not matched to the team's total inference budget.
+No equivalence or non-inferiority margin was prespecified. A CI spanning zero is not evidence of equivalence; HumanEval's paired $[0,0]$ reflects all-success observed pairs, not zero population uncertainty.
+MBPP messages and tokens slightly increase; savings occur on GSM8K, MATH, and HumanEval.
 \textbf{Temperature robustness (greedy reruns):}
-message compression under temperature$=0$ barely changes: MATH 25.59$\to$25.39\% ($\Delta=-0.20$pp), GSM8K 30.49$\to$30.28\% ($\Delta=-0.21$pp) --- VIB compression is not a sampling artefact.
+message reduction is similar in the recorded greedy runs: MATH 25.59$\to$25.39\%, GSM8K 30.49$\to$30.28\%. This does not eliminate provider or sampling uncertainty.
 \textbf{MATH significance envelope:}
 sampling regression $-0.92$pp (McNemar $p=0.041$), greedy $-0.72$pp ($p=0.132$); magnitude stays $-0.7\sim-0.9$pp but significance is marginal across temperatures, see $\S$ marker.}
 \end{table*}

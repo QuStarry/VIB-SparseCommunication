@@ -215,12 +215,12 @@ def _star(delta: float, ci: Tuple[float, float], mcnemar: float,
 
 TABLE1_HEADER = r"""\begin{table*}[t]
 \centering
-\caption{Pass@1 main results: Vanilla single-agent baseline vs Full-Comm 3-agent vs VIB-Sparse (ours).
+\caption{Observed accuracy and communication budgets: Vanilla single-agent, Full-Comm 3-agent, and VIB-Sparse.
 Point estimates (pp) and 95\% paired-bootstrap CIs are reported for VIB vs Full; VIB vs Vanilla reports the raw pp difference without CI for brevity.
 $\dagger$: 95\% CI does not span zero;
 $\ddagger$: McNemar $p<0.05$ under both sampling and greedy (temperature$=0$, robust);
 $\S$: sampling $p<0.05$ but greedy $p\ge 0.05$ (marginal, temperature-sensitive).
-MBPP compression is near zero because max\_steps$=2$ caps each side at $\sim 6$ messages saturating discussion; MATH follows the same frozen-history Planner-Solver-Verifier pipeline as GSM8K.
+MBPP has near-zero aggregate savings under its historical reference-assisted early-stop protocol; MATH follows the frozen-history Planner-Solver-Verifier pipeline.
 \label{tab:main_results}}
 \setlength{\tabcolsep}{3.4pt}
 \scriptsize
@@ -243,10 +243,11 @@ TABLE1_FOOTER = r"""\bottomrule
 \vspace{0.3em}
 \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
 \textbf{Notes.} All intervals at 95\% level. Single-proportion intervals use Wilson score; method-difference intervals use 10k paired bootstrap draws (seed=20260812).
-Vanilla is single-agent direct synthesis (no team discussion, temperature$=0.1$, max\_tokens$=1024$), sharing synthesis hyperparameters with Full/VIB to keep apples-to-apples comparison.
-MBPP message compression is near zero because the 3-agent max\_steps$=2$ bounds each side to $\approx 6$ messages saturating the discussion budget; VIB savings concentrate on GSM8K ($+30.49\%$), MATH ($+25.59\%$) and HumanEval ($+21.14\%$).
+Vanilla uses direct synthesis without team discussion, with temperature$=0.1$ and task-specific output limits ($1024$ code, $256$ math). It is not matched to the team's total inference budget.
+No equivalence or non-inferiority margin was prespecified. A CI spanning zero is not evidence of equivalence; HumanEval's paired $[0,0]$ reflects all-success observed pairs, not zero population uncertainty.
+MBPP messages and tokens slightly increase; savings occur on GSM8K, MATH, and HumanEval.
 \textbf{Temperature robustness (greedy reruns):}
-message compression under temperature$=0$ barely changes: MATH 25.59$\to$25.39\% ($\Delta=-0.20$pp), GSM8K 30.49$\to$30.28\% ($\Delta=-0.21$pp) --- VIB compression is not a sampling artefact.
+message reduction is similar in the recorded greedy runs: MATH 25.59$\to$25.39\%, GSM8K 30.49$\to$30.28\%. This does not eliminate provider or sampling uncertainty.
 \textbf{MATH significance envelope:}
 sampling regression $-0.92$pp (McNemar $p=0.041$), greedy $-0.72$pp ($p=0.132$); magnitude stays $-0.7\sim-0.9$pp but significance is marginal across temperatures, see $\S$ marker.}
 \end{table*}
@@ -328,8 +329,9 @@ def render_table2(mbpp: DatasetRow) -> str:
 TABLE3_HEADER = r"""\begin{table}[t]
 \centering
 \caption{GSM8K ablation on $N=200$ sub-sample toggling role-aware weights (Section 3, Method).
-Frozen-history-only VIB already achieves $+30.25\%$ message compression;
-adding role-aware weights (frozen+role) still holds $+25.17\%$ compression while Full baseline drops 1~pp --- VIB is robust to both history regimes.
+Message reduction is $30.25\%$ without role weights and $25.17\%$ with them.
+These are separate stochastic executions; the Full baseline also varies by $1$~pp.
+No formal non-inferiority or role-specific accuracy benefit is established.
 \label{tab:gsm8k_ablation}}
 \setlength{\tabcolsep}{3.2pt}
 \scriptsize
@@ -373,17 +375,18 @@ def render_table3(ablation_only: Dict[str, Any], ablation_role: Dict[str, Any]) 
 
 TABLE5_CAPTION = r"""\caption{Cross-family transfer on GSM8K ($N=200$).
 Both rows run under the \emph{identical} harness configuration (paper defaults $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$,
-temperature $0.1$), so the backbone family is the only variable. VIB's compression and its non-inferior accuracy
-transfer from DeepSeek v4-pro to Qwen-3.8-Max: message reduction stays above $25\%$ and accuracy does not drop for either family.
+agent-turn temperature $0.2$ and synthesis temperature $0.1$), using different gateway model IDs.
+Message reduction exceeds $25\%$ and accuracy point estimates are positive in both runs.
+This is limited transfer evidence, not a formal non-inferiority result or verification of immutable served snapshots.
 \label{tab:crossmodel}}"""
 
 TABLE5_NOTE = r"""\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
 \textbf{Reading the token column.} VIB compresses the \emph{shared context}, not the model's output:
-prompt tokens fall by $4.6$--$5.2\%$, but steering both backbones on a shorter history makes them emit a
-\emph{longer} chain-of-thought, so completion tokens rise ($+0.45\%$ DeepSeek, $+3.64\%$ Qwen) and the
+prompt tokens fall by $4.6$--$5.2\%$, while completion tokens rise
+($+0.45\%$ DeepSeek, $+3.64\%$ Qwen) and the
 \emph{net} token saving ($1.2$--$1.7\%$) trails the message/prompt reduction.
-The mechanism is therefore best read as \textbf{context compression}; the end-to-end token saving is real
-but bounded by how much the backbone lengthens its own reasoning once the context shrinks.}"""
+These aggregate observations are consistent with output-length rebound but do not by themselves
+establish that shorter context caused longer reasoning. Token counts are not a measured monetary or latency saving.}"""
 
 
 def render_table5_crossmodel(deepseek: Dict[str, Any], qwen: Dict[str, Any]) -> str:
@@ -579,6 +582,22 @@ def _detailed_rows(point: Dict[str, Any]) -> List[Dict[str, Any]]:
     return (point.get("detailed_results") or {}).get("gsm8k") or []
 
 
+def _gating_outcomes(point: Dict[str, Any], outcome_key: str) -> Dict[str, bool]:
+    """拒绝重复或缺失任务，避免配对统计被静默缩减。"""
+    outcomes = {}
+    for row in _detailed_rows(point):
+        task_id = row.get("task_id")
+        if not task_id or task_id in outcomes:
+            raise ValueError(f"Missing or duplicate gating task id: {task_id!r}")
+        outcome = row.get(outcome_key)
+        if not isinstance(outcome, bool):
+            raise ValueError(f"Invalid {outcome_key} for task {task_id}")
+        outcomes[task_id] = outcome
+    if not outcomes:
+        raise ValueError("No gating task outcomes")
+    return outcomes
+
+
 def _paired_vs_anchor(anchor: Dict[str, bool], arm: Dict[str, bool],
                       n_boot: int = 10000, seed: int = 20260812):
     """Paired bootstrap CI for (arm − anchor) in pp over the shared task ids.
@@ -587,10 +606,10 @@ def _paired_vs_anchor(anchor: Dict[str, bool], arm: Dict[str, bool],
     ``full_passed``/``vib_passed`` keys, so the anchor is mapped onto the former
     and the comparison arm onto the latter.
     """
-    shared = [t for t in anchor if t in arm]
-    if not shared:
-        return (0.0, 0.0)
-    rows = [{"full_passed": anchor[t], "vib_passed": arm[t]} for t in shared]
+    if not anchor or anchor.keys() != arm.keys():
+        raise ValueError("Gating arms must contain identical nonempty task sets")
+    rows = [{"full_passed": anchor[task_id], "vib_passed": arm[task_id]}
+            for task_id in anchor]
     return an._paired_delta_pp_bootstrap_ci(rows, n_boot=n_boot, seed=seed)
 
 
@@ -600,8 +619,8 @@ def render_table6_gating(sweep: Dict[str, Any], gating_dir: Path) -> str:
     anchor = by_arm["vib"]
 
     anchor_json = load(gating_dir / f"{anchor['name']}.json")
-    anchor_vib = {r["task_id"]: bool(r["vib_passed"]) for r in _detailed_rows(anchor_json)}
-    anchor_full = {r["task_id"]: bool(r["full_passed"]) for r in _detailed_rows(anchor_json)}
+    anchor_vib = _gating_outcomes(anchor_json, "vib_passed")
+    anchor_full = _gating_outcomes(anchor_json, "full_passed")
     n = len(anchor_vib)
 
     keep_rate = float(sweep.get("matched_keep_rate") or 0.0)
@@ -626,19 +645,18 @@ def render_table6_gating(sweep: Dict[str, Any], gating_dir: Path) -> str:
         if r["arm"] == "vib":
             continue
         point = load(gating_dir / f"{r['name']}.json")
-        arm_map = {d["task_id"]: bool(d["vib_passed"]) for d in _detailed_rows(point)}
-        label = naive_labels.get(r["arm"]) or f"Diversity top-$k$ ($\\theta={float(r['knob']):.2f}$)"
-        # Use the same shared-task convention as the paired CI below, so the point
-        # estimate and its interval cannot disagree about which tasks they summarise.
-        shared = [t for t in anchor_vib if t in arm_map]
-        delta = 100.0 * sum(arm_map[t] - anchor_vib[t] for t in shared) / max(1, len(shared))
+        arm_map = _gating_outcomes(point, "vib_passed")
+        paired_ci = _paired_vs_anchor(anchor_vib, arm_map)
+        label = naive_labels.get(r["arm"]) or f"Cosine threshold ($\\theta={float(r['knob']):.2f}$)"
+        delta = 100.0 * sum(arm_map[task_id] - anchor_vib[task_id]
+                           for task_id in anchor_vib) / n
         body_rows.append((
             label,
             float(r["summary"]["msg_compression_pct"]),
             float(r["summary"]["token_saving_pct"]),
             float(r["summary"]["vib_pass_rate"]),
             delta,
-            _paired_vs_anchor(anchor_vib, arm_map),
+            paired_ci,
             False,
         ))
 
@@ -676,16 +694,16 @@ def render_table6_gating(sweep: Dict[str, Any], gating_dir: Path) -> str:
 
     header = r"""\begin{table}[t]
 \centering
-\caption{Is the VIB utility signal doing the work? All arms share one backbone snapshot
-(\texttt{__MODEL__}), one $200$-problem GSM8K subset and the identical harness, so only the
-admission policy varies. \emph{Random drop} keeps each candidate with probability $p$ calibrated
-to the VIB anchor's own admission rate, and \emph{diversity top-$k$} drops any candidate whose
+\caption{Lightweight gating controls using the same gateway model ID
+(\texttt{__MODEL__}), $200$ GSM8K tasks, and harness, but separate stochastic executions.
+\emph{Random drop} uses probability $p$ calibrated to VIB admission, and the \emph{cosine-threshold gate} drops any candidate whose
 maximum cosine against the already-broadcast history exceeds $\theta$ --- it reuses the same frozen
-encoder but has no goal term, no $\beta_t$ schedule, no role prior and no guards.
+encoder but omits the goal term, schedule, and VIB-specific corrections. This is threshold admission, not fixed-cardinality top-$k$.
 $\Delta$ is the paired (arm$-$VIB) Pass@1 difference in pp with a $10\,000$-resample bootstrap 95\% CI;
 negative means the arm is worse than VIB. The arms pinned to the anchor's message budget --- the random
-drop and the nearest top-$k$ --- realise a reduction within $__BUDGET__$~pp of the anchor's; the
-remaining top-$k$ settings remove strictly less and only trace the budget/accuracy trade-off.
+drop and the nearest cosine threshold --- realise a reduction within $__BUDGET__$~pp of the anchor's; other
+thresholds trace different budgets. Matching messages does not match total-token cost.
+Intervals spanning zero do not establish equivalence or VIB-specific superiority.
 \label{tab:gating_controls}}
 \setlength{\tabcolsep}{3.0pt}
 \scriptsize
