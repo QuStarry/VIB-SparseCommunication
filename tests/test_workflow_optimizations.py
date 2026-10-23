@@ -120,6 +120,23 @@ def test_first_round_role_guard_rescues_coder_and_reviewer():
     ]
 
 
+def test_rescue_trace_marks_actual_candidate_not_first_rejection():
+    workflow = VIBMultiAgentWorkflow(
+        agents=[
+            make_agent("Architect", "Plan"),
+            make_agent("Coder", "Implement"),
+            make_agent("Reviewer", "Review"),
+        ],
+        vib_router=RecordingRouter(allow_all=False),
+        max_steps=1,
+        required_roles_first_step=["Reviewer"],
+    )
+    workflow.run("goal", verbose=False)
+    decisions = workflow.stats["gate_decisions"]
+    assert [row["rescued"] for row in decisions] == [False, False, True]
+    assert [row["is_allowed"] for row in decisions] == [False, False, True]
+
+
 def test_first_round_role_guard_respects_minimum_approval_floor():
     router = RecordingRouter(allow_all=False)
     workflow = VIBMultiAgentWorkflow(

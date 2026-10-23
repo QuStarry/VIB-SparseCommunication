@@ -291,12 +291,10 @@ class VIBMultiAgentWorkflow:
             running_history=running_history,
             approved_roles=approved_roles
         )
-        # _rescue_required_roles currently returns remaining blocked items.
-        # Mark rescued candidates: anything originally blocked *not* in remaining rescued list.
-        rescued_set_ids = set()
-        if len(rescued) != len(blocked_items_plain):
-            # Approximate: if lengths differ, assume first (N-diff) blocked items were rescued.
-            for (_, idx) in blocked_items_with_idx[: len(blocked_items_with_idx) - len(rescued)]:
+        # 返回值保留未获救援的原对象，按身份匹配，避免把前面的其他角色标成获救。
+        remaining_blocked_ids = {id(item) for item in rescued}
+        for item, idx in blocked_items_with_idx:
+            if id(item) not in remaining_blocked_ids:
                 self.stats["gate_decisions"][idx]["rescued"] = True
                 self.stats["gate_decisions"][idx]["is_allowed"] = True
         self.stats["total_blocked"] += len(rescued)
