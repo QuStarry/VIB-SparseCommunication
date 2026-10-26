@@ -1,0 +1,236 @@
+{
+  "manifest_sha256": "fabfe8676e5aac8aae52b5183e4c92773bdbf0965ef111855da9f35c25a171dc",
+  "request_content_sha256": "4ec919d5903e04f3094a59b606b1f0230faad43df745a88dacbb1ae5266b4f51",
+  "audit_script_sha256": "ddfb060b95dc68063f0e7623e2aa6b1ff450515a64787a56c291a59f6df9d965",
+  "coverage": {
+    "contrast": "full_minus_first_round",
+    "selected_cases": 2,
+    "audited_cases": 2,
+    "unsupported_cases": 0
+  },
+  "api_requests": 0,
+  "cases": [
+    {
+      "task_id": "HumanEval/116",
+      "problem": "\ndef sort_array(arr):\n    \"\"\"\n    In this Kata, you have to sort an array of non-negative integers according to\n    number of ones in their binary representation in ascending order.\n    For similar number of ones, sort based on decimal value.\n\n    It must be implemented like this:\n    >>> sort_array([1, 5, 2, 3, 4]) == [1, 2, 3, 4, 5]\n    >>> sort_array([-2, -3, -4, -5, -6]) == [-6, -5, -4, -3, -2]\n    >>> sort_array([1, 0, 2, 3, 4]) [0, 1, 2, 3, 4]\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 建议先明确负数二进制表示的处理规则（如补码或符号位），因为示例中负数排序与正数逻辑可能冲突。核心算法可用`bin(x).count('1')`作为主键，`x`本身作为次键，但需验证负数场景的预期行为。",
+        "[Coder]: 直接使用 `bin(x).count('1')` 作为排序键，配合 `(popcount, x)` 元组即可满足要求。注意负数在 Python 中 `bin()` 会带 `-` 前缀，需用 `abs(x)` 处理，但题目示例中负数按绝对值排序，所以直接对绝对值计算即可。",
+        "[Reviewer]: 该实现需注意负数二进制表示的处理，Python中`bin(-2)`返回`'-0b10'`，需用`bin(x & 0xffffffff)`或`abs(x)`统一计算，否则排序结果会错误。另外，题目要求非负整数，但示例包含负数，需明确排序规则是否按补码中1的个数计算。",
+        "[Architect]: 建议明确负数按补码（如32位）计算1的个数，否则示例中`-6`（补码含大量1）会排错；同时需确认是否允许修改函数签名以支持负数，或按绝对值处理。",
+        "[Coder]: 建议直接采用 `(bin(x & 0xffffffff).count('1'), x)` 作为排序键，这样负数按32位补码中1的个数排序，与示例结果一致，且无需额外处理绝对值。",
+        "[Reviewer]: 建议补充负数排序的明确规则：若按补码计算，`-2`（`...1110`）的1个数远多于`-6`，与示例结果矛盾；若按绝对值计算，则需在文档字符串中显式声明，否则实现与需求不一致。另外，`sort_array`应处理空数组和全零数组，确保返回新列表而非原地修改。"
+      ],
+      "certificate": {
+        "source": "non-negative, unbounded-integer rule in the problem",
+        "checks": [
+          {
+            "expression": "sort_array([1, 4294967296])",
+            "expected": [
+              1,
+              4294967296
+            ]
+          }
+        ],
+        "specification_conflicts": [
+          {
+            "public_input": [
+              1,
+              5,
+              2,
+              3,
+              4
+            ],
+            "literal_example": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "rule_derived": [
+              1,
+              2,
+              4,
+              3,
+              5
+            ]
+          },
+          {
+            "description": "Non-negative domain is contradicted by a negative example; negative encoding width is unspecified."
+          }
+        ],
+        "interpretation": "32-bit masking fails the non-negative integer rule. This does not settle negative-number benchmark semantics or explain the archived failure by itself."
+      },
+      "outputs": [
+        {
+          "policy": "first_round",
+          "repeat": 0,
+          "request_id": "38e525be1bd5a784f062f18cb246295ef16399da0bc420409f94222a01369180",
+          "output_sha256": "8073c9c0669d0bde376832eeba66944a6fb7e3643a74a7b980ab5d25c03cdf95",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": [
+                  1,
+                  4294967296
+                ],
+                "satisfied": true
+              }
+            ]
+          }
+        },
+        {
+          "policy": "first_round",
+          "repeat": 1,
+          "request_id": "70c0e66eeebcbded34e08271da3bacbe09e1df3a86a27210e47b17f8bef4f3da",
+          "output_sha256": "8073c9c0669d0bde376832eeba66944a6fb7e3643a74a7b980ab5d25c03cdf95",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": [
+                  1,
+                  4294967296
+                ],
+                "satisfied": true
+              }
+            ]
+          }
+        },
+        {
+          "policy": "full",
+          "repeat": 0,
+          "request_id": "e72021750ac2365c1dfd25f77403a86d6d3d47fe9babc3c07b5d1a1ac036d279",
+          "output_sha256": "682fc5ebfde915bc6ff439a7ac3d48ea7d2421188a75d5d97eeb50b267640bbb",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": [
+                  4294967296,
+                  1
+                ],
+                "satisfied": false
+              }
+            ]
+          }
+        },
+        {
+          "policy": "full",
+          "repeat": 1,
+          "request_id": "179293857791ade9584e68ed78f0e2c50c4a7bf6cfa2124b321a19788548cf45",
+          "output_sha256": "682fc5ebfde915bc6ff439a7ac3d48ea7d2421188a75d5d97eeb50b267640bbb",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": [
+                  4294967296,
+                  1
+                ],
+                "satisfied": false
+              }
+            ]
+          }
+        }
+      ],
+      "certificate_authoring": "manual_post_hoc_discovery_only",
+      "candidate_message_attribution": "not_intervened_not_proven"
+    },
+    {
+      "task_id": "HumanEval/93",
+      "problem": "\ndef encode(message):\n    \"\"\"\n    Write a function that takes a message, and encodes in such a \n    way that it swaps case of all letters, replaces all vowels in \n    the message with the letter that appears 2 places ahead of that \n    vowel in the english alphabet. \n    Assume only letters. \n    \n    Examples:\n    >>> encode('test')\n    'TGST'\n    >>> encode('This is a message')\n    'tHKS KS C MGSSCGG'\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该函数需先交换大小写，再对元音字母（a/e/i/o/u，含大小写）按字母表后移两位替换（如a→c，e→g，i→k，o→q，u→w）。注意替换应在大小写交换之后进行，且仅处理字母，非元音保持交换后的结果。",
+        "[Coder]: 实现时先交换大小写，再对元音（a/e/i/o/u，含大写）按字母表后移两位（a→c，e→g，i→k，o→q，u→w），注意保持原字母大小写形式。可用字典映射元音转换，避免复杂条件判断。",
+        "[Reviewer]: 该实现需注意大小写转换与元音替换的先后顺序：先交换大小写，再对原字母（非转换后）判断是否为元音并替换。同时需明确“2 places ahead”指字母表循环（如z后接a），且仅替换a/e/i/o/u（含大小写），不替换y。建议补充边界测试如`encode('Zebra')`和`encode('AEIOU')`验证循环与大小写逻辑。",
+        "[Architect]: 明确“2 places ahead”在元音替换中不涉及循环（因a/e/i/o/u后移两位仍在字母表内），但需确认大小写交换后元音判断基于原始字符而非转换后字符，例如`encode('a')`应返回`C`而非`c`。建议实现时用`str.swapcase()`先处理，再对原字符查元音映射表，确保顺序正确。",
+        "[Coder]: 建议使用`str.translate`配合静态映射表实现，一次性完成大小写交换和元音替换，避免多次遍历字符串。同时注意`'z'`和`'Z'`在大小写交换后若为元音需按规则处理，但本例中`z`非元音，无需循环移位。",
+        "[Reviewer]: 需明确“2 places ahead”是否包含循环（如u→w，但若涉及y或z则需确认是否回绕），且当前示例中`'test'`输出`'TGST'`表明t→T、e→G、s→S、t→T，但e替换为G而非g，说明替换后需保持大写形式，需验证大小写交换后再判断元音时是否基于原字符还是转换后字符。"
+      ],
+      "certificate": {
+        "source": "literal problem example",
+        "checks": [
+          {
+            "expression": "encode('test')",
+            "expected": "TGST"
+          }
+        ],
+        "interpretation": "Vowel replacement must preserve the swapped case."
+      },
+      "outputs": [
+        {
+          "policy": "first_round",
+          "repeat": 0,
+          "request_id": "a0110e675797d8732f0fec917108425ca667b4551c251d644e296628d79116c7",
+          "output_sha256": "50b6ad3037ae74ffd50b17d1d5c3e459a39bd3400358cd2a9b610227257687bd",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": "TGST",
+                "satisfied": true
+              }
+            ]
+          }
+        },
+        {
+          "policy": "first_round",
+          "repeat": 1,
+          "request_id": "769cf0bd06466a77999f5e4ed0afd92321098ac027de55122af9075fe3020a98",
+          "output_sha256": "7cd81cdda3e4533280f16f665b66b285c88b53c1c840149db1af7218dc0c51fc",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": "TGST",
+                "satisfied": true
+              }
+            ]
+          }
+        },
+        {
+          "policy": "full",
+          "repeat": 0,
+          "request_id": "cf190253e0fa010703252a01fb7477f498be076a182665d9c705750a40095e19",
+          "output_sha256": "0ab2fb897dfa484de1ecf3526ede4460caa566fdbc655baae9f249b5df0bfbe0",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": "TgST",
+                "satisfied": false
+              }
+            ]
+          }
+        },
+        {
+          "policy": "full",
+          "repeat": 1,
+          "request_id": "12eddce203d0d078dcf7f289e21bb4475f295ae26b4f5ff32ef0555c6a956a99",
+          "output_sha256": "0ab2fb897dfa484de1ecf3526ede4460caa566fdbc655baae9f249b5df0bfbe0",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": "TgST",
+                "satisfied": false
+              }
+            ]
+          }
+        }
+      ],
+      "certificate_authoring": "manual_post_hoc_discovery_only",
+      "candidate_message_attribution": "not_intervened_not_proven"
+    }
+  ],
+  "limitations": [
+    "Selection uses observed pass differences; evidence generation never reads reference answers or hidden tests. This is discovery, not blinded validation.",
+    "Public certificates are authored manually after seeing outcomes; no automatic verifier or policy performance is established.",
+    "No message-removal or replacement intervention was run; compatibility with a bad suggestion does not prove its causal effect.",
+    "Only observed Full/first-round discordances are covered; this is not an all-task false-positive or recall evaluation.",
+    "Child processes have timeouts but no filesystem/network security sandbox; only previously archived local outputs are executed."
+  ]
+}

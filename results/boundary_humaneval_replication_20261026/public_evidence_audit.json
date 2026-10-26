@@ -1,0 +1,165 @@
+{
+  "manifest_sha256": "bbf66e99d9ae9059c3ab6e890ac31f54bb61ecf1ec3147f71bb0348ffd985e5e",
+  "request_content_sha256": "ff77fb818a9dfe0e35b0ee7f1bc002f726b95e1ac3dd54c960583eef3ed117c2",
+  "audit_script_sha256": "ddfb060b95dc68063f0e7623e2aa6b1ff450515a64787a56c291a59f6df9d965",
+  "coverage": {
+    "contrast": "full_minus_first_round",
+    "selected_cases": 1,
+    "audited_cases": 1,
+    "unsupported_cases": 0
+  },
+  "api_requests": 0,
+  "cases": [
+    {
+      "task_id": "HumanEval/147",
+      "problem": "\ndef get_max_triples(n):\n    \"\"\"\n    You are given a positive integer n. You have to create an integer array a of length n.\n        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.\n        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, \n    and a[i] + a[j] + a[k] is a multiple of 3.\n\n    Example :\n        Input: n = 5\n        Output: 1\n        Explanation: \n        a = [1, 3, 7, 13, 21]\n        The only valid triple is (1, 7, 13).\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 核心约束是a[i]模3的余数，可化简为(i² - i + 1) mod 3，其周期为3，因此只需统计n中三种余数的个数，再用组合数计算三元组余数和为0的组合。",
+        "[Coder]: 直接按模3分类计数即可：a[i] = i² - i + 1，模3周期为3，统计每类余数的数量，然后组合计数（余数0+0+0、1+1+1、2+2+2、0+1+2）。时间复杂度O(n)，空间O(1)。",
+        "[Reviewer]: 该实现需注意n=1或2时无三元组，应返回0；同时需验证a[i]对3取模的周期性（i mod 3对应余数0,1,2），可简化为统计余数组合而非显式构造数组。",
+        "[Architect]: 利用模3周期性可进一步推导：i mod 3 = 0时a[i]≡1，i mod 3 = 1时a[i]≡1，i mod 3 = 2时a[i]≡0，因此余数分布仅由n中2的个数决定。最终组合数可写成闭式公式，无需循环，直接O(1)计算。",
+        "[Coder]: 利用模3周期性，直接统计i%3为0、1、2的数量，分别对应a[i]%3为1、0、1，因此余数1的数量为2*ceil(n/3)（或具体计算），余数0和2各为floor(n/3)左右，再按组合公式计算即可，无需构造数组。",
+        "[Reviewer]: 边界条件n<3时直接返回0，且组合计数需用整数运算避免浮点误差。另外，余数0+1+2的组合数应计算为cnt0*cnt1*cnt2，而非排列数，确保i<j<k的约束自然满足。"
+      ],
+      "certificate": {
+        "source": "literal n=5 example and direct enumeration at n=3",
+        "checks": [
+          {
+            "expression": "get_max_triples(5)",
+            "expected": 1
+          },
+          {
+            "expression": "get_max_triples(3)",
+            "expected": 0
+          }
+        ],
+        "interpretation": "Count residues of i*i-i+1, not residues of i."
+      },
+      "outputs": [
+        {
+          "policy": "first_round",
+          "repeat": 0,
+          "request_id": "0f6bd8cf19961c8b228cafec9b2d384b55056d9f796f194fb2f4846bf9e9e521",
+          "output_sha256": "e3d9ca6739c3a91f49d2d824a2d6fca5f08d071d76b09c3d73f7c48ac44b2af7",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": 1,
+                "satisfied": true
+              },
+              {
+                "actual": 0,
+                "satisfied": true
+              }
+            ]
+          }
+        },
+        {
+          "policy": "first_round",
+          "repeat": 1,
+          "request_id": "618d6462d7f31c3f16ffae9785083b3d5f6640eb112b09999572fefcde5786af",
+          "output_sha256": "e3d9ca6739c3a91f49d2d824a2d6fca5f08d071d76b09c3d73f7c48ac44b2af7",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": 1,
+                "satisfied": true
+              },
+              {
+                "actual": 0,
+                "satisfied": true
+              }
+            ]
+          }
+        },
+        {
+          "policy": "first_round_control",
+          "repeat": 0,
+          "request_id": "7d472b94eb05a28f4705881aaf586689e93ed10fd5a35a1fb9869b2ea4ed82e8",
+          "output_sha256": "e3d9ca6739c3a91f49d2d824a2d6fca5f08d071d76b09c3d73f7c48ac44b2af7",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": 1,
+                "satisfied": true
+              },
+              {
+                "actual": 0,
+                "satisfied": true
+              }
+            ]
+          }
+        },
+        {
+          "policy": "first_round_control",
+          "repeat": 1,
+          "request_id": "a8108407628c941ada559972462c4c1edddcbf3b318ce6760c21f7ec081f9738",
+          "output_sha256": "58df1afbb46a4e9b9b624f85c3059238849c5f297c5dfd3dc21cbd333fb40e25",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": 1,
+                "satisfied": true
+              },
+              {
+                "actual": 0,
+                "satisfied": true
+              }
+            ]
+          }
+        },
+        {
+          "policy": "full",
+          "repeat": 0,
+          "request_id": "663af843a9fdd431dc5a802ee9c4a8f087f7812eff34b72b09113f338811a8ae",
+          "output_sha256": "2167dd22e43f0053090cafca9dba48ac7b04de765c480b478d70b639e3883f6c",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": 4,
+                "satisfied": false
+              },
+              {
+                "actual": 1,
+                "satisfied": false
+              }
+            ]
+          }
+        },
+        {
+          "policy": "full",
+          "repeat": 1,
+          "request_id": "cd55a9fd111caf1579f3cbb92b5076b68593221d8fbc74991b9397f274a7e8e0",
+          "output_sha256": "2167dd22e43f0053090cafca9dba48ac7b04de765c480b478d70b639e3883f6c",
+          "public_evaluation": {
+            "status": "executed",
+            "checks": [
+              {
+                "actual": 4,
+                "satisfied": false
+              },
+              {
+                "actual": 1,
+                "satisfied": false
+              }
+            ]
+          }
+        }
+      ],
+      "certificate_authoring": "manual_post_hoc_discovery_only",
+      "candidate_message_attribution": "not_intervened_not_proven"
+    }
+  ],
+  "limitations": [
+    "Selection uses observed pass differences; evidence generation never reads reference answers or hidden tests. This is discovery, not blinded validation.",
+    "Public certificates are authored manually after seeing outcomes; no automatic verifier or policy performance is established.",
+    "No message-removal or replacement intervention was run; compatibility with a bad suggestion does not prove its causal effect.",
+    "Only observed Full/first-round discordances are covered; this is not an all-task false-positive or recall evaluation.",
+    "Child processes have timeouts but no filesystem/network security sandbox; only previously archived local outputs are executed."
+  ]
+}

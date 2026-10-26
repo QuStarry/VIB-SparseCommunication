@@ -1,0 +1,20 @@
+{
+  "manifest_sha256": "ea9ae8d6832bd7c3eb1355f08413abef4068244dbdbdad400e6b6f107805725c",
+  "request_content_sha256": "f6e6f617fe37e83a47ed8536e852202952f001a401db1b4b833c12a277b25a6e",
+  "audit_script_sha256": "ddfb060b95dc68063f0e7623e2aa6b1ff450515a64787a56c291a59f6df9d965",
+  "coverage": {
+    "contrast": "full_minus_first_round",
+    "selected_cases": 0,
+    "audited_cases": 0,
+    "unsupported_cases": 0
+  },
+  "api_requests": 0,
+  "cases": [],
+  "limitations": [
+    "Selection uses observed pass differences; evidence generation never reads reference answers or hidden tests. This is discovery, not blinded validation.",
+    "Public certificates are authored manually after seeing outcomes; no automatic verifier or policy performance is established.",
+    "No message-removal or replacement intervention was run; compatibility with a bad suggestion does not prove its causal effect.",
+    "Only observed Full/first-round discordances are covered; this is not an all-task false-positive or recall evaluation.",
+    "Child processes have timeouts but no filesystem/network security sandbox; only previously archived local outputs are executed."
+  ]
+}

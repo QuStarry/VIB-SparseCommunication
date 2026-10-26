@@ -1,0 +1,119 @@
+{
+  "manifest_sha256": "748cd55e7e75f71f6a022e2f73643b097b099c7adca1c0bac6a0d0c719f3736f",
+  "request_content_sha256": "a097bce5a9d5d1e14c42fe44d047741e1f93e01a755c36e15b13afbc23fd08f2",
+  "audit_script_sha256": "ddfb060b95dc68063f0e7623e2aa6b1ff450515a64787a56c291a59f6df9d965",
+  "coverage": {
+    "contrast": "full_minus_first_round",
+    "selected_cases": 1,
+    "audited_cases": 1,
+    "unsupported_cases": 0
+  },
+  "api_requests": 0,
+  "cases": [
+    {
+      "task_id": "MATH/1791",
+      "problem": "The parallelogram bounded by the lines $y=ax+c$, $y=ax+d$, $y=bx+c$, and $y=bx+d$ has area 18. The parallelogram bounded by the lines $y=ax+c$, $y=ax-d$, $y=bx+c$, and $y=bx-d$ has area 72. Given that $a$, $b$, $c$, and $d$ are positive integers, what is the smallest possible value of $a+b+c+d$?",
+      "candidates": [
+        "[Planner]: 先建立两族平行线的交点坐标，用参数表示面积公式，发现面积与|a-b|和|c-d|的乘积成正比。设第一个面积为18，第二个为72，可推出|a-b|·|c-d|与|a-b|·(c+d)的关系，从而得到c和d的线性约束。接下来只需枚举正整数解，最小化a+b+c+d。",
+        "[Solver]: 设两平行线间距为 \\( \\frac{|c-d|}{\\sqrt{1+a^2}} \\)，另一方向间距为 \\( \\frac{|c-d|}{\\sqrt{1+b^2}} \\)，夹角正弦为 \\( \\frac{|a-b|}{\\sqrt{(1+a^2)(1+b^2)}} \\)，故面积 \\( S = \\frac{(c-d)^2 |a-b|}{|(1+a^2)(1+b^2)|^{1/2}} \\cdot \\sqrt{(1+a^2)(1+b^2)} = (c-d)^2 |a-b| \\)。第一面积 18 给出 \\( (c-d)^2 |a-b| = 18 \\)，第二面积 72 给出 \\( (c+d)^2 |a-b| = 72 \\)。两式相除得 \\( \\frac{(c+d)^2}{(c-d)^2} = 4 \\)，即 \\( c+d = 2(c-d) \\)（正数），故 \\( c = 3d \\)。代入第一式得 \\( (2d)^2 |a-b| = 18 \\)，即 \\( 4d^2 |a-b| = 18 \\)，所以",
+        "[Verifier]: 首先，两条平行线间的距离公式为|(c-d)|/√(1+a²)，因此第一个平行四边形的面积可表示为|(c-d)(c-d)|/|a-b|，但更直接的是通过坐标变换：令u=y-ax，v=y-bx，则面积等于|(c-d)²/(a-b)|。根据题意，第一个面积为18，第二个面积为72，且第二个的截距差为c+d（因为y=ax+c与y=ax-d的距离为c+d），所以有|(c-d)²/(a-b)|=18和|(c+d)²/(a-b)|=72。两式相除得((c+d)/(c-d))²=4，即(c+d)/(c-d)=2（因正数），解得c=3d。代入第一式得(2d)²/|a-b|=18，即4d²=18|a-b|，所以|a-b|=2d²/9。由于a,b,d为正整数，d必须是3的倍数，设d=3k，则|a-b|=2k²。为使a+b+c+d最小，取k=1，则d=",
+        "[Planner]: 继续推导：由 \\(d=3k\\) 得 \\(|a-b|=2k^2\\)，且 \\(c=9k\\)。为使 \\(a+b+c+d\\) 最小，取 \\(k=1\\)，则 \\(|a-b|=2\\)，最小正整数解为 \\(a=1, b=3\\)（或互换），此时总和为 \\(1+3+9+3=16\\)。需验证面积条件是否满足，并确认这是全局最小值。",
+        "[Solver]: 取k=1时，d=3，|a-b|=2，则a+b最小为1+3=4（或3+1=4），c=9，总和最小为4+3+9=16。验证：a=1,b=3,d=3,c=9时，第一面积=4·9·2=72？不对，需重新核对：第一面积应为(2d)²|a-b|=36·2=72，与18矛盾，说明k=1不满足第一式，实际需4d²|a-b|=18，即d²|a-b|=4.5，无整数解，故需重新检查面积公式推导。",
+        "[Verifier]: 验证面积公式时需注意坐标变换的雅可比行列式绝对值应为1/|a-b|，而非(c-d)²/|a-b|，但最终比例关系正确。另外，由4d²=18|a-b|化简得|a-b|=2d²/9，因d为正整数，d必须为3的倍数，且k=1时|a-b|=2，此时a+b最小为3（如a=1,b=3），但需检查c=3d=9，总和为1+3+3+9=16，是否还有更小组合需验证k=1时a+b的其他可能。"
+      ],
+      "certificate": {
+        "source": "Jacobian area derivation and integer lower bound from the problem",
+        "derived_minimum": 16,
+        "witness": {
+          "a": 1,
+          "b": 3,
+          "c": 9,
+          "d": 3
+        },
+        "verified_areas": [
+          "18",
+          "72"
+        ],
+        "proof": [
+          "|det d(u,v)/d(x,y)|=|a-b|, so area=(intercept difference)^2/|a-b|.",
+          "Area ratio 72/18=4 implies max(c,d)=3*min(c,d).",
+          "Let min(c,d)=m; 4*m^2=18*|a-b| implies m=3*k, |a-b|=2*k^2.",
+          "Positive integer a,b imply a+b>=2*k^2+2; c+d=12*k.",
+          "For k>=1, 2*k^2+12*k+2 is increasing; minimum is 16 at k=1."
+        ],
+        "interpretation": "Correct continuation coexists with incorrect critiques; speaker role or agreement is not an evidence certificate."
+      },
+      "outputs": [
+        {
+          "policy": "first_round",
+          "repeat": 0,
+          "request_id": "de8fb57e0010c8850a0b33096519eb040072c2b144cdf79d284691c9fc919e2a",
+          "output_sha256": "11a8630509d8c2fce31bd89be7f061c273f6c907b47677c5090af14d6ae04be3",
+          "public_evaluation": {
+            "status": "derived_scalar_comparison",
+            "satisfied": false
+          }
+        },
+        {
+          "policy": "first_round",
+          "repeat": 1,
+          "request_id": "7cf20e703efe78d09398eb2ab5cf30f80bc9753d8fe73b8030ce1c80734790f8",
+          "output_sha256": "11a8630509d8c2fce31bd89be7f061c273f6c907b47677c5090af14d6ae04be3",
+          "public_evaluation": {
+            "status": "derived_scalar_comparison",
+            "satisfied": false
+          }
+        },
+        {
+          "policy": "first_round_control",
+          "repeat": 0,
+          "request_id": "0eab65b7fe28bf7b58970d1161c70ec80d6ef042e6aa6869ba99dce940685e30",
+          "output_sha256": "c720ccbb8b0941b3d4dc9ab283791a6e6425630e2587ee9f621cd479e439eee4",
+          "public_evaluation": {
+            "status": "derived_scalar_comparison",
+            "satisfied": false
+          }
+        },
+        {
+          "policy": "first_round_control",
+          "repeat": 1,
+          "request_id": "8bb1e16327f38301817dacf9f7e98f09bf4da0c45b278fb41ed4d2ed2f144bf0",
+          "output_sha256": "c720ccbb8b0941b3d4dc9ab283791a6e6425630e2587ee9f621cd479e439eee4",
+          "public_evaluation": {
+            "status": "derived_scalar_comparison",
+            "satisfied": false
+          }
+        },
+        {
+          "policy": "full",
+          "repeat": 0,
+          "request_id": "b4edf70c0df8cf79b7fea9429d3e4453bccd3049f96d07e8887d3416fca1ac7d",
+          "output_sha256": "5cf554b58047a574ca05dc02ac9a51347f7c8cd604226ac8997aa5287df34c8a",
+          "public_evaluation": {
+            "status": "derived_scalar_comparison",
+            "satisfied": true
+          }
+        },
+        {
+          "policy": "full",
+          "repeat": 1,
+          "request_id": "8c447f13c635e5cc31ff0bf2cb52bc67ae5c688d01b764a3a2c12cf4c0dea378",
+          "output_sha256": "5cf554b58047a574ca05dc02ac9a51347f7c8cd604226ac8997aa5287df34c8a",
+          "public_evaluation": {
+            "status": "derived_scalar_comparison",
+            "satisfied": true
+          }
+        }
+      ],
+      "certificate_authoring": "manual_post_hoc_discovery_only",
+      "candidate_message_attribution": "not_intervened_not_proven"
+    }
+  ],
+  "limitations": [
+    "Selection uses observed pass differences; evidence generation never reads reference answers or hidden tests. This is discovery, not blinded validation.",
+    "Public certificates are authored manually after seeing outcomes; no automatic verifier or policy performance is established.",
+    "No message-removal or replacement intervention was run; compatibility with a bad suggestion does not prove its causal effect.",
+    "Only observed Full/first-round discordances are covered; this is not an all-task false-positive or recall evaluation.",
+    "Child processes have timeouts but no filesystem/network security sandbox; only previously archived local outputs are executed."
+  ]
+}
