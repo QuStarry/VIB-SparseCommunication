@@ -159,10 +159,24 @@ MBPP 全量重跑后的 MR 分组可能变化，不能保证仍为原来 21 题�
 - 边界：只覆盖整数答案、六候选齐全的 24 题；复用同一批历史候选，重复合成不增加独立问题量；`direct` 不是等预算单智能体对照；random `keep_rate=0.70` / cosine `0.75` 未校准为该子集等消息预算。不能据此否证门控在其它任务/规模上的价值。
 - 待决策的高收益候选：转向「何时值得调用验证器 / 保留纠错」（自适应验证调度，需与 ProgRouter / PEAR 划清增量）；或在代码任务（纠错对最终代码有实际影响）上重做该受控实验；或先补齐等预算单智能体与跨模型对照。
 
+### 代码评分修正与 HumanEval 重放（2026-10-23）
+
+- 用户选择保留刷新后的原始输出，仅重算可执行评分；先完成修正，再启动已批准的 24 题 × 6 策略 × 2 次重放，代理费用上限 $3。不自动扩展实验。
+- 根因：历史提交 `324f3df` 的 synthesis-refresh 评分仅执行 HumanEval 的 `check` 定义而不调用它；`914b6c8` 已修实现，但历史派生 JSON 仍含旧标记。
+- `scripts/recompute_code_eval.py` 按 harness 分派重算：HumanEval 显式传 `entry_point`，MBPP 执行顶层断言、不传入口。原始 `results/main_with_math_merged.json` 保持只读；另存 `results/main_with_math_merged.codeeval_fixed.json` 和逐题审计 `results/codeeval_correction_20261023.json`。
+- HumanEval：Full 151/164 = 92.07%，VIB 148/164 = 90.24%，Δ−1.83pp，paired bootstrap CI `[-6.71,+3.05]`，McNemar p=0.607239；Full-only=9、VIB-only=6。29 个臂标签由通过转为失败，旧 100%/100% 与零宽区间不再作为证据。
+- MBPP：Full 236/257 = 91.83%，VIB 237/257 = 92.22%，Δ+0.39pp，CI `[-1.56,+2.33]`，p=1.0；5 个臂标签由失败转为通过。该差异不是 HumanEval 未调用 check 的同一机制，不能未经验证归因。
+- 保留原 ES/MR OR 分组（236/21 题）：ES 改为 Full 99.15% / VIB 98.73%；MR 仍为 9.52% / 19.05%。不重做参考答案早停，也不改变历史分组。
+- 已重导表 1、表 2，更新摘要与正文。图表入口同步改用修正产物，并补齐 Pareto 图的 MATH 点与 HumanEval 完整置信区间；不把跨基准散点称为共同 Pareto 前沿。
+- 启动前 HumanEval 重放目录只有 dry-run manifest，无付费请求；执行时复用原始候选来源以保持已冻结契约，正确性由可执行测试判定，不读取历史 passed 选题。省去主 harness 的 doctest 自修复，仅研究接收端单次合成，不能直接与主表比较。
+- 修正后验证：87 项测试通过；源文件与评分脚本 SHA-256 均匹配溯源记录；逐字段比较确认除通过相关字段及修正溯源块外其余数据完全不变。PDF 编译成功、Overfull hbox 为 0（仍有 Underfull 排版警告）。
+- 上述验证通过后，已启动获批 HumanEval 重放，冻结契约哈希 `8b0a6518d73da7e545e60bac60de41fe1ab9df4347b6166b3439df7c0cd0bb84`；请求逐条持久化。未完成全部配对前不报告策略优劣，不启动付费扩展。
+
 ## 一键导航
 
 [阶段性论文](paper.pdf) · [正文事实源](paper.tex) · [表格生成器](../scripts/export_latex_tables.py) ·
-[门控对照数据](../results/gating_sweep/gating_summary.json) · [核心工作流](../src/workflow.py)
+[门控对照数据](../results/gating_sweep/gating_summary.json) · [核心工作流](../src/workflow.py) ·
+[代码评分修正](../results/codeeval_correction_20261023.json) · [修正主表数据](../results/main_with_math_merged.codeeval_fixed.json)
 
 ---
 

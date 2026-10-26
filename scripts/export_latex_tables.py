@@ -3,7 +3,9 @@ Phase 3-a: 把 3 类实验 JSON 结果自动导出为 LaTeX 顶会论文表格�
 
 Inputs (默认路径，CLI 可覆盖):
   --vanilla     results/vanilla_with_math_merged.json    (含 MATH，Table 1 第 4 行必需)
-  --main        results/main_with_math_merged.json       (含 MATH，Table 1 第 4 行必需)
+  --main        results/main_with_math_merged.codeeval_fixed.json
+                                                          (含 MATH；由 scripts/recompute_code_eval.py
+                                                           重算代码基准通过标记后的修正产物)
   --ablfrozen   results/gsm8k_ablation_frozen_only.json
   --ablrole     results/gsm8k_ablation_frozen_plus_role.json
   --outdir      paper/tables/
@@ -244,7 +246,8 @@ TABLE1_FOOTER = r"""\bottomrule
 \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
 \textbf{Notes.} All intervals at 95\% level. Single-proportion intervals use Wilson score; method-difference intervals use 10k paired bootstrap draws (seed=20260812).
 Vanilla uses direct synthesis without team discussion, with temperature$=0.1$ and task-specific output limits ($1024$ code, $256$ math). It is not matched to the team's total inference budget.
-No equivalence or non-inferiority margin was prespecified. A CI spanning zero is not evidence of equivalence; HumanEval's paired $[0,0]$ reflects all-success observed pairs, not zero population uncertainty.
+No equivalence or non-inferiority margin was prespecified. A CI spanning zero is not evidence of equivalence.
+HumanEval and MBPP pass labels were recomputed with the harness code evaluator (see \Cref{app:repro}); an earlier artifact reported HumanEval at $100.00/100.00$ because the synthesis-refresh scoring step executed the reference tests without invoking them.
 MBPP messages and tokens slightly increase; savings occur on GSM8K, MATH, and HumanEval.
 \textbf{Temperature robustness (greedy reruns):}
 message reduction is similar in the recorded greedy runs: MATH 25.59$\to$25.39\%, GSM8K 30.49$\to$30.28\%. This does not eliminate provider or sampling uncertainty.
@@ -791,7 +794,9 @@ def preview_table1_plain(rows: List[DatasetRow]):
 def main():
     p = argparse.ArgumentParser(description="Export VIB-Sparse paper LaTeX tables from result JSONs")
     p.add_argument("--vanilla", default="results/vanilla_with_math_merged.json")
-    p.add_argument("--main", default="results/main_with_math_merged.json")
+    p.add_argument("--main", default="results/main_with_math_merged.codeeval_fixed.json",
+                   help="主结果 JSON；默认使用 scripts/recompute_code_eval.py 修正过"
+                        "代码基准通过标记的产物（原始文件保持只读）")
     p.add_argument("--ablfrozen", default="results/gsm8k_ablation_frozen_only.json")
     p.add_argument("--ablrole", default="results/gsm8k_ablation_frozen_plus_role.json")
     p.add_argument("--outdir", default="paper/tables")

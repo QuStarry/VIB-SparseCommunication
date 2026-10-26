@@ -22,8 +22,8 @@ MBPP has near-zero aggregate savings under its historical reference-assisted ear
 & & \multicolumn{3}{c}{Pass@1 (\%)} & (pp) & & & \multicolumn{1}{c}{$\downarrow$\%} & \multicolumn{1}{c}{$\downarrow$\%} \\
 \midrule
 
-HumanEval       &   164 &   93.90 & 100.00~[+97.71,\,+100.00] & 100.00~[+97.71,\,+100.00] &  +6.10 & 0.00       & [+0.00,\,+0.00] & +21.14 &  +3.88 \\
-MBPP            &   257 &   89.88 & 90.66~[+86.48,\,+93.64] & 91.44~[+87.38,\,+94.28] &  +1.56 & +0.78       & [-1.17,\,+2.72] &  -0.12 &  -0.05 \\
+HumanEval       &   164 &   93.90 & 92.07~[+86.91,\,+95.31] & 90.24~[+84.74,\,+93.90] &  -3.66 & -1.83       & [-6.71,\,+3.05] & +21.14 &  +3.88 \\
+MBPP            &   257 &   89.88 & 91.83~[+87.83,\,+94.59] & 92.22~[+88.29,\,+94.91] &  +2.34 & +0.39       & [-1.56,\,+2.33] &  -0.12 &  -0.05 \\
 GSM8K           &  1319 &   59.29 & 95.30~[+94.02,\,+96.32] & 95.22~[+93.93,\,+96.25] & +35.93 & -0.08       & [-0.83,\,+0.68] & +30.49 &  +4.96 \\
 MATH            &  5000 &   49.10 & 80.08~[+78.95,\,+81.16] & 79.16~[+78.01,\,+80.26] & +30.06 & -0.92$^\dagger$$^\S$ & [-1.78,\,-0.04] & +25.59 &  +4.42 \\
 \bottomrule
@@ -32,7 +32,8 @@ MATH            &  5000 &   49.10 & 80.08~[+78.95,\,+81.16] & 79.16~[+78.01,\,+8
 \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
 \textbf{Notes.} All intervals at 95\% level. Single-proportion intervals use Wilson score; method-difference intervals use 10k paired bootstrap draws (seed=20260812).
 Vanilla uses direct synthesis without team discussion, with temperature$=0.1$ and task-specific output limits ($1024$ code, $256$ math). It is not matched to the team's total inference budget.
-No equivalence or non-inferiority margin was prespecified. A CI spanning zero is not evidence of equivalence; HumanEval's paired $[0,0]$ reflects all-success observed pairs, not zero population uncertainty.
+No equivalence or non-inferiority margin was prespecified. A CI spanning zero is not evidence of equivalence.
+HumanEval and MBPP pass labels were recomputed with the harness code evaluator (see \Cref{app:repro}); an earlier artifact reported HumanEval at $100.00/100.00$ because the synthesis-refresh scoring step executed the reference tests without invoking them.
 MBPP messages and tokens slightly increase; savings occur on GSM8K, MATH, and HumanEval.
 \textbf{Temperature robustness (greedy reruns):}
 message reduction is similar in the recorded greedy runs: MATH 25.59$\to$25.39\%, GSM8K 30.49$\to$30.28\%. This does not eliminate provider or sampling uncertainty.

@@ -4,7 +4,7 @@ Phase 3-b · Figure 3-a: Pareto-optimal bubble chart.
 x-axis  : VIB relative to Full → message compression (%)
 y-axis  : VIB relative to Full → Δ Pass@1 (pp), with paired Bootstrap 95% CI whiskers
 bubble  : total tasks (N)
-color   : dataset (HumanEval / MBPP / GSM8K)
+color   : dataset (HumanEval / MBPP / GSM8K / MATH)
 
 Outputs (paper/figures/):
   figure3_pareto_bubble.pdf   (vector, for paper)
@@ -12,7 +12,7 @@ Outputs (paper/figures/):
 
 Usage:
   python3 scripts/plot_pareto_3a.py
-  python3 scripts/plot_pareto_3a.py --main results/3dataset_synthesis_refreshed_split_or.json --outdir paper/figures
+  python3 scripts/plot_pareto_3a.py --main results/main_with_math_merged.codeeval_fixed.json --outdir paper/figures
 """
 import argparse
 import json
@@ -37,6 +37,7 @@ PALETTE = {
     "HumanEval": "#1f77b4",
     "MBPP":      "#2ca02c",
     "GSM8K":     "#ff7f0e",
+    "MATH":      "#9467bd",
 }
 EDGE = "#222222"
 GRID = "#e5e7eb"
@@ -60,8 +61,13 @@ def load_json(p: Path) -> Dict[str, Any]:
 def build_points(main_path: Path) -> List[Point]:
     data = load_json(main_path)
     pts: List[Point] = []
-    order = [("humaneval", "HumanEval"), ("mbpp", "MBPP"), ("gsm8k", "GSM8K")]
+    order = [
+        ("humaneval", "HumanEval"), ("mbpp", "MBPP"),
+        ("gsm8k", "GSM8K"), ("math", "MATH"),
+    ]
     for ds, lab in order:
+        if ds not in data["summary"]:
+            continue
         s = data["summary"][ds]
         rows = [{
             "task_id": r["task_id"],
@@ -93,12 +99,12 @@ def savefig(fig, outdir: Path, name: str):
 
 
 def plot(pts: List[Point], outdir: Path, with_arrows: bool):
-    # ---- size: bubble area ∝ N
+    # Bubble area follows sqrt(N), matching the manuscript caption.
     ns = np.array([p.n for p in pts])
     # Map N→area. Use sqrt for radius. Set min area to 180 (so MBPP doesn't vanish).
     n_ref = 1000.0
     base_area = 260.0
-    sizes = base_area * (np.sqrt(ns / n_ref)) ** 2
+    sizes = base_area * np.sqrt(ns / n_ref)
     sizes = np.clip(sizes, 180, 1600)
 
     fig, ax = plt.subplots(figsize=(8.2, 5.4))
@@ -111,12 +117,9 @@ def plot(pts: List[Point], outdir: Path, with_arrows: bool):
 
     # --- x>0 band (positive compression) shade light
     ax.axvspan(0, 50, facecolor="#eef7ff", alpha=0.4, zorder=-1)
-    ax.text(49, ax.get_ylim()[1] if False else -5,
-            "better compression →", color="#1f2937", fontsize=8, ha="right", va="top", alpha=0.75)
-    # y>0 annotation
     ax.set_xlim(-6, 42)
-    ax.set_ylim(-4.2, 6.8)
-    ax.text(-5.5, 6.5, "better accuracy →", color="#1f2937", fontsize=8, va="top", rotation=90, alpha=0.75)
+    ax.set_ylim(min(-4.2, min(p.y_ci[0] for p in pts) - 1.0),
+                max(6.8, max(p.y_ci[1] for p in pts) + 1.0))
 
     # grid
     ax.grid(True, which="both", linestyle=":", linewidth=0.7, color=GRID, zorder=0)
@@ -150,7 +153,7 @@ def plot(pts: List[Point], outdir: Path, with_arrows: bool):
         ax.annotate(
             f"{p.label}\nN={p.n}",
             xy=(p.x, p.y),
-            xytext=(0, r * 0.028),
+            xytext=(0, r + 5),
             textcoords="offset points",
             ha="center", va="bottom",
             fontsize=9, fontweight="bold", color=p.color,
@@ -161,7 +164,7 @@ def plot(pts: List[Point], outdir: Path, with_arrows: bool):
     # axes labels
     ax.set_xlabel("Message Compression vs. Full-Comm (%)", fontsize=11, fontweight="bold")
     ax.set_ylabel("Δ Pass@1 vs. Full-Comm (pp, 95% Boot CI)", fontsize=11, fontweight="bold")
-    ax.set_title("Figure 3-a · Pareto front (accuracy vs. communication)",
+    ax.set_title("Figure 3-a · Observed accuracy–communication trade-offs",
                  fontsize=12, fontweight="bold", pad=10, loc="left")
 
     # arrow: Pareto direction NE → better
@@ -172,8 +175,8 @@ def plot(pts: List[Point], outdir: Path, with_arrows: bool):
                 rotation=28, fontstyle="italic")
 
     # ---- N size legend (custom) ----
-    legend_n = [100, 500, 1500]
-    legend_sizes = base_area * (np.sqrt(np.array(legend_n) / n_ref)) ** 2
+    legend_n = [100, 1000, 5000]
+    legend_sizes = base_area * np.sqrt(np.array(legend_n) / n_ref)
     legend_sizes = np.clip(legend_sizes, 180, 1600)
     handles = [
         plt.scatter([], [], s=s, c="#cccccc", alpha=0.85, edgecolors=EDGE, linewidths=1.0)
@@ -192,7 +195,7 @@ def plot(pts: List[Point], outdir: Path, with_arrows: bool):
     handles2 = [
         Line2D([0], [0], marker="o", color="w", markerfacecolor=PALETTE[l],
                markersize=10, markeredgecolor=EDGE, markeredgewidth=1.0, label=l)
-        for l in ("HumanEval", "MBPP", "GSM8K")
+        for l in (point.label for point in pts)
     ]
     ax.legend(handles=handles2, title="Dataset",
               loc="upper left", frameon=True, framealpha=0.92,
@@ -205,7 +208,9 @@ def plot(pts: List[Point], outdir: Path, with_arrows: bool):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--main", default="results/3dataset_synthesis_refreshed_split_or.json")
+    ap.add_argument("--main", default="results/main_with_math_merged.codeeval_fixed.json",
+                    help="主结果 JSON；默认使用 scripts/recompute_code_eval.py 修正过"
+                         "代码基准通过标记的产物，与 paper/tables 保持同一数据源")
     ap.add_argument("--outdir", default="paper/figures")
     ap.add_argument("--no-arrows", action="store_true", help="Disable Pareto arrow")
     args = ap.parse_args()
