@@ -1,0 +1,89 @@
+{
+  "request_id": "55fb180f6c173b9f2413e13450dee88e6c064547a66871350f81620c0b8aac09",
+  "task_id": "HumanEval/25",
+  "repeat": 0,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0006048,
+  "admitted_messages": 5,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.9399700401279841,
+      "sufficiency": 0.24244223535060883,
+      "redundancy": 0.0,
+      "beta_t": 3.8770886548238703,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 0.984682770118701,
+      "sufficiency": 0.20513348281383514,
+      "redundancy": 0.0,
+      "beta_t": 4.800205001210506,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.7903654555731292,
+      "sufficiency": 0.4216260313987732,
+      "redundancy": 0.0,
+      "beta_t": 4.246335193378524,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.8437106847614552,
+      "sufficiency": 0.18048688769340515,
+      "redundancy": 1.48967396218012,
+      "beta_t": 3.579003913658088,
+      "is_allowed": false,
+      "threshold": -0.5710609766840935
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 1.3725253217153268,
+      "sufficiency": 0.396578848361969,
+      "redundancy": 0.38477413111320236,
+      "beta_t": 4.431147702624299,
+      "is_allowed": true,
+      "threshold": -0.5486982099098318
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 1.3103332789427014,
+      "sufficiency": 0.42744237184524536,
+      "redundancy": 0.36518158767829206,
+      "beta_t": 3.919861429244572,
+      "is_allowed": true,
+      "threshold": -0.5686907830834389
+    }
+  ],
+  "prompt_sha256": "58702170719a1992ddf9dda75f31000b91749b63d67cea21532e277ab130f563",
+  "prompt_tokens": 1652,
+  "completion_tokens": 91,
+  "usage": {
+    "completion_tokens": 91,
+    "prompt_tokens": 1652,
+    "total_tokens": 1743,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "a68b65a2c04b6c28082d4cf9eb382f19-d0de547c",
+  "finish_reason": "stop",
+  "output": "```python\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    if n <= 1:\n        return []\n    result = []\n    i = 2\n    while i * i <= n:\n        while n % i == 0:\n            result.append(i)\n            n //= i\n        i += 1\n    if n > 1:\n        result.append(n)\n    return result\n```",
+  "passed": true,
+  "elapsed_ms": 3199.17133403942
+}

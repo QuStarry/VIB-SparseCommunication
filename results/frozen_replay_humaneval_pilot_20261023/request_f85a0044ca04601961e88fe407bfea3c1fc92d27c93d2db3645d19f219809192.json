@@ -1,0 +1,89 @@
+{
+  "request_id": "f85a0044ca04601961e88fe407bfea3c1fc92d27c93d2db3645d19f219809192",
+  "task_id": "HumanEval/55",
+  "repeat": 1,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005658,
+  "admitted_messages": 6,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.9965116894035735,
+      "sufficiency": 0.30494582653045654,
+      "redundancy": 0.0,
+      "beta_t": 3.2678318662086907,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 3.1581666842181906,
+      "sufficiency": 0.7535685300827026,
+      "redundancy": 0.0,
+      "beta_t": 4.190948212595327,
+      "is_allowed": true,
+      "threshold": -0.605625
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.5996593598165332,
+      "sufficiency": 0.439819872379303,
+      "redundancy": 0.0,
+      "beta_t": 3.637078404763345,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.30690253273036183,
+      "sufficiency": 0.3519126772880554,
+      "redundancy": 1.3684784485519463,
+      "beta_t": 3.016589012940388,
+      "is_allowed": true,
+      "threshold": -0.549042450785637
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.5295986739592979,
+      "sufficiency": 0.21877774596214294,
+      "redundancy": 0.31679396817163347,
+      "beta_t": 3.8687328019065994,
+      "is_allowed": true,
+      "threshold": -0.5965912464261055
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 1.1089490474017933,
+      "sufficiency": 0.4427337050437927,
+      "redundancy": 0.3775056936593291,
+      "beta_t": 3.357446528526873,
+      "is_allowed": true,
+      "threshold": -0.5781878608465195
+    }
+  ],
+  "prompt_sha256": "4ff33be9512402b33ac0a0bb9b4d2676ffbd3bfef5071143db33f875b927a515",
+  "prompt_tokens": 1562,
+  "completion_tokens": 81,
+  "usage": {
+    "completion_tokens": 81,
+    "prompt_tokens": 1562,
+    "total_tokens": 1643,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "123a118f86dc41ee8e9095a9c3c21ccf",
+  "finish_reason": "stop",
+  "output": "```python\ndef fib(n: int):\n    \"\"\"Return n-th Fibonacci number.\n    >>> fib(10)\n    55\n    >>> fib(1)\n    1\n    >>> fib(8)\n    21\n    \"\"\"\n    a, b = 0, 1\n    for _ in range(n):\n        a, b = b, a + b\n    return a\n```",
+  "passed": true,
+  "elapsed_ms": 2468.1738750077784
+}

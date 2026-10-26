@@ -1,0 +1,89 @@
+{
+  "request_id": "9c89ddb782a002c5e36a9d640ce693975a7fe38515731595c0a645da1ae30895",
+  "task_id": "HumanEval/140",
+  "repeat": 0,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005316,
+  "admitted_messages": 4,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.507845219135352,
+      "sufficiency": 0.13161295652389526,
+      "redundancy": 0.0,
+      "beta_t": 3.858626327896137,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 0.7537875507412716,
+      "sufficiency": 0.15763866901397705,
+      "redundancy": 0.0,
+      "beta_t": 4.781742674282773,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 0.5281101390295743,
+      "sufficiency": 0.12491154670715332,
+      "redundancy": 0.0,
+      "beta_t": 4.227872866450792,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.46093333368759615,
+      "sufficiency": 0.2603380084037781,
+      "redundancy": 1.3882471763008077,
+      "beta_t": 3.5619610378787634,
+      "is_allowed": true,
+      "threshold": -0.6070299783349037
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": -0.5771878867968183,
+      "sufficiency": 0.21538183093070984,
+      "redundancy": 1.527905866322773,
+      "beta_t": 4.414104826844975,
+      "is_allowed": false,
+      "threshold": -0.5680538964271545
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": -0.9293766531818175,
+      "sufficiency": 0.16952189803123474,
+      "redundancy": 1.5909898620367644,
+      "beta_t": 3.902818553465248,
+      "is_allowed": false,
+      "threshold": -0.5534049922227859
+    }
+  ],
+  "prompt_sha256": "874fcaa8de76c5974d1088bfd731d313fc161f9b6585e5294c019765e3928085",
+  "prompt_tokens": 1580,
+  "completion_tokens": 48,
+  "usage": {
+    "completion_tokens": 48,
+    "prompt_tokens": 1580,
+    "total_tokens": 1628,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "d57c4c659e6adff0263a66fc74770033-17bd4545",
+  "finish_reason": "stop",
+  "output": "```python\ndef fix_spaces(text):\n    import re\n    result = re.sub(r'\\s{3,}', '-', text)\n    result = re.sub(r'\\s', '_', result)\n    return result\n```",
+  "passed": true,
+  "elapsed_ms": 3636.3592079724185
+}

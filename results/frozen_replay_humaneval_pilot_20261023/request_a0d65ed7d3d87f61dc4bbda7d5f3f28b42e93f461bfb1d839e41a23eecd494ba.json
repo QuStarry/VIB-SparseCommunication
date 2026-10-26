@@ -1,0 +1,89 @@
+{
+  "request_id": "a0d65ed7d3d87f61dc4bbda7d5f3f28b42e93f461bfb1d839e41a23eecd494ba",
+  "task_id": "HumanEval/72",
+  "repeat": 0,
+  "policy": "cosine",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005396999999999999,
+  "admitted_messages": 4,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.23061907291412354,
+      "sufficiency": 0.0,
+      "redundancy": 0.7693809270858765,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.40612053871154785,
+      "sufficiency": 0.0,
+      "redundancy": 0.5938794612884521,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.22680330276489258,
+      "sufficiency": 0.0,
+      "redundancy": 0.7731966972351074,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.75
+    }
+  ],
+  "prompt_sha256": "15ad243b12e2c8f7a15a9470770a5f498b982971cd783a66d77a3a0c3e60c539",
+  "prompt_tokens": 1683,
+  "completion_tokens": 29,
+  "usage": {
+    "completion_tokens": 29,
+    "prompt_tokens": 1683,
+    "total_tokens": 1712,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "c95432a84d33ac8e509e088370a79acf-8d203aa9",
+  "finish_reason": "stop",
+  "output": "```python\ndef will_it_fly(q, w):\n    return q == q[::-1] and sum(q) <= w\n```",
+  "passed": true,
+  "elapsed_ms": 2715.0033750222065
+}

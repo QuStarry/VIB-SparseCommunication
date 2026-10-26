@@ -1,0 +1,89 @@
+{
+  "request_id": "6ed5cdac1be1e6438e3d457102f13af19bdcc2d7806b3d84db6f43f217fc28f1",
+  "task_id": "HumanEval/25",
+  "repeat": 1,
+  "policy": "cosine",
+  "status": "ok",
+  "charged_proxy_usd": 0.0006246,
+  "admitted_messages": 6,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.3767794966697693,
+      "sufficiency": 0.0,
+      "redundancy": 0.6232205033302307,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.2539902925491333,
+      "sufficiency": 0.0,
+      "redundancy": 0.7460097074508667,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.25996237993240356,
+      "sufficiency": 0.0,
+      "redundancy": 0.7400376200675964,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    }
+  ],
+  "prompt_sha256": "48fc9f534c1b9e0140633a34f082a0bb4a7347212b9ec083b68f95e070625cb4",
+  "prompt_tokens": 1718,
+  "completion_tokens": 91,
+  "usage": {
+    "completion_tokens": 91,
+    "prompt_tokens": 1718,
+    "total_tokens": 1809,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 1536
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "5441254148184cd8bc6594f35cd1b292",
+  "finish_reason": "stop",
+  "output": "```python\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    if n <= 1:\n        return []\n    factors = []\n    i = 2\n    while i * i <= n:\n        while n % i == 0:\n            factors.append(i)\n            n //= i\n        i += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n```",
+  "passed": true,
+  "elapsed_ms": 3977.7987499837764
+}

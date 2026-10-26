@@ -1,0 +1,29 @@
+{
+  "request_id": "b8f37446c10078056b30bdad8caa907e0dd1ec34d2988fe4e39304285f734f10",
+  "task_id": "HumanEval/14",
+  "repeat": 0,
+  "policy": "first_round",
+  "status": "ok",
+  "charged_proxy_usd": 0.000495,
+  "admitted_messages": 3,
+  "decisions": [],
+  "prompt_sha256": "92ad2550e0c8424f60afe7b67423ddbb1c6477198cf5c4eb48081eaeaeb556ca",
+  "prompt_tokens": 1334,
+  "completion_tokens": 79,
+  "usage": {
+    "completion_tokens": 79,
+    "prompt_tokens": 1334,
+    "total_tokens": 1413,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-179274742408344800002f59fa8d#a1",
+  "finish_reason": "stop",
+  "output": "```python\nfrom typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n    return [string[:i] for i in range(1, len(string) + 1)]\n```",
+  "passed": true,
+  "elapsed_ms": 3240.341291995719
+}

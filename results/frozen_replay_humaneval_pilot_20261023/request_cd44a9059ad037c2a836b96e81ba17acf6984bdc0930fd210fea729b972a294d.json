@@ -1,0 +1,89 @@
+{
+  "request_id": "cd44a9059ad037c2a836b96e81ba17acf6984bdc0930fd210fea729b972a294d",
+  "task_id": "HumanEval/70",
+  "repeat": 1,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005382,
+  "admitted_messages": 4,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.7323115400222877,
+      "sufficiency": 0.18888181447982788,
+      "redundancy": 0.0,
+      "beta_t": 3.8770886548238703,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 0.8427182560029871,
+      "sufficiency": 0.17555880546569824,
+      "redundancy": 0.0,
+      "beta_t": 4.800205001210506,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 0.5117835485550668,
+      "sufficiency": 0.12052358686923981,
+      "redundancy": 0.0,
+      "beta_t": 4.246335193378524,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.9636371509278632,
+      "sufficiency": 0.12572850286960602,
+      "redundancy": 1.4136199547565553,
+      "beta_t": 3.579003913658088,
+      "is_allowed": false,
+      "threshold": -0.5807550778985023
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 1.0685837542424184,
+      "sufficiency": 0.5115453004837036,
+      "redundancy": 1.1981490287842018,
+      "beta_t": 4.431147702624299,
+      "is_allowed": true,
+      "threshold": -0.6392256456613541
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": -0.7139335004584674,
+      "sufficiency": 0.16390305757522583,
+      "redundancy": 1.3564107739828475,
+      "beta_t": 3.919861429244572,
+      "is_allowed": false,
+      "threshold": -0.5965185958147049
+    }
+  ],
+  "prompt_sha256": "be7dfaada18b288a622bc788e6129e57f53cd068d07dadea87dd30a8acc36bf4",
+  "prompt_tokens": 1586,
+  "completion_tokens": 52,
+  "usage": {
+    "completion_tokens": 52,
+    "prompt_tokens": 1586,
+    "total_tokens": 1638,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "0123ffb6288b9a54d722b39bd6814c58-dda2cfa1",
+  "finish_reason": "stop",
+  "output": "```python\nfrom collections import deque\n\ndef strange_sort_list(lst):\n    dq = deque(sorted(lst))\n    return [dq.popleft() if i % 2 == 0 else dq.pop() for i in range(len(lst))]\n```",
+  "passed": true,
+  "elapsed_ms": 3144.717874994967
+}

@@ -1,0 +1,84 @@
+{
+  "request_id": "5bda8928ce8011389daa074b122dfe1b1b794b38581bdb645e81900eab70fd1d",
+  "task_id": "HumanEval/13",
+  "repeat": 0,
+  "policy": "cosine",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005475,
+  "admitted_messages": 6,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.5330131947994232,
+      "sufficiency": 0.0,
+      "redundancy": 0.4669868052005768,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.428760826587677,
+      "sufficiency": 0.0,
+      "redundancy": 0.571239173412323,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.5439690053462982,
+      "sufficiency": 0.0,
+      "redundancy": 0.4560309946537018,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    }
+  ],
+  "prompt_sha256": "b1bd3636c985a850c9978f3101bb5321c1f8815f9a0ea1ba63b213bb262e4ee5",
+  "prompt_tokens": 1617,
+  "completion_tokens": 52,
+  "usage": {
+    "completion_tokens": 52,
+    "prompt_tokens": 1617,
+    "total_tokens": 1669,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-1792747078809588000055df9273#a1",
+  "finish_reason": "stop",
+  "output": "```python\ndef greatest_common_divisor(a: int, b: int) -> int:\n    a, b = abs(a), abs(b)\n    while b:\n        a, b = b, a % b\n    return a\n```",
+  "passed": true,
+  "elapsed_ms": 2674.823582987301
+}

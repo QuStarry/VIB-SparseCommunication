@@ -1,0 +1,34 @@
+{
+  "request_id": "cd51d6e0b55ef310b21705fed415d1effaae9f7ca5d33f3c139902dc6e7ccf81",
+  "task_id": "HumanEval/55",
+  "repeat": 0,
+  "policy": "direct",
+  "status": "ok",
+  "charged_proxy_usd": 0.00048,
+  "admitted_messages": 0,
+  "decisions": [],
+  "prompt_sha256": "92257e5f2d9752611d50da65f2f179866c781b27730031d2454b04e5a76b94d8",
+  "prompt_tokens": 1208,
+  "completion_tokens": 98,
+  "usage": {
+    "completion_tokens": 98,
+    "prompt_tokens": 1208,
+    "total_tokens": 1306,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "7a31bfa5578349b687034a608ff3a135",
+  "finish_reason": "stop",
+  "output": "```python\ndef fib(n: int):\n    \"\"\"Return n-th Fibonacci number.\n    >>> fib(10)\n    55\n    >>> fib(1)\n    1\n    >>> fib(8)\n    21\n    \"\"\"\n    if n <= 1:\n        return n\n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b\n```",
+  "passed": true,
+  "elapsed_ms": 2850.5506250075996
+}

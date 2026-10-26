@@ -1,4 +1,8 @@
-"""在共同候选流上做有预算上限、可续跑的探索性接收端干预。"""
+"""在共同候选流上做有预算上限、可续跑的探索性接收端干预。
+
+支持 `--dataset math|humaneval`：数学题按整数答案严格匹配，代码题按题面
+测试用例实际执行评分。两者都只复用历史候选，只改变合成器接收到的消息。
+"""
 from __future__ import annotations
 
 import argparse
@@ -19,6 +23,11 @@ from src.vib_router import VIBSparseCommRouter
 
 POLICIES = ("full", "random", "cosine", "vib", "first_round", "direct")
 SCALAR = re.compile(r"[-+]?\d+(?:\.\d+)?")
+# 复用既有历史轨迹，因此只覆盖两轮六候选齐全的任务。
+DATASETS = {
+    "math": {"roles": r"^\[(Planner|Solver|Verifier)\]: ", "max_tokens": 256},
+    "humaneval": {"roles": r"^\[(Architect|Coder|Reviewer)\]: ", "max_tokens": 1024},
+}
 
 
 def fingerprint(value):
@@ -48,14 +57,14 @@ def strict_scalar_equal(output, reference):
         return False
 
 
-def select_tasks(traces, count, seed):
-    """按题号哈希抽样，不读取历史正确率；限完整的六候选整数答案轨迹。"""
+def select_tasks(traces, count, seed, dataset):
+    """按题号哈希抽样，不读取历史正确率；限完整的六候选轨迹。"""
+    roles = _dataset_config(dataset)["roles"]
     eligible = [
         row for row in traces
-        if re.fullmatch(r"[-+]?\d+", str(row["full"]["reference_answer"]).strip())
-        and len(row["full"]["history"]) == 6
-        and all(re.match(r"^\[(Planner|Solver|Verifier)\]: ", message)
-                for message in row["full"]["history"])
+        if len(row["full"]["history"]) == 6
+        and all(re.match(roles, message) for message in row["full"]["history"])
+        and _has_reference(row["full"], dataset)
     ]
     if count < 1 or count > len(eligible):
         raise ValueError("任务数量超出可用轨迹范围")
@@ -63,6 +72,52 @@ def select_tasks(traces, count, seed):
         raise ValueError("重复 task_id")
     eligible.sort(key=lambda row: fingerprint([seed, row["task_id"]]))
     return eligible[:count]
+
+
+def _dataset_config(name):
+    if name not in DATASETS:
+        raise ValueError(f"未知数据集 {name!r}；可选 {sorted(DATASETS)}")
+    return DATASETS[name]
+
+
+def _has_reference(full, dataset):
+    """数学题需要整数参考答案；代码题需要可执行评测入口。"""
+    if dataset == "math":
+        return bool(re.fullmatch(r"[-+]?\d+", str(full["reference_answer"]).strip()))
+    return bool(full.get("entry_point")) and bool(full.get("test_cases"))
+
+
+def build_task(row, dataset):
+    """只保留重放所需字段；评测材料留在评测侧，不进入任何提示词。"""
+    full = row["full"]
+    task = {
+        "task_id": row["task_id"],
+        "problem": full["prompt"],
+        "candidates": full["history"],
+    }
+    if dataset == "math":
+        task["reference"] = full["reference_answer"]
+    else:
+        task["entry_point"] = full["entry_point"]
+        task["test_cases"] = full["test_cases"]
+    return task
+
+
+def build_prompt(dataset, task, history):
+    if dataset == "math":
+        return synthesis_prompt(task["problem"], history)
+    from experiments.run_multi_benchmark import build_final_code_prompt
+    return build_final_code_prompt(task["problem"], history)
+
+
+def score_output(dataset, task, output):
+    if dataset == "math":
+        return strict_scalar_equal(output, task["reference"])
+    from experiments.run_multi_benchmark import CodeEvaluator, sanitize_code_output
+    return CodeEvaluator.evaluate(
+        sanitize_code_output(output), task["test_cases"],
+        entry_point=task["entry_point"],
+    )
 
 
 def admitted_history(messages, goal, policy, task_id, seed):
@@ -146,23 +201,25 @@ def aggregate(records):
 
 def run(args):
     source = json.loads(args.source.read_text())
-    selected = select_tasks(source["trace_results"]["math"], args.tasks, args.seed)
-    tasks = [{
-        "task_id": row["task_id"],
-        "problem": row["full"]["prompt"],
-        "reference": row["full"]["reference_answer"],
-        "candidates": row["full"]["history"],
-    } for row in selected]
-    # 参考答案仅存于评测侧；接收历史和合成提示词均不读取它。
+    config = _dataset_config(args.dataset)
+    selected = select_tasks(
+        source["trace_results"][args.dataset], args.tasks, args.seed, args.dataset
+    )
+    tasks = [build_task(row, args.dataset) for row in selected]
+    # 参考答案/测试用例仅存于评测侧；接收历史和合成提示词均不读取它。
     contract = {
         "version": 2, "source_sha256": hashlib.sha256(args.source.read_bytes()).hexdigest(),
         "tasks": tasks, "seed": args.seed, "repeats": args.repeats,
         "model": args.model, "provider": args.provider, "temperature": 0.1,
-        "max_tokens": 256, "policies": POLICIES,
+        "max_tokens": config["max_tokens"], "policies": POLICIES,
+        "dataset": args.dataset,
+        # 主 harness 的代码合成还会跑一轮只看题面示例的 doctest 自修复；它不读讨论历史，
+        # 这里省去该回路以便对照对历史变化更敏感，属于有意的偏离。
+        "synthesis_mode": "single_shot",
         "input_usd_per_million": args.input_rate,
         "output_usd_per_million": args.output_rate,
         "max_proxy_usd": args.max_usd,
-        "scope": "exploratory_integer_subset_receiver_only_not_held_out",
+        "scope": f"exploratory_{args.dataset}_subset_receiver_only_not_held_out",
         "router_config": {
             "beta_0": 3.2, "lambda_decay": 0.08, "temp_tau": 0.5,
             "gamma": -0.4, "adaptive": True, "alpha": 0.35, "tau_min": -1.0,
@@ -200,9 +257,12 @@ def run(args):
         history, decisions = admitted_history(
             task["candidates"], task["problem"], policy, task["task_id"], args.seed
         )
-        prompt = synthesis_prompt(task["problem"], history)
+        prompt = build_prompt(args.dataset, task, history)
         # UTF-8 字节数加余量作保守代理预留，失败请求也不假定免费。
-        reserve = proxy_cost(len(prompt.encode()) + 1024, 256, args.input_rate, args.output_rate)
+        reserve = proxy_cost(
+            len(prompt.encode()) + 1024, config["max_tokens"],
+            args.input_rate, args.output_rate,
+        )
         if used + reserve > args.max_usd:
             stop_reason = "budget_limit"
             break
@@ -217,7 +277,7 @@ def run(args):
         try:
             response = api.chat.completions.create(
                 model=client.model, messages=[{"role": "user", "content": prompt}],
-                temperature=0.1, max_tokens=256,
+                temperature=0.1, max_tokens=config["max_tokens"],
             )
             if response.usage:
                 record.update(
@@ -236,7 +296,7 @@ def run(args):
             if (not response.usage or not record["output"]
                     or record["finish_reason"] != "stop"):
                 raise ValueError("用量缺失、空内容或输出截断；中止而不计作错误答案")
-            record["passed"] = strict_scalar_equal(record["output"], task["reference"])
+            record["passed"] = score_output(args.dataset, task, record["output"])
             record["status"] = "ok"
         except Exception as error:
             record["status"] = "error"
@@ -267,6 +327,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, default=ROOT / "results/main_with_math_merged.json")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--dataset", choices=sorted(DATASETS), default="math")
     parser.add_argument("--tasks", type=int, default=24)
     parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--seed", type=int, default=20261023)

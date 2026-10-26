@@ -1,0 +1,89 @@
+{
+  "request_id": "652ac736d85c1f9200e227479df6b1467ccdd9d23f6832026d1f4b8c39423f33",
+  "task_id": "HumanEval/93",
+  "repeat": 1,
+  "policy": "random",
+  "status": "ok",
+  "charged_proxy_usd": 0.0006705,
+  "admitted_messages": 5,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.7
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.7
+    }
+  ],
+  "prompt_sha256": "4dec3a0e769f0f502673d2f13211883bb7589e6ada7ed7ec840585d771436e64",
+  "prompt_tokens": 1695,
+  "completion_tokens": 135,
+  "usage": {
+    "completion_tokens": 135,
+    "prompt_tokens": 1695,
+    "total_tokens": 1830,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "6ba3626880fa405585365538a92479b1",
+  "finish_reason": "stop",
+  "output": "```python\ndef encode(message):\n    vowel_map = {\n        'a': 'c', 'e': 'g', 'i': 'k', 'o': 'q', 'u': 'w',\n        'A': 'C', 'E': 'G', 'I': 'K', 'O': 'Q', 'U': 'W'\n    }\n    swapped = message.swapcase()\n    result = []\n    for original, swapped_char in zip(message, swapped):\n        if original in vowel_map:\n            result.append(vowel_map[original])\n        else:\n            result.append(swapped_char)\n    return ''.join(result)\n```",
+  "passed": false,
+  "elapsed_ms": 2888.026417000219
+}

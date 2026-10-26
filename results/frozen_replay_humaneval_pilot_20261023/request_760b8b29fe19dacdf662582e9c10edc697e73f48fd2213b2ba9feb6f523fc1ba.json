@@ -1,0 +1,84 @@
+{
+  "request_id": "760b8b29fe19dacdf662582e9c10edc697e73f48fd2213b2ba9feb6f523fc1ba",
+  "task_id": "HumanEval/45",
+  "repeat": 0,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005078999999999999,
+  "admitted_messages": 5,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.9399986873436931,
+      "sufficiency": 0.28285789489746094,
+      "redundancy": 0.0,
+      "beta_t": 3.323218846991889,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.2737546957339072,
+      "sufficiency": 0.29996564984321594,
+      "redundancy": 0.0,
+      "beta_t": 4.246335193378525,
+      "is_allowed": true,
+      "threshold": -0.6125
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0375305693245402,
+      "sufficiency": 0.28098586201667786,
+      "redundancy": 0.0,
+      "beta_t": 3.692465385546543,
+      "is_allowed": true,
+      "threshold": -0.6179545454545454
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.7414829741075066,
+      "sufficiency": 0.2957707941532135,
+      "redundancy": 1.6488242568104596,
+      "beta_t": 3.067717640278361,
+      "is_allowed": false,
+      "threshold": -0.5390268809596698
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.5968016871344586,
+      "sufficiency": 0.2601442337036133,
+      "redundancy": 0.42292766060072107,
+      "beta_t": 3.919861429244573,
+      "is_allowed": true,
+      "threshold": -0.5217039078474045
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.07079589926140217,
+      "sufficiency": 0.44526979327201843,
+      "redundancy": 1.4469396557426755,
+      "beta_t": 3.4085751558648454,
+      "is_allowed": true,
+      "threshold": -0.58025613874197
+    }
+  ],
+  "prompt_sha256": "2b0e03d4dc8dd72624f0bbe2687b023833693a007c6eaf0f9fce1ea700de56bc",
+  "prompt_tokens": 1481,
+  "completion_tokens": 53,
+  "usage": {
+    "completion_tokens": 53,
+    "prompt_tokens": 1481,
+    "total_tokens": 1534,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-17927476783300630000615768ed#a1",
+  "finish_reason": "stop",
+  "output": "```python\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n    return a * h / 2\n```",
+  "passed": true,
+  "elapsed_ms": 3209.7373330034316
+}

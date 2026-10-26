@@ -1,0 +1,89 @@
+{
+  "request_id": "611eb679206ac118e4494afe7f1124056581db2eb50a5b31db0fc86686ccc01f",
+  "task_id": "HumanEval/72",
+  "repeat": 1,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005547000000000001,
+  "admitted_messages": 5,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.7623558749115597,
+      "sufficiency": 0.19663101434707642,
+      "redundancy": 0.0,
+      "beta_t": 3.8770886548238703,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.2231727364036473,
+      "sufficiency": 0.25481677055358887,
+      "redundancy": 0.0,
+      "beta_t": 4.800205001210506,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 0.7298064643954316,
+      "sufficiency": 0.17186737060546875,
+      "redundancy": 0.0,
+      "beta_t": 4.246335193378524,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.7484750613531994,
+      "sufficiency": 0.23522672057151794,
+      "redundancy": 1.5903524148756196,
+      "beta_t": 3.579003913658088,
+      "is_allowed": false,
+      "threshold": -0.5615016728639602
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.047990995326835595,
+      "sufficiency": 0.35091450810432434,
+      "redundancy": 1.5069630210771774,
+      "beta_t": 4.431147702624299,
+      "is_allowed": true,
+      "threshold": -0.6044995319843292
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": -0.30760212941993936,
+      "sufficiency": 0.31338801980018616,
+      "redundancy": 1.5360397406220232,
+      "beta_t": 3.919861429244572,
+      "is_allowed": true,
+      "threshold": -0.5605668091773987
+    }
+  ],
+  "prompt_sha256": "4465abd169817d1a7b83ffef6efeac112dc127d5fe9ea213e9ebfb1ff681eac0",
+  "prompt_tokens": 1737,
+  "completion_tokens": 28,
+  "usage": {
+    "completion_tokens": 28,
+    "prompt_tokens": 1737,
+    "total_tokens": 1765,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "2a126f3955de62703330994b97cf5a1e-47be6252",
+  "finish_reason": "stop",
+  "output": "```python\ndef will_it_fly(q,w):\n    return q == q[::-1] and sum(q) <= w\n```",
+  "passed": true,
+  "elapsed_ms": 2759.5200419891626
+}

@@ -1,0 +1,89 @@
+{
+  "request_id": "ab12d23246f2b229e2dc34f6d7e939d4bc0c27f277070836d5101b16a876ef3b",
+  "task_id": "HumanEval/163",
+  "repeat": 1,
+  "policy": "cosine",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005535,
+  "admitted_messages": 5,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.29899030923843384,
+      "sufficiency": 0.0,
+      "redundancy": 0.7010096907615662,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.1977747678756714,
+      "sufficiency": 0.0,
+      "redundancy": 0.8022252321243286,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.2930666208267212,
+      "sufficiency": 0.0,
+      "redundancy": 0.7069333791732788,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    }
+  ],
+  "prompt_sha256": "52d39c9dfd4f2c3c17c09df5fffd2596be8cc44c66f59a8d748930eb59e8509e",
+  "prompt_tokens": 1649,
+  "completion_tokens": 49,
+  "usage": {
+    "completion_tokens": 49,
+    "prompt_tokens": 1649,
+    "total_tokens": 1698,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-32fcea102a9881e034d6c265fe9dc7d1-bec73ff3#a1",
+  "finish_reason": "stop",
+  "output": "```python\ndef generate_integers(a, b):\n    start, end = sorted((a, b))\n    return [n for n in range(start, end + 1) if n % 2 == 0]\n```",
+  "passed": false,
+  "elapsed_ms": 2969.631957996171
+}

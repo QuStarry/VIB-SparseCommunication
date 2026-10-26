@@ -33,19 +33,58 @@ def trace(task_id):
     }
 
 
+def code_trace(task_id):
+    return {
+        "task_id": task_id,
+        "full": {
+            "prompt": "def add(a, b):\n    '''Return a + b.'''\n",
+            "entry_point": "add",
+            "test_cases": ["def check(candidate):\n    assert candidate(1, 2) == 3"],
+            "history": [
+                f"[{role}]: 直接返回 a + b"
+                for _ in range(2) for role in ("Architect", "Coder", "Reviewer")
+            ],
+        },
+    }
+
+
 def test_selection_is_independent_of_historical_outcomes():
     rows = [trace(f"MATH/{index}") for index in range(10)]
-    selected = replay.select_tasks(rows, 4, 1)
+    selected = replay.select_tasks(rows, 4, 1, "math")
     for row in rows:
         row["full"]["passed"] = False
     assert [row["task_id"] for row in selected] == [
-        row["task_id"] for row in replay.select_tasks(list(reversed(rows)), 4, 1)
+        row["task_id"] for row in replay.select_tasks(list(reversed(rows)), 4, 1, "math")
     ]
 
 
 def test_selection_rejects_duplicate_tasks():
     with pytest.raises(ValueError, match="task_id"):
-        replay.select_tasks([trace("MATH/1"), trace("MATH/1")], 1, 1)
+        replay.select_tasks([trace("MATH/1"), trace("MATH/1")], 1, 1, "math")
+
+
+def test_selection_is_dataset_specific():
+    mixed = [trace("MATH/1"), code_trace("HumanEval/1")]
+    assert [row["task_id"] for row in replay.select_tasks(mixed, 1, 1, "humaneval")] == [
+        "HumanEval/1"
+    ]
+    # 代码题没有整数参考答案，不能混进数学子集。
+    assert [row["task_id"] for row in replay.select_tasks(mixed, 1, 1, "math")] == ["MATH/1"]
+    with pytest.raises(ValueError, match="数据集"):
+        replay.select_tasks(mixed, 1, 1, "mbpp")
+
+
+def test_code_scoring_runs_the_task_tests():
+    task = replay.build_task(code_trace("HumanEval/1"), "humaneval")
+    assert replay.score_output("humaneval", task, "def add(a, b):\n    return a + b\n")
+    assert not replay.score_output("humaneval", task, "def add(a, b):\n    return a - b\n")
+
+
+def test_code_prompt_does_not_contain_tests():
+    task = replay.build_task(code_trace("HumanEval/1"), "humaneval")
+    prompt = replay.build_prompt("humaneval", task, task["candidates"])
+    assert "def check" not in prompt
+    assert "assert" not in prompt
 
 
 def test_gate_uses_frozen_history_and_full_message(monkeypatch):
@@ -84,9 +123,9 @@ def arguments(tmp_path):
     source = tmp_path / "source.json"
     source.write_text(json.dumps({"trace_results": {"math": [trace("MATH/1")]}}))
     return SimpleNamespace(
-        source=source, tasks=1, repeats=1, seed=1, model="fake", provider="fake",
-        input_rate=0.3, output_rate=1.2, max_usd=3, output=tmp_path / "run",
-        dry_run=False,
+        source=source, dataset="math", tasks=1, repeats=1, seed=1, model="fake",
+        provider="fake", input_rate=0.3, output_rate=1.2, max_usd=3,
+        output=tmp_path / "run", dry_run=False,
     )
 
 

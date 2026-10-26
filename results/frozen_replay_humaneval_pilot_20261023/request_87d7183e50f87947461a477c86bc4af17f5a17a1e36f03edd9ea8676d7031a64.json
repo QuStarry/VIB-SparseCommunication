@@ -1,0 +1,89 @@
+{
+  "request_id": "87d7183e50f87947461a477c86bc4af17f5a17a1e36f03edd9ea8676d7031a64",
+  "task_id": "HumanEval/46",
+  "repeat": 0,
+  "policy": "cosine",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005897999999999999,
+  "admitted_messages": 3,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.2110365629196167,
+      "sufficiency": 0.0,
+      "redundancy": 0.7889634370803833,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.1709909439086914,
+      "sufficiency": 0.0,
+      "redundancy": 0.8290090560913086,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.19973182678222656,
+      "sufficiency": 0.0,
+      "redundancy": 0.8002681732177734,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.75
+    }
+  ],
+  "prompt_sha256": "b71e2383efe48f9dda9f8d570d6dd75c5116af7f8974de44a1cb7bee264f499a",
+  "prompt_tokens": 1482,
+  "completion_tokens": 121,
+  "usage": {
+    "completion_tokens": 121,
+    "prompt_tokens": 1482,
+    "total_tokens": 1603,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 1280
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "ca03d11c086245ccafa4fcbfd4201b27",
+  "finish_reason": "stop",
+  "output": "```python\ndef fib4(n: int):\n    if n == 0:\n        return 0\n    if n == 1:\n        return 0\n    if n == 2:\n        return 2\n    if n == 3:\n        return 0\n    a, b, c, d = 0, 0, 2, 0\n    for _ in range(4, n + 1):\n        a, b, c, d = b, c, d, a + b + c + d\n    return d\n```",
+  "passed": true,
+  "elapsed_ms": 3571.662332979031
+}

@@ -1,0 +1,89 @@
+{
+  "request_id": "dcd90915562994348a4745758983e1f09060c626abea586d36221f4df83f55e1",
+  "task_id": "HumanEval/68",
+  "repeat": 1,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0006474,
+  "admitted_messages": 5,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.41269470704460454,
+      "sufficiency": 0.10644448548555374,
+      "redundancy": 0.0,
+      "beta_t": 3.8770886548238703,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.2573582707589679,
+      "sufficiency": 0.2619384527206421,
+      "redundancy": 0.0,
+      "beta_t": 4.800205001210506,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 0.15022188628114402,
+      "sufficiency": 0.03537683188915253,
+      "redundancy": 0.0,
+      "beta_t": 4.246335193378524,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -1.1701020077155535,
+      "sufficiency": 0.05597849190235138,
+      "redundancy": 1.3704492493147467,
+      "beta_t": 3.579003913658088,
+      "is_allowed": false,
+      "threshold": -0.5943329441547394
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": -0.22840560580305946,
+      "sufficiency": 0.2504135072231293,
+      "redundancy": 1.338024843040922,
+      "beta_t": 4.431147702624299,
+      "is_allowed": true,
+      "threshold": -0.5753973167538643
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": -0.4081332268534953,
+      "sufficiency": 0.2360382378101349,
+      "redundancy": 1.3333704110723008,
+      "beta_t": 3.919861429244572,
+      "is_allowed": true,
+      "threshold": -0.578270966053009
+    }
+  ],
+  "prompt_sha256": "3082f9e424873185ab029e730aacb47998d59a115b1025019ef563b032cb1820",
+  "prompt_tokens": 1834,
+  "completion_tokens": 81,
+  "usage": {
+    "completion_tokens": 81,
+    "prompt_tokens": 1834,
+    "total_tokens": 1915,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "a1718cb50aa7a5ec9f9039c49d427457-589150c4",
+  "finish_reason": "stop",
+  "output": "```python\ndef pluck(arr):\n    min_val = float('inf')\n    min_idx = -1\n    for i, v in enumerate(arr):\n        if v % 2 == 0 and v < min_val:\n            min_val = v\n            min_idx = i\n    if min_idx == -1:\n        return []\n    return [min_val, min_idx]\n```",
+  "passed": true,
+  "elapsed_ms": 2973.3159580500796
+}

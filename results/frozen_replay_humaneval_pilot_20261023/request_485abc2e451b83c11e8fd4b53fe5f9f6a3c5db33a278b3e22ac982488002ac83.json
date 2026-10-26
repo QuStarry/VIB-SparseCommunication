@@ -1,0 +1,89 @@
+{
+  "request_id": "485abc2e451b83c11e8fd4b53fe5f9f6a3c5db33a278b3e22ac982488002ac83",
+  "task_id": "HumanEval/14",
+  "repeat": 0,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.000537,
+  "admitted_messages": 5,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 0.35336238566054934,
+      "sufficiency": 0.10126796364784241,
+      "redundancy": 0.0,
+      "beta_t": 3.4893797893414833,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 0.692647180407034,
+      "sufficiency": 0.15697400271892548,
+      "redundancy": 0.0,
+      "beta_t": 4.412496135728119,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 0.6444056446786066,
+      "sufficiency": 0.16700389981269836,
+      "redundancy": 0.0,
+      "beta_t": 3.858626327896137,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.9192120431118741,
+      "sufficiency": 0.08155138045549393,
+      "redundancy": 1.1818974819448633,
+      "beta_t": 3.221103522292279,
+      "is_allowed": false,
+      "threshold": -0.63053884729743
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.15102954384302136,
+      "sufficiency": 0.3574133515357971,
+      "redundancy": 1.30480342930805,
+      "beta_t": 4.07324731125849,
+      "is_allowed": true,
+      "threshold": -0.6186958849430084
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": -0.15210117502679577,
+      "sufficiency": 0.34612420201301575,
+      "redundancy": 1.384982096864036,
+      "beta_t": 3.5619610378787634,
+      "is_allowed": true,
+      "threshold": -0.6030450740456581
+    }
+  ],
+  "prompt_sha256": "27bf1c6bb92d505d0cd6df4b788726d778e58cb909cbec4a208d671ff1e09706",
+  "prompt_tokens": 1474,
+  "completion_tokens": 79,
+  "usage": {
+    "completion_tokens": 79,
+    "prompt_tokens": 1474,
+    "total_tokens": 1553,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "26de192a4d48b3ea4c8136425fc0ddfb-253750fa",
+  "finish_reason": "stop",
+  "output": "```python\nfrom typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n    return [string[:i] for i in range(1, len(string) + 1)]\n```",
+  "passed": true,
+  "elapsed_ms": 5223.689290985931
+}

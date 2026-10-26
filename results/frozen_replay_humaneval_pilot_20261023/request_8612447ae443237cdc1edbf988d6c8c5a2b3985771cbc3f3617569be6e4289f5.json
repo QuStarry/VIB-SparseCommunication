@@ -1,0 +1,89 @@
+{
+  "request_id": "8612447ae443237cdc1edbf988d6c8c5a2b3985771cbc3f3617569be6e4289f5",
+  "task_id": "HumanEval/51",
+  "repeat": 0,
+  "policy": "cosine",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005105999999999999,
+  "admitted_messages": 4,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.0,
+      "sufficiency": 0.0,
+      "redundancy": 0.0,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": 0.12897801399230957,
+      "sufficiency": 0.0,
+      "redundancy": 0.8710219860076904,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 0.17151230573654175,
+      "sufficiency": 0.0,
+      "redundancy": 0.8284876942634583,
+      "beta_t": 1.0,
+      "is_allowed": false,
+      "threshold": 0.75
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.43278658390045166,
+      "sufficiency": 0.0,
+      "redundancy": 0.5672134160995483,
+      "beta_t": 1.0,
+      "is_allowed": true,
+      "threshold": 0.75
+    }
+  ],
+  "prompt_sha256": "65296339a64748c6e33807176a5da282c8964fdc319446cf176bb76b4e1208be",
+  "prompt_tokens": 1582,
+  "completion_tokens": 30,
+  "usage": {
+    "completion_tokens": 30,
+    "prompt_tokens": 1582,
+    "total_tokens": 1612,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "00e075faec5777e9997deb558a7e927a-01a55851",
+  "finish_reason": "stop",
+  "output": "```python\ndef remove_vowels(text):\n    return ''.join(c for c in text if c.lower() not in 'aeiou')\n```",
+  "passed": true,
+  "elapsed_ms": 2829.109833983239
+}

@@ -11,6 +11,25 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from run_frozen_replay import POLICIES, aggregate, fingerprint, write_json
 
+CAVEATS = {
+    "math": [
+        "复用历史候选，非独立泛化评测；不覆盖非整数答案。",
+        "重复合成不是新增独立问题；所有区间未经多重比较校正。",
+        "费用只覆盖当前合成，不含历史候选生成，不能当作端到端调度成本。",
+        "VIB与截轮提示词相同时，结果差异不能归因于选择机制。",
+        "direct不是等预算单智能体对照。",
+        "随机放行率与余弦阈值固定，未在该任务子集校准为等消息预算。",
+    ],
+    "humaneval": [
+        "复用历史候选，非独立泛化评测；只覆盖两轮六候选齐全的 HumanEval 任务。",
+        "重复合成不是新增独立问题；所有区间未经多重比较校正。",
+        "费用只覆盖当前合成，不含历史候选生成，不能当作端到端调度成本。",
+        "合成走单次调用；主 harness 另有只看题面示例的 doctest 自修复回路，未纳入对照。",
+        "direct不是等预算单智能体对照。",
+        "随机放行率与余弦阈值固定，未在该任务子集校准为等消息预算。",
+    ],
+}
+
 
 def paired_interval(differences, seed=20261023):
     """每题先聚合重复合成，再重采样任务；区间仅用于探索。"""
@@ -30,6 +49,9 @@ def analyze(directory):
     manifest = json.loads((directory / "manifest.json").read_text())
     if manifest.get("version") != 2 or manifest.get("router_config", {}).get("beta_0") != 3.2:
         raise ValueError("路由协议未对齐论文配置，禁止纳入本轮分析")
+    dataset = manifest.get("dataset", "math")
+    if dataset not in CAVEATS:
+        raise ValueError(f"未知数据集 {dataset!r}，拒绝分析")
     records = [json.loads(path.read_text()) for path in directory.glob("request_*.json")]
     task_ids = [task["task_id"] for task in manifest["tasks"]]
     if len(set(task_ids)) != len(task_ids):
@@ -81,15 +103,8 @@ def analyze(directory):
         "policies": costs, "paired_comparisons": comparisons,
         "vib_first_round_identical_prompts": identical,
         "vib_first_round_total_pairs": len(task_ids) * manifest["repeats"],
-        "scope": "exploratory_integer_subset_receiver_only",
-        "caveats": [
-            "复用历史候选，非独立泛化评测；不覆盖非整数答案。",
-            "重复合成不是新增独立问题；所有区间未经多重比较校正。",
-            "费用只覆盖当前合成，不含历史候选生成，不能当作端到端调度成本。",
-            "VIB与截轮提示词相同时，结果差异不能归因于选择机制。",
-            "direct不是等预算单智能体对照。",
-            "随机放行率与余弦阈值固定，未在该任务子集校准为等消息预算。",
-        ],
+        "scope": f"exploratory_{dataset}_subset_receiver_only",
+        "caveats": CAVEATS[dataset],
     }
 
 

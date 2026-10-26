@@ -1,0 +1,89 @@
+{
+  "request_id": "5a3b801655224a6b7437168426d2ce7029670a52a63177eec2c2cdf0ea1a79cd",
+  "task_id": "HumanEval/51",
+  "repeat": 0,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005466,
+  "admitted_messages": 6,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.2078737487650066,
+      "sufficiency": 0.33723556995391846,
+      "redundancy": 0.0,
+      "beta_t": 3.581691423980147,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 3.742856613238723,
+      "sufficiency": 0.8308582305908203,
+      "redundancy": 0.0,
+      "beta_t": 4.504807770366782,
+      "is_allowed": true,
+      "threshold": -0.6204999999999999
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 1.2063714769985212,
+      "sufficiency": 0.3053379952907562,
+      "redundancy": 0.0,
+      "beta_t": 3.9509379625348013,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.4669057433534103,
+      "sufficiency": 0.31758761405944824,
+      "redundancy": 1.5169513569140356,
+      "beta_t": 3.3063179011889003,
+      "is_allowed": true,
+      "threshold": -0.5365996134281159
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": -0.1779707869972973,
+      "sufficiency": 0.3090518116950989,
+      "redundancy": 1.4631509062043975,
+      "beta_t": 4.158461690155112,
+      "is_allowed": true,
+      "threshold": -0.5470205149054528
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.8570954368244481,
+      "sufficiency": 0.32742202281951904,
+      "redundancy": 0.3370701157137708,
+      "beta_t": 3.6471754167753847,
+      "is_allowed": true,
+      "threshold": -0.6110327130556107
+    }
+  ],
+  "prompt_sha256": "dd7678137a2d519f09fc9aecf0ed122f5e214922c16ec2fbf7f1d1d03b4e810d",
+  "prompt_tokens": 1702,
+  "completion_tokens": 30,
+  "usage": {
+    "completion_tokens": 30,
+    "prompt_tokens": 1702,
+    "total_tokens": 1732,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "3fb9b05ea32d4ffabf27b85b60da038f",
+  "finish_reason": "stop",
+  "output": "```python\ndef remove_vowels(text):\n    return ''.join(c for c in text if c.lower() not in 'aeiou')\n```",
+  "passed": true,
+  "elapsed_ms": 3443.8519999966957
+}

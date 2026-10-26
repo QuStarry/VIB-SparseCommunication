@@ -1,0 +1,74 @@
+{
+  "contract_sha256": "8b0a6518d73da7e545e60bac60de41fe1ab9df4347b6166b3439df7c0cd0bb84",
+  "stop_reason": "complete",
+  "proxy_usd": 0.1668918,
+  "policies": {
+    "full": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.8333333333333334,
+      "prompt_tokens": 82012,
+      "completion_tokens": 4252,
+      "proxy_usd": 0.029706,
+      "mean_admitted_messages": 6.0,
+      "mean_elapsed_ms": 3305.9455382463057
+    },
+    "random": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.875,
+      "prompt_tokens": 75678,
+      "completion_tokens": 4452,
+      "proxy_usd": 0.0280458,
+      "mean_admitted_messages": 4.0,
+      "mean_elapsed_ms": 3152.0294366431094
+    },
+    "cosine": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.875,
+      "prompt_tokens": 78958,
+      "completion_tokens": 4678,
+      "proxy_usd": 0.029301,
+      "mean_admitted_messages": 5.041666666666667,
+      "mean_elapsed_ms": 3339.7651788533644
+    },
+    "vib": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.8541666666666666,
+      "prompt_tokens": 78668,
+      "completion_tokens": 4163,
+      "proxy_usd": 0.028596,
+      "mean_admitted_messages": 4.875,
+      "mean_elapsed_ms": 3411.777047730235
+    },
+    "first_round": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9166666666666666,
+      "prompt_tokens": 72200,
+      "completion_tokens": 4346,
+      "proxy_usd": 0.0268752,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 3205.3820208057004
+    },
+    "direct": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9166666666666666,
+      "prompt_tokens": 63578,
+      "completion_tokens": 4412,
+      "proxy_usd": 0.0243678,
+      "mean_admitted_messages": 0.0,
+      "mean_elapsed_ms": 3284.9915026211725
+    }
+  },
+  "cost_scope": "synthesis_only_no_candidate_generation_not_actual_invoice"
+}

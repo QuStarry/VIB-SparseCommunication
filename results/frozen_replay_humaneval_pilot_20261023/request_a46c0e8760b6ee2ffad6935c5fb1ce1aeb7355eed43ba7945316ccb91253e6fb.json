@@ -1,0 +1,84 @@
+{
+  "request_id": "a46c0e8760b6ee2ffad6935c5fb1ce1aeb7355eed43ba7945316ccb91253e6fb",
+  "task_id": "HumanEval/162",
+  "repeat": 0,
+  "policy": "vib",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005304,
+  "admitted_messages": 6,
+  "decisions": [
+    {
+      "candidate_index": 0,
+      "utility_score": 1.827981595387662,
+      "sufficiency": 0.5294729471206665,
+      "redundancy": 0.0,
+      "beta_t": 3.452455135486018,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 1,
+      "utility_score": 2.8264456025833136,
+      "sufficiency": 0.6459603309631348,
+      "redundancy": 0.0,
+      "beta_t": 4.375571481872654,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 2,
+      "utility_score": 2.3820664865041814,
+      "sufficiency": 0.6232999563217163,
+      "redundancy": 0.0,
+      "beta_t": 3.8217016740406726,
+      "is_allowed": true,
+      "threshold": -0.6275
+    },
+    {
+      "candidate_index": 3,
+      "utility_score": -0.42366944787659855,
+      "sufficiency": 0.26794493198394775,
+      "redundancy": 1.277614707687454,
+      "beta_t": 3.1870177707336307,
+      "is_allowed": true,
+      "threshold": -0.6087257823348046
+    },
+    {
+      "candidate_index": 4,
+      "utility_score": 1.9026024690756234,
+      "sufficiency": 0.5644227266311646,
+      "redundancy": 0.377192111753949,
+      "beta_t": 4.039161559699842,
+      "is_allowed": true,
+      "threshold": -0.5580251038074493
+    },
+    {
+      "candidate_index": 5,
+      "utility_score": 0.9503567641231307,
+      "sufficiency": 0.36704862117767334,
+      "redundancy": 0.34454499540745714,
+      "beta_t": 3.5278752863201155,
+      "is_allowed": true,
+      "threshold": -0.5911725038290023
+    }
+  ],
+  "prompt_sha256": "f9e2f513faef80aa0065a305dc38bff274dc86d6b9407c8052602601469f9d4b",
+  "prompt_tokens": 1584,
+  "completion_tokens": 46,
+  "usage": {
+    "completion_tokens": 46,
+    "prompt_tokens": 1584,
+    "total_tokens": 1630,
+    "completion_tokens_details": null,
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "chatcmpl-1792747504107834000041b6fed9#a1",
+  "finish_reason": "stop",
+  "output": "```python\nimport hashlib\n\ndef string_to_md5(text):\n    if text == \"\":\n        return None\n    return hashlib.md5(text.encode('utf-8')).hexdigest()\n```",
+  "passed": true,
+  "elapsed_ms": 3316.2900409661233
+}

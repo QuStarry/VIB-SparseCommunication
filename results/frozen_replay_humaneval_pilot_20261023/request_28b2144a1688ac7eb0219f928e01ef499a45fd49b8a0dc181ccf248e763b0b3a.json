@@ -1,0 +1,34 @@
+{
+  "request_id": "28b2144a1688ac7eb0219f928e01ef499a45fd49b8a0dc181ccf248e763b0b3a",
+  "task_id": "HumanEval/14",
+  "repeat": 1,
+  "policy": "direct",
+  "status": "ok",
+  "charged_proxy_usd": 0.0004587,
+  "admitted_messages": 0,
+  "decisions": [],
+  "prompt_sha256": "9a5504eedc66952430543b45525a1970035c42f51e7bd6629b5c86e98c25251f",
+  "prompt_tokens": 1213,
+  "completion_tokens": 79,
+  "usage": {
+    "completion_tokens": 79,
+    "prompt_tokens": 1213,
+    "total_tokens": 1292,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "de69779b1ff640f8b2ec78c193dae4f8",
+  "finish_reason": "stop",
+  "output": "```python\nfrom typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n    return [string[:i] for i in range(1, len(string) + 1)]\n```",
+  "passed": true,
+  "elapsed_ms": 2528.6197080276906
+}
