@@ -1,0 +1,35 @@
+{
+  "request_id": "486c6620fdf7d81b4d9fd3762cd9cbb286ca79ad4a18ba55d0446a7cfe8cd6e8",
+  "task_id": "HumanEval/92",
+  "repeat": 1,
+  "policy": "direct",
+  "status": "ok",
+  "charged_proxy_usd": 0.0006123,
+  "admitted_messages": 0,
+  "decisions": [],
+  "prompt_sha256": "91db47760f51de785620fc70cefc648baee5482320af6becf6a748636176c7a7",
+  "prompt_tokens": 1337,
+  "completion_tokens": 176,
+  "usage": {
+    "completion_tokens": 176,
+    "prompt_tokens": 1337,
+    "total_tokens": 1513,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "e6ad92bf2bd2d5b6f0c80fb3d79991f0-7ef2a6b6",
+  "finish_reason": "stop",
+  "output": "```python\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    \n    Examples\n    any_int(5, 2, 7) ➞ True\n    \n    any_int(3, 2, 2) ➞ False\n\n    any_int(3, -2, 1) ➞ True\n    \n    any_int(3.6, -2.2, 2) ➞ False\n    '''\n    if not all(isinstance(n, int) for n in (x, y, z)):\n        return False\n    return x == y + z or y == x + z or z == x + y\n```",
+  "passed": true,
+  "evaluation_seed": 20261026,
+  "elapsed_ms": 5278.272249999645
+}

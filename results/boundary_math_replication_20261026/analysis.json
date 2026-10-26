@@ -1,0 +1,2002 @@
+{
+  "contract_sha256": "eaff7defcfbbb2a03f85002e7b76d4b6b38ee6094f6c759c6aef5f5a603ef693",
+  "valid_requests": 192,
+  "independent_tasks": 24,
+  "proxy_usd": 0.022278,
+  "policies": {
+    "full": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9583333333333334,
+      "prompt_tokens": 28666,
+      "completion_tokens": 246,
+      "proxy_usd": 0.008895,
+      "mean_admitted_messages": 6.0,
+      "mean_elapsed_ms": 1688.6433524373767,
+      "synthesis_token_saving_pct": 0.0
+    },
+    "first_round": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9166666666666666,
+      "prompt_tokens": 17722,
+      "completion_tokens": 246,
+      "proxy_usd": 0.0056118,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 1635.9251848749445,
+      "synthesis_token_saving_pct": 37.85279468732706
+    },
+    "first_round_control": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.8958333333333334,
+      "prompt_tokens": 17722,
+      "completion_tokens": 246,
+      "proxy_usd": 0.0056118,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 1748.9776241668171,
+      "synthesis_token_saving_pct": 37.85279468732706
+    },
+    "direct": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.75,
+      "prompt_tokens": 6214,
+      "completion_tokens": 246,
+      "proxy_usd": 0.0021593999999999997,
+      "mean_admitted_messages": 0.0,
+      "mean_elapsed_ms": 1554.3946397499628,
+      "synthesis_token_saving_pct": 77.65633646928612
+    }
+  },
+  "paired_comparisons": {
+    "first_round_minus_full": {
+      "delta_pp": -4.166666666666666,
+      "bootstrap_ci95_pp": [
+        -12.5,
+        0.0
+      ],
+      "independent_tasks": 24,
+      "tasks_better": 0,
+      "tasks_worse": 1
+    },
+    "first_round_control_minus_full": {
+      "delta_pp": -6.25,
+      "bootstrap_ci95_pp": [
+        -16.666666666666664,
+        0.0
+      ],
+      "independent_tasks": 24,
+      "tasks_better": 0,
+      "tasks_worse": 2
+    },
+    "direct_minus_full": {
+      "delta_pp": -20.833333333333336,
+      "bootstrap_ci95_pp": [
+        -39.58333333333333,
+        -2.083333333333333
+      ],
+      "independent_tasks": 24,
+      "tasks_better": 1,
+      "tasks_worse": 7
+    }
+  },
+  "vib_first_round_identical_prompts": 0,
+  "vib_first_round_total_pairs": 0,
+  "scope": "exploratory_math_subset_receiver_only",
+  "caveats": [
+    "复用历史候选的新子集，排除旧 pilot 题号并不意味着 truly held-out。",
+    "重复合成按任务聚类，主比较已冻结，但区间仍是探索性、未经多重比较校正。",
+    "费用仅覆盖当前合成，不含候选生成；direct 不是等预算单智能体对照。",
+    "首轮重复对照使用独立调用，没有共享 API 随机种子，不与首轮池化增大分母。",
+    "代码评分固定 Python random 种子并独立执行两次，未控制其它随机源。",
+    "新批改变了评分随机种子协议，不直接把新旧子集差异归因于任务迁移。"
+  ],
+  "collaboration_boundary": {
+    "contrasts": {
+      "full_minus_first_round": {
+        "delta_pp": 4.166666666666666,
+        "bootstrap_ci95_pp": [
+          0.0,
+          12.5
+        ],
+        "independent_tasks": 24,
+        "tasks_better": 1,
+        "tasks_worse": 0,
+        "tasks_tied": 23,
+        "tasks_with_opposite_repeat_differences": 0,
+        "identical_prompt_pairs": 0,
+        "identical_prompt_score_disagreements": 0,
+        "tasks": [
+          {
+            "task_id": "MATH/635",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4643",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4012",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1791",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3699",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3618",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1204",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 2,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3938",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3987",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4031",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/310",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1378",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/473",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3742",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/330",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4585",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3820",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/698",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4157",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3634",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1145",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4023",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/158",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4741",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          }
+        ]
+      },
+      "full_minus_direct": {
+        "delta_pp": 20.833333333333336,
+        "bootstrap_ci95_pp": [
+          2.083333333333333,
+          39.58333333333333
+        ],
+        "independent_tasks": 24,
+        "tasks_better": 7,
+        "tasks_worse": 1,
+        "tasks_tied": 16,
+        "tasks_with_opposite_repeat_differences": 0,
+        "identical_prompt_pairs": 0,
+        "identical_prompt_score_disagreements": 0,
+        "tasks": [
+          {
+            "task_id": "MATH/635",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.5,
+            "delta_pp": 50.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 1,
+              "both_fail": 0,
+              "policy_only_pass": 1,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4643",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4012",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1791",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.5,
+            "delta_pp": 50.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 1,
+              "both_fail": 0,
+              "policy_only_pass": 1,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3699",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3618",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1204",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": -100.0,
+            "observed_direction": "worse",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 2
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3938",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3987",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4031",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/310",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1378",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/473",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3742",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/330",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4585",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3820",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/698",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4157",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3634",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1145",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4023",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/158",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4741",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          }
+        ]
+      },
+      "first_round_minus_direct": {
+        "delta_pp": 16.666666666666664,
+        "bootstrap_ci95_pp": [
+          -2.083333333333333,
+          37.5
+        ],
+        "independent_tasks": 24,
+        "tasks_better": 6,
+        "tasks_worse": 2,
+        "tasks_tied": 16,
+        "tasks_with_opposite_repeat_differences": 0,
+        "identical_prompt_pairs": 0,
+        "identical_prompt_score_disagreements": 0,
+        "tasks": [
+          {
+            "task_id": "MATH/635",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.5,
+            "delta_pp": 50.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 1,
+              "both_fail": 0,
+              "policy_only_pass": 1,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4643",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4012",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1791",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 0.5,
+            "delta_pp": -50.0,
+            "observed_direction": "worse",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 1,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 1
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3699",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3618",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1204",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": -100.0,
+            "observed_direction": "worse",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 2
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3938",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3987",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4031",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/310",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1378",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/473",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3742",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/330",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4585",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3820",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/698",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4157",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3634",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1145",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4023",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/158",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4741",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 100.0,
+            "observed_direction": "better",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 2,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          }
+        ]
+      },
+      "first_round_control_minus_first_round": {
+        "delta_pp": -2.083333333333333,
+        "bootstrap_ci95_pp": [
+          -6.25,
+          0.0
+        ],
+        "independent_tasks": 24,
+        "tasks_better": 0,
+        "tasks_worse": 1,
+        "tasks_tied": 23,
+        "tasks_with_opposite_repeat_differences": 0,
+        "identical_prompt_pairs": 48,
+        "identical_prompt_score_disagreements": 1,
+        "tasks": [
+          {
+            "task_id": "MATH/635",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4643",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4012",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1791",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 2,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3699",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3618",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1204",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 2,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3938",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3987",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4031",
+            "policy_pass_rate": 0.5,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": -50.0,
+            "observed_direction": "worse",
+            "repeat_outcomes": {
+              "both_pass": 1,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 1
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 1
+          },
+          {
+            "task_id": "MATH/310",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1378",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/473",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3742",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/330",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4585",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3820",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/698",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4157",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/3634",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/1145",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4023",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/158",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "MATH/4741",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          }
+        ]
+      }
+    },
+    "task_features": [
+      {
+        "task_id": "MATH/635",
+        "candidate_messages": 6,
+        "first_round_chars": 594,
+        "second_round_chars": 339,
+        "second_round_char_fraction": 0.3633440514469453,
+        "second_round_new_word_fraction": 0.7954545454545454,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/4643",
+        "candidate_messages": 6,
+        "first_round_chars": 704,
+        "second_round_chars": 561,
+        "second_round_char_fraction": 0.4434782608695652,
+        "second_round_new_word_fraction": 0.4772727272727273,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/4012",
+        "candidate_messages": 6,
+        "first_round_chars": 214,
+        "second_round_chars": 224,
+        "second_round_char_fraction": 0.5114155251141552,
+        "second_round_new_word_fraction": 0.9032258064516129,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/1791",
+        "candidate_messages": 6,
+        "first_round_chars": 944,
+        "second_round_chars": 534,
+        "second_round_char_fraction": 0.36129905277401897,
+        "second_round_new_word_fraction": 0.7464788732394366,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/3699",
+        "candidate_messages": 6,
+        "first_round_chars": 313,
+        "second_round_chars": 288,
+        "second_round_char_fraction": 0.47920133111480867,
+        "second_round_new_word_fraction": 0.9333333333333333,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/3618",
+        "candidate_messages": 6,
+        "first_round_chars": 318,
+        "second_round_chars": 341,
+        "second_round_char_fraction": 0.5174506828528073,
+        "second_round_new_word_fraction": 0.875,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/1204",
+        "candidate_messages": 6,
+        "first_round_chars": 886,
+        "second_round_chars": 411,
+        "second_round_char_fraction": 0.31688511950655357,
+        "second_round_new_word_fraction": 0.868421052631579,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/3938",
+        "candidate_messages": 6,
+        "first_round_chars": 204,
+        "second_round_chars": 212,
+        "second_round_char_fraction": 0.5096153846153846,
+        "second_round_new_word_fraction": 0.9523809523809523,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/3987",
+        "candidate_messages": 6,
+        "first_round_chars": 166,
+        "second_round_chars": 189,
+        "second_round_char_fraction": 0.532394366197183,
+        "second_round_new_word_fraction": 0.8,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/4031",
+        "candidate_messages": 6,
+        "first_round_chars": 313,
+        "second_round_chars": 321,
+        "second_round_char_fraction": 0.5063091482649842,
+        "second_round_new_word_fraction": 0.78125,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/310",
+        "candidate_messages": 6,
+        "first_round_chars": 239,
+        "second_round_chars": 163,
+        "second_round_char_fraction": 0.4054726368159204,
+        "second_round_new_word_fraction": 0.9,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/1378",
+        "candidate_messages": 6,
+        "first_round_chars": 255,
+        "second_round_chars": 252,
+        "second_round_char_fraction": 0.4970414201183432,
+        "second_round_new_word_fraction": 0.6666666666666666,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/473",
+        "candidate_messages": 6,
+        "first_round_chars": 164,
+        "second_round_chars": 275,
+        "second_round_char_fraction": 0.6264236902050114,
+        "second_round_new_word_fraction": 0.9375,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/3742",
+        "candidate_messages": 6,
+        "first_round_chars": 316,
+        "second_round_chars": 285,
+        "second_round_char_fraction": 0.47420965058236275,
+        "second_round_new_word_fraction": 0.8666666666666667,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/330",
+        "candidate_messages": 6,
+        "first_round_chars": 392,
+        "second_round_chars": 425,
+        "second_round_char_fraction": 0.5201958384332925,
+        "second_round_new_word_fraction": 0.7333333333333333,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/4585",
+        "candidate_messages": 6,
+        "first_round_chars": 237,
+        "second_round_chars": 352,
+        "second_round_char_fraction": 0.597623089983022,
+        "second_round_new_word_fraction": 0.8076923076923077,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/3820",
+        "candidate_messages": 6,
+        "first_round_chars": 450,
+        "second_round_chars": 436,
+        "second_round_char_fraction": 0.49209932279909707,
+        "second_round_new_word_fraction": 0.7021276595744681,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/698",
+        "candidate_messages": 6,
+        "first_round_chars": 399,
+        "second_round_chars": 387,
+        "second_round_char_fraction": 0.49236641221374045,
+        "second_round_new_word_fraction": 0.7391304347826086,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/4157",
+        "candidate_messages": 6,
+        "first_round_chars": 275,
+        "second_round_chars": 330,
+        "second_round_char_fraction": 0.5454545454545454,
+        "second_round_new_word_fraction": 0.8857142857142857,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/3634",
+        "candidate_messages": 6,
+        "first_round_chars": 241,
+        "second_round_chars": 265,
+        "second_round_char_fraction": 0.5237154150197628,
+        "second_round_new_word_fraction": 0.7,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/1145",
+        "candidate_messages": 6,
+        "first_round_chars": 438,
+        "second_round_chars": 392,
+        "second_round_char_fraction": 0.472289156626506,
+        "second_round_new_word_fraction": 0.6304347826086957,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/4023",
+        "candidate_messages": 6,
+        "first_round_chars": 338,
+        "second_round_chars": 225,
+        "second_round_char_fraction": 0.3996447602131439,
+        "second_round_new_word_fraction": 0.625,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/158",
+        "candidate_messages": 6,
+        "first_round_chars": 306,
+        "second_round_chars": 363,
+        "second_round_char_fraction": 0.5426008968609866,
+        "second_round_new_word_fraction": 0.7692307692307693,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "MATH/4741",
+        "candidate_messages": 6,
+        "first_round_chars": 596,
+        "second_round_chars": 773,
+        "second_round_char_fraction": 0.5646457268078889,
+        "second_round_new_word_fraction": 0.8245614035087719,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      }
+    ],
+    "limitations": [
+      "逐题标签是已观测合成结果之差，不是单条消息的因果效应或未来可预测真值。",
+      "repeat 编号只作配对索引；API 未提供共享随机种子，不能排除合成或评分波动。",
+      "提示词相同却评分不同的配对不能归因于门控；任务平均相等也不代表重复结果完全一致。",
+      "可见消息特征只供描述，不训练选择器、不扫描阈值，不证明其能预测收益。",
+      "Python AST 差异是语法结构差异，不证明语义冲突或错误；未执行候选代码。",
+      "第二轮特征只有第二轮已生成后才可见，不能当作生成前免费调度信号。",
+      "两批数据集分别分析；不合并准确率、费用或独立任务数为总体收益。"
+    ]
+  }
+}

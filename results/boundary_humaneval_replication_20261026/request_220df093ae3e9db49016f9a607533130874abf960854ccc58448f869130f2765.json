@@ -1,0 +1,35 @@
+{
+  "request_id": "220df093ae3e9db49016f9a607533130874abf960854ccc58448f869130f2765",
+  "task_id": "HumanEval/4",
+  "repeat": 1,
+  "policy": "full",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005417999999999999,
+  "admitted_messages": 6,
+  "decisions": [],
+  "prompt_sha256": "e477fe92a51141168267ce0fd8fa08716f996910e09575dd68814d2c7b2ed2d8",
+  "prompt_tokens": 1598,
+  "completion_tokens": 52,
+  "usage": {
+    "completion_tokens": 52,
+    "prompt_tokens": 1598,
+    "total_tokens": 1650,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "8fac57bf8ced5e75dec8d31de29136c5-58a94863",
+  "finish_reason": "stop",
+  "output": "```python\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    mean = sum(numbers) / len(numbers)\n    return sum(abs(x - mean) for x in numbers) / len(numbers)\n```",
+  "passed": true,
+  "evaluation_seed": 20261026,
+  "elapsed_ms": 3894.9469580002187
+}

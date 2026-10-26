@@ -1,0 +1,35 @@
+{
+  "request_id": "b6efa7a1d832179bcb1622c0ef7763c01e3169a31c08c75e9611f35f300da43a",
+  "task_id": "HumanEval/100",
+  "repeat": 1,
+  "policy": "first_round",
+  "status": "ok",
+  "charged_proxy_usd": 0.00046919999999999997,
+  "admitted_messages": 3,
+  "decisions": [],
+  "prompt_sha256": "aec107e7217df602eb04c4f291bd0a38845f9024306baa01a3a6504a47e50c0f",
+  "prompt_tokens": 1456,
+  "completion_tokens": 27,
+  "usage": {
+    "completion_tokens": 27,
+    "prompt_tokens": 1456,
+    "total_tokens": 1483,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "981e946e44088484c3f1a23359a4b6d3-82352240",
+  "finish_reason": "stop",
+  "output": "```python\ndef make_a_pile(n):\n    return [n + 2 * i for i in range(n)]\n```",
+  "passed": true,
+  "evaluation_seed": 20261026,
+  "elapsed_ms": 3066.7356249996374
+}

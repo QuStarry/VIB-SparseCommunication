@@ -1,0 +1,35 @@
+{
+  "request_id": "c5a69f48d5398bd3d164dda2f080fe5ac289a361bc087c207205b4366b27addf",
+  "task_id": "HumanEval/62",
+  "repeat": 1,
+  "policy": "full",
+  "status": "ok",
+  "charged_proxy_usd": 0.000552,
+  "admitted_messages": 6,
+  "decisions": [],
+  "prompt_sha256": "3fe9c7bb1ded426933bd22dd656d16bd778eaa257156baaa9bfcbe7dfe6134fe",
+  "prompt_tokens": 1716,
+  "completion_tokens": 31,
+  "usage": {
+    "completion_tokens": 31,
+    "prompt_tokens": 1716,
+    "total_tokens": 1747,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 1536
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "e7d4e43847fd44e2a70533cd0339801b",
+  "finish_reason": "stop",
+  "output": "```python\ndef derivative(xs: list):\n    return [i * xs[i] for i in range(1, len(xs))]\n```",
+  "passed": true,
+  "evaluation_seed": 20261026,
+  "elapsed_ms": 2707.876166999995
+}

@@ -1,0 +1,2010 @@
+{
+  "contract_sha256": "0bb392e4a856c74bf1493c2f9f042aad172725be07026edde704aa9b635dfd2a",
+  "valid_requests": 192,
+  "independent_tasks": 24,
+  "proxy_usd": 0.105123,
+  "policies": {
+    "full": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9166666666666666,
+      "prompt_tokens": 81760,
+      "completion_tokens": 3942,
+      "proxy_usd": 0.029258399999999997,
+      "mean_admitted_messages": 6.0,
+      "mean_elapsed_ms": 3656.2974713541316,
+      "synthesis_token_saving_pct": 0.0
+    },
+    "first_round": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9583333333333334,
+      "prompt_tokens": 71982,
+      "completion_tokens": 3774,
+      "proxy_usd": 0.026123399999999998,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 3446.742886375015,
+      "synthesis_token_saving_pct": 11.60533009731395
+    },
+    "first_round_control": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9375,
+      "prompt_tokens": 71982,
+      "completion_tokens": 3623,
+      "proxy_usd": 0.0259422,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 3321.3055902292767,
+      "synthesis_token_saving_pct": 11.781522018155933
+    },
+    "direct": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9583333333333334,
+      "prompt_tokens": 63030,
+      "completion_tokens": 4075,
+      "proxy_usd": 0.023799,
+      "mean_admitted_messages": 0.0,
+      "mean_elapsed_ms": 3578.4266935416817,
+      "synthesis_token_saving_pct": 21.699610277473102
+    }
+  },
+  "paired_comparisons": {
+    "first_round_minus_full": {
+      "delta_pp": 4.166666666666666,
+      "bootstrap_ci95_pp": [
+        0.0,
+        12.5
+      ],
+      "independent_tasks": 24,
+      "tasks_better": 1,
+      "tasks_worse": 0
+    },
+    "first_round_control_minus_full": {
+      "delta_pp": 2.083333333333333,
+      "bootstrap_ci95_pp": [
+        -6.25,
+        12.5
+      ],
+      "independent_tasks": 24,
+      "tasks_better": 1,
+      "tasks_worse": 1
+    },
+    "direct_minus_full": {
+      "delta_pp": 4.166666666666666,
+      "bootstrap_ci95_pp": [
+        0.0,
+        12.5
+      ],
+      "independent_tasks": 24,
+      "tasks_better": 1,
+      "tasks_worse": 0
+    }
+  },
+  "vib_first_round_identical_prompts": 0,
+  "vib_first_round_total_pairs": 0,
+  "scope": "exploratory_humaneval_subset_receiver_only",
+  "caveats": [
+    "复用历史候选的新子集，排除旧 pilot 题号并不意味着 truly held-out。",
+    "重复合成按任务聚类，主比较已冻结，但区间仍是探索性、未经多重比较校正。",
+    "费用仅覆盖当前合成，不含候选生成；direct 不是等预算单智能体对照。",
+    "首轮重复对照使用独立调用，没有共享 API 随机种子，不与首轮池化增大分母。",
+    "代码评分固定 Python random 种子并独立执行两次，未控制其它随机源。",
+    "新批改变了评分随机种子协议，不直接把新旧子集差异归因于任务迁移。"
+  ],
+  "collaboration_boundary": {
+    "contrasts": {
+      "full_minus_first_round": {
+        "delta_pp": -4.166666666666666,
+        "bootstrap_ci95_pp": [
+          -12.5,
+          0.0
+        ],
+        "independent_tasks": 24,
+        "tasks_better": 0,
+        "tasks_worse": 1,
+        "tasks_tied": 23,
+        "tasks_with_opposite_repeat_differences": 0,
+        "identical_prompt_pairs": 0,
+        "identical_prompt_score_disagreements": 0,
+        "tasks": [
+          {
+            "task_id": "HumanEval/50",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/38",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/132",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 2,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/36",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/144",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/98",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/62",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/48",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/147",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": -100.0,
+            "observed_direction": "worse",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 2
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/64",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/143",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/120",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/21",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/92",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/86",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/90",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/4",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/100",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/121",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/11",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/111",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/94",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/69",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/67",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          }
+        ]
+      },
+      "full_minus_direct": {
+        "delta_pp": -4.166666666666666,
+        "bootstrap_ci95_pp": [
+          -12.5,
+          0.0
+        ],
+        "independent_tasks": 24,
+        "tasks_better": 0,
+        "tasks_worse": 1,
+        "tasks_tied": 23,
+        "tasks_with_opposite_repeat_differences": 0,
+        "identical_prompt_pairs": 0,
+        "identical_prompt_score_disagreements": 0,
+        "tasks": [
+          {
+            "task_id": "HumanEval/50",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/38",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/132",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 2,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/36",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/144",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/98",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/62",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/48",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/147",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": -100.0,
+            "observed_direction": "worse",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 2
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/64",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/143",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/120",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/21",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/92",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/86",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/90",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/4",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/100",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/121",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/11",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/111",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/94",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/69",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/67",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          }
+        ]
+      },
+      "first_round_minus_direct": {
+        "delta_pp": 0.0,
+        "bootstrap_ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 24,
+        "tasks_better": 0,
+        "tasks_worse": 0,
+        "tasks_tied": 24,
+        "tasks_with_opposite_repeat_differences": 0,
+        "identical_prompt_pairs": 0,
+        "identical_prompt_score_disagreements": 0,
+        "tasks": [
+          {
+            "task_id": "HumanEval/50",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/38",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/132",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 2,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/36",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/144",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/98",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/62",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/48",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/147",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/64",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/143",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/120",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/21",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/92",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/86",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/90",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/4",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/100",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/121",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/11",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/111",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/94",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/69",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/67",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 0,
+            "identical_prompt_score_disagreements": 0
+          }
+        ]
+      },
+      "first_round_control_minus_first_round": {
+        "delta_pp": -2.083333333333333,
+        "bootstrap_ci95_pp": [
+          -6.25,
+          0.0
+        ],
+        "independent_tasks": 24,
+        "tasks_better": 0,
+        "tasks_worse": 1,
+        "tasks_tied": 23,
+        "tasks_with_opposite_repeat_differences": 0,
+        "identical_prompt_pairs": 48,
+        "identical_prompt_score_disagreements": 1,
+        "tasks": [
+          {
+            "task_id": "HumanEval/50",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/38",
+            "policy_pass_rate": 0.5,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": -50.0,
+            "observed_direction": "worse",
+            "repeat_outcomes": {
+              "both_pass": 1,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 1
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 1
+          },
+          {
+            "task_id": "HumanEval/132",
+            "policy_pass_rate": 0.0,
+            "baseline_pass_rate": 0.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 0,
+              "both_fail": 2,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/36",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/144",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/98",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/62",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/48",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/147",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/64",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/143",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/120",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/21",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/92",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/86",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/90",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/4",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/100",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/121",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/11",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/111",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/94",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/69",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          },
+          {
+            "task_id": "HumanEval/67",
+            "policy_pass_rate": 1.0,
+            "baseline_pass_rate": 1.0,
+            "delta_pp": 0.0,
+            "observed_direction": "tie",
+            "repeat_outcomes": {
+              "both_pass": 2,
+              "both_fail": 0,
+              "policy_only_pass": 0,
+              "baseline_only_pass": 0
+            },
+            "opposite_repeat_differences": false,
+            "identical_prompt_pairs": 2,
+            "identical_prompt_score_disagreements": 0
+          }
+        ]
+      }
+    },
+    "task_features": [
+      {
+        "task_id": "HumanEval/50",
+        "candidate_messages": 6,
+        "first_round_chars": 399,
+        "second_round_chars": 329,
+        "second_round_char_fraction": 0.4519230769230769,
+        "second_round_new_word_fraction": 0.8461538461538461,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/38",
+        "candidate_messages": 6,
+        "first_round_chars": 404,
+        "second_round_chars": 347,
+        "second_round_char_fraction": 0.4620505992010652,
+        "second_round_new_word_fraction": 0.8214285714285714,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/132",
+        "candidate_messages": 6,
+        "first_round_chars": 340,
+        "second_round_chars": 296,
+        "second_round_char_fraction": 0.46540880503144655,
+        "second_round_new_word_fraction": 0.8947368421052632,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/36",
+        "candidate_messages": 6,
+        "first_round_chars": 331,
+        "second_round_chars": 411,
+        "second_round_char_fraction": 0.5539083557951483,
+        "second_round_new_word_fraction": 0.8809523809523809,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/144",
+        "candidate_messages": 6,
+        "first_round_chars": 362,
+        "second_round_chars": 301,
+        "second_round_char_fraction": 0.4539969834087481,
+        "second_round_new_word_fraction": 0.782608695652174,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/98",
+        "candidate_messages": 6,
+        "first_round_chars": 277,
+        "second_round_chars": 275,
+        "second_round_char_fraction": 0.49818840579710144,
+        "second_round_new_word_fraction": 0.75,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/62",
+        "candidate_messages": 6,
+        "first_round_chars": 310,
+        "second_round_chars": 360,
+        "second_round_char_fraction": 0.5373134328358209,
+        "second_round_new_word_fraction": 0.725,
+        "python_fence_blocks": 1,
+        "parsable_python_blocks": 1,
+        "distinct_python_ast_hashes": [
+          "8a4094dc781fcb9c32de228abe5534ba65acf0b9a015832aa9be1b7132cf7377"
+        ],
+        "distinct_python_ast_count": 1
+      },
+      {
+        "task_id": "HumanEval/48",
+        "candidate_messages": 6,
+        "first_round_chars": 244,
+        "second_round_chars": 359,
+        "second_round_char_fraction": 0.5953565505804311,
+        "second_round_new_word_fraction": 1.0,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/147",
+        "candidate_messages": 6,
+        "first_round_chars": 256,
+        "second_round_chars": 311,
+        "second_round_char_fraction": 0.5485008818342152,
+        "second_round_new_word_fraction": 0.825,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/64",
+        "candidate_messages": 6,
+        "first_round_chars": 370,
+        "second_round_chars": 500,
+        "second_round_char_fraction": 0.5747126436781609,
+        "second_round_new_word_fraction": 0.8,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/143",
+        "candidate_messages": 6,
+        "first_round_chars": 205,
+        "second_round_chars": 321,
+        "second_round_char_fraction": 0.6102661596958175,
+        "second_round_new_word_fraction": 1.0,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/120",
+        "candidate_messages": 6,
+        "first_round_chars": 326,
+        "second_round_chars": 372,
+        "second_round_char_fraction": 0.5329512893982808,
+        "second_round_new_word_fraction": 0.8108108108108109,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/21",
+        "candidate_messages": 6,
+        "first_round_chars": 463,
+        "second_round_chars": 364,
+        "second_round_char_fraction": 0.44014510278113667,
+        "second_round_new_word_fraction": 0.8333333333333334,
+        "python_fence_blocks": 1,
+        "parsable_python_blocks": 1,
+        "distinct_python_ast_hashes": [
+          "5ccb43af8a6dd06126259f9d56b1aa27d70df757eef3dfc080a4e3e7819a9bf1"
+        ],
+        "distinct_python_ast_count": 1
+      },
+      {
+        "task_id": "HumanEval/92",
+        "candidate_messages": 6,
+        "first_round_chars": 356,
+        "second_round_chars": 377,
+        "second_round_char_fraction": 0.514324693042292,
+        "second_round_new_word_fraction": 0.75,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/86",
+        "candidate_messages": 6,
+        "first_round_chars": 355,
+        "second_round_chars": 347,
+        "second_round_char_fraction": 0.4943019943019943,
+        "second_round_new_word_fraction": 0.9,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/90",
+        "candidate_messages": 6,
+        "first_round_chars": 243,
+        "second_round_chars": 297,
+        "second_round_char_fraction": 0.55,
+        "second_round_new_word_fraction": 0.8235294117647058,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/4",
+        "candidate_messages": 6,
+        "first_round_chars": 217,
+        "second_round_chars": 320,
+        "second_round_char_fraction": 0.595903165735568,
+        "second_round_new_word_fraction": 0.9696969696969697,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/100",
+        "candidate_messages": 6,
+        "first_round_chars": 247,
+        "second_round_chars": 204,
+        "second_round_char_fraction": 0.4523281596452328,
+        "second_round_new_word_fraction": 0.7916666666666666,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/121",
+        "candidate_messages": 6,
+        "first_round_chars": 317,
+        "second_round_chars": 405,
+        "second_round_char_fraction": 0.5609418282548476,
+        "second_round_new_word_fraction": 0.8947368421052632,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/11",
+        "candidate_messages": 6,
+        "first_round_chars": 243,
+        "second_round_chars": 270,
+        "second_round_char_fraction": 0.5263157894736842,
+        "second_round_new_word_fraction": 0.8928571428571429,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/111",
+        "candidate_messages": 6,
+        "first_round_chars": 220,
+        "second_round_chars": 286,
+        "second_round_char_fraction": 0.5652173913043478,
+        "second_round_new_word_fraction": 0.9696969696969697,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      },
+      {
+        "task_id": "HumanEval/94",
+        "candidate_messages": 6,
+        "first_round_chars": 526,
+        "second_round_chars": 262,
+        "second_round_char_fraction": 0.33248730964467005,
+        "second_round_new_word_fraction": 0.7407407407407407,
+        "python_fence_blocks": 1,
+        "parsable_python_blocks": 1,
+        "distinct_python_ast_hashes": [
+          "425d2b9a782da324d633fd8dbc0d198a52d201b3d0ad42f0fc79bf8e4106a0a1"
+        ],
+        "distinct_python_ast_count": 1
+      },
+      {
+        "task_id": "HumanEval/69",
+        "candidate_messages": 6,
+        "first_round_chars": 410,
+        "second_round_chars": 242,
+        "second_round_char_fraction": 0.37116564417177916,
+        "second_round_new_word_fraction": 0.8461538461538461,
+        "python_fence_blocks": 1,
+        "parsable_python_blocks": 1,
+        "distinct_python_ast_hashes": [
+          "dea7382a696d313d9f5617b2336f532947b5e47e184826632f666721dae4e01e"
+        ],
+        "distinct_python_ast_count": 1
+      },
+      {
+        "task_id": "HumanEval/67",
+        "candidate_messages": 6,
+        "first_round_chars": 301,
+        "second_round_chars": 356,
+        "second_round_char_fraction": 0.5418569254185692,
+        "second_round_new_word_fraction": 0.7297297297297297,
+        "python_fence_blocks": 0,
+        "parsable_python_blocks": 0,
+        "distinct_python_ast_hashes": [],
+        "distinct_python_ast_count": 0
+      }
+    ],
+    "limitations": [
+      "逐题标签是已观测合成结果之差，不是单条消息的因果效应或未来可预测真值。",
+      "repeat 编号只作配对索引；API 未提供共享随机种子，不能排除合成或评分波动。",
+      "提示词相同却评分不同的配对不能归因于门控；任务平均相等也不代表重复结果完全一致。",
+      "可见消息特征只供描述，不训练选择器、不扫描阈值，不证明其能预测收益。",
+      "Python AST 差异是语法结构差异，不证明语义冲突或错误；未执行候选代码。",
+      "第二轮特征只有第二轮已生成后才可见，不能当作生成前免费调度信号。",
+      "两批数据集分别分析；不合并准确率、费用或独立任务数为总体收益。"
+    ]
+  }
+}

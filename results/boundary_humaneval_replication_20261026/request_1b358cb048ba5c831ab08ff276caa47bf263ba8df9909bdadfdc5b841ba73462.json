@@ -1,0 +1,35 @@
+{
+  "request_id": "1b358cb048ba5c831ab08ff276caa47bf263ba8df9909bdadfdc5b841ba73462",
+  "task_id": "HumanEval/132",
+  "repeat": 0,
+  "policy": "direct",
+  "status": "ok",
+  "charged_proxy_usd": 0.0005274,
+  "admitted_messages": 0,
+  "decisions": [],
+  "prompt_sha256": "0e0c57eb47a06ab2991609e3879745f4055758de4372f32260cda700ea90a844",
+  "prompt_tokens": 1350,
+  "completion_tokens": 102,
+  "usage": {
+    "completion_tokens": 102,
+    "prompt_tokens": 1350,
+    "total_tokens": 1452,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 0,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0
+    }
+  },
+  "response_model": "deepseek-v4-flash-0817",
+  "response_id": "c0f4a84c703237f94488594d48b8050f-397e408c",
+  "finish_reason": "stop",
+  "output": "```python\ndef is_nested(string):\n    max_open = 0\n    min_open = 0\n    for ch in string:\n        if ch == '[':\n            max_open += 1\n            min_open += 1\n        else:\n            max_open -= 1\n            min_open = max(0, min_open - 1)\n        if max_open < 0:\n            return False\n    return min_open == 0 and max_open > 0\n```",
+  "passed": false,
+  "evaluation_seed": 20261026,
+  "elapsed_ms": 3847.2494590005226
+}

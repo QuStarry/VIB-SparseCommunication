@@ -234,3 +234,184 @@ def test_analysis_rejects_default_router_protocol(tmp_path, monkeypatch):
     path.write_text(json.dumps(manifest))
     with pytest.raises(ValueError, match="论文配置"):
         analyze(args.output)
+
+
+def test_analysis_rejects_changed_request_identity(tmp_path, monkeypatch):
+    from experiments.analyze_frozen_replay import analyze
+    args = arguments(tmp_path)
+    fake_client(monkeypatch)
+    replay.run(args)
+    path = next(args.output.glob("request_*.json"))
+    record = json.loads(path.read_text())
+    record["request_id"] = "wrong-contract"
+    path.write_text(json.dumps(record))
+    with pytest.raises(ValueError, match="契约"):
+        analyze(args.output)
+
+
+def test_boundary_features_ignore_reference_material():
+    from experiments.analyze_frozen_replay import history_features
+    task = replay.build_task(code_trace("HumanEval/1"), "humaneval")
+    before = history_features(task["candidates"])
+    task["entry_point"] = "hidden"
+    task["test_cases"] = ["raise RuntimeError('must not execute')"]
+    assert before == history_features(task["candidates"])
+    assert before["candidate_messages"] == 6
+
+
+def test_boundary_features_normalize_code_without_execution():
+    from experiments.analyze_frozen_replay import history_features
+    messages = [
+        "[Coder]: ```python\nraise RuntimeError('must not execute')\n```",
+        "[Reviewer]: ```python\n# same AST\nraise RuntimeError('must not execute')\n```",
+        "[Architect]: ```python\nthis is not valid python!\n```",
+        "[Coder]: ```python\nvalue = 2\n```",
+        "[Reviewer]: additional evidence",
+        "[Architect]: additional evidence",
+    ]
+    features = history_features(messages)
+    assert features["python_fence_blocks"] == 4
+    assert features["parsable_python_blocks"] == 3
+    assert features["distinct_python_ast_count"] == 2
+    assert 0 <= features["second_round_new_word_fraction"] <= 1
+
+
+def test_boundary_features_reject_incomplete_rounds():
+    from experiments.analyze_frozen_replay import history_features
+    with pytest.raises(ValueError, match="六候选"):
+        history_features(["partial"])
+
+
+def test_boundary_preserves_opposite_repeat_outcomes():
+    from experiments.analyze_frozen_replay import compare_policies
+    lookup = {}
+    for repeat, full_passed in enumerate((True, False)):
+        lookup["task", repeat, "full"] = {
+            "passed": full_passed, "prompt_sha256": "same",
+        }
+        lookup["task", repeat, "first_round"] = {
+            "passed": not full_passed, "prompt_sha256": "same",
+        }
+    report = compare_policies(["task"], 2, lookup, "full", "first_round")
+    assert report["delta_pp"] == 0
+    assert report["independent_tasks"] == 1
+    assert report["tasks_tied"] == 1
+    assert report["tasks_with_opposite_repeat_differences"] == 1
+    assert report["identical_prompt_score_disagreements"] == 2
+    assert report["tasks"][0]["repeat_outcomes"]["policy_only_pass"] == 1
+    assert report["tasks"][0]["repeat_outcomes"]["baseline_only_pass"] == 1
+
+
+def test_boundary_reports_observed_harm_with_distinct_prompts():
+    from experiments.analyze_frozen_replay import compare_policies
+    lookup = {
+        ("task", 0, "full"): {"passed": False, "prompt_sha256": "full"},
+        ("task", 0, "first_round"): {"passed": True, "prompt_sha256": "first"},
+    }
+    report = compare_policies(["task"], 1, lookup, "full", "first_round")
+    assert report["delta_pp"] == -100
+    assert report["tasks_worse"] == 1
+    assert report["identical_prompt_pairs"] == 0
+    assert report["tasks"][0]["observed_direction"] == "worse"
+
+
+def boundary_arguments(tmp_path):
+    args = arguments(tmp_path)
+    prior = tmp_path / "prior_manifest.json"
+    prior.write_text(json.dumps({"dataset": "math", "tasks": [{"task_id": "MATH/old"}]}))
+    args.protocol = "boundary"
+    args.model = "fake-response"
+    args.exclude_manifest = [prior]
+    return args
+
+
+def test_boundary_selection_excludes_old_pilot_tasks():
+    rows = [trace("MATH/old"), trace("MATH/new")]
+    selected = replay.select_tasks(rows, 1, 1, "math", {"MATH/old"})
+    assert [row["task_id"] for row in selected] == ["MATH/new"]
+
+
+def test_boundary_control_uses_identical_first_round_history():
+    messages = trace("MATH/1")["full"]["history"]
+    assert replay.admitted_history(messages, "goal", "first_round_control", "id", 1) == (
+        replay.admitted_history(messages, "goal", "first_round", "id", 1)
+    )
+
+
+def test_boundary_runs_four_policies_and_resumes_without_calls(tmp_path, monkeypatch):
+    from experiments.analyze_frozen_replay import analyze
+    args = boundary_arguments(tmp_path)
+    args.repeats = 2
+    calls = fake_client(monkeypatch)
+    replay.run(args)
+    replay.run(args)
+    assert len(calls) == 8
+    report = analyze(args.output)
+    assert set(report["policies"]) == set(replay.BOUNDARY_POLICIES)
+    control = report["collaboration_boundary"]["contrasts"][
+        "first_round_control_minus_first_round"
+    ]
+    assert control["identical_prompt_pairs"] == 2
+    assert control["independent_tasks"] == 1
+    assert control["identical_prompt_score_disagreements"] == 0
+
+
+def test_boundary_requires_explicit_exclusion_manifest(tmp_path, monkeypatch):
+    args = boundary_arguments(tmp_path)
+    args.exclude_manifest = []
+    calls = fake_client(monkeypatch)
+    with pytest.raises(ValueError, match="排除"):
+        replay.run(args)
+    assert not calls
+
+
+def test_boundary_model_drift_stops_and_blocks_paid_resume(tmp_path, monkeypatch):
+    args = boundary_arguments(tmp_path)
+    args.model = "different-pinned-model"
+    calls = fake_client(monkeypatch)
+    with pytest.raises(RuntimeError, match="请求失败"):
+        replay.run(args)
+    with pytest.raises(RuntimeError, match="人工审计"):
+        replay.run(args)
+    assert len(calls) == 1
+
+
+def test_boundary_analysis_rejects_nonidentical_noise_control(tmp_path, monkeypatch):
+    from experiments.analyze_frozen_replay import analyze
+    args = boundary_arguments(tmp_path)
+    fake_client(monkeypatch)
+    replay.run(args)
+    for path in args.output.glob("request_*.json"):
+        record = json.loads(path.read_text())
+        if record["policy"] == "first_round_control":
+            record["prompt_sha256"] = "different-prompt"
+            path.write_text(json.dumps(record))
+            break
+    with pytest.raises(ValueError, match="提示词不相同"):
+        analyze(args.output)
+
+
+def test_seeded_code_scoring_preserves_parent_random_state():
+    import random
+    task = replay.build_task(code_trace("HumanEval/1"), "humaneval")
+    task["test_cases"] = [
+        "def check(candidate):"
+        "\n    import random"
+        "\n    assert candidate(1, 2) == 3"
+        "\n    assert random.random() == 0.13436424411240122"
+    ]
+    state = random.getstate()
+    try:
+        assert replay.score_output("humaneval", task, "def add(a, b): return a + b", 1)
+        assert random.getstate() == state
+    finally:
+        random.setstate(state)
+
+
+def test_seeded_code_scoring_rejects_inconsistent_independent_checks(monkeypatch):
+    from experiments.run_multi_benchmark import CodeEvaluator
+    results = iter((True, False))
+    monkeypatch.setattr(CodeEvaluator, "evaluate", lambda *args, **kwargs: next(results))
+    task = replay.build_task(code_trace("HumanEval/1"), "humaneval")
+    with pytest.raises(ValueError, match="不一致"):
+        replay.score_output("humaneval", task, "def add(a, b): return a + b", 1)

@@ -1,0 +1,52 @@
+{
+  "contract_sha256": "0bb392e4a856c74bf1493c2f9f042aad172725be07026edde704aa9b635dfd2a",
+  "stop_reason": "complete",
+  "proxy_usd": 0.10512300000000004,
+  "policies": {
+    "full": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9166666666666666,
+      "prompt_tokens": 81760,
+      "completion_tokens": 3942,
+      "proxy_usd": 0.029258399999999997,
+      "mean_admitted_messages": 6.0,
+      "mean_elapsed_ms": 3656.2974713541316
+    },
+    "first_round": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9583333333333334,
+      "prompt_tokens": 71982,
+      "completion_tokens": 3774,
+      "proxy_usd": 0.026123399999999998,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 3446.742886375015
+    },
+    "first_round_control": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9375,
+      "prompt_tokens": 71982,
+      "completion_tokens": 3623,
+      "proxy_usd": 0.0259422,
+      "mean_admitted_messages": 3.0,
+      "mean_elapsed_ms": 3321.3055902292767
+    },
+    "direct": {
+      "requests": 48,
+      "valid_requests": 48,
+      "tasks": 24,
+      "task_mean_accuracy": 0.9583333333333334,
+      "prompt_tokens": 63030,
+      "completion_tokens": 4075,
+      "proxy_usd": 0.023799,
+      "mean_admitted_messages": 0.0,
+      "mean_elapsed_ms": 3578.4266935416817
+    }
+  },
+  "cost_scope": "synthesis_only_no_candidate_generation_not_actual_invoice"
+}

@@ -1,0 +1,466 @@
+{
+  "version": 3,
+  "source_sha256": "c69ff5708dd473454bdccdfada157680b4f4c18ca97fa6646cf94ed364392943",
+  "tasks": [
+    {
+      "task_id": "HumanEval/50",
+      "problem": "\n\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 建议decode_shift直接复用encode_shift的逻辑，通过反向移位（-5）实现，并确保处理小写字母边界。同时可添加输入校验，避免非小写字母导致错误结果。",
+        "[Coder]: decode_shift 应实现 encode_shift 的逆操作，即每个字符向前移动 5 位，并处理字母环绕。建议使用 `chr(((ord(ch) - 5 - ord('a')) % 26) + ord('a'))` 来确保正确性。",
+        "[Reviewer]: decode_shift函数未实现，需补全为`return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])`。注意encode_shift对非小写字母（如大写、数字）会错误移位，且decode_shift需与encode_shift的取模逻辑严格对称，否则边界字符（如'a'和'z'）会解码错误。",
+        "[Architect]: 建议在decode_shift中增加输入校验，仅处理小写字母，对非小写字符直接保留原样，以避免与encode_shift的隐式假设不一致。同时，可考虑将移位量（5）提取为常量，确保编码解码逻辑对称且易于维护。",
+        "[Coder]: 建议在decode_shift中直接复用encode_shift的移位逻辑，通过参数化偏移量（如`shift=-5`）避免代码重复，同时增加对非小写字母的过滤或报错，确保输入严格为'a'-'z'，这样可提升健壮性并简化维护。",
+        "[Reviewer]: 建议在decode_shift中显式校验输入仅包含小写字母，否则抛出ValueError，避免与encode_shift的非小写字符错误行为叠加。同时，测试用例应覆盖'a'、'z'、'f'等边界字符，确保取模对称性无偏差。"
+      ],
+      "entry_point": "decode_shift",
+      "test_cases": [
+        "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    from random import randint, choice\n    import copy\n    import string\n\n    letters = string.ascii_lowercase\n    for _ in range(100):\n        str = ''.join(choice(letters) for i in range(randint(10, 20)))\n        encoded_str = encode_shift(str)\n        assert candidate(copy.deepcopy(encoded_str)) == str\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/38",
+      "problem": "\n\ndef encode_cyclic(s: str):\n    \"\"\"\n    returns encoded string by cycling groups of three characters.\n    \"\"\"\n    # split string to groups. Each of length 3.\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    # cycle elements in each group. Unless group has fewer elements than 3.\n    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n\n\ndef decode_cyclic(s: str):\n    \"\"\"\n    takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 建议在decode_cyclic中按3字符分组，对每组长度恰好为3的字符串执行逆操作（将最后一个字符移到开头），长度不足3的组保持不变，最后拼接即可。注意需处理输入长度非3倍数时的边界情况，确保与encode逻辑完全对称。",
+        "[Coder]: decode_cyclic 的实现只需将每个长度为3的组反向操作：`group[2] + group[:2]`，但需注意最后一组可能不足3个字符，此时应原样保留。建议复用 encode 的分组逻辑，避免重复代码。",
+        "[Reviewer]: `decode_cyclic` 函数目前为空，且其逆操作存在边界问题：当输入字符串长度不是3的倍数时，`encode_cyclic` 对末尾不足3个字符的组不进行循环移位，因此解码时需先判断每组长度是否为3，仅对长度为3的组执行 `group[-1] + group[:-1]` 操作，否则直接保留。建议实现时先按3字符分组，再逐组处理，避免因长度非3倍数导致解码错误。",
+        "[Architect]: 建议在实现时直接复用encode_cyclic的分组逻辑，将分组代码提取为独立辅助函数，确保编码解码的对称性；同时补充测试用例覆盖长度0、1、2、3、4、5及多组场景，验证边界行为。",
+        "[Coder]: 实现时直接复用 `encode_cyclic` 的分组逻辑，用列表推导式对每组判断长度：若为3则执行 `group[2] + group[:2]`，否则原样保留，最后拼接返回。这样代码简洁且与编码逻辑完全对称，无需额外处理边界。",
+        "[Reviewer]: 解码时需严格匹配编码的分组边界：若输入长度非3倍数，末尾不足3字符的组必须原样保留，且逆操作仅对长度恰好为3的组执行`group[-1] + group[:-1]`，否则会因索引越界或错误移位导致解码失败。建议在实现中显式检查`len(group) == 3`，避免依赖隐式假设。"
+      ],
+      "entry_point": "decode_cyclic",
+      "test_cases": [
+        "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    from random import randint, choice\n    import string\n\n    letters = string.ascii_lowercase\n    for _ in range(100):\n        str = ''.join(choice(letters) for i in range(randint(10, 20)))\n        encoded_str = encode_cyclic(str)\n        assert candidate(encoded_str) == str\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/132",
+      "problem": "\ndef is_nested(string):\n    '''\n    Create a function that takes a string as input which contains only square brackets.\n    The function should return True if and only if there is a valid subsequence of brackets \n    where at least one bracket in the subsequence is nested.\n\n    is_nested('[[]]') ➞ True\n    is_nested('[]]]]]]][[[[[]') ➞ False\n    is_nested('[][]') ➞ False\n    is_nested('[]') ➞ False\n    is_nested('[[][]]') ➞ True\n    is_nested('[[]][[') ➞ True\n    '''\n",
+      "candidates": [
+        "[Architect]: 该问题可转化为括号匹配的变体：只需判断是否存在至少一对嵌套括号，而非完全匹配。最优策略是维护当前未匹配的`[`数量，并跟踪是否出现过嵌套（即某个`]`在未匹配的`[`之后出现且之前已有未匹配的`[`）。时间复杂度O(n)，空间O(1)，无需栈。",
+        "[Coder]: 可以维护一个计数器，遍历字符串时遇到`[`加1、遇到`]`减1，同时记录是否出现过嵌套（即计数器曾大于1且之后又减到过0以下）。更简洁的方法是：先检查是否存在`[`后紧跟`]`且中间有内容，或直接模拟栈判断是否有未匹配的`[`在已匹配的`]`之前。",
+        "[Reviewer]: 该实现需严格区分“有效子序列”与“子串”，并确保至少存在一对括号嵌套。建议先验证空字符串和仅含单种括号的边界情况，再通过栈或计数器模拟匹配过程，同时记录是否存在嵌套层级超过1的匹配对。",
+        "[Architect]: 建议采用计数器法：遍历时维护`open`计数，遇到`[`加1，遇到`]`时若`open>0`则减1并检查是否曾出现`open>=2`（表示存在嵌套），同时需重置`open`为0当`]`多于`[`时，但需保留“曾嵌套”标志。最终返回标志即可，无需栈，且能正确处理所有示例。",
+        "[Coder]: 直接实现计数器法：遍历时`[`加1，`]`减1，若计数曾≥2且之后减到0以下则返回True，否则False。边界情况如空字符串或全为`[`时返回False，因为无嵌套。",
+        "[Reviewer]: 计数器方案需注意：当`]`使计数减到负数时，应重置为0而非继续递减，否则会错误判断嵌套；同时需在每次`]`匹配前检查计数是否≥2，以准确捕获嵌套发生。"
+      ],
+      "entry_point": "is_nested",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('[[]]') == True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('[]]]]]]][[[[[]') == False\n    assert candidate('[][]') == False\n    assert candidate(('[]')) == False\n    assert candidate('[[[[]]]]') == True\n    assert candidate('[]]]]]]]]]]') == False\n    assert candidate('[][][[]]') == True\n    assert candidate('[[]') == False\n    assert candidate('[]]') == False\n    assert candidate('[[]][[') == True\n    assert candidate('[[][]]') == True\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('') == False, \"This prints if this assert fails 2 (also good for debugging!)\"\n    assert candidate('[[[[[[[[') == False\n    assert candidate(']]]]]]]]') == False\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/36",
+      "problem": "\n\ndef fizz_buzz(n: int):\n    \"\"\"Return the number of times the digit 7 appears in integers less than n which are divisible by 11 or 13.\n    >>> fizz_buzz(50)\n    0\n    >>> fizz_buzz(78)\n    2\n    >>> fizz_buzz(79)\n    3\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该问题可通过遍历小于n的整数，筛选出能被11或13整除的数，并统计其十进制表示中数字7的出现次数来解决。时间复杂度为O(n)，空间复杂度O(1)，对于常规输入足够高效。可进一步优化为仅遍历11和13的倍数，但需注意去重（即同时被11和13整除的数只计一次）。",
+        "[Coder]: 直接遍历小于n且能被11或13整除的数，统计数字7出现的次数即可，时间复杂度O(n)。注意边界条件：n本身不包含在内。",
+        "[Reviewer]: 该实现需确保严格遍历小于n的整数，并仅统计能被11或13整除的数中数字7的出现次数。注意边界条件：n=78时，77（含两个7）和78（不含7）应计为2，而n=79时需额外计入78（不含7）但77仍计2，故结果为3。建议使用循环逐位检查数字7，避免字符串转换可能引入的溢出或性能问题。",
+        "[Architect]: 建议采用数学方法直接生成11和13的倍数序列，并通过容斥原理避免重复计数（即减去143的倍数），同时用取模运算逐位统计7，避免字符串转换。该方案可将时间复杂度降至O(n/11 + n/13)，且保持O(1)空间。",
+        "[Coder]: 基于Reviewer的边界分析，我建议直接遍历所有小于n的整数，用整除判断和逐位取模统计7，避免字符串转换。同时可提前用`if i % 11 == 0 or i % 13 == 0`过滤，确保每个数只检查一次，代码简洁且无重复计数风险。",
+        "[Reviewer]: 边界条件需严格验证：当n=78时，77（含两个7）计入，而78本身不含7且不满足整除条件，故结果为2；当n=79时，77仍计2，但78不满足条件，结果应为2而非3，因此示例中fizz_buzz(79)=3存在逻辑矛盾，需确认是否误将78计入。建议实现时明确使用整除判断（n % 11 == 0 or n % 13 == 0）并逐位提取数字，避免字符串转换的潜在性能问题。"
+      ],
+      "entry_point": "fizz_buzz",
+      "test_cases": [
+        "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate(50) == 0\n    assert candidate(78) == 2\n    assert candidate(79) == 3\n    assert candidate(100) == 3\n    assert candidate(200) == 6\n    assert candidate(4000) == 192\n    assert candidate(10000) == 639\n    assert candidate(100000) == 8026\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/144",
+      "problem": "\ndef simplify(x, n):\n    \"\"\"Your task is to implement a function that will simplify the expression\n    x * n. The function returns True if x * n evaluates to a whole number and False\n    otherwise. Both x and n, are string representation of a fraction, and have the following format,\n    <numerator>/<denominator> where both numerator and denominator are positive whole numbers.\n\n    You can assume that x, and n are valid fractions, and do not have zero as denominator.\n\n    simplify(\"1/5\", \"5/1\") = True\n    simplify(\"1/6\", \"2/1\") = False\n    simplify(\"7/10\", \"10/2\") = False\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该问题本质是判断两个分数相乘后是否为整数，等价于验证分子乘积能否被分母乘积整除。建议直接解析字符串为整数，计算 `(x_num * n_num) % (x_den * n_den) == 0`，无需约分或浮点运算，避免精度损失。",
+        "[Coder]: 可以先将两个分数相乘，再判断结果是否为整数。直接解析分子分母，计算 `x_num * n_num` 是否能被 `x_den * n_den` 整除即可，无需约分。",
+        "[Reviewer]: 该实现需注意分子分母均为正整数，但乘积可能溢出，建议用交叉相乘判断：`int(x.split('/')[0]) * int(n.split('/')[1]) == int(x.split('/')[1]) * int(n.split('/')[0])`，避免浮点误差。另外需确认输入格式严格为“a/b”，且分母非零（题目已保证）。",
+        "[Architect]: 交叉相乘判断条件有误：它验证的是两分数相等而非乘积为整数。正确做法是检查 `(x_num * n_num) % (x_den * n_den) == 0`，但需注意Python整数无溢出问题，可直接计算。",
+        "[Coder]: 直接解析分子分母后，用 `(x_num * n_num) % (x_den * n_den) == 0` 判断即可，无需交叉相乘或约分，因为整数乘法在 Python 中无溢出问题。",
+        "[Reviewer]: 交叉相乘判断条件有误，应改为 `x_num * n_num % (x_den * n_den) == 0`，而非比较分子分母交叉乘积相等。另外，需注意整数溢出问题，建议使用Python的任意精度整数，无需额外处理。"
+      ],
+      "entry_point": "simplify",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"1/5\", \"5/1\") == True, 'test1'\n    assert candidate(\"1/6\", \"2/1\") == False, 'test2'\n    assert candidate(\"5/1\", \"3/1\") == True, 'test3'\n    assert candidate(\"7/10\", \"10/2\") == False, 'test4'\n    assert candidate(\"2/10\", \"50/10\") == True, 'test5'\n    assert candidate(\"7/2\", \"4/2\") == True, 'test6'\n    assert candidate(\"11/6\", \"6/1\") == True, 'test7'\n    assert candidate(\"2/3\", \"5/2\") == False, 'test8'\n    assert candidate(\"5/2\", \"3/5\") == False, 'test9'\n    assert candidate(\"2/4\", \"8/4\") == True, 'test10'\n\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"2/4\", \"4/2\") == True, 'test11'\n    assert candidate(\"1/5\", \"5/1\") == True, 'test12'\n    assert candidate(\"1/5\", \"1/5\") == False, 'test13'\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/98",
+      "problem": "\ndef count_upper(s):\n    \"\"\"\n    Given a string s, count the number of uppercase vowels in even indices.\n    \n    For example:\n    count_upper('aBCdEf') returns 1\n    count_upper('abcdefg') returns 0\n    count_upper('dBBE') returns 0\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该函数需遍历字符串的偶数索引（0、2、4...），仅当字符为大写元音（A、E、I、O、U）时计数。建议直接使用`enumerate`配合`step=2`切片，并利用集合`{'A','E','I','O','U'}`进行O(1)成员判断，整体时间复杂度O(n)，空间复杂度O(1)。",
+        "[Coder]: 直接实现即可：遍历偶数索引，检查字符是否为大写元音（A/E/I/O/U），计数并返回。注意索引从0开始，且仅检查偶数位置。",
+        "[Reviewer]: 该实现需注意偶数索引从0开始计数，且仅统计大写元音（A/E/I/O/U）。建议补充空字符串和全小写输入的边界测试，并确认索引奇偶判断是否与示例一致。",
+        "[Architect]: 建议采用切片`range(0, len(s), 2)`直接生成偶数索引，避免`enumerate`后取模判断，代码更简洁且性能略优。同时明确大写元音集合为`{'A','E','I','O','U'}`，无需考虑小写或非元音字符。",
+        "[Coder]: 建议使用`range(0, len(s), 2)`直接遍历偶数索引，避免创建切片副本以节省内存。同时将元音集合定义为模块级常量，提升可读性和复用性。",
+        "[Reviewer]: 建议补充对非字母字符（如数字、空格）的测试，确保它们不会影响计数逻辑。另外，确认偶数索引的定义与Python字符串索引一致（0-based），避免因索引偏移导致结果偏差。"
+      ],
+      "entry_point": "count_upper",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('aBCdEf')  == 1\n    assert candidate('abcdefg') == 0\n    assert candidate('dBBE') == 0\n    assert candidate('B')  == 0\n    assert candidate('U')  == 1\n    assert candidate('') == 0\n    assert candidate('EEEE') == 2\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/62",
+      "problem": "\n\ndef derivative(xs: list):\n    \"\"\" xs represent coefficients of a polynomial.\n    xs[0] + xs[1] * x + xs[2] * x^2 + ....\n     Return derivative of this polynomial in the same form.\n    >>> derivative([3, 1, 2, 4, 5])\n    [1, 4, 12, 20]\n    >>> derivative([1, 2, 3])\n    [2, 6]\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该任务本质是多项式系数数组的逐项微分，核心算法为：对索引i≥1的元素，新系数为原系数乘以i。边界条件需处理空列表和仅含常数项的情况，此时应返回空列表。实现时建议用列表推导式 `[i * xs[i] for i in range(1, len(xs))]`，简洁且符合函数式风格。",
+        "[Coder]: ```python\ndef derivative(xs):\n    return [i * xs[i] for i in range(1, len(xs))]\n```",
+        "[Reviewer]: 该实现需处理空列表边界：若输入为`[]`，应返回`[]`而非报错。同时注意系数为0时（如`[0,0,1]`）导数应为`[0,2]`，需保留零系数项以维持多项式次数对应关系。",
+        "[Architect]: 补充边界条件：当输入列表长度小于2时（空列表或仅含常数项），列表推导式自然返回空列表，无需额外判断。同时需明确系数类型为数值（int/float），避免字符串等非法输入导致乘法运算错误。",
+        "[Coder]: 补充边界条件处理：当输入为空列表或仅含常数项时，直接返回空列表，避免索引错误。同时保留零系数项以维持多项式次数对应关系，确保输出长度始终为`len(xs)-1`。",
+        "[Reviewer]: 列表推导式`[i * xs[i] for i in range(1, len(xs))]`对空列表和仅含常数项的情况均自然返回空列表，无需额外分支。但需注意：若输入为`None`或非列表类型（如元组），该实现会因索引操作报错，建议在函数开头添加类型检查或转换为列表。此外，当系数为0时（如`[0,0,1]`），推导式正确生成`[0,2]`，符合数学定义，无需特殊处理。"
+      ],
+      "entry_point": "derivative",
+      "test_cases": [
+        "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate([3, 1, 2, 4, 5]) == [1, 4, 12, 20]\n    assert candidate([1, 2, 3]) == [2, 6]\n    assert candidate([3, 2, 1]) == [2, 2]\n    assert candidate([3, 2, 1, 0, 4]) == [2, 2, 0, 16]\n    assert candidate([1]) == []\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/48",
+      "problem": "\n\ndef is_palindrome(text: str):\n    \"\"\"\n    Checks if given string is a palindrome\n    >>> is_palindrome('')\n    True\n    >>> is_palindrome('aba')\n    True\n    >>> is_palindrome('aaaaa')\n    True\n    >>> is_palindrome('zbcd')\n    False\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 建议采用双指针法从两端向中间遍历，时间复杂度O(n)、空间复杂度O(1)，同时需明确空字符串视为回文。实现时注意处理Unicode字符，避免因字节比较导致错误。",
+        "[Coder]: 直接比较字符串与其反转即可，时间复杂度O(n)，空间复杂度O(n)。若需优化空间，可用双指针从两端向中间遍历，实现O(1)额外空间。",
+        "[Reviewer]: 该函数实现需注意空字符串和单字符均返回True，但需确保输入类型为str，否则可能引发TypeError。建议添加类型检查或文档说明，同时考虑Unicode字符（如组合字符）可能影响回文判断。",
+        "[Architect]: 建议采用双指针法实现，同时明确处理Unicode组合字符（如é由e和重音符号组成）时，需先进行规范化（如NFC）再比较，否则可能误判。另外，可考虑忽略大小写和非字母数字字符，但需在文档中明确说明该行为，避免调用者误解。",
+        "[Coder]: 采用双指针法实现，从两端向中间比较字符，遇到不匹配立即返回False，空字符串和单字符自然返回True。同时添加类型检查，确保输入为str，避免非字符串参数引发意外错误。",
+        "[Reviewer]: 建议补充对非字符串输入的类型检查，例如`if not isinstance(text, str): raise TypeError`，否则传入`None`或整数时可能产生意外行为。另外，若需严格处理Unicode组合字符，可考虑使用`unicodedata.normalize`进行规范化，但需在文档中明确说明该行为是否必要。"
+      ],
+      "entry_point": "is_palindrome",
+      "test_cases": [
+        "\n\nMETADATA = {}\n\n\ndef check(candidate):\n    assert candidate('') == True\n    assert candidate('aba') == True\n    assert candidate('aaaaa') == True\n    assert candidate('zbcd') == False\n    assert candidate('xywyx') == True\n    assert candidate('xywyz') == False\n    assert candidate('xywzx') == False\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/147",
+      "problem": "\ndef get_max_triples(n):\n    \"\"\"\n    You are given a positive integer n. You have to create an integer array a of length n.\n        For each i (1 ≤ i ≤ n), the value of a[i] = i * i - i + 1.\n        Return the number of triples (a[i], a[j], a[k]) of a where i < j < k, \n    and a[i] + a[j] + a[k] is a multiple of 3.\n\n    Example :\n        Input: n = 5\n        Output: 1\n        Explanation: \n        a = [1, 3, 7, 13, 21]\n        The only valid triple is (1, 7, 13).\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 核心约束是a[i]模3的余数，可化简为(i² - i + 1) mod 3，其周期为3，因此只需统计n中三种余数的个数，再用组合数计算三元组余数和为0的组合。",
+        "[Coder]: 直接按模3分类计数即可：a[i] = i² - i + 1，模3周期为3，统计每类余数的数量，然后组合计数（余数0+0+0、1+1+1、2+2+2、0+1+2）。时间复杂度O(n)，空间O(1)。",
+        "[Reviewer]: 该实现需注意n=1或2时无三元组，应返回0；同时需验证a[i]对3取模的周期性（i mod 3对应余数0,1,2），可简化为统计余数组合而非显式构造数组。",
+        "[Architect]: 利用模3周期性可进一步推导：i mod 3 = 0时a[i]≡1，i mod 3 = 1时a[i]≡1，i mod 3 = 2时a[i]≡0，因此余数分布仅由n中2的个数决定。最终组合数可写成闭式公式，无需循环，直接O(1)计算。",
+        "[Coder]: 利用模3周期性，直接统计i%3为0、1、2的数量，分别对应a[i]%3为1、0、1，因此余数1的数量为2*ceil(n/3)（或具体计算），余数0和2各为floor(n/3)左右，再按组合公式计算即可，无需构造数组。",
+        "[Reviewer]: 边界条件n<3时直接返回0，且组合计数需用整数运算避免浮点误差。另外，余数0+1+2的组合数应计算为cnt0*cnt1*cnt2，而非排列数，确保i<j<k的约束自然满足。"
+      ],
+      "entry_point": "get_max_triples",
+      "test_cases": [
+        "def check(candidate):\n\n    assert candidate(5) == 1\n    assert candidate(6) == 4\n    assert candidate(10) == 36\n    assert candidate(100) == 53361\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/64",
+      "problem": "\nFIX = \"\"\"\nAdd more test cases.\n\"\"\"\n\ndef vowels_count(s):\n    \"\"\"Write a function vowels_count which takes a string representing\n    a word as input and returns the number of vowels in the string.\n    Vowels in this case are 'a', 'e', 'i', 'o', 'u'. Here, 'y' is also a\n    vowel, but only when it is at the end of the given word.\n\n    Example:\n    >>> vowels_count(\"abcde\")\n    2\n    >>> vowels_count(\"ACEDY\")\n    3\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 建议补充边界测试：空字符串、全辅音、末尾y、非末尾y、大小写混合，以及包含数字或符号的字符串。同时验证“y”仅在单词末尾时计数，例如“sky”返回1，“yellow”返回1（末尾y），但“yoyo”返回2（两个y均非末尾）。",
+        "[Coder]: 补充测试用例覆盖边界情况：空字符串、纯辅音、y在中间和末尾、大小写混合，以及包含非字母字符的输入。例如：`vowels_count(\"\")`、`vowels_count(\"bcdfg\")`、`vowels_count(\"sky\")`、`vowels_count(\"SYZYGY\")`、`vowels_count(\"hello!\")`。",
+        "[Reviewer]: 需补充边界测试：空字符串、单字符\"y\"、\"Y\"结尾、非字母字符（如\"abc1e\"）、全大写混合（如\"AEIOUY\"）及\"y\"在中间（如\"yess\"）的情况，确保逻辑覆盖所有分支。",
+        "[Architect]: 建议增加对“y”作为唯一元音且位于末尾的测试，如“fly”和“my”，同时验证“y”在单词中间但前后有元音时不计入，例如“ayes”应返回2（a和e）。另外，测试包含连续元音和重复元音的字符串，如“queue”应返回4。",
+        "[Coder]: 补充测试用例：`vowels_count(\"y\")` 应返回1（单字符y视为末尾），`vowels_count(\"Y\")` 返回1（大小写不敏感），`vowels_count(\"rhythm\")` 返回1（末尾y），`vowels_count(\"myth\")` 返回1，`vowels_count(\"cry\")` 返回1，同时验证`vowels_count(\"yess\")` 返回1（仅末尾y计数）。",
+        "[Reviewer]: 补充测试用例：`vowels_count(\"y\")`应返回1（y在末尾），`vowels_count(\"Y\")`应返回1（大小写不敏感），`vowels_count(\"yyy\")`应返回3（所有y均在末尾），以及`vowels_count(\"yay\")`应返回2（中间y不计，末尾y计）。同时验证`vowels_count(\"a1e2i\")`返回3，确保非字母字符不影响计数。"
+      ],
+      "entry_point": "vowels_count",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"abcde\") == 2, \"Test 1\"\n    assert candidate(\"Alone\") == 3, \"Test 2\"\n    assert candidate(\"key\") == 2, \"Test 3\"\n    assert candidate(\"bye\") == 1, \"Test 4\"\n    assert candidate(\"keY\") == 2, \"Test 5\"\n    assert candidate(\"bYe\") == 1, \"Test 6\"\n    assert candidate(\"ACEDY\") == 3, \"Test 7\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/143",
+      "problem": "\ndef words_in_sentence(sentence):\n    \"\"\"\n    You are given a string representing a sentence,\n    the sentence contains some words separated by a space,\n    and you have to return a string that contains the words from the original sentence,\n    whose lengths are prime numbers,\n    the order of the words in the new string should be the same as the original one.\n\n    Example 1:\n        Input: sentence = \"This is a test\"\n        Output: \"is\"\n\n    Example 2:\n        Input: sentence = \"lets go for swimming\"\n        Output: \"go for\"\n\n    Constraints:\n        * 1 <= len(sentence) <= 100\n        * sentence contains only letters\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该任务核心是判断每个单词长度是否为素数，需注意1不是素数，且长度2是最小素数。建议先用split()分割句子，再对每个单词长度进行素数检测，最后按原顺序拼接符合条件的单词。",
+        "[Coder]: 直接实现即可：按空格分割，用简单的素数判断函数过滤长度，再拼接结果。注意长度1不是素数，且需保持原顺序。",
+        "[Reviewer]: 该实现需注意单词长度计算时是否包含标点（尽管约束仅含字母），且需正确判断1是否为非素数。建议先验证空字符串和单字符单词的边界情况。",
+        "[Architect]: 建议在素数判断函数中显式处理长度小于2的情况，并采用试除法优化到sqrt(n)，因为句子长度上限100，单词长度最多100，性能无瓶颈但逻辑需清晰。同时，确保split()默认按空白分割，避免多余空格影响结果。",
+        "[Coder]: 实现时用 `all(n % i for i in range(2, int(n**0.5)+1))` 判断素数，并单独处理 `n < 2` 的情况；同时用 `' '.join(...)` 拼接结果，确保空列表时返回空字符串。",
+        "[Reviewer]: 边界情况需重点验证：当句子长度为1且单词长度为1时，应返回空字符串；当单词长度为2时，必须正确识别为素数。另外，split()默认按空白分割，若句子首尾有空格会产生空字符串，需确认约束中是否允许此类输入。"
+      ],
+      "entry_point": "words_in_sentence",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"This is a test\") == \"is\"\n    assert candidate(\"lets go for swimming\") == \"go for\"\n    assert candidate(\"there is no place available here\") == \"there is no place\"\n    assert candidate(\"Hi I am Hussein\") == \"Hi am Hussein\"\n    assert candidate(\"go for it\") == \"go for it\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(\"here\") == \"\"\n    assert candidate(\"here is\") == \"is\"\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/120",
+      "problem": "\ndef maximum(arr, k):\n    \"\"\"\n    Given an array arr of integers and a positive integer k, return a sorted list \n    of length k with the maximum k numbers in arr.\n\n    Example 1:\n\n        Input: arr = [-3, -4, 5], k = 3\n        Output: [-4, -3, 5]\n\n    Example 2:\n\n        Input: arr = [4, -4, 4], k = 2\n        Output: [4, 4]\n\n    Example 3:\n\n        Input: arr = [-3, 2, 1, 2, -1, -2, 1], k = 1\n        Output: [2]\n\n    Note:\n        1. The length of the array will be in the range of [1, 1000].\n        2. The elements in the array will be in the range of [-1000, 1000].\n        3. 0 <= k <= len(arr)\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 建议采用最小堆（大小为k）遍历数组，维护当前最大的k个元素，最后排序输出；若k为0则直接返回空列表。该方案时间复杂度O(n log k)，空间O(k)，在给定约束下高效且简洁。",
+        "[Coder]: 可以直接使用 `sorted(arr, reverse=True)[:k][::-1]` 实现，但更高效的做法是用 `heapq.nlargest(k, arr)` 再排序，因为当 k 远小于 n 时堆方法复杂度为 O(n log k)。注意 k=0 时返回空列表，且结果需升序排列。",
+        "[Reviewer]: 边界条件需注意：k=0时应返回空列表，且k可能等于数组长度，此时应返回整个数组的排序副本。另外，当数组包含重复元素时，需确保输出中保留重复值（如例2），排序应使用稳定排序或直接对副本排序。",
+        "[Architect]: 建议采用 `heapq.nsmallest(k, arr)` 后反转，或直接 `sorted(arr)[-k:]`，两者均能正确处理重复元素且满足升序要求；若k为0，直接返回空列表，无需额外分支。",
+        "[Coder]: 建议直接使用 `heapq.nlargest(k, arr)` 获取最大k个元素后调用 `sorted()` 升序排列，这样既简洁又高效，且天然处理了k=0和重复值的情况。若追求极致性能，可对k=0或k==len(arr)做短路判断，避免不必要的堆操作。",
+        "[Reviewer]: 建议补充对k=0的显式处理，避免`heapq.nlargest(0, arr)`返回空列表但后续排序可能引发异常；同时验证k等于数组长度时，`heapq.nlargest`会返回整个数组的副本，排序后结果正确。另外，测试用例应覆盖k=0、k=len(arr)及重复元素场景，确保边界无遗漏。"
+      ],
+      "entry_point": "maximum",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([-3, -4, 5], 3) == [-4, -3, 5]\n    assert candidate([4, -4, 4], 2) == [4, 4]\n    assert candidate([-3, 2, 1, 2, -1, -2, 1], 1) == [2]\n    assert candidate([123, -123, 20, 0 , 1, 2, -3], 3) == [2, 20, 123]\n    assert candidate([-123, 20, 0 , 1, 2, -3], 4) == [0, 1, 2, 20]\n    assert candidate([5, 15, 0, 3, -13, -8, 0], 7) == [-13, -8, 0, 0, 3, 5, 15]\n    assert candidate([-1, 0, 2, 5, 3, -10], 2) == [3, 5]\n    assert candidate([1, 0, 5, -7], 1) == [5]\n    assert candidate([4, -4], 2) == [-4, 4]\n    assert candidate([-10, 10], 2) == [-10, 10]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1, 2, 3, -23, 243, -400, 0], 0) == []\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/21",
+      "problem": "from typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该任务本质是线性归一化，需处理边界条件：若所有输入值相等，则分母为零，应约定返回全0或全1以避免除零错误。实现时建议先计算最小值和最大值，再对每个元素执行 `(x - min) / (max - min)`，并确保输入列表长度至少为2。",
+        "[Coder]: ```python\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    min_val, max_val = min(numbers), max(numbers)\n    if min_val == max_val:\n        return [0.0] * len(numbers)  # 处理全相等情况，避免除零\n    return [(x - min_val) / (max_val - min_val) for x in numbers]\n```",
+        "[Reviewer]: 该实现需确保输入列表至少包含两个元素，且所有数值不相等，否则分母为零导致除零错误。建议增加输入验证或处理边界情况，例如当最小值和最大值相同时返回全零列表。",
+        "[Architect]: 建议在函数开头添加显式输入校验，若列表长度小于2则抛出ValueError，并在文档字符串中明确说明全相等时返回全零列表的约定，以增强代码健壮性和可读性。",
+        "[Coder]: 建议将输入验证与边界处理合并，使用 `if len(numbers) < 2: raise ValueError` 明确约束，并在全相等时返回 `[0.0] * len(numbers)`，同时用 `max_val - min_val` 的浮点比较（如 `math.isclose`）增强鲁棒性，避免极小浮点误差导致除零。",
+        "[Reviewer]: 实现已正确处理全相等情况，但需补充输入长度验证：若列表长度小于2，应抛出ValueError或返回原列表，避免min/max在空列表上出错。另外，浮点精度问题可能导致极端值（如极大/极小）计算时溢出，可考虑使用Decimal或归一化前检查数值范围。"
+      ],
+      "entry_point": "rescale_to_unit",
+      "test_cases": [
+        "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate([2.0, 49.9]) == [0.0, 1.0]\n    assert candidate([100.0, 49.9]) == [1.0, 0.0]\n    assert candidate([1.0, 2.0, 3.0, 4.0, 5.0]) == [0.0, 0.25, 0.5, 0.75, 1.0]\n    assert candidate([2.0, 1.0, 5.0, 3.0, 4.0]) == [0.25, 0.0, 1.0, 0.5, 0.75]\n    assert candidate([12.0, 11.0, 15.0, 13.0, 14.0]) == [0.25, 0.0, 1.0, 0.5, 0.75]\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/92",
+      "problem": "\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    \n    Examples\n    any_int(5, 2, 7) ➞ True\n    \n    any_int(3, 2, 2) ➞ False\n\n    any_int(3, -2, 1) ➞ True\n    \n    any_int(3.6, -2.2, 2) ➞ False\n  \n\n    \n    '''\n",
+      "candidates": [
+        "[Architect]: 该函数核心逻辑是：先验证三个参数均为整数（`isinstance(n, int)`），再检查是否存在任一数等于另外两数之和（即`x==y+z or y==x+z or z==x+y`）。注意布尔值在Python中属于`int`子类，若需严格排除布尔值，应使用`type(n) is int`。",
+        "[Coder]: 直接实现逻辑：先检查三个参数是否均为整数，再判断任一数等于另外两数之和。可用 `isinstance(n, int)` 判断整数，并用集合或条件组合简化求和判断。",
+        "[Reviewer]: 该实现需确保所有参数均为整数，且任一数等于另外两数之和。注意浮点数如3.0应视为整数，但3.6不是；同时需处理负数及零的边界情况。建议使用`isinstance(x, int)`或`x.is_integer()`进行类型检查，并验证三个条件中的任意一个。",
+        "[Architect]: 建议采用`type(n) is int`严格排除布尔值干扰，并直接使用`x == y+z or y == x+z or z == x+y`进行判断，避免引入额外数据结构。同时需注意，若输入为`True`或`False`，应返回`False`，因为布尔值虽为`int`子类，但不符合“数字”的常规语义。",
+        "[Coder]: 建议使用 `type(n) is int` 严格排除布尔值，并直接通过 `x + y == z or x + z == y or y + z == x` 判断，避免冗余条件。",
+        "[Reviewer]: 需注意`bool`是`int`的子类，`any_int(True, 1, 2)`会错误返回`True`，应改用`type(n) is int`严格排除布尔值；同时需验证`x+y+z`是否等于`2*max(x,y,z)`以覆盖所有求和组合，避免遗漏边界情况如`(0,0,0)`。"
+      ],
+      "entry_point": "any_int",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(2, 3, 1)==True, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate(2.5, 2, 3)==False, \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate(1.5, 5, 3.5)==False, \"This prints if this assert fails 3 (good for debugging!)\"\n    assert candidate(2, 6, 2)==False, \"This prints if this assert fails 4 (good for debugging!)\"\n    assert candidate(4, 2, 2)==True, \"This prints if this assert fails 5 (good for debugging!)\"\n    assert candidate(2.2, 2.2, 2.2)==False, \"This prints if this assert fails 6 (good for debugging!)\"\n    assert candidate(-4, 6, 2)==True, \"This prints if this assert fails 7 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate(2,1,1)==True, \"This prints if this assert fails 8 (also good for debugging!)\"\n    assert candidate(3,4,7)==True, \"This prints if this assert fails 9 (also good for debugging!)\"\n    assert candidate(3.0,4,7)==False, \"This prints if this assert fails 10 (also good for debugging!)\"\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/86",
+      "problem": "\ndef anti_shuffle(s):\n    \"\"\"\n    Write a function that takes a string and returns an ordered version of it.\n    Ordered version of string, is a string where all words (separated by space)\n    are replaced by a new word where all the characters arranged in\n    ascending order based on ascii value.\n    Note: You should keep the order of words and blank spaces in the sentence.\n\n    For example:\n    anti_shuffle('Hi') returns 'Hi'\n    anti_shuffle('hello') returns 'ehllo'\n    anti_shuffle('Hello World!!!') returns 'Hello !!!Wdlor'\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该函数的核心是分割单词并保持空格位置，但需注意标点符号应视为单词的一部分，例如“World!!!”整体排序后为“!!!Wdlor”。实现时可用`split(' ')`保留连续空格，对每个子串用`sorted()`按ASCII排序后拼接。边界条件包括空字符串和仅含空格的情况，应直接返回原字符串。",
+        "[Coder]: 直接按空格分割单词，对每个单词内部字符排序后重组，同时保留原空格位置即可。注意非字母字符（如`!!!`）也参与排序，但单词间的空格数量需原样保留。",
+        "[Reviewer]: 该实现需注意空格处理：应仅按单个空格分割单词，但保留连续空格和首尾空格的数量与位置。另外，示例中'Hello World!!!'的'!!!'被视为独立单词，说明非字母字符也参与排序，但需确认是否应保持原单词内字符顺序的稳定性（如'ba'应变为'ab'而非'ba'）。",
+        "[Architect]: 建议使用`re.split(r'(\\s+)', s)`来同时保留分隔符和单词，确保连续空格与首尾空格原样保留；对每个非空格片段调用`sorted()`即可满足ASCII升序要求，无需额外处理标点。",
+        "[Coder]: 建议使用`re.split(r'(\\s+)', s)`来分割，这样既能保留所有空白字符（包括空格、制表符等），又能确保连续空格和首尾空格的数量与位置完全不变。对每个非空白子串执行`sorted()`排序后拼接，空字符串或纯空白输入直接返回原字符串。",
+        "[Reviewer]: 需明确`split(' ')`与`split()`的区别：前者保留连续空格和首尾空格，后者会合并多个空格，因此必须使用`split(' ')`。另外，排序时`sorted()`是稳定的，但ASCII排序本身已保证相同字符的相对顺序，无需额外处理。"
+      ],
+      "entry_point": "anti_shuffle",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('Hi') == 'Hi'\n    assert candidate('hello') == 'ehllo'\n    assert candidate('number') == 'bemnru'\n    assert candidate('abcd') == 'abcd'\n    assert candidate('Hello World!!!') == 'Hello !!!Wdlor'\n    assert candidate('') == ''\n    assert candidate('Hi. My name is Mister Robot. How are you?') == '.Hi My aemn is Meirst .Rboot How aer ?ouy'\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/90",
+      "problem": "\ndef next_smallest(lst):\n    \"\"\"\n    You are given a list of integers.\n    Write a function next_smallest() that returns the 2nd smallest element of the list.\n    Return None if there is no such element.\n    \n    next_smallest([1, 2, 3, 4, 5]) == 2\n    next_smallest([5, 1, 4, 3, 2]) == 2\n    next_smallest([]) == None\n    next_smallest([1, 1]) == None\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该问题核心在于处理重复元素与边界条件。建议先对列表去重并排序，若去重后长度小于2则返回None，否则返回第二个元素。时间复杂度O(n log n)，空间复杂度O(n)，满足通用场景需求。",
+        "[Coder]: 可以直接用 `sorted(set(lst))` 去重排序，若长度小于2则返回 `None`，否则返回第二个元素。这样既简洁又能正确处理重复值。",
+        "[Reviewer]: 该实现需注意重复元素处理：若列表为[1,1,2]，第二小应为2而非None，因此需先排序并去重后再取索引1。同时需考虑列表长度小于2时直接返回None。",
+        "[Architect]: 补充边界条件：若列表仅含一个元素或所有元素相同，去重后长度必然小于2，直接返回None；若列表含负数或零，排序逻辑同样适用，无需额外处理。",
+        "[Coder]: 可以直接用 `sorted(set(lst))` 实现，若长度小于2返回 `None`，否则返回 `lst[1]`。该方案已覆盖空列表、单元素及重复值场景，且代码简洁高效。",
+        "[Reviewer]: 边界条件需覆盖负数与零值，例如 `[-5, -1, 0, 3]` 应返回 `-1`，且 `sorted(set(lst))` 对空列表和单元素列表均安全返回 `None`。另外，若列表包含不可哈希类型（如子列表）会引发 `TypeError`，但题目限定为整数列表，可忽略此异常。"
+      ],
+      "entry_point": "next_smallest",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([1, 2, 3, 4, 5]) == 2\n    assert candidate([5, 1, 4, 3, 2]) == 2\n    assert candidate([]) == None\n    assert candidate([1, 1]) == None\n    assert candidate([1,1,1,1,0]) == 1\n    assert candidate([1, 0**0]) == None\n    assert candidate([-35, 34, 12, -45]) == -35\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/4",
+      "problem": "from typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该实现直接计算均值后遍历求绝对差即可，时间复杂度O(n)，空间O(1)。注意输入为空列表时应返回0或抛出明确异常，且需考虑浮点精度对均值的影响。",
+        "[Coder]: 直接实现该函数：先计算均值，再用列表推导式求绝对差均值。注意使用`sum()`和`len()`避免额外导入，时间复杂度O(n)。",
+        "[Reviewer]: 该实现逻辑正确，但需注意输入列表为空或包含非数值类型时的边界情况。建议添加空列表检查并抛出明确异常，同时确认所有元素均为float类型以避免隐式类型转换错误。",
+        "[Architect]: 建议采用单次遍历同时累加和与绝对差，避免两次遍历带来的额外开销；同时使用Kahan求和算法降低浮点误差，确保均值计算精度。空列表应返回0.0，非数值元素应抛出TypeError。",
+        "[Coder]: 建议使用`statistics.fmean`计算均值以提高浮点精度，并采用生成器表达式避免创建中间列表。同时增加空列表检查，抛出`ValueError`并附带清晰提示信息。",
+        "[Reviewer]: 建议在计算均值前显式检查`len(numbers) == 0`并抛出`ValueError`，同时用`isinstance(x, (int, float))`验证每个元素类型，避免字符串等隐式转换导致运行时错误。此外，可考虑使用`math.fsum`提升浮点累加精度，但需权衡导入成本。"
+      ],
+      "entry_point": "mean_absolute_deviation",
+      "test_cases": [
+        "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert abs(candidate([1.0, 2.0, 3.0]) - 2.0/3.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0]) - 1.0) < 1e-6\n    assert abs(candidate([1.0, 2.0, 3.0, 4.0, 5.0]) - 6.0/5.0) < 1e-6\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/100",
+      "problem": "\ndef make_a_pile(n):\n    \"\"\"\n    Given a positive integer n, you have to make a pile of n levels of stones.\n    The first level has n stones.\n    The number of stones in the next level is:\n        - the next odd number if n is odd.\n        - the next even number if n is even.\n    Return the number of stones in each level in a list, where element at index\n    i represents the number of stones in the level (i+1).\n\n    Examples:\n    >>> make_a_pile(3)\n    [3, 5, 7]\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该问题本质上是生成一个等差数列，首项为n，公差为2，长度为n。直接使用列表推导式 `[n + 2*i for i in range(n)]` 即可满足所有正整数的奇偶性要求，无需条件分支。",
+        "[Coder]: 直接按规则生成列表即可：从n开始，若n为奇数则每次加2，偶数同理，循环n次。时间复杂度O(n)，空间复杂度O(n)。",
+        "[Reviewer]: 该实现存在边界漏洞：当n为偶数时，第一层为偶数，但后续层数应交替奇偶，而当前描述仅按首层奇偶性固定递增，未明确交替规则。建议明确每层递增2的固定步长，并验证n=1时返回[1]的边界情况。",
+        "[Architect]: 确认需求中“下一个奇数/偶数”指的是固定步长2的等差数列，而非交替奇偶。建议补充测试用例覆盖n=1、n=2、n=4，以验证边界和偶数起始场景。",
+        "[Coder]: 固定步长2的等差数列实现完全正确，且n=1时自然返回[1]，无需额外处理。建议补充文档字符串说明该序列的数学性质，便于后续维护。",
+        "[Reviewer]: 该实现完全正确：首项为n、公差为2的等差数列天然满足奇偶性要求，且n=1时返回[1]符合边界条件。无需额外分支，代码简洁且无逻辑漏洞。"
+      ],
+      "entry_point": "make_a_pile",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(3) == [3, 5, 7], \"Test 3\"\n    assert candidate(4) == [4,6,8,10], \"Test 4\"\n    assert candidate(5) == [5, 7, 9, 11, 13]\n    assert candidate(6) == [6, 8, 10, 12, 14, 16]\n    assert candidate(8) == [8, 10, 12, 14, 16, 18, 20, 22]\n\n    # Check some edge cases that are easy to work out by hand.\n    assert True, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/121",
+      "problem": "\ndef solution(lst):\n    \"\"\"Given a non-empty list of integers, return the sum of all of the odd elements that are in even positions.\n    \n\n    Examples\n    solution([5, 8, 7, 1]) ==> 12\n    solution([3, 3, 3, 3, 3]) ==> 9\n    solution([30, 13, 24, 321]) ==>0\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该问题可通过单次遍历解决，时间复杂度O(n)，空间复杂度O(1)。注意偶数位置指索引从0开始计数的偶数下标，且仅当元素值为奇数时才累加。边界条件包括空列表（但题目保证非空）和全偶数或全奇数的情况。",
+        "[Coder]: 直接遍历列表，用 `enumerate` 检查索引是否为偶数且元素为奇数，累加符合条件的值即可。时间复杂度 O(n)，空间 O(1)。",
+        "[Reviewer]: 该实现需注意“偶数位置”的索引定义：若按0-based索引，位置0、2、4为偶数位；若按1-based，则位置1、3、5。示例中`solution([5,8,7,1])`返回12，对应0-based索引0和2（5+7），故应明确采用0-based索引。同时需处理空列表边界，但题目已声明非空，可忽略。",
+        "[Architect]: 确认采用0-based索引后，算法无需额外状态即可完成。建议在实现中直接使用`for i, val in enumerate(lst): if i % 2 == 0 and val % 2 != 0: total += val`，并注意Python中负奇数的`%`结果仍为1，因此条件`val % 2 != 0`可正确覆盖所有奇数。",
+        "[Coder]: 直接使用列表推导式 `sum(x for i, x in enumerate(lst) if i % 2 == 0 and x % 2 != 0)` 即可，简洁且符合0-based索引定义，无需额外变量。",
+        "[Reviewer]: 确认0-based索引后，需警惕负索引陷阱：若列表含负数，`lst[i] % 2 == 1`会误判（如-3%2==1），应改用`lst[i] & 1`或`lst[i] % 2 != 0`。同时建议显式检查`i % 2 == 0`，避免依赖`enumerate`默认行为。"
+      ],
+      "entry_point": "solution",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([5, 8, 7, 1])    == 12\n    assert candidate([3, 3, 3, 3, 3]) == 9\n    assert candidate([30, 13, 24, 321]) == 0\n    assert candidate([5, 9]) == 5\n    assert candidate([2, 4, 8]) == 0\n    assert candidate([30, 13, 23, 32]) == 23\n    assert candidate([3, 13, 2, 9]) == 3\n\n    # Check some edge cases that are easy to work out by hand.\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/11",
+      "problem": "from typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该问题本质上是逐位异或运算，可直接利用Python的`zip`函数并行遍历两个字符串，结合`int`转换和`str`拼接实现，时间复杂度O(n)。需注意输入长度可能不同，但题目未明确要求处理不等长情况，建议默认等长或补充前导零。",
+        "[Coder]: 直接使用`zip`和条件表达式逐位比较即可，无需额外库。注意输入长度可能不同，但题目保证等长，因此可安全假设。",
+        "[Reviewer]: 该实现需确保输入字符串长度一致，否则需处理长度差异（如补零或报错）。建议先校验字符仅含'0'/'1'，再逐位异或，避免隐式类型转换导致意外结果。",
+        "[Architect]: 建议直接使用`zip_longest`处理不等长输入，并以`fillvalue='0'`补齐，确保健壮性；同时用`ord`和位运算替代`int`转换，可减少开销并避免类型转换异常。",
+        "[Coder]: 建议直接使用`zip_longest`处理不等长输入，用`fillvalue='0'`补齐，这样更健壮。同时用`ord`和位运算替代`int`转换，可减少开销。",
+        "[Reviewer]: 建议在函数开头显式校验输入长度相等，否则抛出`ValueError`并附带清晰提示，避免`zip`静默截断导致结果错误；同时可考虑用`ord`差值替代`int`转换以提升性能，但需确保字符合法性。"
+      ],
+      "entry_point": "string_xor",
+      "test_cases": [
+        "\n\nMETADATA = {\n    'author': 'jt',\n    'dataset': 'test'\n}\n\n\ndef check(candidate):\n    assert candidate('111000', '101010') == '010010'\n    assert candidate('1', '1') == '0'\n    assert candidate('0101', '0000') == '0101'\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/111",
+      "problem": "\ndef histogram(test):\n    \"\"\"Given a string representing a space separated lowercase letters, return a dictionary\n    of the letter with the most repetition and containing the corresponding count.\n    If several letters have the same occurrence, return all of them.\n    \n    Example:\n    histogram('a b c') == {'a': 1, 'b': 1, 'c': 1}\n    histogram('a b b a') == {'a': 2, 'b': 2}\n    histogram('a b c a b') == {'a': 2, 'b': 2}\n    histogram('b b b b a') == {'b': 4}\n    histogram('') == {}\n\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 该函数的核心逻辑是统计词频后筛选最大值，需注意空字符串返回空字典，且多个字母并列最高时需全部返回。建议用字典推导式结合max函数获取最高频次，再过滤出所有等于该频次的键。",
+        "[Coder]: 直接使用`collections.Counter`统计频率，再筛选出最大值对应的所有字母即可，注意空字符串返回空字典。",
+        "[Reviewer]: 该实现需注意空字符串输入应返回空字典，且需正确处理多个字母并列最高频次的情况。建议在遍历时用字典记录频次，再筛选最大值对应的所有键，避免遗漏并列项。",
+        "[Architect]: 建议采用单次遍历统计频次并同步维护当前最高频次集合，避免二次遍历；同时需明确输入仅含小写字母和空格，可忽略其他字符的边界处理。",
+        "[Coder]: 用`Counter`统计后，通过`max(counts.values(), default=0)`获取最高频次，再用字典推导式`{k: v for k, v in counts.items() if v == max_count}`过滤，这样空字符串和并列情况都能自然处理。",
+        "[Reviewer]: 需验证输入是否仅含小写字母和空格，若含非法字符（如数字或大写）应明确处理策略，避免隐式错误。另外，当字符串含连续多个空格时，需确认是否按空字符串处理，否则可能产生空键。"
+      ],
+      "entry_point": "histogram",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate('a b b a') == {'a':2,'b': 2}, \"This prints if this assert fails 1 (good for debugging!)\"\n    assert candidate('a b c a b') == {'a': 2, 'b': 2}, \"This prints if this assert fails 2 (good for debugging!)\"\n    assert candidate('a b c d g') == {'a': 1, 'b': 1, 'c': 1, 'd': 1, 'g': 1}, \"This prints if this assert fails 3 (good for debugging!)\"\n    assert candidate('r t g') == {'r': 1,'t': 1,'g': 1}, \"This prints if this assert fails 4 (good for debugging!)\"\n    assert candidate('b b b b a') == {'b': 4}, \"This prints if this assert fails 5 (good for debugging!)\"\n    assert candidate('r t g') == {'r': 1,'t': 1,'g': 1}, \"This prints if this assert fails 6 (good for debugging!)\"\n    \n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate('') == {}, \"This prints if this assert fails 7 (also good for debugging!)\"\n    assert candidate('a') == {'a': 1}, \"This prints if this assert fails 8 (also good for debugging!)\"\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/94",
+      "problem": "\n\ndef skjkasdkd(lst):\n    \"\"\"You are given a list of integers.\n    You need to find the largest prime value and return the sum of its digits.\n\n    Examples:\n    For lst = [0,3,2,1,3,5,7,4,5,5,5,2,181,32,4,32,3,2,32,324,4,3] the output should be 10\n    For lst = [1,0,1,8,2,4597,2,1,3,40,1,2,1,2,4,2,5,1] the output should be 25\n    For lst = [1,3,1,32,5107,34,83278,109,163,23,2323,32,30,1,9,3] the output should be 13\n    For lst = [0,724,32,71,99,32,6,0,5,91,83,0,5,6] the output should be 11\n    For lst = [0,81,12,3,1,21] the output should be 3\n    For lst = [0,8,1,2,1,7] the output should be 7\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 分析需求：需从列表中找出最大素数，并返回其各位数字之和。边界条件包括负数、0、1（非素数）及重复值，需确保素数判定正确。建议采用埃拉托斯特尼筛法预生成素数表（若列表最大值较大）或逐个试除法，并优先处理大数以减少计算量。",
+        "[Coder]: ```python\ndef skjkasdkd(lst):\n    def is_prime(n):\n        if n < 2:\n            return False\n        for i in range(2, int(n**0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n    \n    max_prime = max((x for x in lst if is_prime(x)), default=0)\n    return sum(int(d) for d in str(max_prime))\n```",
+        "[Reviewer]: 该实现需确保正确处理负数、0和1（均非素数），且当列表为空或全为非素数时应返回0。建议先筛选出所有素数，再取最大值，最后计算各位数字之和，避免在遍历中遗漏边界情况。",
+        "[Architect]: 建议将素数判定改为缓存机制，避免对重复大数重复计算；同时可先对列表去重并降序排序，找到第一个素数即返回，减少不必要的遍历。",
+        "[Coder]: 建议将素数判定改为缓存机制，避免对重复大数重复计算；同时可先对列表降序排序，找到第一个素数即返回，减少无效遍历。",
+        "[Reviewer]: 该实现逻辑正确，但需注意当列表为空或全为非素数时，`max_prime`为0，`str(0)`返回`\"0\"`，求和结果为0，符合预期。建议补充对负数的显式测试，确保`is_prime`对负数返回`False`，且`max`生成器不会因空序列抛出异常（已通过`default=0`处理）。"
+      ],
+      "entry_point": "skjkasdkd",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate([0,3,2,1,3,5,7,4,5,5,5,2,181,32,4,32,3,2,32,324,4,3]) == 10, \"This prints if this assert fails 1 (good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1,0,1,8,2,4597,2,1,3,40,1,2,1,2,4,2,5,1]) == 25, \"This prints if this assert fails 2 (also good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([1,3,1,32,5107,34,83278,109,163,23,2323,32,30,1,9,3]) == 13, \"This prints if this assert fails 3 (also good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([0,724,32,71,99,32,6,0,5,91,83,0,5,6]) == 11, \"This prints if this assert fails 4 (also good for debugging!)\"\n    \n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([0,81,12,3,1,21]) == 3, \"This prints if this assert fails 5 (also good for debugging!)\"\n\n    # Check some edge cases that are easy to work out by hand.\n    assert candidate([0,8,1,2,1,7]) == 7, \"This prints if this assert fails 6 (also good for debugging!)\"\n\n    assert candidate([8191]) == 19, \"This prints if this assert fails 7 (also good for debugging!)\"\n    assert candidate([8191, 123456, 127, 7]) == 19, \"This prints if this assert fails 8 (also good for debugging!)\"\n    assert candidate([127, 97, 8192]) == 10, \"This prints if this assert fails 9 (also good for debugging!)\"\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/69",
+      "problem": "\ndef search(lst):\n    '''\n    You are given a non-empty list of positive integers. Return the greatest integer that is greater than \n    zero, and has a frequency greater than or equal to the value of the integer itself. \n    The frequency of an integer is the number of times it appears in the list.\n    If no such a value exist, return -1.\n    Examples:\n        search([4, 1, 2, 2, 3, 1]) == 2\n        search([1, 2, 2, 3, 3, 3, 4, 4, 4]) == 3\n        search([5, 5, 4, 4, 4]) == -1\n    '''\n",
+      "candidates": [
+        "[Architect]: 建议采用哈希表统计频率后，按数值降序检查第一个满足 `freq >= value` 的整数；时间复杂度O(n)，空间O(n)。注意边界条件：若列表全为1且出现多次，应返回1，因为1的频率必然≥1。",
+        "[Coder]: ```python\ndef search(lst):\n    freq = {}\n    for x in lst:\n        freq[x] = freq.get(x, 0) + 1\n    candidates = [x for x, count in freq.items() if count >= x]\n    return max(candidates) if candidates else -1\n```",
+        "[Reviewer]: 该实现需注意频率统计的边界条件：当整数本身大于列表长度时，其频率不可能达到要求，可直接跳过。建议先统计频率字典，再遍历键值对，筛选满足 `freq >= value` 的最大值，避免遗漏重复元素。",
+        "[Architect]: 建议在筛选时直接维护最大值，避免构建候选列表，可减少一次遍历；同时可提前剪枝：若当前值大于列表长度，则无需检查其频率。",
+        "[Coder]: 建议在遍历候选值时增加剪枝：若 `x > len(lst)` 则直接跳过，因为频率不可能超过列表长度。同时可改用 `max()` 配合生成器表达式，避免创建中间列表，减少内存占用。",
+        "[Reviewer]: 建议增加对空列表的防御性检查，尽管题目声明非空，但健壮性更好；同时可优化为在统计频率时同步记录最大值候选，避免二次遍历。当前实现正确，但需确认当存在多个相同最大值时返回该值而非-1。"
+      ],
+      "entry_point": "search",
+      "test_cases": [
+        "def check(candidate):\n\n    # manually generated tests\n    assert candidate([5, 5, 5, 5, 1]) == 1\n    assert candidate([4, 1, 4, 1, 4, 4]) == 4\n    assert candidate([3, 3]) == -1\n    assert candidate([8, 8, 8, 8, 8, 8, 8, 8]) == 8\n    assert candidate([2, 3, 3, 2, 2]) == 2\n\n    # automatically generated tests\n    assert candidate([2, 7, 8, 8, 4, 8, 7, 3, 9, 6, 5, 10, 4, 3, 6, 7, 1, 7, 4, 10, 8, 1]) == 1\n    assert candidate([3, 2, 8, 2]) == 2\n    assert candidate([6, 7, 1, 8, 8, 10, 5, 8, 5, 3, 10]) == 1\n    assert candidate([8, 8, 3, 6, 5, 6, 4]) == -1\n    assert candidate([6, 9, 6, 7, 1, 4, 7, 1, 8, 8, 9, 8, 10, 10, 8, 4, 10, 4, 10, 1, 2, 9, 5, 7, 9]) == 1\n    assert candidate([1, 9, 10, 1, 3]) == 1\n    assert candidate([6, 9, 7, 5, 8, 7, 5, 3, 7, 5, 10, 10, 3, 6, 10, 2, 8, 6, 5, 4, 9, 5, 3, 10]) == 5\n    assert candidate([1]) == 1\n    assert candidate([8, 8, 10, 6, 4, 3, 5, 8, 2, 4, 2, 8, 4, 6, 10, 4, 2, 1, 10, 2, 1, 1, 5]) == 4\n    assert candidate([2, 10, 4, 8, 2, 10, 5, 1, 2, 9, 5, 5, 6, 3, 8, 6, 4, 10]) == 2\n    assert candidate([1, 6, 10, 1, 6, 9, 10, 8, 6, 8, 7, 3]) == 1\n    assert candidate([9, 2, 4, 1, 5, 1, 5, 2, 5, 7, 7, 7, 3, 10, 1, 5, 4, 2, 8, 4, 1, 9, 10, 7, 10, 2, 8, 10, 9, 4]) == 4\n    assert candidate([2, 6, 4, 2, 8, 7, 5, 6, 4, 10, 4, 6, 3, 7, 8, 8, 3, 1, 4, 2, 2, 10, 7]) == 4\n    assert candidate([9, 8, 6, 10, 2, 6, 10, 2, 7, 8, 10, 3, 8, 2, 6, 2, 3, 1]) == 2\n    assert candidate([5, 5, 3, 9, 5, 6, 3, 2, 8, 5, 6, 10, 10, 6, 8, 4, 10, 7, 7, 10, 8]) == -1\n    assert candidate([10]) == -1\n    assert candidate([9, 7, 7, 2, 4, 7, 2, 10, 9, 7, 5, 7, 2]) == 2\n    assert candidate([5, 4, 10, 2, 1, 1, 10, 3, 6, 1, 8]) == 1\n    assert candidate([7, 9, 9, 9, 3, 4, 1, 5, 9, 1, 2, 1, 1, 10, 7, 5, 6, 7, 6, 7, 7, 6]) == 1\n    assert candidate([3, 10, 10, 9, 2]) == -1\n\n"
+      ]
+    },
+    {
+      "task_id": "HumanEval/67",
+      "problem": "\ndef fruit_distribution(s,n):\n    \"\"\"\n    In this task, you will be given a string that represents a number of apples and oranges \n    that are distributed in a basket of fruit this basket contains \n    apples, oranges, and mango fruits. Given the string that represents the total number of \n    the oranges and apples and an integer that represent the total number of the fruits \n    in the basket return the number of the mango fruits in the basket.\n    for examble:\n    fruit_distribution(\"5 apples and 6 oranges\", 19) ->19 - 5 - 6 = 8\n    fruit_distribution(\"0 apples and 1 oranges\",3) -> 3 - 0 - 1 = 2\n    fruit_distribution(\"2 apples and 3 oranges\", 100) -> 100 - 2 - 3 = 95\n    fruit_distribution(\"100 apples and 1 oranges\",120) -> 120 - 100 - 1 = 19\n    \"\"\"\n",
+      "candidates": [
+        "[Architect]: 建议直接使用正则表达式提取字符串中的两个数字，然后返回 `n - 苹果数 - 橙子数`。注意字符串格式固定为“X apples and Y oranges”，无需处理复数或异常情况。",
+        "[Coder]: 直接解析字符串中的数字并求和，用总数减去即可。注意使用正则表达式提取所有整数，避免依赖固定格式。",
+        "[Reviewer]: 该实现需确保字符串解析仅提取数字，且忽略“apples”和“oranges”前的非数字字符，防止负数或额外数字干扰。建议使用正则表达式`re.findall(r'\\d+', s)`提取所有整数，并验证提取数量恰好为2，否则抛出异常。同时，最终结果需检查`n - apples - oranges`是否非负，避免返回负数。",
+        "[Architect]: 建议在正则提取后显式断言数字数量为2，并处理字符串中可能出现的“1 oranges”等语法不一致情况，避免依赖自然语言规则。同时，最终结果应使用`max(0, n - apples - oranges)`防御性返回，确保逻辑健壮性。",
+        "[Coder]: 直接使用 `re.findall(r'\\d+', s)` 提取所有数字，并确保恰好有两个数字，然后返回 `n - int(nums[0]) - int(nums[1])`。同时，在返回前检查结果是否为非负整数，若为负则抛出 `ValueError` 以提示输入数据异常。",
+        "[Reviewer]: 正则表达式提取所有数字可能误匹配字符串中其他位置的数字，但当前格式固定，风险可控。建议在提取后显式转换为整数并验证两个数字均非负，且`n`不小于两者之和，否则返回0或抛出`ValueError`以明确错误。"
+      ],
+      "entry_point": "fruit_distribution",
+      "test_cases": [
+        "def check(candidate):\n\n    # Check some simple cases\n    assert candidate(\"5 apples and 6 oranges\",19) == 8\n    assert candidate(\"5 apples and 6 oranges\",21) == 10\n    assert candidate(\"0 apples and 1 oranges\",3) == 2\n    assert candidate(\"1 apples and 0 oranges\",3) == 2\n    assert candidate(\"2 apples and 3 oranges\",100) == 95\n    assert candidate(\"2 apples and 3 oranges\",5) == 0\n    assert candidate(\"1 apples and 100 oranges\",120) == 19\n"
+      ]
+    }
+  ],
+  "seed": 20261026,
+  "repeats": 2,
+  "model": "deepseek-v4-flash-0817",
+  "provider": "private",
+  "temperature": 0.1,
+  "max_tokens": 1024,
+  "policies": [
+    "full",
+    "first_round",
+    "first_round_control",
+    "direct"
+  ],
+  "dataset": "humaneval",
+  "synthesis_mode": "single_shot",
+  "input_usd_per_million": 0.3,
+  "output_usd_per_million": 1.2,
+  "max_proxy_usd": 1.5,
+  "scope": "exploratory_humaneval_subset_receiver_only_not_held_out",
+  "router_config": {
+    "beta_0": 3.2,
+    "lambda_decay": 0.08,
+    "temp_tau": 0.5,
+    "gamma": -0.4,
+    "adaptive": true,
+    "alpha": 0.35,
+    "tau_min": -1.0,
+    "enable_math_role_weights": false,
+    "enable_reasoning_guard": false,
+    "enable_math_critical_guard": true,
+    "same_round_history": "frozen",
+    "random_keep_rate": 0.7,
+    "cosine_threshold": 0.75
+  },
+  "code_sha256": "5e7c72754d46bdd8ddb11b7c16dee76a9db213753b1faea5ffc1f5857806ea14",
+  "router_sha256": "420815777b8f0c52c75ddc522dddb54ddc564260d7265582ba7a0c4c9141036c",
+  "protocol": "boundary",
+  "exclusions": [
+    {
+      "source": "results/frozen_replay_humaneval_pilot_20261023/manifest.json",
+      "sha256": "fabfe8676e5aac8aae52b5183e4c92773bdbf0965ef111855da9f35c25a171dc",
+      "task_ids": [
+        "HumanEval/116",
+        "HumanEval/65",
+        "HumanEval/32",
+        "HumanEval/45",
+        "HumanEval/70",
+        "HumanEval/68",
+        "HumanEval/25",
+        "HumanEval/117",
+        "HumanEval/142",
+        "HumanEval/51",
+        "HumanEval/55",
+        "HumanEval/40",
+        "HumanEval/140",
+        "HumanEval/61",
+        "HumanEval/42",
+        "HumanEval/93",
+        "HumanEval/162",
+        "HumanEval/163",
+        "HumanEval/118",
+        "HumanEval/154",
+        "HumanEval/46",
+        "HumanEval/13",
+        "HumanEval/14",
+        "HumanEval/72"
+      ]
+    }
+  ],
+  "primary_contrast": "full_minus_first_round",
+  "noise_control": "first_round_control_minus_first_round",
+  "evaluation": {
+    "python_random_seed": 20261026,
+    "independent_code_checks": 2,
+    "numpy_and_other_rngs_controlled": false
+  },
+  "inference_claim": "exploratory_new_replay_subset_not_held_out_no_equivalence_margin"
+}

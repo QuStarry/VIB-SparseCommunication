@@ -22,6 +22,7 @@ from src.llm_client import build_client
 from src.vib_router import VIBSparseCommRouter
 
 POLICIES = ("full", "random", "cosine", "vib", "first_round", "direct")
+BOUNDARY_POLICIES = ("full", "first_round", "first_round_control", "direct")
 SCALAR = re.compile(r"[-+]?\d+(?:\.\d+)?")
 # 复用既有历史轨迹，因此只覆盖两轮六候选齐全的任务。
 DATASETS = {
@@ -57,12 +58,13 @@ def strict_scalar_equal(output, reference):
         return False
 
 
-def select_tasks(traces, count, seed, dataset):
+def select_tasks(traces, count, seed, dataset, excluded_ids=()):
     """按题号哈希抽样，不读取历史正确率；限完整的六候选轨迹。"""
     roles = _dataset_config(dataset)["roles"]
     eligible = [
         row for row in traces
-        if len(row["full"]["history"]) == 6
+        if row["task_id"] not in excluded_ids
+        and len(row["full"]["history"]) == 6
         and all(re.match(roles, message) for message in row["full"]["history"])
         and _has_reference(row["full"], dataset)
     ]
@@ -110,21 +112,28 @@ def build_prompt(dataset, task, history):
     return build_final_code_prompt(task["problem"], history)
 
 
-def score_output(dataset, task, output):
+def score_output(dataset, task, output, evaluation_seed=None):
     if dataset == "math":
         return strict_scalar_equal(output, task["reference"])
     from experiments.run_multi_benchmark import CodeEvaluator, sanitize_code_output
-    return CodeEvaluator.evaluate(
-        sanitize_code_output(output), task["test_cases"],
-        entry_point=task["entry_point"],
-    )
+    code = sanitize_code_output(output)
+    if evaluation_seed is None:
+        return CodeEvaluator.evaluate(code, task["test_cases"], entry_point=task["entry_point"])
+    # Seed in the execution child, not the parent: no global RNG pollution.
+    code = f"import random\nrandom.seed({evaluation_seed})\nexec({code!r}, globals())"
+    tests = [f"import random\nrandom.seed({evaluation_seed})", *task["test_cases"]]
+    first = CodeEvaluator.evaluate(code, tests, entry_point=task["entry_point"])
+    second = CodeEvaluator.evaluate(code, tests, entry_point=task["entry_point"])
+    if first != second:
+        raise ValueError("固定评分种子下独立执行结果不一致")
+    return first
 
 
 def admitted_history(messages, goal, policy, task_id, seed):
     """冻结同轮历史；这里只干预接收端，不能等同生成前调度。"""
     if policy == "full":
         return list(messages), []
-    if policy == "first_round":
+    if policy in ("first_round", "first_round_control"):
         return list(messages[:3]), []
     if policy == "direct":
         return [], []
@@ -170,10 +179,10 @@ def proxy_cost(prompt_tokens, completion_tokens, input_rate, output_rate):
     return (prompt_tokens * input_rate + completion_tokens * output_rate) / 1e6
 
 
-def aggregate(records):
+def aggregate(records, policies=POLICIES):
     """重复合成先按任务聚合；不把调用次数当独立样本数。"""
     summary = {}
-    for policy in POLICIES:
+    for policy in policies:
         rows = [row for row in records if row["policy"] == policy]
         valid = [row for row in rows if row["status"] == "ok"]
         tasks = {}
@@ -202,16 +211,34 @@ def aggregate(records):
 def run(args):
     source = json.loads(args.source.read_text())
     config = _dataset_config(args.dataset)
+    protocol = getattr(args, "protocol", "gating")
+    policies = BOUNDARY_POLICIES if protocol == "boundary" else POLICIES
+    excluded_ids = set()
+    exclusions = []
+    for path in getattr(args, "exclude_manifest", ()):
+        prior = json.loads(path.read_text())
+        if prior.get("dataset", "math") != args.dataset:
+            raise ValueError("排除 manifest 的数据集不匹配")
+        ids = [task["task_id"] for task in prior["tasks"]]
+        excluded_ids.update(ids)
+        exclusions.append({
+            "source": str(path), "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "task_ids": ids,
+        })
+    if protocol == "boundary" and not exclusions:
+        raise ValueError("边界重放必须明确排除旧 pilot manifest")
     selected = select_tasks(
-        source["trace_results"][args.dataset], args.tasks, args.seed, args.dataset
+        source["trace_results"][args.dataset], args.tasks, args.seed, args.dataset,
+        excluded_ids,
     )
     tasks = [build_task(row, args.dataset) for row in selected]
     # 参考答案/测试用例仅存于评测侧；接收历史和合成提示词均不读取它。
     contract = {
-        "version": 2, "source_sha256": hashlib.sha256(args.source.read_bytes()).hexdigest(),
+        "version": 3 if protocol == "boundary" else 2,
+        "source_sha256": hashlib.sha256(args.source.read_bytes()).hexdigest(),
         "tasks": tasks, "seed": args.seed, "repeats": args.repeats,
         "model": args.model, "provider": args.provider, "temperature": 0.1,
-        "max_tokens": config["max_tokens"], "policies": POLICIES,
+        "max_tokens": config["max_tokens"], "policies": policies,
         "dataset": args.dataset,
         # 主 harness 的代码合成还会跑一轮只看题面示例的 doctest 自修复；它不读讨论历史，
         # 这里省去该回路以便对照对历史变化更敏感，属于有意的偏离。
@@ -230,6 +257,18 @@ def run(args):
         "code_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "router_sha256": hashlib.sha256((ROOT / "src/vib_router.py").read_bytes()).hexdigest(),
     }
+    if protocol == "boundary":
+        contract.update(
+            protocol="boundary", exclusions=exclusions,
+            primary_contrast="full_minus_first_round",
+            noise_control="first_round_control_minus_first_round",
+            evaluation={
+                "python_random_seed": args.seed,
+                "independent_code_checks": 2,
+                "numpy_and_other_rngs_controlled": False,
+            },
+            inference_claim="exploratory_new_replay_subset_not_held_out_no_equivalence_margin",
+        )
     args.output.mkdir(parents=True, exist_ok=True)
     manifest = args.output / "manifest.json"
     if manifest.exists() and json.loads(manifest.read_text()) != json.loads(json.dumps(contract)):
@@ -240,13 +279,13 @@ def run(args):
         raise RuntimeError("存在失败或中断请求，需人工审计；不自动重复计费")
     used = sum(row["charged_proxy_usd"] for row in records)
     if args.dry_run:
-        print(json.dumps({"tasks": len(tasks), "max_requests": len(tasks)*len(POLICIES)*args.repeats,
+        print(json.dumps({"tasks": len(tasks), "max_requests": len(tasks)*len(policies)*args.repeats,
                           "max_proxy_usd": args.max_usd, "contract_sha256": fingerprint(contract)}))
         return
     client = build_client(args.model, args.provider)
     api = client.client.with_options(max_retries=0, timeout=60.0)
     jobs = [(task, repeat, policy) for task in tasks
-            for repeat in range(args.repeats) for policy in POLICIES]
+            for repeat in range(args.repeats) for policy in policies]
     random.Random(args.seed).shuffle(jobs)
     stop_reason = "complete"
     for task, repeat, policy in jobs:
@@ -290,13 +329,20 @@ def run(args):
                     args.input_rate, args.output_rate,
                 )
             record["response_model"] = response.model
+            if protocol == "boundary" and response.model != args.model:
+                raise ValueError("返回模型与冻结 pinned 模型不一致")
             record["response_id"] = response.id
             record["finish_reason"] = response.choices[0].finish_reason
             record["output"] = response.choices[0].message.content
             if (not response.usage or not record["output"]
                     or record["finish_reason"] != "stop"):
                 raise ValueError("用量缺失、空内容或输出截断；中止而不计作错误答案")
-            record["passed"] = score_output(args.dataset, task, record["output"])
+            evaluation_seed = args.seed if protocol == "boundary" else None
+            record["passed"] = score_output(
+                args.dataset, task, record["output"], evaluation_seed=evaluation_seed
+            )
+            if protocol == "boundary":
+                record["evaluation_seed"] = evaluation_seed
             record["status"] = "ok"
         except Exception as error:
             record["status"] = "error"
@@ -311,14 +357,14 @@ def run(args):
         )}), flush=True)
         write_json(args.output / "summary.json", {
             "contract_sha256": fingerprint(contract), "stop_reason": stop_reason,
-            "proxy_usd": used, "policies": aggregate(records),
+            "proxy_usd": used, "policies": aggregate(records, policies),
             "cost_scope": "synthesis_only_no_candidate_generation_not_actual_invoice",
         })
         if record["status"] != "ok":
             raise RuntimeError("请求失败，已持久化账目并停止")
     write_json(args.output / "summary.json", {
         "contract_sha256": fingerprint(contract), "stop_reason": stop_reason,
-        "proxy_usd": used, "policies": aggregate(records),
+        "proxy_usd": used, "policies": aggregate(records, policies),
         "cost_scope": "synthesis_only_no_candidate_generation_not_actual_invoice",
     })
 
@@ -328,6 +374,8 @@ def main():
     parser.add_argument("--source", type=Path, default=ROOT / "results/main_with_math_merged.json")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--dataset", choices=sorted(DATASETS), default="math")
+    parser.add_argument("--protocol", choices=("gating", "boundary"), default="gating")
+    parser.add_argument("--exclude-manifest", type=Path, action="append", default=[])
     parser.add_argument("--tasks", type=int, default=24)
     parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--seed", type=int, default=20261023)
