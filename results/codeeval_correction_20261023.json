@@ -1,0 +1,231 @@
+{
+  "source": "results/main_with_math_merged.json",
+  "datasets": [
+    {
+      "dataset": "humaneval",
+      "total_tasks": 164,
+      "full_pass_rate": 92.07,
+      "vib_pass_rate": 90.24,
+      "pass_delta_pp": -1.83,
+      "mcnemar_pvalue": 0.607239,
+      "flip_count": 29,
+      "flips": [
+        {
+          "task_id": "HumanEval/10",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/32",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/59",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/68",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/75",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/81",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/83",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/103",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/103",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/106",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/106",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/116",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/119",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/127",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/127",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/129",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/130",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/132",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/132",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/134",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/140",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/145",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/145",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/146",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/147",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/147",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/158",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/163",
+          "arm": "full",
+          "recorded": true,
+          "recomputed": false
+        },
+        {
+          "task_id": "HumanEval/163",
+          "arm": "vib",
+          "recorded": true,
+          "recomputed": false
+        }
+      ]
+    },
+    {
+      "dataset": "mbpp",
+      "total_tasks": 257,
+      "full_pass_rate": 91.83,
+      "vib_pass_rate": 92.22,
+      "pass_delta_pp": 0.39,
+      "mcnemar_pvalue": 1.0,
+      "flip_count": 5,
+      "flips": [
+        {
+          "task_id": "MBPP/18",
+          "arm": "full",
+          "recorded": false,
+          "recomputed": true
+        },
+        {
+          "task_id": "MBPP/18",
+          "arm": "vib",
+          "recorded": false,
+          "recomputed": true
+        },
+        {
+          "task_id": "MBPP/70",
+          "arm": "full",
+          "recorded": false,
+          "recomputed": true
+        },
+        {
+          "task_id": "MBPP/70",
+          "arm": "vib",
+          "recorded": false,
+          "recomputed": true
+        },
+        {
+          "task_id": "MBPP/164",
+          "arm": "full",
+          "recorded": false,
+          "recomputed": true
+        }
+      ]
+    }
+  ]
+}

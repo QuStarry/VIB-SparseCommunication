@@ -241,3 +241,75 @@ def test_offline_backfill_split_mode_and_or_produce_correct_counts():
     # MR: 行 4 双方过，行 5 双方错 → Full 1/2 = 50%，VIB 1/2 = 50%
     assert sum_or["multi_round_full_pass_rate"] == 50.0
     assert sum_or["multi_round_vib_pass_rate"] == 50.0
+
+
+def test_code_correction_dispatches_humaneval_entry_point(monkeypatch):
+    from scripts import recompute_code_eval as correction
+
+    calls = []
+
+    def evaluate(code, tests, entry_point):
+        calls.append(entry_point)
+        return False
+
+    monkeypatch.setattr(correction.CodeEvaluator, "evaluate", evaluate)
+    assert not correction._score("humaneval", {
+        "output": "def add(a, b): return a - b",
+        "test_cases": ["def check(candidate): assert candidate(1, 2) == 3"],
+        "entry_point": "add",
+    })
+    assert calls == ["add"]
+
+
+def test_code_correction_dispatches_mbpp_without_entry_point(monkeypatch):
+    from scripts import recompute_code_eval as correction
+
+    calls = []
+
+    def evaluate(code, tests, entry_point):
+        calls.append(entry_point)
+        return True
+
+    monkeypatch.setattr(correction.CodeEvaluator, "evaluate", evaluate)
+    assert correction._score("mbpp", {
+        "output": "def add(a, b): return a + b",
+        "test_cases": ["assert add(1, 2) == 3"],
+        "entry_point": "add",
+    })
+    assert calls == [None]
+
+
+def test_code_correction_refreshes_mbpp_split_without_changing_outputs(monkeypatch):
+    from scripts import recompute_code_eval as correction
+    import copy
+
+    traces = [{
+        "task_id": "MBPP/1",
+        "full": {"passed": False, "early_stopped": False, "output": "full"},
+        "vib": {"passed": True, "early_stopped": True, "output": "vib"},
+    }]
+    rows = [{
+        "task_id": "MBPP/1", "full_passed": False, "vib_passed": True,
+        "full_messages": 6, "vib_messages": 3, "full_tokens": 100, "vib_tokens": 80,
+    }]
+    data = {
+        "trace_results": {"mbpp": traces},
+        "detailed_results": {"mbpp": rows},
+        "summary": {"mbpp": {
+            "total_tasks": 1, "same_message_ratio": 0.0, "avg_message_delta": 3.0,
+            "full_tokens": 100, "vib_tokens": 80,
+        }},
+    }
+    before = copy.deepcopy(traces)
+    monkeypatch.setattr(correction, "_score", lambda dataset, trace: True)
+    report = correction._recompute_dataset("mbpp", data)
+    assert report["flip_count"] == 1
+    assert data["summary"]["mbpp"]["full_pass_rate"] == 100.0
+    assert data["summary"]["mbpp"]["early_stopped_full_pass_rate"] == 100.0
+    assert data["summary"]["mbpp"]["early_stopped_count"] == 1
+    assert data["summary"]["mbpp"]["multi_round_count"] == 0
+    assert data["summary"]["mbpp"]["full_tokens"] == 100
+    assert rows[0]["full_passed"] is True
+    for arm in ("full", "vib"):
+        assert traces[0][arm]["output"] == before[0][arm]["output"]
+        assert traces[0][arm]["early_stopped"] == before[0][arm]["early_stopped"]
