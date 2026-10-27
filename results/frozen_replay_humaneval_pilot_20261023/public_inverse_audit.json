@@ -1,0 +1,21 @@
+{
+  "protocol_sha256": "48e7c0e913b034f47c083e1607e22263481e3d8f803b8aa6d949dcab437fb1f0",
+  "api_requests": 0,
+  "complete": true,
+  "coverage": {
+    "total_tasks": 24,
+    "applicable_tasks": 0,
+    "code_outputs": 0,
+    "probes_per_output": 64
+  },
+  "outputs": [],
+  "limitations": [
+    "Two observed task prompts motivated this adapter; no strictly unseen validation tasks.",
+    "Synthetic development fixtures test the adapter implementation, not task generalization.",
+    "Only lowercase ASCII and a narrow public-encoder AST subset are covered.",
+    "No policy or task-ID rules; recorded labels are attached after public evaluation.",
+    "Finite encoder collision checks do not prove injectivity for all strings.",
+    "Supplied-symbol completeness is separate from decoder semantic round-trip correctness.",
+    "Timed local candidate execution is not a security sandbox; no model calls."
+  ]
+}

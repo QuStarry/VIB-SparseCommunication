@@ -1,0 +1,4534 @@
+{
+  "protocol_sha256": "00a2097f2195115d5f6e6b889fc1db72372eea96523a3ca22308a828a1293cc3",
+  "api_requests": 0,
+  "complete": true,
+  "coverage": {
+    "total_tasks": 24,
+    "applicable_tasks": 2,
+    "code_outputs": 16,
+    "probes_per_output": 64
+  },
+  "outputs": [
+    {
+      "request_id": "03b5a3adb926ab22548b60b44be5975d71d0708e2fb80249be6c0d5430a283e5",
+      "task_id": "HumanEval/38",
+      "policy": "full",
+      "repeat": 1,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "0566fdb360590f9d2f68c298b14fb688dcfa242199b3c01181c0fe3d68da916e",
+      "task_id": "HumanEval/38",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "1820601e598ed1c30c5eb7ddc3273e71714298792ff09b5339f484d9e359b513",
+      "task_id": "HumanEval/38",
+      "policy": "direct",
+      "repeat": 0,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "279fce0899760eede781bc2e30e46f6ed827b152608a4e1a4fa5d0ee22955cf0",
+      "task_id": "HumanEval/38",
+      "policy": "direct",
+      "repeat": 1,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "322813f0929a59c52253e54eeee55b1d62d46961c58448b746e14d11782ef30f",
+      "task_id": "HumanEval/50",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3a5d1238b2c17f0908b0af18afcade4e953ddc6d165ded1ddc5d7e6d70ba7940",
+      "task_id": "HumanEval/50",
+      "policy": "first_round",
+      "repeat": 0,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3d748db517cf37df53c7628978a39e3e7b3da02dbcb67dd0182d1d362e2e8f18",
+      "task_id": "HumanEval/38",
+      "policy": "full",
+      "repeat": 0,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "7203ebf90713e419730096ceff81e3848ab2acfb0653012fe32d23c0a6a54c68",
+      "task_id": "HumanEval/38",
+      "policy": "first_round",
+      "repeat": 0,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "750553b9d7b2827dc7ee987e6aabbee0f5864c7fc6dcfcea2714b59089151d47",
+      "task_id": "HumanEval/50",
+      "policy": "direct",
+      "repeat": 1,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "9d453812e6c8cedf6c58f17982aead6784c8267a01945baff4ba3d816cb5efba",
+      "task_id": "HumanEval/50",
+      "policy": "full",
+      "repeat": 0,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b1bb755cf3bff8242561a2d30aa20058d7fef354fa217276ec806b5901409345",
+      "task_id": "HumanEval/38",
+      "policy": "first_round",
+      "repeat": 1,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ce55a969accd4d6f170e69eba7cf6b747743a55f316cfdd102844df55e17485a",
+      "task_id": "HumanEval/50",
+      "policy": "first_round",
+      "repeat": 1,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ea2d891867c225a42eec847e49226dcf3a92f1736153a7a26189324fece99edf",
+      "task_id": "HumanEval/50",
+      "policy": "full",
+      "repeat": 1,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "f5bb8b499b576baa6c8d07f77bdf7d422c78975aa243d5b140a567351c3c6246",
+      "task_id": "HumanEval/50",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "f6f8cdf4d248d6a2f4357073815937983b9e4d82d38f7ffb4d119e6859b9a5ef",
+      "task_id": "HumanEval/50",
+      "policy": "direct",
+      "repeat": 0,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": true,
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "fd026f933b137f6224b9654aab8ecfd2334e30229336c14f03f64f3e9463518f",
+      "task_id": "HumanEval/38",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "roundtrip_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          }
+        ]
+      },
+      "interface_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": false,
+            "satisfied": false
+          }
+        ]
+      },
+      "satisfied_probes": 64,
+      "property_violations": 0,
+      "probe_execution_errors": 0,
+      "all_roundtrips_satisfied": true,
+      "supplied_encoder_symbol_present": false,
+      "recorded_benchmark_passed": false
+    }
+  ],
+  "limitations": [
+    "Two observed task prompts motivated this adapter; no strictly unseen validation tasks.",
+    "Synthetic development fixtures test the adapter implementation, not task generalization.",
+    "Only lowercase ASCII and a narrow public-encoder AST subset are covered.",
+    "No policy or task-ID rules; recorded labels are attached after public evaluation.",
+    "Finite encoder collision checks do not prove injectivity for all strings.",
+    "Supplied-symbol completeness is separate from decoder semantic round-trip correctness.",
+    "Timed local candidate execution is not a security sandbox; no model calls."
+  ]
+}
