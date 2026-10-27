@@ -4,7 +4,7 @@ Phase 3-b · Figure 3-a: Pareto-optimal bubble chart.
 x-axis  : VIB relative to Full → message compression (%)
 y-axis  : VIB relative to Full → Δ Pass@1 (pp), with paired Bootstrap 95% CI whiskers
 bubble  : total tasks (N)
-color   : dataset (HumanEval / MBPP / GSM8K / MATH)
+color   : dataset (HumanEval / GSM8K / MATH; historical oracle MBPP excluded)
 
 Outputs (paper/figures/):
   figure3_pareto_bubble.pdf   (vector, for paper)
@@ -12,7 +12,7 @@ Outputs (paper/figures/):
 
 Usage:
   python3 scripts/plot_pareto_3a.py
-  python3 scripts/plot_pareto_3a.py --main results/main_with_math_merged.codeeval_fixed.json --outdir paper/figures
+  python3 scripts/plot_pareto_3a.py --main results/main_with_math_merged.codeeval_fixed.matheval_fixed.json --outdir paper/figures
 """
 import argparse
 import json
@@ -29,6 +29,7 @@ import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'experiments'))
 import analyze_multi_benchmark as an
+from export_latex_tables import validate_math_protocol
 
 
 # ---------------- Theme (brand-less, conference neutral) ----------------
@@ -60,9 +61,10 @@ def load_json(p: Path) -> Dict[str, Any]:
 
 def build_points(main_path: Path) -> List[Point]:
     data = load_json(main_path)
+    validate_math_protocol(data)
     pts: List[Point] = []
     order = [
-        ("humaneval", "HumanEval"), ("mbpp", "MBPP"),
+        ("humaneval", "HumanEval"),
         ("gsm8k", "GSM8K"), ("math", "MATH"),
     ]
     for ds, lab in order:
@@ -208,7 +210,7 @@ def plot(pts: List[Point], outdir: Path, with_arrows: bool):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--main", default="results/main_with_math_merged.codeeval_fixed.json",
+    ap.add_argument("--main", default="results/main_with_math_merged.codeeval_fixed.matheval_fixed.json",
                     help="主结果 JSON；默认使用 scripts/recompute_code_eval.py 修正过"
                          "代码基准通过标记的产物，与 paper/tables 保持同一数据源")
     ap.add_argument("--outdir", default="paper/figures")

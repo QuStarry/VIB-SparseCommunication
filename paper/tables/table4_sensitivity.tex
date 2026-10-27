@@ -3,7 +3,7 @@
 \caption{One-factor-at-a-time sensitivity to the three interpretable VIB scalars on GSM8K ($N=200$, \texttt{deepseek-chat}).
 Each block varies one parameter while the other two stay at the paper defaults
 $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$ (bolded rows); these three bolded rows are the \emph{same}
-configuration, so their agreement is a direct run-to-run noise bound at this $N$.
+configuration, so their spread is a descriptive run-to-run observation at this $N$, not a noise bound.
 Columns: VIB$-$Full Pass@1 $\Delta$pp, inter-agent message reduction, total-token reduction;
 $\Delta$~ok marks rows whose accuracy gap stays within $\pm1$ pp of the mean of the three default repeats.
 \label{tab:sensitivity}}
@@ -35,15 +35,15 @@ $\gamma$ & 0.00 & -1.00 & 42.33 & 7.63 &  \\
 \end{tabular}}
 \vspace{0.3em}
 \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
-\textbf{Interpretation.} VIB accuracy is insensitive to all three scalars: across the 15 grid points
-the VIB$-$Full $\Delta$ deviates from the default by at most $1.67$ pp, so the headline result is not
-an artefact of a lucky hyperparameter choice. Message reduction is governed by the two scalars that
-set how aggressively the gate trades sufficiency against redundancy: $\beta_0$ spans
+\textbf{Interpretation.} Across these 15 grid points, the observed
+VIB$-$Full $\Delta$ deviates from the mean default by at most $1.67$ pp.
+This fixed-subset, one-factor comparison does not establish non-inferiority or joint-parameter robustness.
+Observed message reduction varies across the gate settings: $\beta_0$ spans
 $7.7$\%--$47.6$\% (decreasing as it grows) and $\gamma$ spans $5.9$\%--$42.3$\% (increasing), whereas
-$\lambda$ shifts it only over $19.6$\%--$29.2$\% across a threefold range. Because accuracy is
-flat throughout, either $\beta_0$ or $\gamma$ serves as a deployment dial for the sparsity/cost
-budget; we keep the defaults $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$ used in all main results
-and leave per-budget retuning to future work. The three bolded default rows are the \emph{same}
-configuration and agree to within $1.00$ pp in $\Delta$ and $0.91$ pp in message reduction --- a
-direct run-to-run noise bound at $N=200$.}
+$\lambda$ shifts it over $19.6$\%--$29.2$\% across a threefold range.
+We retain the main defaults $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$;
+deployment calibration requires independent tasks and complete cost accounting.
+The three bolded rows repeat the \emph{same} configuration and show ranges of
+$1.00$ pp in $\Delta$ and $0.91$ pp in message reduction.
+These three executions are not a confidence bound on future runs.}
 \end{table}

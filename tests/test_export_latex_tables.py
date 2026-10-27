@@ -14,6 +14,81 @@ import pytest
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
+def corrected_math_run(matcher="matcher-v1", task_id="MATH/1"):
+    return {
+        "math_eval_correction": {"provenance": {
+            "method": "whole_answer_v1", "matcher_sha256": matcher, "sympy_version": "1.14.0",
+        }},
+        "summary": {"math": {"total_tasks": 1}},
+        "detailed_results": {"math": [{"task_id": task_id}]},
+    }
+
+
+def test_math_tables_reject_legacy_labels():
+    module = load_module("export_math_legacy", "scripts/export_latex_tables.py")
+    with pytest.raises(ValueError, match="correction"):
+        module.validate_math_protocol({"summary": {"math": {}}})
+
+
+@pytest.mark.parametrize("other", [
+    corrected_math_run(matcher="different"), corrected_math_run(task_id="MATH/2"),
+])
+def test_math_tables_reject_mixed_protocol_or_tasks(other):
+    module = load_module("export_math_mixed", "scripts/export_latex_tables.py")
+    with pytest.raises(ValueError, match="differ"):
+        module.validate_math_protocol(corrected_math_run(), other)
+
+
+def test_math_tables_accept_matching_protocol():
+    module = load_module("export_math_matched", "scripts/export_latex_tables.py")
+    module.validate_math_protocol(corrected_math_run(), corrected_math_run())
+
+
+def test_unverified_t0_batches_never_imply_temperature_robustness():
+    module = load_module("export_missing_greedy", "scripts/export_latex_tables.py")
+    assert "ddagger" not in module._star(-1, (-2, -0.1), 0.04)
+    assert "ddagger" not in module._star(-1, (-2, -0.1), 0.04, 0.03, -1.2)
+    assert "ddagger" not in module._star(-1, (-2, -0.1), 0.04, 0.03, 1.2)
+
+
+def test_oracle_mbpp_is_not_rendered_as_headline_row():
+    module = load_module("export_mbpp_oracle", "scripts/export_latex_tables.py")
+    row = module.DatasetRow(
+        ds="mbpp", label="MBPP", total=257, vanilla_pass=89.88, full_pass=91.83,
+        vib_pass=92.22, delta_vib_full=0.39, delta_vib_full_ci=(-1, 1),
+        delta_vib_vanilla=2.34, msg_compress_vib_full=-0.12,
+        token_save_vib_full=-0.05, mcnemar_p=1, full_wilson=(88, 95), vib_wilson=(88, 95),
+    )
+    assert "MBPP            &" not in module.render_table1([row])
+    assert "oracle-only" in module.render_table2(row)
+
+
+def test_chinese_main_table_reuses_english_numeric_rows():
+    module = load_module("export_bilingual_rows", "scripts/export_latex_tables.py")
+    row = module.DatasetRow(
+        ds="humaneval", label="HumanEval", total=164, vanilla_pass=93.90,
+        full_pass=92.07, vib_pass=90.24, delta_vib_full=-1.83,
+        delta_vib_full_ci=(-6.71, 3.05), delta_vib_vanilla=-3.66,
+        msg_compress_vib_full=21.14, token_save_vib_full=3.88,
+        mcnemar_p=0.607, full_wilson=(86.91, 95.31), vib_wilson=(84.74, 93.90),
+    )
+    english = module.render_table1([row])
+    chinese = module.render_table1_chinese([row])
+    numeric_rows = [
+        line for line in english.splitlines() if line.startswith("HumanEval ") and "&" in line
+    ]
+    assert numeric_rows and all(line in chinese for line in numeric_rows)
+    assert "历史计数" in chinese
+    assert "完整费用" in chinese
+
+
+def test_headline_notes_do_not_claim_verified_greedy_or_refresh_cost():
+    module = load_module("export_cost_limits", "scripts/export_latex_tables.py")
+    tex = module.render_table1([])
+    assert "greedy" not in tex
+    assert "temperature robustness" not in tex.lower()
+    assert "not refreshed end-to-end cost" in tex
+
 ANCHOR = {"beta0": 3.2, "lambda": 0.08, "gamma": -0.4}
 GRID = {
     "beta0": [1.6, 2.4, 3.2, 4.0, 4.8],

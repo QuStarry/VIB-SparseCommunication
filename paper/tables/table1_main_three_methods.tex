@@ -3,9 +3,9 @@
 \caption{Observed accuracy and communication budgets: Vanilla single-agent, Full-Comm 3-agent, and VIB-Sparse.
 Point estimates (pp) and 95\% paired-bootstrap CIs are reported for VIB vs Full; VIB vs Vanilla reports the raw pp difference without CI for brevity.
 $\dagger$: 95\% CI does not span zero;
-$\ddagger$: McNemar $p<0.05$ under both sampling and greedy (temperature$=0$, robust);
-$\S$: sampling $p<0.05$ but greedy $p\ge 0.05$ (marginal, temperature-sensitive).
-MBPP has near-zero aggregate savings under its historical reference-assisted early-stop protocol; MATH follows the frozen-history Planner-Solver-Verifier pipeline.
+$*$: primary-batch McNemar $p<0.05$.
+Tests are unadjusted. MBPP is excluded because of reference-assisted stopping (see \Cref{app:gate_trace}).
+MATH reports conservative whole-answer matching, not a complete semantic oracle.
 \label{tab:main_results}}
 \setlength{\tabcolsep}{3.4pt}
 \scriptsize
@@ -23,9 +23,8 @@ MBPP has near-zero aggregate savings under its historical reference-assisted ear
 \midrule
 
 HumanEval       &   164 &   93.90 & 92.07~[+86.91,\,+95.31] & 90.24~[+84.74,\,+93.90] &  -3.66 & -1.83       & [-6.71,\,+3.05] & +21.14 &  +3.88 \\
-MBPP            &   257 &   89.88 & 91.83~[+87.83,\,+94.59] & 92.22~[+88.29,\,+94.91] &  +2.34 & +0.39       & [-1.56,\,+2.33] &  -0.12 &  -0.05 \\
 GSM8K           &  1319 &   59.29 & 95.30~[+94.02,\,+96.32] & 95.22~[+93.93,\,+96.25] & +35.93 & -0.08       & [-0.83,\,+0.68] & +30.49 &  +4.96 \\
-MATH            &  5000 &   49.10 & 80.08~[+78.95,\,+81.16] & 79.16~[+78.01,\,+80.26] & +30.06 & -0.92$^\dagger$$^\S$ & [-1.78,\,-0.04] & +25.59 &  +4.42 \\
+MATH            &  5000 &   46.16 & 78.58~[+77.42,\,+79.70] & 77.66~[+76.48,\,+78.79] & +31.50 & -0.92$^\dagger$$^*$ & [-1.78,\,-0.04] & +25.59 &  +4.42 \\
 \bottomrule
 \end{tabular}}
 \vspace{0.3em}
@@ -34,9 +33,9 @@ MATH            &  5000 &   49.10 & 80.08~[+78.95,\,+81.16] & 79.16~[+78.01,\,+8
 Vanilla uses direct synthesis without team discussion, with temperature$=0.1$ and task-specific output limits ($1024$ code, $256$ math). It is not matched to the team's total inference budget.
 No equivalence or non-inferiority margin was prespecified. A CI spanning zero is not evidence of equivalence.
 HumanEval and MBPP pass labels were recomputed with the harness code evaluator (see \Cref{app:repro}); an earlier artifact reported HumanEval at $100.00/100.00$ because the synthesis-refresh scoring step executed the reference tests without invoking them.
-MBPP messages and tokens slightly increase; savings occur on GSM8K, MATH, and HumanEval.
-\textbf{Temperature robustness (greedy reruns):}
-message reduction is similar in the recorded greedy runs: MATH 25.59$\to$25.39\%, GSM8K 30.49$\to$30.28\%. This does not eliminate provider or sampling uncertainty.
-\textbf{MATH significance envelope:}
-sampling regression $-0.92$pp (McNemar $p=0.041$), greedy $-0.72$pp ($p=0.132$); magnitude stays $-0.7\sim-0.9$pp but significance is marginal across temperatures, see $\S$ marker.}
+MATH labels use the same whole-answer matcher across all methods and recorded reruns; opaque forms can retain false negatives.
+\textbf{Accounting.} Tok denotes historical counter reduction, not refreshed end-to-end cost.
+HumanEval refreshed outputs retain old token fields, so its $3.88\%$ is not verified complete-run savings.
+\textbf{Protocol audit.} Files labeled \texttt{t0} do not establish temperature zero: agent and synthesis calls override client defaults. Reruns are descriptive, not temperature-robustness evidence.
+\textbf{MATH matching results.} Primary-batch difference $-0.92$pp (McNemar $p=0.0453$), recorded rerun $-1.04$pp ($p=0.0332$); these are conditional on the matching protocol, not universal accuracy guarantees.}
 \end{table*}

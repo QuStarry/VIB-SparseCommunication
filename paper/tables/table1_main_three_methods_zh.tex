@@ -1,0 +1,27 @@
+\begin{table*}[t]
+\centering
+\caption{三种方法的历史表现与通信预算。VIB相对Full的差值以百分点及配对bootstrap 95\%区间表示；相对Vanilla仅报告点估计。$\dagger$表示区间不跨零；$*$表示主批次McNemar检验$p<0.05$，未经多重检验校正。MBPP因参考测试辅助早停而排除。MATH为保守完整答案匹配率。\label{tab:main_results}}
+\setlength{\tabcolsep}{3.4pt}
+\scriptsize
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{} l r r r r r r r r r @{}}
+\toprule
+\textbf{数据集} & \textbf{题数} &
+\textbf{Vanilla} & \textbf{Full} & \textbf{VIB} &
+\textbf{$\Delta_{\text{V-V}}$} &
+\multicolumn{2}{c}{\textbf{$\Delta_{\text{V-F}}$}} &
+\textbf{广播} & \textbf{历史Token} \\
+& & & & & & \multicolumn{1}{c}{pp} & \multicolumn{1}{c}{95\% CI} & & \\
+\cmidrule(lr){7-8}
+& & \multicolumn{3}{c}{Pass@1 (\%)} & (pp) & & & \multicolumn{1}{c}{$\downarrow$\%} & \multicolumn{1}{c}{$\downarrow$\%} \\
+\midrule
+
+HumanEval       &   164 &   93.90 & 92.07~[+86.91,\,+95.31] & 90.24~[+84.74,\,+93.90] &  -3.66 & -1.83       & [-6.71,\,+3.05] & +21.14 &  +3.88 \\
+GSM8K           &  1319 &   59.29 & 95.30~[+94.02,\,+96.32] & 95.22~[+93.93,\,+96.25] & +35.93 & -0.08       & [-0.83,\,+0.68] & +30.49 &  +4.96 \\
+MATH            &  5000 &   46.16 & 78.58~[+77.42,\,+79.70] & 77.66~[+76.48,\,+78.79] & +31.50 & -0.92$^\dagger$$^*$ & [-1.78,\,-0.04] & +25.59 &  +4.42 \\
+\bottomrule
+\end{tabular}}
+\vspace{0.3em}
+\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
+\textbf{口径说明。}单比例区间使用Wilson方法，差值区间使用10000次任务配对bootstrap。Vanilla的推理预算不与团队对齐；区间跨零不证明等效或非劣效。历史计数减少不等于最终运行的完整费用：HumanEval刷新代码继承旧Token字段，其3.88\%不能作为刷新后完整节省。文件名中的\texttt{t0}不验证真实温度零，不能据此声称温度稳健性。MATH未知格式仍可能漏判。}
+\end{table*}

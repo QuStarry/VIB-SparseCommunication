@@ -2,8 +2,8 @@ r"""
 Phase 3-a: 把 3 类实验 JSON 结果自动导出为 LaTeX 顶会论文表格。
 
 Inputs (默认路径，CLI 可覆盖):
-  --vanilla     results/vanilla_with_math_merged.json    (含 MATH，Table 1 第 4 行必需)
-  --main        results/main_with_math_merged.codeeval_fixed.json
+  --vanilla     results/vanilla_with_math_merged.matheval_fixed.json
+  --main        results/main_with_math_merged.codeeval_fixed.matheval_fixed.json
                                                           (含 MATH；由 scripts/recompute_code_eval.py
                                                            重算代码基准通过标记后的修正产物)
   --ablfrozen   results/gsm8k_ablation_frozen_only.json
@@ -55,7 +55,7 @@ class DatasetRow:
     mcnemar_p: float              # Full vs VIB paired (sampling baseline)
     full_wilson: Tuple[float, float]
     vib_wilson: Tuple[float, float]
-    # t0 (temperature=0) robustness fields — filled only if --t0-* JSON is provided
+    # Legacy t0-named batch fields; these do not certify effective request temperature.
     t0_delta_vib_full: Optional[float] = None
     t0_mcnemar_p: Optional[float] = None
     t0_msg_compress: Optional[float] = None
@@ -65,18 +65,40 @@ class DatasetRow:
     es_vanilla: float = 0.0
     es_full: float = 0.0
     es_vib: float = 0.0
+    es_msg_compress: float = 0.0
     mr_count: int = 0
     mr_pct: float = 0.0
     mr_vanilla: float = 0.0
     mr_full: float = 0.0
     mr_vib: float = 0.0
     mr_delta_vib_full: float = 0.0
+    mr_msg_compress: float = 0.0
 
 
 def load(p: Path) -> Dict[str, Any]:
     if not p.exists():
         raise FileNotFoundError(p)
     return json.loads(p.read_text())
+
+
+def validate_math_protocol(*runs: Dict[str, Any]) -> None:
+    """Refuse to mix legacy labels with separately corrected MATH scores."""
+    expected = None
+    task_ids = None
+    for run in runs:
+        if run is None or "math" not in run.get("summary", {}):
+            continue
+        provenance = run.get("math_eval_correction", {}).get("provenance", {})
+        fields = ("method", "matcher_sha256", "sympy_version")
+        if not all(provenance.get(key) for key in fields):
+            raise ValueError("MATH requires a provenance-checked whole-answer correction")
+        protocol = tuple(provenance[key] for key in fields)
+        ids = [row["task_id"] for row in run["detailed_results"]["math"]]
+        if len(set(ids)) != len(ids) or len(ids) != run["summary"]["math"]["total_tasks"]:
+            raise ValueError("MATH task IDs or counts are inconsistent")
+        if expected is not None and (protocol != expected or set(ids) != task_ids):
+            raise ValueError("MATH comparison protocols or task sets differ")
+        expected, task_ids = protocol, set(ids)
 
 
 def _build_row(ds: str, label: str, van: Dict[str, Any], main: Dict[str, Any],
@@ -122,12 +144,14 @@ def _build_row(ds: str, label: str, van: Dict[str, Any], main: Dict[str, Any],
         row.es_vanilla = v.get("early_stopped_full_pass_rate", 0.0)
         row.es_full = m["early_stopped_full_pass_rate"]
         row.es_vib = m["early_stopped_vib_pass_rate"]
+        row.es_msg_compress = m["early_stopped_msg_compression_pct"]
         row.mr_count = m["multi_round_count"]
         row.mr_pct = m["multi_round_pct"]
         row.mr_vanilla = v.get("multi_round_full_pass_rate", 0.0)
         row.mr_full = m["multi_round_full_pass_rate"]
         row.mr_vib = m["multi_round_vib_pass_rate"]
         row.mr_delta_vib_full = m["multi_round_pass_delta_pp"]
+        row.mr_msg_compress = m["multi_round_msg_compression_pct"]
     return row
 
 
@@ -157,7 +181,7 @@ def _pval(p: float) -> str:
 
 
 # ---------------------------------------------------------------
-# t0 (temperature=0) robustness helpers
+# Legacy rerun-batch helpers
 # ---------------------------------------------------------------
 
 def _t0_mcnemar_p(t0_json: Optional[Dict[str, Any]], ds: str) -> Optional[float]:
@@ -192,22 +216,15 @@ def _t0_msg_compress(t0_json: Optional[Dict[str, Any]], ds: str) -> Optional[flo
     return s.get("msg_compression_pct")
 
 
-def _star(delta: float, ci: Tuple[float, float], mcnemar: float,
-          t0_mcnemar: Optional[float] = None) -> str:
-    r"""顶会规范:
-    †  = 95% CI 不跨 0 (VIB vs Full)
-    ‡  = 配对 McNemar 检验 p<0.05 —— 且 temperature=0 下仍 p<0.05 (稳健显著)
-    §  = 采样下 McNemar p<0.05 但贪心解码下 p≥0.05 (边缘显著, 对温度敏感)
-    """
+def _star(_delta: float, ci: Tuple[float, float], mcnemar: float,
+          _t0_mcnemar: Optional[float] = None, _t0_delta: Optional[float] = None) -> str:
+    """Mark only primary-batch evidence; historical t0 labels do not verify temperature."""
     stars = ""
     lo, hi = ci
     if not (lo <= 0 <= hi):
         stars += r"$^\dagger$"
     if mcnemar < 0.05:
-        if t0_mcnemar is not None and t0_mcnemar >= 0.05:
-            stars += r"$^\S$"
-        else:
-            stars += r"$^\ddagger$"
+        stars += r"$^*$"
     return stars
 
 
@@ -220,9 +237,9 @@ TABLE1_HEADER = r"""\begin{table*}[t]
 \caption{Observed accuracy and communication budgets: Vanilla single-agent, Full-Comm 3-agent, and VIB-Sparse.
 Point estimates (pp) and 95\% paired-bootstrap CIs are reported for VIB vs Full; VIB vs Vanilla reports the raw pp difference without CI for brevity.
 $\dagger$: 95\% CI does not span zero;
-$\ddagger$: McNemar $p<0.05$ under both sampling and greedy (temperature$=0$, robust);
-$\S$: sampling $p<0.05$ but greedy $p\ge 0.05$ (marginal, temperature-sensitive).
-MBPP has near-zero aggregate savings under its historical reference-assisted early-stop protocol; MATH follows the frozen-history Planner-Solver-Verifier pipeline.
+$*$: primary-batch McNemar $p<0.05$.
+Tests are unadjusted. MBPP is excluded because of reference-assisted stopping (see \Cref{app:gate_trace}).
+MATH reports conservative whole-answer matching, not a complete semantic oracle.
 \label{tab:main_results}}
 \setlength{\tabcolsep}{3.4pt}
 \scriptsize
@@ -248,20 +265,23 @@ TABLE1_FOOTER = r"""\bottomrule
 Vanilla uses direct synthesis without team discussion, with temperature$=0.1$ and task-specific output limits ($1024$ code, $256$ math). It is not matched to the team's total inference budget.
 No equivalence or non-inferiority margin was prespecified. A CI spanning zero is not evidence of equivalence.
 HumanEval and MBPP pass labels were recomputed with the harness code evaluator (see \Cref{app:repro}); an earlier artifact reported HumanEval at $100.00/100.00$ because the synthesis-refresh scoring step executed the reference tests without invoking them.
-MBPP messages and tokens slightly increase; savings occur on GSM8K, MATH, and HumanEval.
-\textbf{Temperature robustness (greedy reruns):}
-message reduction is similar in the recorded greedy runs: MATH 25.59$\to$25.39\%, GSM8K 30.49$\to$30.28\%. This does not eliminate provider or sampling uncertainty.
-\textbf{MATH significance envelope:}
-sampling regression $-0.92$pp (McNemar $p=0.041$), greedy $-0.72$pp ($p=0.132$); magnitude stays $-0.7\sim-0.9$pp but significance is marginal across temperatures, see $\S$ marker.}
+MATH labels use the same whole-answer matcher across all methods and recorded reruns; opaque forms can retain false negatives.
+\textbf{Accounting.} Tok denotes historical counter reduction, not refreshed end-to-end cost.
+HumanEval refreshed outputs retain old token fields, so its $3.88\%$ is not verified complete-run savings.
+\textbf{Protocol audit.} Files labeled \texttt{t0} do not establish temperature zero: agent and synthesis calls override client defaults. Reruns are descriptive, not temperature-robustness evidence.
+__MATH_NOTE__}
 \end{table*}
 """
 
 
-def render_table1(rows: List[DatasetRow]) -> str:
-    lines = [TABLE1_HEADER]
+def _main_row_lines(rows: List[DatasetRow]):
+    """Share every numeric row between the English and Chinese manuscripts."""
     for r in rows:
-        star = _star(r.delta_vib_full, r.delta_vib_full_ci, r.mcnemar_p, r.t0_mcnemar_p)
-        lines.append(
+        if r.ds == "mbpp":
+            continue
+        star = _star(r.delta_vib_full, r.delta_vib_full_ci, r.mcnemar_p, r.t0_mcnemar_p,
+                     r.t0_delta_vib_full)
+        yield (
             f"{r.label:<15} & {r.total:>5} & "
             f"{_pct(r.vanilla_pass):>7} & "
             f"{_pct(r.full_pass)}~{_fmt_ci(*r.full_wilson):>14} & "
@@ -271,8 +291,49 @@ def render_table1(rows: List[DatasetRow]) -> str:
             f"{_pp(r.msg_compress_vib_full):>6} & "
             f"{_pp(r.token_save_vib_full):>6} \\\\"
         )
-    lines.append(TABLE1_FOOTER)
+
+
+def render_table1(rows: List[DatasetRow]) -> str:
+    lines = [TABLE1_HEADER, *_main_row_lines(rows)]
+    math_row = next((row for row in rows if row.ds == "math"), None)
+    math_note = ""
+    if math_row is not None:
+        math_note = (
+            rf"\textbf{{MATH matching results.}} Primary-batch difference "
+            rf"${math_row.delta_vib_full:+.2f}$pp (McNemar $p={_pval(math_row.mcnemar_p)}$)"
+        )
+        if math_row.t0_delta_vib_full is not None:
+            math_note += (
+                rf", recorded rerun ${math_row.t0_delta_vib_full:+.2f}$pp "
+                rf"($p={_pval(math_row.t0_mcnemar_p)}$)"
+            )
+        math_note += "; these are conditional on the matching protocol, not universal accuracy guarantees."
+    lines.append(TABLE1_FOOTER.replace("__MATH_NOTE__", math_note))
     return "\n".join(lines)
+
+
+def render_table1_chinese(rows: List[DatasetRow]) -> str:
+    """Render a localized main table without translating or copying stored numeric data."""
+    header = r"""\begin{table*}[t]
+\centering
+\caption{三种方法的历史表现与通信预算。VIB相对Full的差值以百分点及配对bootstrap 95\%区间表示；相对Vanilla仅报告点估计。$\dagger$表示区间不跨零；$*$表示主批次McNemar检验$p<0.05$，未经多重检验校正。MBPP因参考测试辅助早停而排除。MATH为保守完整答案匹配率。\label{tab:main_results}}
+"""
+    layout = TABLE1_HEADER[TABLE1_HEADER.index(r"\setlength"):]
+    for english, chinese in (
+        (r"\textbf{Dataset}", r"\textbf{数据集}"),
+        (r"\textbf{N}", r"\textbf{题数}"),
+        (r"\textbf{Msg}", r"\textbf{广播}"),
+        (r"\textbf{Tok}", r"\textbf{历史Token}"),
+    ):
+        layout = layout.replace(english, chinese)
+    footer = r"""\bottomrule
+\end{tabular}}
+\vspace{0.3em}
+\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
+\textbf{口径说明。}单比例区间使用Wilson方法，差值区间使用10000次任务配对bootstrap。Vanilla的推理预算不与团队对齐；区间跨零不证明等效或非劣效。历史计数减少不等于最终运行的完整费用：HumanEval刷新代码继承旧Token字段，其3.88\%不能作为刷新后完整节省。文件名中的\texttt{t0}不验证真实温度零，不能据此声称温度稳健性。MATH未知格式仍可能漏判。}
+\end{table*}
+"""
+    return "\n".join([header + layout, *_main_row_lines(rows), footer])
 
 
 # ---------------------------------------------------------------
@@ -281,8 +342,9 @@ def render_table1(rows: List[DatasetRow]) -> str:
 
 TABLE2_HEADER = r"""\begin{table}[t]
 \centering
-\caption{MBPP internal Early-Stopped / Multi-Round split.
-ES = early-stopped when the 1st-round probe synthesis passes immediately; MR = multi-round discussion required.
+\caption{Historical MBPP oracle-only results, excluded from headline comparisons.
+ES = stopped by reference-test evaluation after one-round team synthesis; MR = not stopped.
+The OR partition depends on recorded outcomes; discarded probe costs may be missing.
 \label{tab:mbpp_split}}
 \setlength{\tabcolsep}{2.8pt}
 \scriptsize
@@ -306,12 +368,17 @@ TABLE2_FOOTER = r"""\bottomrule
 def render_table2(mbpp: DatasetRow) -> str:
     lines = [TABLE2_HEADER]
     lines.append(
+        f"All (oracle-only) & {mbpp.total} (100.00\\%) & "
+        f"{_pct(mbpp.vanilla_pass)} & {_pct(mbpp.full_pass)} & {_pct(mbpp.vib_pass)} & "
+        f"{_pp(mbpp.delta_vib_full)} & {_pp(mbpp.msg_compress_vib_full)} \\\\"
+    )
+    lines.append(
         f"Early-Stopped & {mbpp.es_count} ({_pct(mbpp.es_pct)}\\%) & "
         f"{_pct(mbpp.es_vanilla):>6} & "
         f"{_pct(mbpp.es_full):>6} & "
         f"{_pct(mbpp.es_vib):>6} & "
         f"{_pp(round(mbpp.es_vib - mbpp.es_full, 2)):>6} & "
-        f"{_pp(0.0):>6} \\\\"
+        f"{_pp(mbpp.es_msg_compress):>6} \\\\"
     )
     lines.append(
         f"Multi-Round    & {mbpp.mr_count} ({_pct(mbpp.mr_pct)}\\%) & "
@@ -319,7 +386,7 @@ def render_table2(mbpp: DatasetRow) -> str:
         f"{_pct(mbpp.mr_full):>6} & "
         f"{_pct(mbpp.mr_vib):>6} & "
         f"{_pp(mbpp.mr_delta_vib_full):>6} & "
-        f"{_pp(1.59):>6} \\\\"
+        f"{_pp(mbpp.mr_msg_compress):>6} \\\\"
     )
     lines.append(TABLE2_FOOTER)
     return "\n".join(lines)
@@ -518,7 +585,7 @@ def render_table4_sensitivity(sweep: Dict[str, Any]) -> str:
 \caption{One-factor-at-a-time sensitivity to the three interpretable VIB scalars on GSM8K ($N=200$, \texttt{__MODEL__}).
 Each block varies one parameter while the other two stay at the paper defaults
 $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$ (bolded rows); these three bolded rows are the \emph{same}
-configuration, so their agreement is a direct run-to-run noise bound at this $N$.
+configuration, so their spread is a descriptive run-to-run observation at this $N$, not a noise bound.
 Columns: VIB$-$Full Pass@1 $\Delta$pp, inter-agent message reduction, total-token reduction;
 $\Delta$~ok marks rows whose accuracy gap stays within $\pm1$ pp of the mean of the three default repeats.
 \label{tab:sensitivity}}
@@ -539,17 +606,17 @@ $\Delta$~ok marks rows whose accuracy gap stays within $\pm1$ pp of the mean of 
 \end{tabular}}
 \vspace{0.3em}
 \parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}{\sloppy\footnotesize
-\textbf{Interpretation.} VIB accuracy is insensitive to all three scalars: across the %d grid points
-the VIB$-$Full $\Delta$ deviates from the default by at most $%.2f$ pp, so the headline result is not
-an artefact of a lucky hyperparameter choice. Message reduction is governed by the two scalars that
-set how aggressively the gate trades sufficiency against redundancy: $\beta_0$ spans
+\textbf{Interpretation.} Across these %d grid points, the observed
+VIB$-$Full $\Delta$ deviates from the mean default by at most $%.2f$ pp.
+This fixed-subset, one-factor comparison does not establish non-inferiority or joint-parameter robustness.
+Observed message reduction varies across the gate settings: $\beta_0$ spans
 $%.1f$\%%--$%.1f$\%% (%s as it grows) and $\gamma$ spans $%.1f$\%%--$%.1f$\%% (%s), whereas
-$\lambda$ shifts it only over $%.1f$\%%--$%.1f$\%% across a threefold range. Because accuracy is
-flat throughout, either $\beta_0$ or $\gamma$ serves as a deployment dial for the sparsity/cost
-budget; we keep the defaults $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$ used in all main results
-and leave per-budget retuning to future work. The three bolded default rows are the \emph{same}
-configuration and agree to within $%.2f$ pp in $\Delta$ and $%.2f$ pp in message reduction --- a
-direct run-to-run noise bound at $N=200$.}""" % (
+$\lambda$ shifts it over $%.1f$\%%--$%.1f$\%% across a threefold range.
+We retain the main defaults $\beta_0=3.2$, $\lambda=0.08$, $\gamma=-0.4$;
+deployment calibration requires independent tasks and complete cost accounting.
+The three bolded rows repeat the \emph{same} configuration and show ranges of
+$%.2f$ pp in $\Delta$ and $%.2f$ pp in message reduction.
+These three executions are not a confidence bound on future runs.}""" % (
             len(rows), max_dev_delta,
             min(beta_msg), max(beta_msg), _monotone(beta_msg),
             min(gamma_msg), max(gamma_msg), _monotone(gamma_msg),
@@ -757,7 +824,8 @@ def preview_table1_plain(rows: List[DatasetRow]):
     print(hdr)
     print("-" * len(hdr))
     for r in rows:
-        star = _star(r.delta_vib_full, r.delta_vib_full_ci, r.mcnemar_p, r.t0_mcnemar_p)
+        star = _star(r.delta_vib_full, r.delta_vib_full_ci, r.mcnemar_p, r.t0_mcnemar_p,
+                     r.t0_delta_vib_full)
         print(f"| {r.label:<15} | {r.total:>5} | {r.vanilla_pass:>7.2f}% | "
               f"{r.full_pass:>7.2f}% {_fmt_ci(*r.full_wilson):>10} | "
               f"{r.vib_pass:>7.2f}% {_fmt_ci(*r.vib_wilson):>10} | "
@@ -766,10 +834,10 @@ def preview_table1_plain(rows: List[DatasetRow]):
               f"{_fmt_ci(*r.delta_vib_full_ci):>18} | "
               f"{r.msg_compress_vib_full:>+6.2f} | {r.token_save_vib_full:>+6.2f} |")
     print("=" * len(hdr))
-    # Print t0 robustness summary
+    # Compare recorded batches without inferring request-level temperature.
     any_t0 = any(r.t0_mcnemar_p is not None for r in rows)
     if any_t0:
-        print("\n── t0 (temperature=0) 稳健性诊断 ──")
+        print("\n── 历史标注 t0 的批次对照（不验证请求温度）──")
         for r in rows:
             if r.t0_mcnemar_p is None:
                 continue
@@ -779,12 +847,13 @@ def preview_table1_plain(rows: List[DatasetRow]):
                      max(r.mcnemar_p, r.t0_mcnemar_p))
             comp_delta = (r.t0_msg_compress - r.msg_compress_vib_full
                           if r.t0_msg_compress is not None else None)
-            sig = _star(r.delta_vib_full, r.delta_vib_full_ci, r.mcnemar_p, r.t0_mcnemar_p)
-            print(f"  · {r.label:<12} Δ(VIB−Full) 采样={r.delta_vib_full:+.2f}pp / t0={r.t0_delta_vib_full:+.2f}pp  "
+            sig = _star(r.delta_vib_full, r.delta_vib_full_ci, r.mcnemar_p, r.t0_mcnemar_p,
+                        r.t0_delta_vib_full)
+            print(f"  · {r.label:<12} Δ(VIB−Full) 主批次={r.delta_vib_full:+.2f}pp / t0文件={r.t0_delta_vib_full:+.2f}pp  "
                   f"range=[{delta_rng[0]:+.2f},{delta_rng[1]:+.2f}]  "
                   f"McNemar p range=[{p_rng[0]:.4f},{p_rng[1]:.4f}]  "
                   f"marker={sig if sig else '(无)'}  "
-                  f"compress Δ(t0−sampling)={'—' if comp_delta is None else f'{comp_delta:+.2f}pp'}")
+                  f"compress Δ(t0−main)={'—' if comp_delta is None else f'{comp_delta:+.2f}pp'}")
 
 
 # ---------------------------------------------------------------
@@ -793,17 +862,17 @@ def preview_table1_plain(rows: List[DatasetRow]):
 
 def main():
     p = argparse.ArgumentParser(description="Export VIB-Sparse paper LaTeX tables from result JSONs")
-    p.add_argument("--vanilla", default="results/vanilla_with_math_merged.json")
-    p.add_argument("--main", default="results/main_with_math_merged.codeeval_fixed.json",
+    p.add_argument("--vanilla", default="results/vanilla_with_math_merged.matheval_fixed.json")
+    p.add_argument("--main", default="results/main_with_math_merged.codeeval_fixed.matheval_fixed.json",
                    help="主结果 JSON；默认使用 scripts/recompute_code_eval.py 修正过"
                         "代码基准通过标记的产物（原始文件保持只读）")
     p.add_argument("--ablfrozen", default="results/gsm8k_ablation_frozen_only.json")
     p.add_argument("--ablrole", default="results/gsm8k_ablation_frozen_plus_role.json")
     p.add_argument("--outdir", default="paper/tables")
-    p.add_argument("--t0-math", default="results/math_main_5000_t0_v2.json",
-                   help="MATH temperature=0 重跑结果 JSON (含 summary.math)，用于稳健显著性标注")
+    p.add_argument("--t0-math", default="results/math_main_5000_t0_v2.matheval_fixed.json",
+                   help="历史标注 t0 的 MATH 重跑，仅作批次描述，不验证请求温度")
     p.add_argument("--t0-gsm8k", default="results/gsm8k_main_1319_t0.json",
-                   help="GSM8K temperature=0 重跑结果 JSON (含 summary.gsm8k)，用于稳健显著性标注")
+                   help="历史标注 t0 的 GSM8K 重跑，仅作批次描述，不验证请求温度")
     p.add_argument("--crossmodel", default="results/paper_improvement_crossmodel_qwen3_gsm8k_n200.json",
                    help="Table 5: 跨族模型 GSM8K N=200 结果 (Qwen-3.8-Max)")
     p.add_argument("--crossmodel-ref", default="results/sweep_gateway_v4pro/sweep_beta0_3p2.json",
@@ -840,6 +909,7 @@ def main():
             return t0_gsm8k
         return None
 
+    validate_math_protocol(van, main, t0_math)
     rows = [
         _build_row("humaneval", "HumanEval", van, main, _t0_for("humaneval")),
         _build_row("mbpp", "MBPP", van, main, _t0_for("mbpp")),
@@ -848,12 +918,17 @@ def main():
     if "math" in main.get("summary", {}):
         rows.append(_build_row("math", "MATH", van, main, _t0_for("math")))
 
-    t1 = render_table1(rows)
+    headline_rows = [row for row in rows if row.ds != "mbpp"]
+    mbpp = next(row for row in rows if row.ds == "mbpp")
+    t1 = render_table1(headline_rows)
     (outdir / "table1_main_three_methods.tex").write_text(t1)
-    (outdir / "table2_mbpp_es_mr_split.tex").write_text(render_table2(rows[1]))
+    (outdir / "table1_main_three_methods_zh.tex").write_text(
+        render_table1_chinese(headline_rows))
+    (outdir / "table2_mbpp_es_mr_split.tex").write_text(render_table2(mbpp))
     (outdir / "table3_gsm8k_ablation.tex").write_text(render_table3(abl1, abl2))
     (outdir / "_README.txt").write_text(README)
-    written = ["table1_main_three_methods.tex", "table2_mbpp_es_mr_split.tex",
+    written = ["table1_main_three_methods.tex", "table1_main_three_methods_zh.tex",
+               "table2_mbpp_es_mr_split.tex",
                "table3_gsm8k_ablation.tex"]
 
     # Table 5 is only meaningful as a *matched-config* contrast: the two backbones
@@ -903,7 +978,7 @@ def main():
                 render_table6_gating(gating, gating_p.parent))
             written.append("table6_gating_controls.tex")
 
-    preview_table1_plain(rows)
+    preview_table1_plain(headline_rows)
     print(f"\n✅ 已生成 {len(written)} 张 .tex + 1 README to {outdir.resolve()}:")
     for name in written:
         f = outdir / name
