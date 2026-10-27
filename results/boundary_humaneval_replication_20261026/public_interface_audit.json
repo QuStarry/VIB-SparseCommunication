@@ -1,0 +1,4641 @@
+{
+  "manifest_sha256": "bbf66e99d9ae9059c3ab6e890ac31f54bb61ecf1ec3147f71bb0348ffd985e5e",
+  "requests_sha256": "ff77fb818a9dfe0e35b0ee7f1bc002f726b95e1ac3dd54c960583eef3ed117c2",
+  "sidecar_digests": {
+    "public_semantics_audit.json": "6f2b1c21d175a31e889b308f80f0459b8dd42ece51640d0e6926fe206d19af65",
+    "public_inverse_manifest.json": "c52c4cdc0220d82b952582e1c6beebff82697f5853ff607478a01b38a591b59b",
+    "public_inverse_audit.json": "451ab8f2ceac96e2dae4a8f2ce2abe3bb2436d665375f10192f806d0842b9c81",
+    "public_probe_manifest.json": "e565d17917915a045ceb265a15e30f36d3faf983da0ac9a1558734fecf44eb46",
+    "public_probe_audit.json": "5e3cd193e1bad35cee9cd1d6cde75294d9faf4b571f6c429e913b25cf39563d1"
+  },
+  "runner_sha256": "dfbbc41151575056a2c6c2b3c771179fecf1688221aa837b2ad52043bf46357e",
+  "executor_sha256": "ddfb060b95dc68063f0e7623e2aa6b1ff450515a64787a56c291a59f6df9d965",
+  "wrapper_sha256": "4acb2dd253a0729175dc92ac33ef4ec2bb745ed725569b05001f57de42cc5643",
+  "audit_sha256": "37f2e396e2bde9f856eff7073ad76ae9ff10bd64aee8feee0060b3504578dd76",
+  "api_requests": 0,
+  "complete": true,
+  "coverage": {
+    "total_tasks": 24,
+    "tasks_with_public_declarations": 24,
+    "total_outputs": 192
+  },
+  "public_declarations": {
+    "HumanEval/50": [
+      {
+        "name": "encode_shift",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "s"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "decode_shift",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "s"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/38": [
+      {
+        "name": "encode_cyclic",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "s"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "decode_cyclic",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "s"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/132": [
+      {
+        "name": "is_nested",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "string"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/36": [
+      {
+        "name": "fizz_buzz",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "n"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/144": [
+      {
+        "name": "simplify",
+        "call_shapes": [
+          {
+            "positional_count": 2,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "x",
+              "n"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/98": [
+      {
+        "name": "count_upper",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "s"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/62": [
+      {
+        "name": "derivative",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "xs"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/48": [
+      {
+        "name": "is_palindrome",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "text"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/147": [
+      {
+        "name": "get_max_triples",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "n"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/64": [
+      {
+        "name": "vowels_count",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "s"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/143": [
+      {
+        "name": "words_in_sentence",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "sentence"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/120": [
+      {
+        "name": "maximum",
+        "call_shapes": [
+          {
+            "positional_count": 2,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "arr",
+              "k"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/21": [
+      {
+        "name": "rescale_to_unit",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "numbers"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/92": [
+      {
+        "name": "any_int",
+        "call_shapes": [
+          {
+            "positional_count": 3,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "x",
+              "y",
+              "z"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/86": [
+      {
+        "name": "anti_shuffle",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "s"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/90": [
+      {
+        "name": "next_smallest",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "lst"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/4": [
+      {
+        "name": "mean_absolute_deviation",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "numbers"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/100": [
+      {
+        "name": "make_a_pile",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "n"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/121": [
+      {
+        "name": "solution",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "lst"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/11": [
+      {
+        "name": "string_xor",
+        "call_shapes": [
+          {
+            "positional_count": 2,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "a",
+              "b"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/111": [
+      {
+        "name": "histogram",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "test"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/94": [
+      {
+        "name": "skjkasdkd",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "lst"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/69": [
+      {
+        "name": "search",
+        "call_shapes": [
+          {
+            "positional_count": 1,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "lst"
+            ]
+          }
+        ]
+      }
+    ],
+    "HumanEval/67": [
+      {
+        "name": "fruit_distribution",
+        "call_shapes": [
+          {
+            "positional_count": 2,
+            "keyword_names": []
+          },
+          {
+            "positional_count": 0,
+            "keyword_names": [
+              "s",
+              "n"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "by_policy": {
+    "full": {
+      "code_outputs": 48,
+      "interface_status_counts": {
+        "public_interface_compatible": 48
+      },
+      "benchmark_failed_despite_compatible_interface": 4,
+      "benchmark_passed_with_interface_diagnostic": 0
+    },
+    "first_round": {
+      "code_outputs": 48,
+      "interface_status_counts": {
+        "public_interface_compatible": 48
+      },
+      "benchmark_failed_despite_compatible_interface": 2,
+      "benchmark_passed_with_interface_diagnostic": 0
+    },
+    "first_round_control": {
+      "code_outputs": 48,
+      "interface_status_counts": {
+        "public_interface_compatible": 47,
+        "public_symbol_missing": 1
+      },
+      "benchmark_failed_despite_compatible_interface": 2,
+      "benchmark_passed_with_interface_diagnostic": 0
+    },
+    "direct": {
+      "code_outputs": 48,
+      "interface_status_counts": {
+        "public_interface_compatible": 48
+      },
+      "benchmark_failed_despite_compatible_interface": 2,
+      "benchmark_passed_with_interface_diagnostic": 0
+    }
+  },
+  "outputs": [
+    {
+      "request_id": "0001eb6b09fccf67f0722f6ac49aa05f12baf70cd2d312fb9140a2f340a32bad",
+      "task_id": "HumanEval/132",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_nested",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "01ea1e41b37edc9b382c753e9fe8389bf5bedeae40741f77fe403c89160a779f",
+      "task_id": "HumanEval/92",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "any_int",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "021103c36215b3b603c435d5452413d71da2069ddd90dfbfb5056dfa13876f1d",
+      "task_id": "HumanEval/4",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "mean_absolute_deviation",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "029c1ba735bf0ae1346ad5a9527921ffde5aec734555e2f31879f7e009e3ebcc",
+      "task_id": "HumanEval/69",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "search",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "03b5a3adb926ab22548b60b44be5975d71d0708e2fb80249be6c0d5430a283e5",
+      "task_id": "HumanEval/38",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "03ffd67c91d6f2578d7117ce6ffc091774f3bdc52e699dfbf3d8913ead0fdf06",
+      "task_id": "HumanEval/120",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "maximum",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "05171278e2f483f334ff358f8534bf16f9a9a686c0c0d6742ec3f194d0ae7421",
+      "task_id": "HumanEval/36",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fizz_buzz",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "0566fdb360590f9d2f68c298b14fb688dcfa242199b3c01181c0fe3d68da916e",
+      "task_id": "HumanEval/38",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "07513320d58ad4a1e1bd3967dd5bf4f4b48497d50255ae794f74ea84fd603244",
+      "task_id": "HumanEval/90",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "next_smallest",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "08a384fb18e807215a6d312f17ea75de715edeca9143919a95636e75a51fa169",
+      "task_id": "HumanEval/111",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "histogram",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "0c2f1ca6860b5f65597815951f1304464a80b3a40ce5de42e272b61554fe5adc",
+      "task_id": "HumanEval/62",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "derivative",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "0d3cc74b8fc9581607d0e350d5dffd878afbcc1974e62461fd29092929977a1c",
+      "task_id": "HumanEval/121",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "solution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "0dc83a878a7811b358719c5fb4a5bf34257c7939ba7e17acc9d501b5ee4824c0",
+      "task_id": "HumanEval/121",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "solution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "0df4956c90ec5fa347d115a59e8782f61dc28f2d7752a125f34aee318def937d",
+      "task_id": "HumanEval/64",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "vowels_count",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "0f6bd8cf19961c8b228cafec9b2d384b55056d9f796f194fb2f4846bf9e9e521",
+      "task_id": "HumanEval/147",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "get_max_triples",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "1020c2fd52df45e387f7fe95296ab2012296aea1d6e34bf2d02fd146b1082eee",
+      "task_id": "HumanEval/86",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "anti_shuffle",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "10e030a0bee010a52dca13561745cac0424dea8ea74e76c022e151b8c815fa9f",
+      "task_id": "HumanEval/147",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "get_max_triples",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "11a9b9cfa3f22c9aaf69e25b1f991d9713ee2ba0a5361a4e313b2b6159516c00",
+      "task_id": "HumanEval/21",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "rescale_to_unit",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "124b012630bc2c3c45f3f234de7af66c7b5a34c92d3b2098ac95170551c1c7f4",
+      "task_id": "HumanEval/48",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_palindrome",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "13a877e1c223da6a77f270a62ef7d0663df22fdc24b5d944ce9074d9af460e5a",
+      "task_id": "HumanEval/4",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "mean_absolute_deviation",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "13bf13bd32c5f2cdc785cb94d64337c824222974c45f2924ea94e83040fb3532",
+      "task_id": "HumanEval/48",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_palindrome",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "142a1fbed26adb5307cb6c11b463fef79c11ce92086469f0a614dd885aeef5ac",
+      "task_id": "HumanEval/120",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "maximum",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "172372446e93ff6d83fb9fc1ce29a55aec902d6f5599dba5003408e70b23330c",
+      "task_id": "HumanEval/36",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fizz_buzz",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "173fff5acee5c2f0375fc43d13ea7d17f136a3e45a3c5c0840f328a1987a136c",
+      "task_id": "HumanEval/90",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "next_smallest",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "17d4f2530bc3dd4ab0b1e6021a9cc7a007f8206ee09725242438815378c0117f",
+      "task_id": "HumanEval/100",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "make_a_pile",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "17fbc5cf400db226d3184593f435f27fa35b1f4f0f5e2b9764d2650420e462a2",
+      "task_id": "HumanEval/64",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "vowels_count",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "180051e57fce562ff1b2fcc08092d699d579481c81ae5f5baaf0452c2126c621",
+      "task_id": "HumanEval/98",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "count_upper",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "1820601e598ed1c30c5eb7ddc3273e71714298792ff09b5339f484d9e359b513",
+      "task_id": "HumanEval/38",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "1a1bce8d14a0d0112a092885e6fcc84ffe60e1e51f3683d262758ead22e62795",
+      "task_id": "HumanEval/111",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "histogram",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "1a3d0adfac3b5eba7dfea4f422c6d2c63509686a242640ccdae2d35603e9250a",
+      "task_id": "HumanEval/111",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "histogram",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "1b358cb048ba5c831ab08ff276caa47bf263ba8df9909bdadfdc5b841ba73462",
+      "task_id": "HumanEval/132",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_nested",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "1d8331601a82e89b0088e40519d187f6cefae18982b8b1c33a0f15f752aed1e1",
+      "task_id": "HumanEval/144",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "simplify",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "220df093ae3e9db49016f9a607533130874abf960854ccc58448f869130f2765",
+      "task_id": "HumanEval/4",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "mean_absolute_deviation",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "2593bd71df93d927620d31bba830d78e2cae7f4d4ece5bb76c261571dd50ceef",
+      "task_id": "HumanEval/98",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "count_upper",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "26a380d8d0687cbe93b3c022a907adf8b9c93625e18578c0a9bc5c03294a555d",
+      "task_id": "HumanEval/120",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "maximum",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "279fce0899760eede781bc2e30e46f6ed827b152608a4e1a4fa5d0ee22955cf0",
+      "task_id": "HumanEval/38",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "285218897d6e6c349a378cbf316d72b53125fd990d7d25707f45ae3f18a0249d",
+      "task_id": "HumanEval/36",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fizz_buzz",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "2bfe043402313494f49c3f3277a65b13ba09c085911f933869aaeb8efd9770fd",
+      "task_id": "HumanEval/100",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "make_a_pile",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "2cce8f26dbc2901b4ec846c06d1a5048214f8b3ca37b9aef342c2be114947b9b",
+      "task_id": "HumanEval/36",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fizz_buzz",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "2f25f60a8742ed239f02ce539727f2e4b52c969a04b9b04698d5486a562fdd4b",
+      "task_id": "HumanEval/92",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "any_int",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "2f5835c43d973d03d59ec1e8cc6bf60645a54b8f4be413c78959e2fba31572df",
+      "task_id": "HumanEval/121",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "solution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3014872e3023f7ebbfa3b5f7f0eb0c0483ad8dd50eec97d9f5f5b93ec361e5fa",
+      "task_id": "HumanEval/90",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "next_smallest",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3067f827d5b88c9266ad8ba46d2013a3024cca2834edd59f65fbe656ab9b04db",
+      "task_id": "HumanEval/64",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "vowels_count",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "31a9891122a7d65dcee9f1764cf4e0fa1dca0d0ed5a41d532e481b8d08c04e14",
+      "task_id": "HumanEval/4",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "mean_absolute_deviation",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "322813f0929a59c52253e54eeee55b1d62d46961c58448b746e14d11782ef30f",
+      "task_id": "HumanEval/50",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "32b90cbea35c43e28fb79a48028bb9fa484cf1e3c3a9cf4fcc5a203f6d5a3c69",
+      "task_id": "HumanEval/98",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "count_upper",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "33324fde8e76c8e306f8ce62ee5d59f61d0f38228389732099326602931a8293",
+      "task_id": "HumanEval/92",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "any_int",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3401ad68de07a81e98c13246028addc19e206bf3c1a668d50710b9cc45ea9066",
+      "task_id": "HumanEval/132",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_nested",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "34ddffc836ba8e08cc9790fabea92a8a9176310fda1d1883fa0ad554b5af2930",
+      "task_id": "HumanEval/121",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "solution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3685dc2588a6daf1c1d92645569619b5c5b545d4fc7fbe196d252797b6fd4510",
+      "task_id": "HumanEval/111",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "histogram",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "39b3c865cbb7e72cc69272c6b15fd923f22f6094b35bbf3b76a03a9a9dac91c7",
+      "task_id": "HumanEval/144",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "simplify",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "39db266ffd4c96689b12fac863c6491abdb896c9730354e686fd426877c4a697",
+      "task_id": "HumanEval/111",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "histogram",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3a5d1238b2c17f0908b0af18afcade4e953ddc6d165ded1ddc5d7e6d70ba7940",
+      "task_id": "HumanEval/50",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3d748db517cf37df53c7628978a39e3e7b3da02dbcb67dd0182d1d362e2e8f18",
+      "task_id": "HumanEval/38",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3d7eae7e8613075e7324b6bd496f610b1a6e2da04513d4e5f98bfc82f745b8c3",
+      "task_id": "HumanEval/132",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_nested",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "3d801162ec0d4d9ee26b926ed3cb084aa14fa5e27784a9d513c2a508e54c2d94",
+      "task_id": "HumanEval/98",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "count_upper",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3da6698547441a1da9473e334e0d05860f22d4a3091463fcbee14d437092c7e4",
+      "task_id": "HumanEval/69",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "search",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3e3eec00fd552520b63c8daa9e57e0a2839a982f88f1627a875aa23cee654e7a",
+      "task_id": "HumanEval/4",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "mean_absolute_deviation",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3e7cbc8468e6d28e9503aaf7d6399ba4850885fb461725e31dc5b54c3764e9f2",
+      "task_id": "HumanEval/62",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "derivative",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3f89ae1e21a11b51cb8a40cd1ab2d5c20cc1fd71ce760f4a63b1ad5e59118804",
+      "task_id": "HumanEval/143",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "words_in_sentence",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "3fbd85a480f315abb6e15ce31bf9c9d30ecd90f01b2b984b7ee5e02e398c867c",
+      "task_id": "HumanEval/11",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "string_xor",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "40f7a68cf842802a3b00cfbd7aa267baadbe999c1c6836bdc5c31928776754bc",
+      "task_id": "HumanEval/144",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "simplify",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "4460d308f468a3719c2f87ab8daf530bbba3eaab60a40a88bdb1f0345473b8f7",
+      "task_id": "HumanEval/94",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "skjkasdkd",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "44ff82a810441bc2e063a7dedf56d22e9abc978d841c6d3768cea54667703d68",
+      "task_id": "HumanEval/100",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "make_a_pile",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "486c6620fdf7d81b4d9fd3762cd9cbb286ca79ad4a18ba55d0446a7cfe8cd6e8",
+      "task_id": "HumanEval/92",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "any_int",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "48e38f0bb8a7c3b9b6b37a43954bba12201d7ecb3b56494508ae9ba81a719036",
+      "task_id": "HumanEval/36",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fizz_buzz",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "49aab1e696bf295c5d1116261c5678157316d9e7db1e34803729b454be866f83",
+      "task_id": "HumanEval/92",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "any_int",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "4d2b9c7049372af16e19a30b2b5c5e78d7ac400294861aa892a9d6628de7c399",
+      "task_id": "HumanEval/86",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "anti_shuffle",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "4da6d2b8bb6c348b9b9a6a12cbdb3d17046250487a74e5cbe06f91d4a52934d9",
+      "task_id": "HumanEval/11",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "string_xor",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "4db2fee4b52715a5a99005746e904893e653ad047667389a939c67849148c181",
+      "task_id": "HumanEval/48",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_palindrome",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "4e60db3bc26b6353063e73726fe30a87f1236f68127a44d4525d641a50e9d993",
+      "task_id": "HumanEval/86",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "anti_shuffle",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "5036689afaf6db59fb54b4f4b08ca359986e9ff03f0bb1db829090a56090b759",
+      "task_id": "HumanEval/143",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "words_in_sentence",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "5122cd747e616c67911b8adbac78298fd816b7ab89985fbab9230a7d06f68261",
+      "task_id": "HumanEval/21",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "rescale_to_unit",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "542c514dac1acd36a1359f18b3e18d9386bedec34d8d88491fbd6cb5e4d8cbf3",
+      "task_id": "HumanEval/69",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "search",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "55afedc3d9979a9794999cfa11ec411f0ab0b6149b397d59f47cee5c08ea6722",
+      "task_id": "HumanEval/48",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_palindrome",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "56ee9dbff7e2eb59fa91885d360e90dc8f94b948f936aa432e3fdc2d9ef6d56b",
+      "task_id": "HumanEval/100",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "make_a_pile",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "59099b94babd848033b34c80fa9543fe8a111394fe4763af72803e3794fc7781",
+      "task_id": "HumanEval/111",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "histogram",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "59b461931c03c3528e38f5f18b91c5c17a94bd5aefbec14911aaa074cddb3977",
+      "task_id": "HumanEval/86",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "anti_shuffle",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "5aef73eb3d214276ae32d3c735122b62e6361a398521ca26ddfe27af822d58b2",
+      "task_id": "HumanEval/98",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "count_upper",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "618d6462d7f31c3f16ffae9785083b3d5f6640eb112b09999572fefcde5786af",
+      "task_id": "HumanEval/147",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "get_max_triples",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "639fcc1a2cc007a348c62a0fb2780b7a1b67e8fc0381e2a1be0b4deec20d4238",
+      "task_id": "HumanEval/69",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "search",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "64ac5b19c59048eaa9a78dc9cb71129a81fca7754d959439af6541bf918e511f",
+      "task_id": "HumanEval/144",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "simplify",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "64fff67c48ed0daa011b5e762e067e3d0eb965379431f9c5a48c2ef5a4c5ba69",
+      "task_id": "HumanEval/62",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "derivative",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "65057cde4fd40488e1aba7137996a3550c1c9abf9ba5f1ed8128109f79215c43",
+      "task_id": "HumanEval/144",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "simplify",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "65c0fa54631d693fa9913509aa57506e82851d4d68d1723688c29d02e9d3dc98",
+      "task_id": "HumanEval/98",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "count_upper",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "663af843a9fdd431dc5a802ee9c4a8f087f7812eff34b72b09113f338811a8ae",
+      "task_id": "HumanEval/147",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "get_max_triples",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "663ca1b477fefc24218c06fcab18744465ed913395b9f5c8b946f8880fc40987",
+      "task_id": "HumanEval/11",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "string_xor",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "67d3c192746b958f323b576c5025d07bc45fd148ad4e4b1632997a92f0b67d9f",
+      "task_id": "HumanEval/62",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "derivative",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "6cbd1347ae53c3ec243d79440c75f646f2c3e7eb869fe18dfc81f9296ff7fbdb",
+      "task_id": "HumanEval/92",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "any_int",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "6fa41910faa500f042507b08f51d618584188a541684fc0b1cef8a53cee40ad4",
+      "task_id": "HumanEval/144",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "simplify",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "70cc098a185bf7c4c7342f5c19d712aab154a030950241c86997084def5b3f6c",
+      "task_id": "HumanEval/111",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "histogram",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "7203ebf90713e419730096ceff81e3848ab2acfb0653012fe32d23c0a6a54c68",
+      "task_id": "HumanEval/38",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "750553b9d7b2827dc7ee987e6aabbee0f5864c7fc6dcfcea2714b59089151d47",
+      "task_id": "HumanEval/50",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "76662500f667a8de554a2fed7fadb671d0d6a57951c09314bb5cd14479b59cd5",
+      "task_id": "HumanEval/4",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "mean_absolute_deviation",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "784b03bd6b6a13dd1fff124fdd45caaf5f4f42baadee97c5c51e9853739ea8f2",
+      "task_id": "HumanEval/144",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "simplify",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "78b0961ec35da44ca78da96765f864bc90fc0689147e2baec4dd859cf5b34be5",
+      "task_id": "HumanEval/86",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "anti_shuffle",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "79355a1f1f7b176e70cf659af3b24a104cc8f912529b0949e3410d826722d31d",
+      "task_id": "HumanEval/67",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fruit_distribution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "7bcd627086d1dab2b11838ce4851e6ecd951f8bb2a2c3493c2887e7bd2630564",
+      "task_id": "HumanEval/11",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "string_xor",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "7d337e37a16311a50b5de032902ac3d7a1adf488d351213756b58713a7280d0b",
+      "task_id": "HumanEval/4",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "mean_absolute_deviation",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "7d472b94eb05a28f4705881aaf586689e93ed10fd5a35a1fb9869b2ea4ed82e8",
+      "task_id": "HumanEval/147",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "get_max_triples",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "7d958c0174ac0d23a0ca059650334d074665b48de742f8fb6017cbf56e93a139",
+      "task_id": "HumanEval/36",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fizz_buzz",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "7db6014b05fcc1907aa10dd87823669f586064373ca780c77f767cccd06cb0bc",
+      "task_id": "HumanEval/120",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "maximum",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "7fb12b30cb452f55cb41af2c656f3185572b7c3638cf20d5716d565f2b0105aa",
+      "task_id": "HumanEval/11",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "string_xor",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "8042e7ef9e1717827c7c63860516260a155d91493a11a9302c75a209c0f7aee2",
+      "task_id": "HumanEval/132",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_nested",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "813fbe3640ce9d15e336c2e6eeda996fabd00a5c04d3b4cf57083930ee7de7f4",
+      "task_id": "HumanEval/94",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "skjkasdkd",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "839fea4e43498d2311681df5c6da9ad350dccccd387749368977e54258e17761",
+      "task_id": "HumanEval/67",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fruit_distribution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "852cf31f4f34898f104593829f58d953f56f2594bf3ad254b9282ee9df68c53d",
+      "task_id": "HumanEval/86",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "anti_shuffle",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "870a605c36ef6377f8cbf4298ac3f3086c7b38358e3e83a1e9865b0de452787e",
+      "task_id": "HumanEval/11",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "string_xor",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "8a6a683e2239ed7e23d8bf2cfbd0d1ad101c7ca95ab4782a3131de8de1331d81",
+      "task_id": "HumanEval/21",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "rescale_to_unit",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "8bc177b5d2e47dffafba93f3fe1d0172456ac7870a342ba1e74cb76eb98140a8",
+      "task_id": "HumanEval/92",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "any_int",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "8d70e289e05b0622cc1c700f9d6ed8a366520c258b58cdd9e864d2bab7f13035",
+      "task_id": "HumanEval/144",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "simplify",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "8dcc64c60f4db2e5980ce2f5140328ddd1fa3f6efecb190ad8c94f1a96377902",
+      "task_id": "HumanEval/67",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fruit_distribution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "8ef6d6ed25207aa7a0b8c23970c909641cfb790acadfffe8eb5dd41d6a485384",
+      "task_id": "HumanEval/36",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fizz_buzz",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "917fd2abc62a5612d4352112a1ae6f1a4a8637614ed2ef23287f53116fe7416a",
+      "task_id": "HumanEval/98",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "count_upper",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "93b91d030eacc7ee103ec03e68418b2252cb0176fefe8759054cd53868f7aa33",
+      "task_id": "HumanEval/111",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "histogram",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "95141d1d32adf84658a57bd9e21a053a131348e6983600f32839ee0cd7e1b06b",
+      "task_id": "HumanEval/21",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "rescale_to_unit",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "971ddecbdb4f1c2121d6374211ae940ab06439efa9d3f43734ad933190478e98",
+      "task_id": "HumanEval/94",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "skjkasdkd",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "98e0215969ca28ffdf98b78c9f08acfeca9388cdfb823b7c4d6154d6c7630fc0",
+      "task_id": "HumanEval/94",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "skjkasdkd",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "99507008287cb0d6e81ea7952863a5b47bd596480238fd3015286d2ccf70f0dc",
+      "task_id": "HumanEval/94",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "skjkasdkd",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "9b85cb52d4a60b90e6ac4bb9c4138d3b1eb2981d7366c71af3f243c1bf6d7807",
+      "task_id": "HumanEval/132",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_nested",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "9bd3314d19c16d5ec529968ec823b1ef05a3dcdba3dd2d5c560acfe84a816055",
+      "task_id": "HumanEval/143",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "words_in_sentence",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "9c36c2d9cdbfda2118688f4897df98bec8c73d541f1f6ecab7798318726840b0",
+      "task_id": "HumanEval/62",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "derivative",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "9d453812e6c8cedf6c58f17982aead6784c8267a01945baff4ba3d816cb5efba",
+      "task_id": "HumanEval/50",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "9d54c28554be3fee0632fab432d956976c79ad6ee7d24e85667b69cfb8770b87",
+      "task_id": "HumanEval/98",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "count_upper",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "9dfcb87f279da5b73f509f55ae7dc896803915f4c1a91fe1276d7b5faa3b2b66",
+      "task_id": "HumanEval/48",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_palindrome",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "9e96b42c24057caba3c4bf01acf782d0a5b10e503969f17a7bf59809333d50ab",
+      "task_id": "HumanEval/62",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "derivative",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a04588fb08b343f0be7e9be22d7db87ceae51764ea6cd2adfc751f20dad757bf",
+      "task_id": "HumanEval/64",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "vowels_count",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a09f6ba66230e45699c33dd88b8da3bd147f3ecfd38b2e5a7603d15efe5ee094",
+      "task_id": "HumanEval/48",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_palindrome",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a17383e07e3ec5f0eedc12f5b7b0cad6f12840e909ba573560312361e2ab49a4",
+      "task_id": "HumanEval/36",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fizz_buzz",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a348e6b588602a142bc82a6fd79496cf2efc5f6096795a4057b1a0de0b7293ac",
+      "task_id": "HumanEval/120",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "maximum",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a6d0451614101f396c3eb6009579113dcbf2ae5ba0966f4c11c62cd8eaa6f60b",
+      "task_id": "HumanEval/64",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "vowels_count",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a6fb89a714760321f4f4d0cef430628c656fcbcfb4b137794f204c341055c60f",
+      "task_id": "HumanEval/67",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fruit_distribution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a8108407628c941ada559972462c4c1edddcbf3b318ce6760c21f7ec081f9738",
+      "task_id": "HumanEval/147",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "get_max_triples",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a8280955f47fb0e6bd91747874dc8ce760da28ebfcd959f7412daa7b1124e589",
+      "task_id": "HumanEval/143",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "words_in_sentence",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "a9591de2f50a4a0f5ab9adf70d86b4f76fea305dbe2b98ea0dd46e0bf9e74bcd",
+      "task_id": "HumanEval/11",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "string_xor",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "abad08b31770e13edff3d538383bbacd7bfbff14bf0fdc9a315b6a5a227c7182",
+      "task_id": "HumanEval/121",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "solution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ac5aa0235f15233d13f96a77e5abcc3ac7fde7f1373425c0ffc3436087e23f30",
+      "task_id": "HumanEval/94",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "skjkasdkd",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "aea2024d266883bcfd59d3a7d99168def5bdf28e0ba0559d4881291d583ef7e1",
+      "task_id": "HumanEval/64",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "vowels_count",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "aea2aa6c5493c266d7af320ebd2c894758e69e915c36dda72a7a2585e9b51cbf",
+      "task_id": "HumanEval/121",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "solution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "afaefdfb3d5a557acb9c47620fa852af8d5bae884a0a6ae5b7f2ff0eafa3973b",
+      "task_id": "HumanEval/69",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "search",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b060777366690395367d58c38cfdef02168bff007c7ee6731821179a5b838ee3",
+      "task_id": "HumanEval/67",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fruit_distribution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b11f975e09a144d783935bf079396506f77bff85374bbb8ca62abca70e0f95b6",
+      "task_id": "HumanEval/48",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_palindrome",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b1bb755cf3bff8242561a2d30aa20058d7fef354fa217276ec806b5901409345",
+      "task_id": "HumanEval/38",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b321748acab1bda9a17e20ac674996026665c9fdda29b7c7b74e1a42e53850e6",
+      "task_id": "HumanEval/21",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "rescale_to_unit",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b480223dea5b98d9629a7577db986ebcc4b5e8751811160c1c74138fbed5b1e6",
+      "task_id": "HumanEval/64",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "vowels_count",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b5e52b5856e8ffe2bb45825a26479fd06a2b7cfc0804aed502bc856b6c901976",
+      "task_id": "HumanEval/69",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "search",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b667064968f6ea4a87ae78d94b72c7a1aa362ffa65231d89c8d934c8e7ee308f",
+      "task_id": "HumanEval/67",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fruit_distribution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b6efa7a1d832179bcb1622c0ef7763c01e3169a31c08c75e9611f35f300da43a",
+      "task_id": "HumanEval/100",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "make_a_pile",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b751186b84c90b5c48328fad47c3a2aa41a46618268ec0fa526471a5ee31dd54",
+      "task_id": "HumanEval/21",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "rescale_to_unit",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b774fa863b68fec466877e33dd84f66879ca22509ec3b1cda73fd4ccdf7c5148",
+      "task_id": "HumanEval/132",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_nested",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "b7adb08d3920ff9031d7f9196e249e0f83ef8fb5bcf8725508938b09d8672ce5",
+      "task_id": "HumanEval/11",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "string_xor",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "b8d310db7f40da901b97adcf2f17eec26828f235b14bd6d0b7b4919056c07c0a",
+      "task_id": "HumanEval/143",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "words_in_sentence",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ba3173d42c2d27d3059ac6d75315e479210fccf748e955b0385a7575867e3708",
+      "task_id": "HumanEval/21",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "rescale_to_unit",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ba3d940ff4cba495d0cb191a0b62ec0c8f5f3c90ffd753e97bfcd9e5f4845f43",
+      "task_id": "HumanEval/132",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_nested",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "ba54fb9b3afc7f47dcc50c7b1ab8ebed70ebfa0a1b637d3c83144e5b9ac7b672",
+      "task_id": "HumanEval/147",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "get_max_triples",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "bd31bfb5c727350662c3183bd5b8a677edd0c143a19cb098ebef81ad8fb950e7",
+      "task_id": "HumanEval/4",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "mean_absolute_deviation",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "bdb8a4b5c5a0b51f52bbf01bcde2827282e1586a7ddbcd55931d70dc4933a18f",
+      "task_id": "HumanEval/90",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "next_smallest",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "c13faf10e550b9d4c4d8ab3381d79d799e0476d34648893f40fb4ba31302d682",
+      "task_id": "HumanEval/48",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "is_palindrome",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "c1520f10856507afd4a352d5003c8dff83bdc434d4392de36b4d4003db236704",
+      "task_id": "HumanEval/62",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "derivative",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "c5a69f48d5398bd3d164dda2f080fe5ac289a361bc087c207205b4366b27addf",
+      "task_id": "HumanEval/62",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "derivative",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "c5f17813b7da9ef5a312eecf75af586dbdcfe2ede516da2e2682f866855e51b1",
+      "task_id": "HumanEval/100",
+      "policy": "full",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "make_a_pile",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "c62a9502e99d94ce5849122b26c019a5803c6bfdaa946fb7c50c5f36c0ba88ef",
+      "task_id": "HumanEval/143",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "words_in_sentence",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "c6696f1e4bfd3a02bef3f2349a2950aa860d0d4cdc6270287b2a25b9ded72bf8",
+      "task_id": "HumanEval/67",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fruit_distribution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "c8a3e971d9f526de4717e0a7d69e65f9baaae80765a9b0e4854896acf4b4f96b",
+      "task_id": "HumanEval/67",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "fruit_distribution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "cd55a9fd111caf1579f3cbb92b5076b68593221d8fbc74991b9397f274a7e8e0",
+      "task_id": "HumanEval/147",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "get_max_triples",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "ce0535194110eacf48ff977ff87907234508cfc0a7c077cc7b906cbfbbbe63d2",
+      "task_id": "HumanEval/90",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "next_smallest",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ce55a969accd4d6f170e69eba7cf6b747743a55f316cfdd102844df55e17485a",
+      "task_id": "HumanEval/50",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "d4dd169e24cfc6c991516002adf74e686bfe040fcfcd7e45b95e2fb54b8e7a65",
+      "task_id": "HumanEval/121",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "solution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "d51d879da4a4bd662b3c9742a4098be16c122b41de03a959f3b327df5def1fa9",
+      "task_id": "HumanEval/69",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "search",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "d6965b1f92b994c36cc3ab4b6570c45b6d1475a6d72a654988c682165999862a",
+      "task_id": "HumanEval/86",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "anti_shuffle",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "d963162bfd97e178d7d2d5148f77a00ef150594b7c467b03382418bf67b7e3b4",
+      "task_id": "HumanEval/94",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "skjkasdkd",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "de5f2b590589cdef257c11e219b0badcad3b1ae38675968a456d085542705623",
+      "task_id": "HumanEval/120",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "maximum",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "e038dd9b1c0aa471cb98632ebff4e6b9c7820fd5f75ab792d98247f2b2fa2e5c",
+      "task_id": "HumanEval/94",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "skjkasdkd",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "e607664dac2352963c5d0e0cc0a9bda786c8c2944fd5c7400f37db222796d56f",
+      "task_id": "HumanEval/92",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "any_int",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ea2d891867c225a42eec847e49226dcf3a92f1736153a7a26189324fece99edf",
+      "task_id": "HumanEval/50",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ebf5bc5783ca409b7cff540f7213be248521910f6f1b4f2989d5b96f09155e06",
+      "task_id": "HumanEval/100",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "make_a_pile",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ee3bf8f3c0623b819ca2ea613e4edfa1ac217c2a561b754a66603eb44cf503c8",
+      "task_id": "HumanEval/143",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "words_in_sentence",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ef2e4f6f2a9cda067c2a7d0c6413c98bb9dd9da9626a4eb690dfcc02a4d98c92",
+      "task_id": "HumanEval/120",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "maximum",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "efb8c97f344548f07f34729185b599ee980f8478aee0ecba731ae6b5e789655b",
+      "task_id": "HumanEval/143",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "words_in_sentence",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "efc749fc8017d15b614f079092389cb3c7249df3d9fcce7e9bbf7b631931758e",
+      "task_id": "HumanEval/100",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "make_a_pile",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "f5bb8b499b576baa6c8d07f77bdf7d422c78975aa243d5b140a567351c3c6246",
+      "task_id": "HumanEval/50",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "f63cb0448fcea184bf48a08a8a7b7e5b5febbbc08c4ef5d9d851bfa5f1b2e616",
+      "task_id": "HumanEval/120",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "maximum",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "f6f8cdf4d248d6a2f4357073815937983b9e4d82d38f7ffb4d119e6859b9a5ef",
+      "task_id": "HumanEval/50",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "encode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          },
+          {
+            "name": "decode_shift",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "f89135e2f1de554713042ac1774f029073219f7733be409e5409b45c73c258d1",
+      "task_id": "HumanEval/21",
+      "policy": "direct",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "rescale_to_unit",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "f89981706703a6f0e415b0ae71a3a6d47b2ca5410bb638150c61d1cb6a8f0759",
+      "task_id": "HumanEval/90",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "next_smallest",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "fd026f933b137f6224b9654aab8ecfd2334e30229336c14f03f64f3e9463518f",
+      "task_id": "HumanEval/38",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "interface": {
+        "status": "public_symbol_missing",
+        "symbols": [
+          {
+            "name": "encode_cyclic",
+            "status": "missing_or_noncallable"
+          },
+          {
+            "name": "decode_cyclic",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_inverse",
+          "status": "checks_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": false
+    },
+    {
+      "request_id": "fd432bb158a9a7c1821d9f21274672ba6acecbd072287a9f900fe1dd95dd6c0e",
+      "task_id": "HumanEval/121",
+      "policy": "full",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "solution",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "fd819442bad8668e1e45aec6909769ded1783f203c03db0b78bab313bdc7f131",
+      "task_id": "HumanEval/64",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "vowels_count",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [
+        {
+          "source": "public_semantics",
+          "status": "examples_satisfied"
+        }
+      ],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "fd8627bbbd8b3aa9a9f9afdc262d955ab13ea654feaa8ee1001d9736fe894b9b",
+      "task_id": "HumanEval/90",
+      "policy": "direct",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "next_smallest",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "fe69d1e78db229630c1f080a06da622c37c3b61d198c5d1c7d56d1a6fbf9f5e2",
+      "task_id": "HumanEval/69",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "search",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ffd2249c4ec030b40ae4c155ab993a25b57bcb6c593e86ce6d65cd2bc52aaaba",
+      "task_id": "HumanEval/86",
+      "policy": "first_round",
+      "repeat": 1,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "anti_shuffle",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    },
+    {
+      "request_id": "ffee21d10568faff249aefcfd522c6535c999da95df4e4eacb2d6d6cc9f928fc",
+      "task_id": "HumanEval/90",
+      "policy": "first_round",
+      "repeat": 0,
+      "interface": {
+        "status": "public_interface_compatible",
+        "symbols": [
+          {
+            "name": "next_smallest",
+            "status": "compatible",
+            "incompatible_public_call_shapes": []
+          }
+        ]
+      },
+      "semantic_layers": [],
+      "discussion_decision": "not_evaluated",
+      "recorded_benchmark_passed": true
+    }
+  ],
+  "limitations": [
+    "Checks public declarations and representative positional/keyword call shapes only; not all possible calls or the benchmark's exact module interface requirements.",
+    "No declared function is called for signature checking; candidate module load can still execute code.",
+    "A compatible interface is not evidence of functional correctness.",
+    "Semantic coverage absence is not semantic success; finite checks do not certify correctness.",
+    "Interface diagnoses do not establish a discussion-stop or repair policy.",
+    "Existing seen tasks and correlated code outputs, not independent held-out validation.",
+    "Timed local execution is not a security sandbox; no model/API calls."
+  ]
+}
