@@ -1,0 +1,1555 @@
+{
+  "version": 1,
+  "seed": 20261026,
+  "probes": [
+    {
+      "probe_id": "linear_integer_root/0",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -1,
+        1
+      ],
+      "witness_root": 1
+    },
+    {
+      "probe_id": "linear_integer_root/1",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        17,
+        1
+      ],
+      "witness_root": -17
+    },
+    {
+      "probe_id": "linear_integer_root/2",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        23,
+        1
+      ],
+      "witness_root": -23
+    },
+    {
+      "probe_id": "linear_integer_root/3",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        10,
+        1
+      ],
+      "witness_root": -10
+    },
+    {
+      "probe_id": "linear_integer_root/4",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -14,
+        1
+      ],
+      "witness_root": 14
+    },
+    {
+      "probe_id": "linear_integer_root/5",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        22,
+        1
+      ],
+      "witness_root": -22
+    },
+    {
+      "probe_id": "linear_integer_root/6",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        7,
+        1
+      ],
+      "witness_root": -7
+    },
+    {
+      "probe_id": "linear_integer_root/7",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -4,
+        1
+      ],
+      "witness_root": 4
+    },
+    {
+      "probe_id": "linear_integer_root/8",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        9,
+        1
+      ],
+      "witness_root": -9
+    },
+    {
+      "probe_id": "linear_integer_root/9",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -25,
+        1
+      ],
+      "witness_root": 25
+    },
+    {
+      "probe_id": "linear_integer_root/10",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        1,
+        1
+      ],
+      "witness_root": -1
+    },
+    {
+      "probe_id": "linear_integer_root/11",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -24,
+        1
+      ],
+      "witness_root": 24
+    },
+    {
+      "probe_id": "linear_integer_root/12",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        25,
+        1
+      ],
+      "witness_root": -25
+    },
+    {
+      "probe_id": "linear_integer_root/13",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -8,
+        1
+      ],
+      "witness_root": 8
+    },
+    {
+      "probe_id": "linear_integer_root/14",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        21,
+        1
+      ],
+      "witness_root": -21
+    },
+    {
+      "probe_id": "linear_integer_root/15",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        13,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "linear_integer_root/16",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -20,
+        1
+      ],
+      "witness_root": 20
+    },
+    {
+      "probe_id": "linear_integer_root/17",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        19,
+        1
+      ],
+      "witness_root": -19
+    },
+    {
+      "probe_id": "linear_integer_root/18",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -21,
+        1
+      ],
+      "witness_root": 21
+    },
+    {
+      "probe_id": "linear_integer_root/19",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        18,
+        1
+      ],
+      "witness_root": -18
+    },
+    {
+      "probe_id": "linear_integer_root/20",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        0,
+        1
+      ],
+      "witness_root": 0
+    },
+    {
+      "probe_id": "linear_integer_root/21",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -6,
+        1
+      ],
+      "witness_root": 6
+    },
+    {
+      "probe_id": "linear_integer_root/22",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -13,
+        1
+      ],
+      "witness_root": 13
+    },
+    {
+      "probe_id": "linear_integer_root/23",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -17,
+        1
+      ],
+      "witness_root": 17
+    },
+    {
+      "probe_id": "linear_integer_root/24",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -2,
+        1
+      ],
+      "witness_root": 2
+    },
+    {
+      "probe_id": "linear_integer_root/25",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        20,
+        1
+      ],
+      "witness_root": -20
+    },
+    {
+      "probe_id": "linear_integer_root/26",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -22,
+        1
+      ],
+      "witness_root": 22
+    },
+    {
+      "probe_id": "linear_integer_root/27",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        14,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "linear_integer_root/28",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -23,
+        1
+      ],
+      "witness_root": 23
+    },
+    {
+      "probe_id": "linear_integer_root/29",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        3,
+        1
+      ],
+      "witness_root": -3
+    },
+    {
+      "probe_id": "linear_integer_root/30",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -16,
+        1
+      ],
+      "witness_root": 16
+    },
+    {
+      "probe_id": "linear_integer_root/31",
+      "family": "linear_integer_root",
+      "split": "development",
+      "coefficients": [
+        -3,
+        1
+      ],
+      "witness_root": 3
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/0",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -108,
+        84,
+        -17,
+        1
+      ],
+      "witness_root": 2
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/1",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        36,
+        -31,
+        -6,
+        1
+      ],
+      "witness_root": -4
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/2",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -540,
+        -171,
+        6,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/3",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -80,
+        -82,
+        -1,
+        1
+      ],
+      "witness_root": -8
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/4",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        120,
+        82,
+        17,
+        1
+      ],
+      "witness_root": -10
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/5",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -1274,
+        -189,
+        6,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/6",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -195,
+        -41,
+        11,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/7",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -288,
+        156,
+        -23,
+        1
+      ],
+      "witness_root": 3
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/8",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        616,
+        -45,
+        -12,
+        1
+      ],
+      "witness_root": -7
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/9",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        650,
+        -115,
+        -8,
+        1
+      ],
+      "witness_root": -10
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/10",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        441,
+        -49,
+        -9,
+        1
+      ],
+      "witness_root": -7
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/11",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -1200,
+        -110,
+        13,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/12",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        144,
+        108,
+        20,
+        1
+      ],
+      "witness_root": -12
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/13",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -216,
+        -69,
+        4,
+        1
+      ],
+      "witness_root": -9
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/14",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        1800,
+        -225,
+        -8,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/15",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        90,
+        -99,
+        8,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/16",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -52,
+        69,
+        -18,
+        1
+      ],
+      "witness_root": 1
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/17",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -1456,
+        398,
+        -35,
+        1
+      ],
+      "witness_root": 8
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/18",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -315,
+        143,
+        -21,
+        1
+      ],
+      "witness_root": 5
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/19",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        810,
+        -81,
+        -10,
+        1
+      ],
+      "witness_root": -9
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/20",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -273,
+        31,
+        17,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/21",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -1890,
+        471,
+        -38,
+        1
+      ],
+      "witness_root": 9
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/22",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        140,
+        36,
+        -15,
+        1
+      ],
+      "witness_root": -2
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/23",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -660,
+        -127,
+        6,
+        1
+      ],
+      "witness_root": -12
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/24",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -1170,
+        -207,
+        4,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/25",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -280,
+        188,
+        -26,
+        1
+      ],
+      "witness_root": 2
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/26",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        0,
+        -99,
+        2,
+        1
+      ],
+      "witness_root": -11
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/27",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        1056,
+        -124,
+        -9,
+        1
+      ],
+      "witness_root": -11
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/28",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        1386,
+        -127,
+        -12,
+        1
+      ],
+      "witness_root": -11
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/29",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        -154,
+        129,
+        24,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/30",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        0,
+        -33,
+        -8,
+        1
+      ],
+      "witness_root": -3
+    },
+    {
+      "probe_id": "cubic_distinct_integer_roots/31",
+      "family": "cubic_distinct_integer_roots",
+      "split": "development",
+      "coefficients": [
+        330,
+        -107,
+        -4,
+        1
+      ],
+      "witness_root": -10
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/0",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -3388,
+        4840,
+        -1303,
+        -161,
+        11,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/1",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        0,
+        3240,
+        -774,
+        -135,
+        8,
+        1
+      ],
+      "witness_root": -12
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/2",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        5600,
+        4740,
+        -992,
+        -121,
+        12,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/3",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        0,
+        -1260,
+        -796,
+        -67,
+        10,
+        1
+      ],
+      "witness_root": -10
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/4",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -48672,
+        -23660,
+        -3261,
+        -29,
+        21,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/5",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -10800,
+        5940,
+        144,
+        -215,
+        2,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/6",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        12096,
+        3552,
+        -1516,
+        -108,
+        15,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/7",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        0,
+        -336,
+        386,
+        -43,
+        -8,
+        1
+      ],
+      "witness_root": -7
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/8",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        6930,
+        6927,
+        -214,
+        -208,
+        4,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/9",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -17160,
+        6818,
+        1315,
+        -207,
+        -7,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/10",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -54600,
+        -21100,
+        -2054,
+        111,
+        26,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/11",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -31500,
+        10800,
+        -235,
+        -193,
+        7,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/12",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -3840,
+        1184,
+        320,
+        -90,
+        -5,
+        1
+      ],
+      "witness_root": -8
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/13",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        0,
+        1456,
+        1308,
+        352,
+        33,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/14",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -7200,
+        -1440,
+        686,
+        53,
+        -20,
+        1
+      ],
+      "witness_root": -4
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/15",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -145200,
+        -42350,
+        -2793,
+        229,
+        33,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/16",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        7488,
+        4936,
+        330,
+        -149,
+        -6,
+        1
+      ],
+      "witness_root": -9
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/17",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        720,
+        -684,
+        148,
+        27,
+        -12,
+        1
+      ],
+      "witness_root": -4
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/18",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        29568,
+        -3824,
+        -1516,
+        48,
+        23,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/19",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        112112,
+        -46844,
+        4916,
+        43,
+        -28,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/20",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -23296,
+        11776,
+        428,
+        -248,
+        -1,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/21",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        0,
+        -9900,
+        405,
+        287,
+        -33,
+        1
+      ],
+      "witness_root": -5
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/22",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -11440,
+        -9598,
+        -2197,
+        -107,
+        13,
+        1
+      ],
+      "witness_root": -11
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/23",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        0,
+        324,
+        -72,
+        -57,
+        4,
+        1
+      ],
+      "witness_root": -9
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/24",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -171990,
+        33159,
+        950,
+        -360,
+        0,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/25",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        0,
+        -2475,
+        2700,
+        -214,
+        -12,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/26",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        26208,
+        11556,
+        451,
+        -193,
+        -7,
+        1
+      ],
+      "witness_root": -8
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/27",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        3360,
+        3524,
+        -5,
+        -165,
+        5,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/28",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        4680,
+        906,
+        -491,
+        -67,
+        11,
+        1
+      ],
+      "witness_root": -13
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/29",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        -6930,
+        -3957,
+        2782,
+        -204,
+        -12,
+        1
+      ],
+      "witness_root": -15
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/30",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        3360,
+        1348,
+        -149,
+        -81,
+        1,
+        1
+      ],
+      "witness_root": -7
+    },
+    {
+      "probe_id": "quintic_distinct_integer_roots/31",
+      "family": "quintic_distinct_integer_roots",
+      "split": "validation",
+      "coefficients": [
+        41580,
+        2559,
+        -1750,
+        -160,
+        10,
+        1
+      ],
+      "witness_root": -11
+    },
+    {
+      "probe_id": "cubic_stationary_origin/0",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -729,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 9
+    },
+    {
+      "probe_id": "cubic_stationary_origin/1",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        512,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -8
+    },
+    {
+      "probe_id": "cubic_stationary_origin/2",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        2744,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -14
+    },
+    {
+      "probe_id": "cubic_stationary_origin/3",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -12167,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 23
+    },
+    {
+      "probe_id": "cubic_stationary_origin/4",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -1728,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 12
+    },
+    {
+      "probe_id": "cubic_stationary_origin/5",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -27000,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 30
+    },
+    {
+      "probe_id": "cubic_stationary_origin/6",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        64,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -4
+    },
+    {
+      "probe_id": "cubic_stationary_origin/7",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -19683,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 27
+    },
+    {
+      "probe_id": "cubic_stationary_origin/8",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -15625,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 25
+    },
+    {
+      "probe_id": "cubic_stationary_origin/9",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        1728,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -12
+    },
+    {
+      "probe_id": "cubic_stationary_origin/10",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -2197,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 13
+    },
+    {
+      "probe_id": "cubic_stationary_origin/11",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -512,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 8
+    },
+    {
+      "probe_id": "cubic_stationary_origin/12",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        5832,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -18
+    },
+    {
+      "probe_id": "cubic_stationary_origin/13",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        125,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -5
+    },
+    {
+      "probe_id": "cubic_stationary_origin/14",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -8000,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 20
+    },
+    {
+      "probe_id": "cubic_stationary_origin/15",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -32768,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 32
+    },
+    {
+      "probe_id": "cubic_stationary_origin/16",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        4096,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -16
+    },
+    {
+      "probe_id": "cubic_stationary_origin/17",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -21952,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 28
+    },
+    {
+      "probe_id": "cubic_stationary_origin/18",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -8,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 2
+    },
+    {
+      "probe_id": "cubic_stationary_origin/19",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -6859,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 19
+    },
+    {
+      "probe_id": "cubic_stationary_origin/20",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        1000,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -10
+    },
+    {
+      "probe_id": "cubic_stationary_origin/21",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        19683,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -27
+    },
+    {
+      "probe_id": "cubic_stationary_origin/22",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -1331,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 11
+    },
+    {
+      "probe_id": "cubic_stationary_origin/23",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -216,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 6
+    },
+    {
+      "probe_id": "cubic_stationary_origin/24",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -5832,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 18
+    },
+    {
+      "probe_id": "cubic_stationary_origin/25",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        9261,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -21
+    },
+    {
+      "probe_id": "cubic_stationary_origin/26",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        6859,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -19
+    },
+    {
+      "probe_id": "cubic_stationary_origin/27",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -10648,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 22
+    },
+    {
+      "probe_id": "cubic_stationary_origin/28",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -2744,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 14
+    },
+    {
+      "probe_id": "cubic_stationary_origin/29",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        17576,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -26
+    },
+    {
+      "probe_id": "cubic_stationary_origin/30",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        -17576,
+        0,
+        0,
+        1
+      ],
+      "witness_root": 26
+    },
+    {
+      "probe_id": "cubic_stationary_origin/31",
+      "family": "cubic_stationary_origin",
+      "split": "validation",
+      "coefficients": [
+        8,
+        0,
+        0,
+        1
+      ],
+      "witness_root": -2
+    }
+  ],
+  "families": {
+    "linear_integer_root": "development",
+    "cubic_distinct_integer_roots": "development",
+    "quintic_distinct_integer_roots": "validation",
+    "cubic_stationary_origin": "validation"
+  },
+  "selection": "all_tasks_with_public_polynomial_contract_no_pass_label_filter",
+  "task_contracts": {},
+  "source_manifest_sha256": "bbf66e99d9ae9059c3ab6e890ac31f54bb61ecf1ec3147f71bb0348ffd985e5e",
+  "source_requests_sha256": "ff77fb818a9dfe0e35b0ee7f1bc002f726b95e1ac3dd54c960583eef3ed117c2",
+  "runner_sha256": "b9f6030dbf2d8a1bc1f8a46d6edd6bbd825ba34d8706b55ac31fddd9163fb50b",
+  "adapter_sha256": "4acb2dd253a0729175dc92ac33ef4ec2bb745ed725569b05001f57de42cc5643",
+  "executor_sha256": "ddfb060b95dc68063f0e7623e2aa6b1ff450515a64787a56c291a59f6df9d965"
+}

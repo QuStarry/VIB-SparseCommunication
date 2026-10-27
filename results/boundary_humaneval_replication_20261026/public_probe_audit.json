@@ -1,0 +1,157 @@
+{
+  "protocol_sha256": "75828d1faa44103f46971b5cf3a8fd9ab077f30c259548ee13e9d89e671f94a3",
+  "api_requests": 0,
+  "total_tasks_in_source": 24,
+  "applicable_tasks": 0,
+  "probes_per_family": 32,
+  "family_jobs": 0,
+  "complete": true,
+  "outputs": [],
+  "limitations": [
+    "Development and validation separate constructed input families, not independent tasks.",
+    "Adapters and family designs are discovery-informed; not blinded or held-out method evaluation.",
+    "Any real root is accepted; construction witnesses are not expected return values.",
+    "Residual tolerance and finite probes do not prove correctness for all valid inputs.",
+    "No policy training, threshold tuning, new model calls or candidate generation.",
+    "Failures include exceptions and invalid return values, not only wrong numeric answers.",
+    "Timed local execution is not a security sandbox; original benchmark labels remain unchanged."
+  ],
+  "by_family_policy": {
+    "linear_integer_root": {
+      "full": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "first_round": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "first_round_control": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "direct": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      }
+    },
+    "cubic_distinct_integer_roots": {
+      "full": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "first_round": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "first_round_control": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "direct": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      }
+    },
+    "quintic_distinct_integer_roots": {
+      "full": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "first_round": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "first_round_control": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "direct": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      }
+    },
+    "cubic_stationary_origin": {
+      "full": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "first_round": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "first_round_control": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      },
+      "direct": {
+        "code_outputs": 0,
+        "code_outputs_satisfying_all_probes": 0,
+        "satisfied_probes": 0,
+        "property_violations": 0,
+        "check_execution_errors": 0,
+        "family_process_errors": 0
+      }
+    }
+  }
+}
