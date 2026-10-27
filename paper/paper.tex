@@ -32,8 +32,9 @@
 
 %% ---- Title / authors ----
 \title{How Much Communication Do LLM Teams Need?\\An Empirical Study of Lightweight Message Gating}
-\author{Anonymous Authors\\Paper ID 8888\\Double-blind submission}
+\author{Zhanxiang Qu\\Independent Researcher\\\texttt{zhanxiangqu@126.com}}
 \date{}
+\hypersetup{pdfauthor={Zhanxiang Qu},pdftitle={How Much Communication Do LLM Teams Need?}}
 
 %% ---- Utility math ----
 \newcommand{\VIB}{\text{VIB}}
@@ -43,14 +44,14 @@
 
 \begin{document}
 \maketitle
-\thispagestyle{empty}   % first page no page number for double-blind
-\pagestyle{empty}
+\thispagestyle{plain}
+\pagestyle{plain}
 
 %% ================================================================
 %% 0. Abstract
 %% ================================================================
 \begin{abstract}
-Do LLM teams need to broadcast every candidate message, and does effective gating require a complex selection rule? We study these questions using a lightweight information-bottleneck-inspired router, VIB-Sparse, on HumanEval ($n=164$), MBPP ($n=257$), GSM8K ($n=1319$), and MATH ($n=5000$). Relative to full communication, it reduces broadcast messages by $21.14\%$ on HumanEval and $30.49\%$ on GSM8K, with observed accuracy differences of $-1.83$ and $-0.08$ percentage points. The trade-off is not uniformly favorable: MATH loses $0.92$ points for $25.59\%$ message reduction, while MBPP saves neither messages nor tokens. Total-token savings on the three compressible benchmarks are only $3.88$--$4.96\%$, because gating occurs after candidate generation. On a separate $200$-problem GSM8K subset, a cosine-only redundancy gate achieves the same $97.00\%$ accuracy point estimate as VIB-Sparse at a similar message budget; their paired difference interval is $[-2.50,+2.50]$ points. These findings motivate simple controls and joint accuracy--cost reporting, not a claim of VIB-specific superiority or formal equivalence.
+Do LLM teams need to broadcast every candidate message, and does effective gating require a complex selection rule? We study these questions using a lightweight information-bottleneck-inspired router, VIB-Sparse, on HumanEval ($n=164$), GSM8K ($n=1319$), and MATH ($n=5000$). Relative to full communication, it reduces broadcast messages by $21.14\%$ on HumanEval and $30.49\%$ on GSM8K, with observed accuracy differences of $-1.83$ and $-0.08$ percentage points. MATH has a $-0.92$-point difference for $25.59\%$ message reduction under a conservative whole-answer matcher, not a complete semantic oracle. GSM8K and MATH record only $4.96\%$ and $4.42\%$ fewer total tokens; refreshed HumanEval outputs inherit old counters and lack complete cost evidence. Historical MBPP ($n=257$) is isolated as oracle-only evidence because reference tests informed stopping. Three earlier HumanEval batches retain positive VIB differences after executable re-scoring, but do not establish stable superiority. On a separate $200$-problem GSM8K subset, a cosine-only gate and VIB share a $97.00\%$ point estimate at similar message budgets; their paired interval is $[-2.50,+2.50]$ points. These findings motivate simple controls and auditable protocols, not VIB-specific superiority or formal equivalence.
 \end{abstract}
 
 %% ================================================================
@@ -74,11 +75,11 @@ We use VIB-Sparse as an information-bottleneck-inspired test policy and compare 
 \end{itemize}
 
 \subsection{Contributions and main results}
-\textbf{C1.}\, A four-benchmark account of the accuracy--communication trade-off under a common harness, including negative results: MATH has an observed accuracy regression, and MBPP has no aggregate budget saving.
+\textbf{C1.}\, A three-benchmark account of observed accuracy--communication trade-offs, with an additional historical MBPP oracle-only audit. MATH's negative point estimate is conditional on the answer-matching protocol.
 
 \textbf{C2.}\, Matched-message-budget controls on a separate GSM8K subset. A cosine-only gate and VIB have identical accuracy point estimates; random drop is one point lower, with both comparison intervals spanning zero. This limits claims of selector-specific benefit rather than proving the policies equivalent.
 
-\textbf{C3.}\, An audit of attribution and cost accounting: $21$--$30\%$ fewer broadcasts yield only $3.9$--$5.0\%$ fewer total tokens on three benchmarks, and two selected MBPP successes broadcast every candidate. They cannot establish a causal filtering mechanism.
+\textbf{C3.}\, An audit of attribution and protocol validity: broadcast reductions exceed recorded token reductions; refreshed HumanEval cost is incomplete; purported zero-temperature runs have caller overrides; and selected MBPP successes broadcast every candidate. Historical positive scores are retained rather than conflated with scoring artifacts.
 
 %% ================================================================
 %% 2. Method
@@ -86,7 +87,7 @@ We use VIB-Sparse as an information-bottleneck-inspired test policy and compare 
 \section{Method}\label{sec:method}
 
 \subsection{Task setup and multi-agent pipeline}
-We evaluate on \emph{code generation} (\textsc{HumanEval}~\cite{chen2021evaluating}, MBPP-Sanitized~\cite{chen2021evaluating,austin2021program}) and \emph{mathematical program-of-thought} (GSM8K~\cite{hendrycks2021gsm8k}, MATH~\cite{hendrycks2021math}; both rendered to final numerical answers).
+We evaluate on \emph{code generation} (\textsc{HumanEval}~\cite{chen2021evaluating}; historical MBPP-Sanitized~\cite{austin2021program} is isolated in an appendix) and \emph{mathematical reasoning} (GSM8K~\cite{hendrycks2021gsm8k}, MATH~\cite{hendrycks2021math}). MATH answers include scalars, expressions, lists, tuples, and intervals, rather than only final numbers.
 
 \paragraph{Vanilla single-agent baseline.} Given prompt $P$, direct synthesis produces $\hat y=f_\theta(P)$ without team history, allowing up to three visible-doctest synthesis attempts on code tasks; the benchmark evaluator supplies final scoring~\cite{chen2021evaluating,austin2021program}.
 
@@ -164,32 +165,27 @@ The headline results use the public \texttt{deepseek-chat} alias, historically a
 
 \paragraph{Dataset coverage and early stopping.} The result artifacts contain HumanEval ($164$), MBPP-Sanitized ($257$), GSM8K ($1319$), and MATH ($5000$). Mathematical tasks use Planner--Solver--Verifier teams. MBPP is descriptively split into Early-Stopped ($236$) and Multi-Round ($21$) tasks using the recorded OR rule: either arm marked early-stopped selects the first group. This is an outcome-dependent partition, not a preassigned difficulty stratum. In the current harness a probe is a \emph{one-round team workflow plus synthesis}, not one-shot single-agent synthesis. Its stop decision invokes the benchmark evaluator, including reference tests. Such reference-assisted stopping is an oracle benchmark procedure, not a deployable policy; the historical MBPP results require this qualification.
 
-\paragraph{Statistical scope.} Intervals quantify paired task-outcome uncertainty for the recorded executions. They do not measure all provider or sampling variation. No accuracy-loss margin was prespecified, so a confidence interval spanning zero is not a formal non-inferiority or equivalence result. Answer matching is string-based, and the numerical extractor handles comma-separated multi-value answers ($9.7\%$ of MATH references) unreliably, so part of an observed paired difference can reflect output formatting rather than team communication. An earlier revision of this artifact reported HumanEval at $100.00/100.00$ with a degenerate $[0,0]$ interval; that row was a scoring artifact of the synthesis-refresh step and is replaced by the corrected labels described in \Cref{app:repro}.
+\paragraph{Statistical scope.} Intervals quantify paired task-outcome uncertainty for recorded executions, not all provider or sampling variation. No accuracy-loss margin was prespecified, so an interval spanning zero is not a non-inferiority or equivalence result. Archived MATH outputs use balanced final-box extraction and whole-answer matching consistently across all methods and the recorded rerun, without a last-number fallback. Unresolved formats retain whole-text matches or failures; this is not a complete mathematical oracle. Reference-expression sensitivity uses only references to select coverage. Earlier HumanEval $100.00/100.00$ scores came from an uninvoked test function, unlike the independently verified historical positive batches (\Cref{app:repro}).
 
-\subsection{Main results --- three methods $\times$ four benchmarks}
+\paragraph{Parameter and cost audit.} The CLI's client-level temperature and token limits are overridden by explicit agent and synthesis arguments. Thus files named \texttt{t0} do not verify end-to-end temperature zero, and their differences are batch observations, not temperature-robustness evidence. Refreshed HumanEval outputs retain pre-refresh token fields; the table reports those historical counters, not complete refreshed-run cost.
+
+\subsection{Main results --- three methods $\times$ three benchmarks}
 
 \input{tables/table1_main_three_methods}
 
 \paragraph{Reading \Cref{tab:main_results} top-to-bottom.}
 \begin{itemize}
-\item \textbf{Vanilla $\rightarrow$ Full.} Recorded differences are $+36.01$ pp on GSM8K, $-1.83$ pp on HumanEval, and $+30.98$ pp on MATH. These compare systems with different inference budgets; without a budget-matched single-agent control they do not isolate the benefit of multi-agent organization.
-\item \textbf{Full $\rightarrow$ VIB.} HumanEval has $\Delta=-1.83$ pp (95\% CI $[-6.71,+3.05]$; McNemar $p=0.607$); GSM8K has $\Delta=-0.08$ pp (95\% CI $[-0.83,+0.68]$). Message reductions are $21.14\%$, $30.49\%$, and $25.59\%$ on HumanEval, GSM8K, and MATH, with total-token savings of $3.88\%$, $4.96\%$, and $4.42\%$ respectively.
-\item \textbf{MBPP exception.} The observed $+0.39$ pp difference is not statistically significant (McNemar $p=1.0$). Messages increase by $0.12\%$ and total tokens by $0.05\%$. This benchmark does not support an aggregate compression claim.
-\item \textbf{MATH regression.} Message reduction is $25.59\%$, but accuracy falls by $0.92$ pp (95\% CI $[-1.78,-0.04]$; McNemar $p=0.041$). A greedy rerun also has a negative point estimate ($-0.72$ pp, $p=0.132$). The different significance decisions do not erase the recorded regression. Formatting affects some labels: on MATH/27, outputs listing the same values with and without spaces after commas receive opposite scores. Identical message counts do not imply identical content, so neither count-based slicing nor unvalidated normalization establishes how much regression is caused by gating.
+\item \textbf{Vanilla $\rightarrow$ Full.} Recorded differences are $+36.01$ pp on GSM8K, $-1.83$ pp on HumanEval, and $+32.42$ pp on MATH under whole-answer matching. These compare systems with different inference budgets; without a budget-matched single-agent control they do not isolate the benefit of multi-agent organization.
+\item \textbf{Full $\rightarrow$ VIB.} HumanEval has $\Delta=-1.83$ pp (95\% CI $[-6.71,+3.05]$; McNemar $p=0.607$); GSM8K has $\Delta=-0.08$ pp (CI $[-0.83,+0.68]$). Message reductions are $21.14\%$, $30.49\%$, and $25.59\%$ on HumanEval, GSM8K, and MATH. GSM8K and MATH record token reductions of $4.96\%$ and $4.42\%$; HumanEval's $3.88\%$ refers only to inherited counters.
+\item \textbf{MATH matching outcome.} Full and VIB match $78.58\%$ and $77.66\%$ of references: $\Delta=-0.92$ pp (95\% CI $[-1.78,-0.04]$; McNemar $p=0.04534$). The recorded rerun has $78.46/77.42\%$, $\Delta=-1.04$ pp (CI $[-1.94,-0.10]$; $p=0.03319$). These unadjusted tests are conditional on a conservative matcher. On the $4458$ reference-expression tasks, differences are $-0.87$ pp (CI $[-1.82,+0.04]$; $p=0.06770$) and $-0.90$ pp (CI $[-1.88,+0.09]$; $p=0.07982$). Negative point estimates persist, but significance is not robust to coverage choice. This post-hoc subset is not an independent benchmark or a temperature comparison.
 \end{itemize}
-
-\subsubsection{MBPP Early-Stopped vs Multi-Round split}
-
-\input{tables/table2_mbpp_es_mr_split}
-
-\Cref{tab:mbpp_split} describes the recorded OR partition. The $21$ Multi-Round tasks have Full $9.52\%$ versus VIB $19.05\%$ accuracy, an observed net difference of two solves. On the other $236$ tasks the two arms are near-identical at $99.15\%$ and $98.73\%$ respectively, an observed one-solve difference in favour of Full. Because subgroup membership depends on the arms' outcomes and the small tail was inspected after execution, this is exploratory evidence, not a confirmatory effect on a preidentified hard population.
 
 \subsubsection{Pareto overview}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.95\columnwidth]{figures/figure3_pareto_bubble.pdf}
-\caption{Observed trade-offs: message compression vs $\Delta$ Pass@1 (VIB $-$ Full) across four benchmarks; bubble size $\propto\sqrt{N}$; whiskers = 95\% paired-bootstrap CI. Points from different datasets do not define a common within-task Pareto frontier.
+\caption{Observed trade-offs across three non-oracle headline benchmarks: message compression vs $\Delta$ Pass@1 (VIB $-$ Full); bubble size $\propto\sqrt{N}$; whiskers = 95\% paired-bootstrap CI. MATH uses conservative whole-answer matching. Historical MBPP is excluded. Points from different datasets do not define a common within-task Pareto frontier.
 \label{fig:pareto}}
 \end{figure}
 
@@ -197,15 +193,8 @@ The headline results use the public \texttt{deepseek-chat} alias, historically a
 \begin{itemize}
 \item GSM8K records $30.49\%$ fewer messages for a $-0.08$ pp accuracy difference; this cross-dataset plot does not establish a within-task efficient frontier.
 \item HumanEval has $151/164$ (Full) and $148/164$ (VIB) observed passes, with $21.14\%$ fewer broadcasts. The paired difference interval spans zero, so the recorded shortfall is one of several inconclusive comparisons. We do not test reinvestment of the saved budget.
-\item MATH saves $7676$ of $30000$ broadcasts while its accuracy difference interval remains entirely below zero. This is an accuracy--budget trade-off, not a demonstrated accuracy-preserving Pareto improvement.
-\item MBPP has almost unchanged communication and token cost. Selected differing outcomes do not by themselves explain that aggregate difference.
+\item MATH saves $7676$ of $30000$ broadcasts. Its whole-answer matching interval is below zero on the full set but crosses zero on the reference-expression subset. This is not a demonstrated accuracy-preserving Pareto improvement.
 \end{itemize}
-
-\subsection{Selected MBPP outcomes and attribution limits}\label{sec:cases}
-
-The archived results contain two selected Multi-Round tasks where VIB passes and Full fails: \textbf{MBPP/260} (\emph{newman\_prime}) and \textbf{MBPP/285} (\emph{text\_match\_two\_three}). In both tasks, however, each arm broadcasts $6/6$ candidates. The historical artifact has no per-candidate \texttt{gate\_decisions} records for either task, although the current workflow supports that serializer.
-
-Consequently, these examples illustrate different stochastic outcomes without observed message removal. They do not show that VIB suppressed a false test, nor that a logged score altered the synthesizer's attention. A causal attribution experiment would hold candidate text and synthesis protocol fixed, intervene on message admission, repeat synthesis, and assess the resulting answer distribution. That experiment has not been run here.
 
 \subsection{Ablation --- GSM8K frozen-history $\times$ role-aware weights}
 
@@ -227,19 +216,26 @@ Blue bars (left axis): $\Delta$ Pass@1 (VIB $-$ Full) with 95\% paired-bootstrap
 
 The role-prior setting retains more messages, but these separate runs do not establish a selective accuracy benefit. The headline runs use frozen-history settings; no leaderboard submission or tuning on a held-out calibration split is claimed.
 
+\subsection{Historical positive results and synthesis provenance}
+Three earlier HumanEval batches remain positive after re-executing archived code with the same entry-point tests. The CLI-fixed, arbitration-rule, and minimum-role-rescue batches have Full/VIB scores $92.68/94.51\%$, $90.24/93.90\%$, and $87.80/90.85\%$; differences are $+1.83$, $+3.66$, and $+3.05$ pp, with exact McNemar $p=0.508$, $0.109$, and $0.302$. Their paired intervals are $[-1.83,+5.49]$, $[0.00,+7.32]$, and $[-1.83,+7.32]$ pp. These previously inspected runs are not independent confirmation; none resolves stable superiority, and the best VIB score exceeds historical Vanilla by only one of $164$ tasks.
+
+The pre-refresh main HumanEval batch scores $147/147$ correct across Full/VIB, whereas refreshed synthesis scores $151/148$. All $328$ histories and token records agree across those artifacts; $45$ Full and $49$ VIB final outputs change. VIB absolute accuracy increases, but Full gains more. This difference is not evidence that the router changed during refresh. The earlier positive batches have different histories from this main batch, precluding attribution of cross-batch changes to one code revision.
+
+An earlier MATH batch with both role and reasoning guards enabled scores $78.46/78.32\%$ under the same whole-answer matcher, $\Delta=-0.14$ pp (CI $[-1.04,+0.72]$; $p=0.791$), with $5.06\%$ fewer broadcasts and $0.48\%$ fewer recorded tokens. The guard-disabled rerun records $25.39\%$ and $4.21\%$ reductions. This suggests a compression--performance configuration trade-off, not a causal guard benefit: the paired tasks are aligned but candidate streams are independently generated.
+
 %% ================================================================
 %% 4. Discussion
 %% ================================================================
 \section{Discussion}
-\paragraph{Stage-one finding.} Lightweight post-generation gating can reduce broadcasts substantially in three tested regimes, but total-token reductions are smaller, and accuracy preservation is not universal. The matched-budget subset provides no statistically resolved VIB advantage over simpler rules. This motivates a simpler default baseline rather than a universal recommendation for any one gate.
+\paragraph{Stage-one finding.} Post-generation gating substantially reduces broadcasts, but recorded token reductions are smaller and refreshed-run cost can be incomplete. Earlier positive HumanEval batches remain valid observations, not stable confirmation or scoring artifacts. The message-budget-matched subset resolves no VIB advantage over simpler rules and is not cost-matched. This motivates protocol repair and controlled synthesis comparisons before either abandoning the method or restoring its best historical score as a headline claim.
 
 \paragraph{Limitations and future work.}
 (1) \emph{External validity.} Teams have three agents and short discussions. A subset result cannot establish that a simple gate suffices on harder, longer, or different-model tasks.
 (2) \emph{Method attribution.} The router combines embedding surrogates with several code, role, and keyword heuristics. Neither their separate contribution nor a variational-information interpretation is established by these results.
 (3) \emph{Tail selection.} The MBPP partition is outcome-dependent, uses reference-assisted stopping, and contains only $21$ Multi-Round tasks. The selected $6/6$-message successes are not causal evidence of filtering.
-(4) \emph{Inference budget.} Vanilla is not a cost-matched single-agent competitor. Generation is paid before message admission; reported counts exclude local encoder energy and may omit discarded early-stop probes.
+(4) \emph{Inference budget.} Vanilla is not cost-matched. Generation is paid before admission; counters omit local encoder energy, may omit discarded probes, and do not account for refreshed HumanEval synthesis.
 (5) \emph{Statistical claims.} No equivalence margin was prespecified. Sampling significance, same-day Full-arm spread, and task-bootstrap intervals are different quantities; none warrants a claim that every accuracy gap is harmless noise.
-(6) \emph{Next-stage questions.} Priorities are controlled message interventions on semantically similar but causally important corrections, matched-token multi-agent versus single-agent comparisons, and pre-generation scheduling. Each requires held-out tasks, explicit cost limits, and stronger simple baselines before a claim of method superiority.
+(6) \emph{Next-stage questions.} First repair stage-parameter propagation and output-linked accounting with zero-API tests. Then compare older and current synthesis prompts on fixed candidate streams, with reference answers used only afterward for evaluation. Independent tasks and equal-cost single-agent controls come next; restore neither task-specific tuning keywords nor an unconfirmed best historical batch.
 
 %% ================================================================
 %% 5. Related Work
@@ -258,10 +254,22 @@ The role-prior setting retains more messages, but these separate runs do not est
 %% ================================================================
 %% Appendix A. Qualitative VIB gate trace
 %% ================================================================
+\clearpage
 \appendix
-\section{Audit of selected MBPP cases}\label{app:gate_trace}
+\section{Historical MBPP audit}\label{app:gate_trace}
+
+\subsection{Recorded early-stop partition}
+\input{tables/table2_mbpp_es_mr_split}
+
+MBPP is excluded from the headline table and figure because reference-test outcomes informed early stopping, and discarded probes may be absent from its recorded costs. Overall Full/VIB accuracy is $91.83/92.22\%$ (McNemar $p=1.0$); messages and tokens increase by $0.12\%$ and $0.05\%$. These are historical oracle-only observations, not deployable-policy performance.
+
+\Cref{tab:mbpp_split} preserves the recorded OR partition. The $21$ Multi-Round tasks have Full $9.52\%$ versus VIB $19.05\%$ accuracy, an observed net difference of two solves. The other $236$ tasks score $99.15\%$ and $98.73\%$, an observed one-solve difference in favour of Full. Membership depends on both arms' outcomes; this inspected small tail is not a preidentified hard population. No reference-based stopping or candidate selection is permitted in the proposed prospective evaluation.
+
+\subsection{Selected outcomes and attribution limits}\label{sec:cases}
 
 The source is the MBPP task trace in the merged main-result JSON, joined by \texttt{task\_id}. For MBPP/260 and MBPP/285, Full fails, VIB passes, and both histories contain six approved messages. Neither archived case has per-candidate gate-score records. We therefore remove numerical utility claims that cannot be traced to the published artifact and do not reconstruct them using a later router version.
+
+These examples illustrate different stochastic outcomes without observed message removal. They do not show that VIB suppressed a false test or that a gate score changed synthesis attention. Causal attribution requires fixed candidate text, message-removal interventions, and repeated synthesis; these selected cases provide no such experiment.
 
 The current serializer records role, utility, relevance, adjusted redundancy, threshold, admission, rescue, and message snippet. It does not forward these scores to synthesis. Future mechanism experiments must preserve complete candidates, distinguish raw gate decisions from workflow rescues, and pair candidate-level interventions with repeated synthesis; a later rerun is a new experiment, not missing historical evidence.
 
@@ -311,6 +319,16 @@ The \textbf{random drop} uses Bernoulli admission with task-salted reproducible 
 
 \paragraph{Post-hoc public evidence audit.} All four observed Full/first-round discordant tasks across these subsets receive manually authored public certificates, without using hidden tests or reference answers in certificate checks. On HumanEval/93, both Full outputs violate the visible \texttt{encode('test')} example by returning \texttt{TgST} rather than \texttt{TGST}; the erroneous mapping suggestion already appears in round one, so its introduction cannot be attributed solely to round two. On HumanEval/147, both Full outputs return $4$ for the visible $n=5$ example instead of $1$, whereas both first-round outputs satisfy it. On HumanEval/116, masking to $32$ bits misorders the non-negative input $[1,2^{32}]$ under the stated popcount rule. However, its literal examples conflict with that rule and include negative inputs despite a non-negative domain description; this certificate neither resolves negative-number semantics nor independently explains the archived benchmark failure. On MATH/1791, the area formula yields the minimum $16$, attained at $(a,b,c,d)=(1,3,9,3)$; a correct but incomplete derivation already exists in round one. These checks certify particular outputs, not per-message causal effects or an automatic evidence extractor. No certificate is fitted or evaluated as a predictive policy, and no message-removal intervention is performed.
 
+\paragraph{All-task literal-example diagnostic.} A task-ID-independent extractor accepts literal \texttt{>>>} call/result and call-equality examples from every replay task, then executes available checks before joining recorded benchmark labels. It covers $15/24$ HumanEval pilot tasks ($39$ checks, $180$ outputs across six policies) and $8/24$ new-subset tasks ($15$ checks, $64$ outputs across four policies). On covered pilot outputs, Full has five literal contradictions among six benchmark failures and one execution error; first-round-only has two literal contradictions among $28$ benchmark passes. These diagnostics are not pooled across policies or datasets. HumanEval/116 illustrates inconsistent examples; HumanEval/32 illustrates a different problem: any polynomial zero is valid, so returning $3$ instead of the displayed $1$ is not necessarily wrong. Conversely, both first-round outputs on HumanEval/32 satisfy its examples but fail the recorded benchmark. All covered new-subset outputs pass the benchmark, so failure detection cannot be estimated there; prose-only examples such as HumanEval/147 remain uncovered. MATH is outside this code-example extractor's scope. These observations preclude interpreting literal-example failure as a validated stopping or continuation signal.
+
+\paragraph{Narrow semantic-check prototype.} Discovery-informed adapters use public wording and polynomial-helper syntax, rather than task IDs, to recognize root residual checks and non-negative popcount specification conflicts. Conflict abstention reduces pilot coverage from $15/24$ to $14/24$ tasks; comparisons therefore use the same $168$ request outputs, excluding $12$ abstained outputs. On that common set, random admission's false alarms fall from $1/26$ benchmark passes to $0/26$ when another valid root is accepted. However, one benchmark-failed output each under Full, cosine and VIB also passes the residual checks on the public inputs; Full's failure detections fall from $3/4$ to $2/4$, with one execution error. No semantic adapter activates on the new subset. Thus correct handling of non-unique example answers does not establish complete failure detection. These narrow adapters were designed after observing the cases, do not generate new test inputs, and do not validate a predictive stopping policy.
+
+\paragraph{Constructed input-family probes.} A further zero-API diagnostic freezes $32$ integer-coefficient polynomials in each of four families before archived-code execution: linear and distinct-root cubic development families, and distinct-root quintic and stationary-origin cubic validation families. Every input has an even number of coefficients, a non-zero leading coefficient and an exactly verified construction witness, while residual checks accept any root. Only one historical task matches the public contract, yielding $12$ code outputs and $1536$ checks. Nine outputs satisfy all development probes, but only one satisfies all validation probes. The valid polynomial $x^3-729$ exposes Newton implementations that stop at a zero derivative at the initial point $0$; $x+17$ exposes a fixed search bracket of $[-10,10]$. Two of three benchmark-passing outputs fail some new probes, illustrating finite-suite coverage rather than an execution-scoring defect. These discovery-informed input-family splits are not independent-task validation, and neither probe count nor code-instance count establishes a policy advantage.
+
+\paragraph{Public inverse-transform checks.} A common syntax-based adapter recognizes decoders referring to supplied encoders and tests round trips on $64$ distinct lowercase ASCII strings. It applies to no pilot tasks and two previously inspected new-subset tasks, not strictly unseen validation tasks. All $16$ archived outputs satisfy all $1024$ round-trip checks, leaving no semantic failures from which to estimate detection sensitivity. One HumanEval/38 first-round-control output omits the supplied encoder symbol despite correct decoding on these inputs. Its recorded benchmark failure is retained: semantic inverse correctness and full-module interface completeness are different requirements. This diagnoses one source of the identical-prompt score disagreement without establishing a stopping-policy benefit.
+
+\paragraph{Interface and semantic layers.} Public declaration and representative positional/keyword signature checks cover all $24$ tasks in each HumanEval replay subset without invoking the declared functions. All $288$ pilot outputs and $191/192$ new-subset outputs are compatible; the sole missing symbol is the HumanEval/38 encoder noted above. Nevertheless, benchmark failures remain among interface-compatible outputs, and $120$ pilot and $112$ new-subset outputs have no automated semantic-check coverage. Both Full and first-round outputs in the three code-task discussion-discordance cases have compatible interfaces. Thus interface compatibility, finite semantic evidence and a decision to continue discussion must be evaluated separately; no discussion policy is inferred from these diagnostics.
+
 \paragraph{Message budget is not token budget.} Random drop saves $13.08\%$ total tokens, compared with $5.08\%$ for VIB and $4.72\%$ for the nearest-budget cosine gate. Matching aggregate message admission therefore does not match inference cost or per-task history content. A next-stage comparison should predefine a token or monetary budget and evaluate accuracy at that budget, rather than treat message count as interchangeable with API cost.
 
 %% ================================================================
@@ -328,7 +346,13 @@ The \textbf{random drop} uses Bernoulli admission with task-salted reproducible 
 
 \paragraph{Code-benchmark scoring correction.} The headline artifact's HumanEval labels were produced by a synthesis-refresh evaluator that executed reference test \emph{definitions} without invoking them. HumanEval test bodies are wrapped in \texttt{def check(candidate)}, so every task scored as passing and the row read $100.00/100.00$ with a degenerate interval. The evaluator was fixed later, but the archived labels were not recomputed. \texttt{scripts/recompute\_code\_eval.py} re-scores archived outputs with the harness dispatch: HumanEval passes \texttt{entry\_point} to invoke \texttt{check}; MBPP uses top-level assertions without an entry point. HumanEval moves to $92.07/90.24$ ($29$ arm labels flip to failing). The same executable audit changes MBPP from $90.66/91.44$ to $91.83/92.22$ ($5$ labels flip to passing); these MBPP discrepancies are not explained by the uncalled HumanEval check. MBPP split accuracies are recomputed while preserving the historical OR partition. Original JSONs remain read-only. Separate corrected artifacts and per-task audit records retain provenance hashes; comparison verifies unchanged raw outputs, histories, message counts, and token accounting. The main tables and Pareto figure use the corrected artifact.
 
-\paragraph{Historical synthesis and accounting.} The merged headline artifact records refreshed synthesis over historical histories. It is not a single newly executed end-to-end batch under a verified model snapshot. For MBPP, the current harness returns the selected retry branch's token counters after a failed probe, so discarded probe costs can be absent from recorded totals. Historical counts remain unchanged here; complete billed cost would require request-level accounting rather than silently adjusting these artifacts.
+\paragraph{MATH whole-answer audit.} The legacy evaluator could accept the last numeric fragment of a fraction, complex answer, list, or long reference solution. The separate offline script \texttt{scripts/recompute\_math\_eval.py} removes that fallback and re-scores all $5000$ archived tasks in each of the main, Vanilla, and recorded rerun batches. It prioritizes balanced final boxes, then explicit answer labels or whole outputs. Ordered lists and tuples preserve order; intervals preserve open and closed endpoints; explicit sets and unions compare without order. Common fractions, roots, and algebraic expressions use a restricted AST with SymPy $1.14.0$; unsupported forms use case-sensitive normalized whole-text equality or fail conservatively. Source, script, matcher, and invariant hashes accompany per-output audits. Labels change in both directions: main Full has $177$ false-to-true and $252$ true-to-false changes; VIB has $181$ and $256$. These are changes in matching decisions, not independently adjudicated error corrections. Vanilla moves from $49.10$ to $46.16\%$. All outputs, histories, configuration, non-MATH labels, and token fields remain unchanged.
+
+\paragraph{Matcher coverage and remaining uncertainty.} Reference-only classification yields $4458$ expression references, $253$ opaque references, and $289$ structured references (lists, tuples, intervals, sets, or unions), identically across the three batches. Candidate extraction or format failures occur in nine main-arm outputs, fourteen Vanilla-arm records (seven distinct outputs), and six rerun-arm outputs. Unknown units, percentages, translations, equivalent equations, and unordered answers written without explicit set notation can retain false negatives. Neither synthetic unit tests nor the reference-expression sensitivity analysis establishes exhaustive mathematical correctness. The matcher is an offline archival audit; the legacy online MATH dispatcher and GSM8K numeric scorer are unchanged. Future experiments must explicitly freeze their evaluation protocol rather than resume legacy labels under a new matcher.
+
+\paragraph{Historical synthesis and accounting.} The merged headline artifact records refreshed synthesis over historical histories, not one end-to-end batch under a verified snapshot. In HumanEval, refresh replaces output and pass fields but inherits token counters from the old variant. Its $3.88\%$ is therefore an archival counter difference, not verified complete refreshed-run savings. In MBPP, failed probes may also be absent from selected-branch counters. Preserving old fields during re-scoring prevents historical mutation; it does not certify their billing completeness. Missing usage must remain unknown rather than be estimated and silently inserted.
+
+\paragraph{Zero-API parameter probe and historical verification.} A recording client configured at temperature $0$ and output limit $77$ receives explicit arguments $0.2/256$ from an agent, $0.1/1024$ from code synthesis, and $0.1/256$ from math synthesis. The client prioritizes these caller arguments. Consequently, CLI configuration alone does not verify the nominal zero-temperature protocol. Four archived HumanEval batches are also re-evaluated, yielding $1312$ code checks and no label changes; this confirms the earlier positive batch observations, not statistical independence. Fixed-input old/current VIB comparisons use deterministic test embeddings, not a live encoder or new model inference, and provide only a limited numerical regression check.
 
 \paragraph{Known sources of run-to-run variance.}
 (i)~The public \texttt{deepseek-chat} endpoint is a rolling alias, so cross-batch differences cannot be cleanly assigned to the gate alone. Gating controls use one named gateway model ID and a same-day anchor, but this does not independently verify the served provider snapshot.
@@ -340,15 +364,17 @@ The \textbf{random drop} uses Bernoulli admission with task-salted reproducible 
 %% ================================================================
 \section{Ethics and broader impact}\label{app:ethics}
 
-\paragraph{Data and human subjects.} All experiments use public, permissively licensed program-synthesis and grade-school-mathematics benchmarks. No human subjects were involved and no personal, demographic or otherwise sensitive data was collected or processed.
+\paragraph{Data and human subjects.} Experiments use public code and mathematics benchmarks, not human-subject data. Exact redistribution permissions and benchmark licenses must be verified before publishing the artifact package. Author contact information is supplied voluntarily for scholarly correspondence, not used as experimental data.
 
 \paragraph{Dual use.} Our work concerns \emph{inter-agent message routing} in code-generation pipelines. Like any work that improves automated code synthesis, it could in principle be turned to producing malicious code. It does not raise the underlying generator's capability: the gate never rewrites, extends or re-generates a message, and every reported accuracy number is measured by the benchmark's own execution-based or answer-matching evaluator. We therefore expect the marginal dual-use risk to be low relative to the base models being routed.
 
-\paragraph{Risks introduced by gating.} A training-free similarity gate is not a safety mechanism. Incorrect but embedding-close content can pass, and a critical correction can be dropped. These experiments do not verify that all rejected turns are redundant or harmless; the MATH regression argues against such a universal assertion.
+\paragraph{Risks introduced by gating.} A training-free similarity gate is not a safety mechanism. Incorrect but embedding-close content can pass, and a critical correction can be dropped. These experiments do not verify that all rejected turns are redundant or harmless. MATH's negative matching differences and unresolved semantic coverage do not support a universal accuracy-preservation assertion.
 
 \paragraph{Efficiency and environment.} The router adds a CPU encoder pass and no judge LLM call. Post-generation admission can reduce subsequent prompt tokens but does not by itself avoid generating rejected messages. We report token usage, not a measured energy, carbon, P99-latency, or monetary saving. Accuracy and cost are reported jointly because lower communication can sacrifice correctness.
 
 \paragraph{Transparency.} Two asymmetries that could otherwise make our numbers hard to interpret are disclosed in the paper rather than left implicit: the backbone used by the main results is a \emph{rolling alias} whose snapshot shifts over time (\Cref{app:sensitivity}), and the reference row of \Cref{tab:crossmodel} comes from a private gateway on a different model version than \S3 (\Cref{app:crossmodel}).
+
+\paragraph{Submission metadata.} This working draft uses the author's confirmed independent-researcher affiliation and contact email. Funding, competing-interest statements, optional ORCID and final journal formatting require author confirmation; independent affiliation does not imply absence of funding or competing interests.
 
 %% ================================================================
 %% References
