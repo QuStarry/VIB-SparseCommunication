@@ -1,0 +1,243 @@
+{
+  "manifest_sha256": "748cd55e7e75f71f6a022e2f73643b097b099c7adca1c0bac6a0d0c719f3736f",
+  "request_content_sha256": "a097bce5a9d5d1e14c42fe44d047741e1f93e01a755c36e15b13afbc23fd08f2",
+  "audit_script_sha256": "de2e60a1b8554f29221086313c6f489bbdae0eeb1d803a6eb0de08371a3c157a",
+  "executor_script_sha256": "ddfb060b95dc68063f0e7623e2aa6b1ff450515a64787a56c291a59f6df9d965",
+  "verification_mode": "semantic_prototype",
+  "api_requests": 0,
+  "coverage": {
+    "dataset": "math",
+    "total_tasks": 24,
+    "tasks_with_checks": 0,
+    "total_outputs": 192,
+    "evaluated_outputs": 0,
+    "accepted_checks": 0,
+    "task_modes": {
+      "unsupported": 24
+    }
+  },
+  "performance": {
+    "workers": 4,
+    "wall_ms": 0.02558299820520915,
+    "execution_elapsed_ms_including_process_startup": {},
+    "extractor_timing_included": false
+  },
+  "by_policy": {
+    "full": {
+      "covered_outputs": 0,
+      "benchmark_passed_outputs": 0,
+      "benchmark_failed_outputs": 0,
+      "public_check_violation_on_passed": 0,
+      "public_check_violation_on_failed": 0,
+      "false_alarm_rate_on_covered_passed": null,
+      "failure_detection_rate_on_covered_failed": null,
+      "benchmark_failure_fraction_among_contradictions": null,
+      "benchmark_failures_despite_satisfied_examples": 0,
+      "execution_error_outputs": 0
+    },
+    "first_round": {
+      "covered_outputs": 0,
+      "benchmark_passed_outputs": 0,
+      "benchmark_failed_outputs": 0,
+      "public_check_violation_on_passed": 0,
+      "public_check_violation_on_failed": 0,
+      "false_alarm_rate_on_covered_passed": null,
+      "failure_detection_rate_on_covered_failed": null,
+      "benchmark_failure_fraction_among_contradictions": null,
+      "benchmark_failures_despite_satisfied_examples": 0,
+      "execution_error_outputs": 0
+    },
+    "first_round_control": {
+      "covered_outputs": 0,
+      "benchmark_passed_outputs": 0,
+      "benchmark_failed_outputs": 0,
+      "public_check_violation_on_passed": 0,
+      "public_check_violation_on_failed": 0,
+      "false_alarm_rate_on_covered_passed": null,
+      "failure_detection_rate_on_covered_failed": null,
+      "benchmark_failure_fraction_among_contradictions": null,
+      "benchmark_failures_despite_satisfied_examples": 0,
+      "execution_error_outputs": 0
+    },
+    "direct": {
+      "covered_outputs": 0,
+      "benchmark_passed_outputs": 0,
+      "benchmark_failed_outputs": 0,
+      "public_check_violation_on_passed": 0,
+      "public_check_violation_on_failed": 0,
+      "false_alarm_rate_on_covered_passed": null,
+      "failure_detection_rate_on_covered_failed": null,
+      "benchmark_failure_fraction_among_contradictions": null,
+      "benchmark_failures_despite_satisfied_examples": 0,
+      "execution_error_outputs": 0
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "MATH/635",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/4643",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/4012",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/1791",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/3699",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/3618",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/1204",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/3938",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/3987",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/4031",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/310",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/1378",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/473",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/3742",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/330",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/4585",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/3820",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/698",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/4157",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/3634",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/1145",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/4023",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/158",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "MATH/4741",
+      "checks": [],
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    }
+  ],
+  "outputs": [],
+  "limitations": [
+    "Literal >>> examples only; prose Input/Output, mathematical derivations and unknown syntax abstain. No task-ID exceptions or manual certificates.",
+    "A public example may contradict the prose or benchmark specification. False alarms are disagreement with recorded benchmark labels, not proof that a general-purpose verifier is wrong.",
+    "Repeated outputs are descriptive diagnostics, not independent tasks. No datasets, policies or protocols are pooled to infer predictive validity.",
+    "Satisfying examples does not certify correctness; execution errors are not counted as literal counterexamples.",
+    "Labels are joined after evaluation; hidden tests and reference answers are never used to extract examples or choose public outcomes.",
+    "Timings are one local run including child-process startup, not a production latency benchmark or an optimized concurrency recommendation.",
+    "Executes archived code in timed local processes, not a security sandbox.",
+    "Semantic adapters were designed after observing failures; applicability depends on public syntax and wording, not task IDs, but is not held-out validation.",
+    "Only explicitly provided coefficient-order polynomials get a residual test; recognized popcount specification conflicts cause abstention, not correction.",
+    "No new inputs are generated; coverage loss through abstention must be reported alongside false-alarm changes, not hidden by denominator changes."
+  ],
+  "semantic_adapter_sha256": "4acb2dd253a0729175dc92ac33ef4ec2bb745ed725569b05001f57de42cc5643",
+  "comparison_with_literal_snapshot": {
+    "common_outputs": 0,
+    "abstained_previously_covered_outputs": 0,
+    "newly_covered_outputs": 0,
+    "matched_by_policy": {},
+    "changed_outcomes_on_common_outputs": []
+  },
+  "literal_snapshot_sha256": "756c98fc7531ff454302def5bce3e3d3643d6f222fe652f2e5daf39906848152"
+}

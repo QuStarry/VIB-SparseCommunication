@@ -1,0 +1,2102 @@
+{
+  "manifest_sha256": "bbf66e99d9ae9059c3ab6e890ac31f54bb61ecf1ec3147f71bb0348ffd985e5e",
+  "request_content_sha256": "ff77fb818a9dfe0e35b0ee7f1bc002f726b95e1ac3dd54c960583eef3ed117c2",
+  "audit_script_sha256": "de2e60a1b8554f29221086313c6f489bbdae0eeb1d803a6eb0de08371a3c157a",
+  "executor_script_sha256": "ddfb060b95dc68063f0e7623e2aa6b1ff450515a64787a56c291a59f6df9d965",
+  "verification_mode": "semantic_prototype",
+  "api_requests": 0,
+  "coverage": {
+    "dataset": "humaneval",
+    "total_tasks": 24,
+    "tasks_with_checks": 8,
+    "total_outputs": 192,
+    "evaluated_outputs": 64,
+    "accepted_checks": 15,
+    "task_modes": {
+      "unsupported": 16,
+      "literal_examples": 8
+    }
+  },
+  "performance": {
+    "workers": 4,
+    "wall_ms": 458.14850000169827,
+    "execution_elapsed_ms_including_process_startup": {
+      "50": 27.701875000275322,
+      "95": 33.70969555089687,
+      "99": 36.17504520963848
+    },
+    "extractor_timing_included": false
+  },
+  "by_policy": {
+    "full": {
+      "covered_outputs": 16,
+      "benchmark_passed_outputs": 16,
+      "benchmark_failed_outputs": 0,
+      "public_check_violation_on_passed": 0,
+      "public_check_violation_on_failed": 0,
+      "false_alarm_rate_on_covered_passed": 0.0,
+      "failure_detection_rate_on_covered_failed": null,
+      "benchmark_failure_fraction_among_contradictions": null,
+      "benchmark_failures_despite_satisfied_examples": 0,
+      "execution_error_outputs": 0
+    },
+    "first_round": {
+      "covered_outputs": 16,
+      "benchmark_passed_outputs": 16,
+      "benchmark_failed_outputs": 0,
+      "public_check_violation_on_passed": 0,
+      "public_check_violation_on_failed": 0,
+      "false_alarm_rate_on_covered_passed": 0.0,
+      "failure_detection_rate_on_covered_failed": null,
+      "benchmark_failure_fraction_among_contradictions": null,
+      "benchmark_failures_despite_satisfied_examples": 0,
+      "execution_error_outputs": 0
+    },
+    "first_round_control": {
+      "covered_outputs": 16,
+      "benchmark_passed_outputs": 16,
+      "benchmark_failed_outputs": 0,
+      "public_check_violation_on_passed": 0,
+      "public_check_violation_on_failed": 0,
+      "false_alarm_rate_on_covered_passed": 0.0,
+      "failure_detection_rate_on_covered_failed": null,
+      "benchmark_failure_fraction_among_contradictions": null,
+      "benchmark_failures_despite_satisfied_examples": 0,
+      "execution_error_outputs": 0
+    },
+    "direct": {
+      "covered_outputs": 16,
+      "benchmark_passed_outputs": 16,
+      "benchmark_failed_outputs": 0,
+      "public_check_violation_on_passed": 0,
+      "public_check_violation_on_failed": 0,
+      "false_alarm_rate_on_covered_passed": 0.0,
+      "failure_detection_rate_on_covered_failed": null,
+      "benchmark_failure_fraction_among_contradictions": null,
+      "benchmark_failures_despite_satisfied_examples": 0,
+      "execution_error_outputs": 0
+    }
+  },
+  "tasks": [
+    {
+      "task_id": "HumanEval/50",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/38",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/132",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/36",
+      "mode": "literal_examples",
+      "checks": [
+        {
+          "expression": "fizz_buzz(50)",
+          "expected": 0,
+          "source_line": 5,
+          "source_text": "fizz_buzz(50)"
+        },
+        {
+          "expression": "fizz_buzz(78)",
+          "expected": 2,
+          "source_line": 7,
+          "source_text": "fizz_buzz(78)"
+        },
+        {
+          "expression": "fizz_buzz(79)",
+          "expected": 3,
+          "source_line": 9,
+          "source_text": "fizz_buzz(79)"
+        }
+      ],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/144",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/98",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/62",
+      "mode": "literal_examples",
+      "checks": [
+        {
+          "expression": "derivative([3, 1, 2, 4, 5])",
+          "expected": [
+            1,
+            4,
+            12,
+            20
+          ],
+          "source_line": 7,
+          "source_text": "derivative([3, 1, 2, 4, 5])"
+        },
+        {
+          "expression": "derivative([1, 2, 3])",
+          "expected": [
+            2,
+            6
+          ],
+          "source_line": 9,
+          "source_text": "derivative([1, 2, 3])"
+        }
+      ],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/48",
+      "mode": "literal_examples",
+      "checks": [
+        {
+          "expression": "is_palindrome('')",
+          "expected": true,
+          "source_line": 6,
+          "source_text": "is_palindrome('')"
+        },
+        {
+          "expression": "is_palindrome('aba')",
+          "expected": true,
+          "source_line": 8,
+          "source_text": "is_palindrome('aba')"
+        },
+        {
+          "expression": "is_palindrome('aaaaa')",
+          "expected": true,
+          "source_line": 10,
+          "source_text": "is_palindrome('aaaaa')"
+        },
+        {
+          "expression": "is_palindrome('zbcd')",
+          "expected": false,
+          "source_line": 12,
+          "source_text": "is_palindrome('zbcd')"
+        }
+      ],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/147",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/64",
+      "mode": "literal_examples",
+      "checks": [
+        {
+          "expression": "vowels_count('abcde')",
+          "expected": 2,
+          "source_line": 13,
+          "source_text": "vowels_count(\"abcde\")"
+        },
+        {
+          "expression": "vowels_count('ACEDY')",
+          "expected": 3,
+          "source_line": 15,
+          "source_text": "vowels_count(\"ACEDY\")"
+        }
+      ],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/143",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/120",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/21",
+      "mode": "literal_examples",
+      "checks": [
+        {
+          "expression": "rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])",
+          "expected": [
+            0.0,
+            0.25,
+            0.5,
+            0.75,
+            1.0
+          ],
+          "source_line": 7,
+          "source_text": "rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])"
+        }
+      ],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/92",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/86",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/90",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/4",
+      "mode": "literal_examples",
+      "checks": [
+        {
+          "expression": "mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])",
+          "expected": 1.0,
+          "source_line": 10,
+          "source_text": "mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])"
+        }
+      ],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/100",
+      "mode": "literal_examples",
+      "checks": [
+        {
+          "expression": "make_a_pile(3)",
+          "expected": [
+            3,
+            5,
+            7
+          ],
+          "source_line": 13,
+          "source_text": "make_a_pile(3)"
+        }
+      ],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/121",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/11",
+      "mode": "literal_examples",
+      "checks": [
+        {
+          "expression": "string_xor('010', '110')",
+          "expected": "100",
+          "source_line": 7,
+          "source_text": "string_xor('010', '110')"
+        }
+      ],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/111",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/94",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/69",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    },
+    {
+      "task_id": "HumanEval/67",
+      "mode": "unsupported",
+      "checks": [],
+      "support_code": "",
+      "rejected_examples": [],
+      "conflicting_expressions": []
+    }
+  ],
+  "outputs": [
+    {
+      "task_id": "HumanEval/4",
+      "request_id": "021103c36215b3b603c435d5452413d71da2069ddd90dfbfb5056dfa13876f1d",
+      "policy": "first_round",
+      "repeat": 1,
+      "output_sha256": "52e43b2f1c67015399d75c874de81005e663d3a9e6c646fdfa06818669f9edfc",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 1.0,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 33.30608299802407,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "request_id": "05171278e2f483f334ff358f8534bf16f9a9a686c0c0d6742ec3f194d0ae7421",
+      "policy": "first_round",
+      "repeat": 1,
+      "output_sha256": "c93b452a2eb5bde8eb07decff44b8488319ac74491240f1e01215927bd16e8a1",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 0,
+            "satisfied": true
+          },
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 36.08741700008977,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "request_id": "0c2f1ca6860b5f65597815951f1304464a80b3a40ce5de42e272b61554fe5adc",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "output_sha256": "c1f7bd71ef859f36a29ff4357eb0549e3b4b2e8e36551112efe2eb0bca3012d2",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              1,
+              4,
+              12,
+              20
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": [
+              2,
+              6
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 36.32424999887007,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "request_id": "0df4956c90ec5fa347d115a59e8782f61dc28f2d7752a125f34aee318def937d",
+      "policy": "direct",
+      "repeat": 0,
+      "output_sha256": "0ae3f38290df51080ec176ff467129a7562a8b486df5d5dceb9d7c1dede40e97",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 33.33562499756226,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "request_id": "11a9b9cfa3f22c9aaf69e25b1f991d9713ee2ba0a5361a4e313b2b6159516c00",
+      "policy": "full",
+      "repeat": 0,
+      "output_sha256": "4ff822cb1ad75b2519e171508f0cb66a8356389919510957aefcc11abfd05168",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              0.0,
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 34.13958300006925,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "request_id": "124b012630bc2c3c45f3f234de7af66c7b5a34c92d3b2098ac95170551c1c7f4",
+      "policy": "full",
+      "repeat": 0,
+      "output_sha256": "f2175fc93591681725d444ac17a6463c636943a2cc5e5fb438a8400e93cb4f23",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": false,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.102583997679176,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/4",
+      "request_id": "13a877e1c223da6a77f270a62ef7d0663df22fdc24b5d944ce9074d9af460e5a",
+      "policy": "first_round",
+      "repeat": 0,
+      "output_sha256": "52e43b2f1c67015399d75c874de81005e663d3a9e6c646fdfa06818669f9edfc",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 1.0,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 33.77570800148533,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "request_id": "13bf13bd32c5f2cdc785cb94d64337c824222974c45f2924ea94e83040fb3532",
+      "policy": "first_round",
+      "repeat": 0,
+      "output_sha256": "01683a4bd71f62d692ae7cf902430ede0ff6cf4570ddd8daa855cfd0335e94b7",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": false,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 30.496041999867884,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "request_id": "172372446e93ff6d83fb9fc1ce29a55aec902d6f5599dba5003408e70b23330c",
+      "policy": "first_round",
+      "repeat": 0,
+      "output_sha256": "c93b452a2eb5bde8eb07decff44b8488319ac74491240f1e01215927bd16e8a1",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 0,
+            "satisfied": true
+          },
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.092415999708464,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "request_id": "17d4f2530bc3dd4ab0b1e6021a9cc7a007f8206ee09725242438815378c0117f",
+      "policy": "first_round",
+      "repeat": 0,
+      "output_sha256": "a9a3ea030019a8ef66670394572d90a11ce090be54999b3e4857ef141ed94c61",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              3,
+              5,
+              7
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.403000000253087,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "request_id": "17fbc5cf400db226d3184593f435f27fa35b1f4f0f5e2b9764d2650420e462a2",
+      "policy": "full",
+      "repeat": 0,
+      "output_sha256": "62fdeee0a141ae6e4eb5613183942ccc7e2e305e49279573104659e4965dee5c",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.93745899866917,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/4",
+      "request_id": "220df093ae3e9db49016f9a607533130874abf960854ccc58448f869130f2765",
+      "policy": "full",
+      "repeat": 1,
+      "output_sha256": "52e43b2f1c67015399d75c874de81005e663d3a9e6c646fdfa06818669f9edfc",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 1.0,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 27.835332999529783,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "request_id": "285218897d6e6c349a378cbf316d72b53125fd990d7d25707f45ae3f18a0249d",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "output_sha256": "c93b452a2eb5bde8eb07decff44b8488319ac74491240f1e01215927bd16e8a1",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 0,
+            "satisfied": true
+          },
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.28499999991618,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "request_id": "2bfe043402313494f49c3f3277a65b13ba09c085911f933869aaeb8efd9770fd",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "output_sha256": "a9a3ea030019a8ef66670394572d90a11ce090be54999b3e4857ef141ed94c61",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              3,
+              5,
+              7
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.72495900010108,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "request_id": "2cce8f26dbc2901b4ec846c06d1a5048214f8b3ca37b9aef342c2be114947b9b",
+      "policy": "full",
+      "repeat": 0,
+      "output_sha256": "c57de09b39cc068f057abbae49c1425eb1f3966f6c53163d04965a493658f847",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 0,
+            "satisfied": true
+          },
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.572583999746712,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "request_id": "3067f827d5b88c9266ad8ba46d2013a3024cca2834edd59f65fbe656ab9b04db",
+      "policy": "direct",
+      "repeat": 1,
+      "output_sha256": "6fbc69a74c1259a0d26b609e631bc4636e65199f9c0288ff4c494c57366f0d55",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.969957998517202,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/4",
+      "request_id": "31a9891122a7d65dcee9f1764cf4e0fa1dca0d0ed5a41d532e481b8d08c04e14",
+      "policy": "direct",
+      "repeat": 1,
+      "output_sha256": "52e43b2f1c67015399d75c874de81005e663d3a9e6c646fdfa06818669f9edfc",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 1.0,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.940333002537955,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/4",
+      "request_id": "3e3eec00fd552520b63c8daa9e57e0a2839a982f88f1627a875aa23cee654e7a",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "output_sha256": "52e43b2f1c67015399d75c874de81005e663d3a9e6c646fdfa06818669f9edfc",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 1.0,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 31.1902920002467,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "request_id": "3e7cbc8468e6d28e9503aaf7d6399ba4850885fb461725e31dc5b54c3764e9f2",
+      "policy": "first_round",
+      "repeat": 1,
+      "output_sha256": "c1f7bd71ef859f36a29ff4357eb0549e3b4b2e8e36551112efe2eb0bca3012d2",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              1,
+              4,
+              12,
+              20
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": [
+              2,
+              6
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.087083999300376,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "request_id": "3fbd85a480f315abb6e15ce31bf9c9d30ecd90f01b2b984b7ee5e02e398c867c",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "output_sha256": "f31bb3dfb1785823d96803aba9a80dd7f10d98d54295bd9c8eb21c1cd851a4ae",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": "100",
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.177374999359017,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "request_id": "44ff82a810441bc2e063a7dedf56d22e9abc978d841c6d3768cea54667703d68",
+      "policy": "direct",
+      "repeat": 1,
+      "output_sha256": "bcfdec95a6286a1dc7be5d24bf72c241e5decc618f3af67af5ec5ad1f73c2241",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              3,
+              5,
+              7
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.74491699851933,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "request_id": "48e38f0bb8a7c3b9b6b37a43954bba12201d7ecb3b56494508ae9ba81a719036",
+      "policy": "direct",
+      "repeat": 0,
+      "output_sha256": "7e0cdbc51ce6bb6a20fd6f859ee050bd690b51b593a85e06c44ca2a9405081ca",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 0,
+            "satisfied": true
+          },
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.959957998769823,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "request_id": "4da6d2b8bb6c348b9b9a6a12cbdb3d17046250487a74e5cbe06f91d4a52934d9",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "output_sha256": "f31bb3dfb1785823d96803aba9a80dd7f10d98d54295bd9c8eb21c1cd851a4ae",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": "100",
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 29.838957998435944,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "request_id": "4db2fee4b52715a5a99005746e904893e653ad047667389a939c67849148c181",
+      "policy": "full",
+      "repeat": 1,
+      "output_sha256": "f2175fc93591681725d444ac17a6463c636943a2cc5e5fb438a8400e93cb4f23",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": false,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 24.871500001609093,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "request_id": "5122cd747e616c67911b8adbac78298fd816b7ab89985fbab9230a7d06f68261",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "output_sha256": "4ff822cb1ad75b2519e171508f0cb66a8356389919510957aefcc11abfd05168",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              0.0,
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 29.22529200077406,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "request_id": "55afedc3d9979a9794999cfa11ec411f0ab0b6149b397d59f47cee5c08ea6722",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "output_sha256": "01683a4bd71f62d692ae7cf902430ede0ff6cf4570ddd8daa855cfd0335e94b7",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": false,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.290416001254926,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "request_id": "56ee9dbff7e2eb59fa91885d360e90dc8f94b948f936aa432e3fdc2d9ef6d56b",
+      "policy": "full",
+      "repeat": 1,
+      "output_sha256": "7aaaf52766efdc4732d3e6b504bb56d3871579bc9f19b61009c3507b6e8c1194",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              3,
+              5,
+              7
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.497249996988103,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "request_id": "64fff67c48ed0daa011b5e762e067e3d0eb965379431f9c5a48c2ef5a4c5ba69",
+      "policy": "full",
+      "repeat": 0,
+      "output_sha256": "c1f7bd71ef859f36a29ff4357eb0549e3b4b2e8e36551112efe2eb0bca3012d2",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              1,
+              4,
+              12,
+              20
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": [
+              2,
+              6
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.945750003302237,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "request_id": "663ca1b477fefc24218c06fcab18744465ed913395b9f5c8b946f8880fc40987",
+      "policy": "direct",
+      "repeat": 1,
+      "output_sha256": "f31bb3dfb1785823d96803aba9a80dd7f10d98d54295bd9c8eb21c1cd851a4ae",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": "100",
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.84908399937558,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "request_id": "67d3c192746b958f323b576c5025d07bc45fd148ad4e4b1632997a92f0b67d9f",
+      "policy": "direct",
+      "repeat": 0,
+      "output_sha256": "6cf4946f90efd18bba164bdfe9b5c668c348ade72eee163485496c3020551491",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              1,
+              4,
+              12,
+              20
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": [
+              2,
+              6
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 29.118750000634464,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/4",
+      "request_id": "76662500f667a8de554a2fed7fadb671d0d6a57951c09314bb5cd14479b59cd5",
+      "policy": "direct",
+      "repeat": 0,
+      "output_sha256": "52e43b2f1c67015399d75c874de81005e663d3a9e6c646fdfa06818669f9edfc",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 1.0,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 31.280916999094188,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "request_id": "7bcd627086d1dab2b11838ce4851e6ecd951f8bb2a2c3493c2887e7bd2630564",
+      "policy": "direct",
+      "repeat": 0,
+      "output_sha256": "f31bb3dfb1785823d96803aba9a80dd7f10d98d54295bd9c8eb21c1cd851a4ae",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": "100",
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 31.881958999292692,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/4",
+      "request_id": "7d337e37a16311a50b5de032902ac3d7a1adf488d351213756b58713a7280d0b",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "output_sha256": "52e43b2f1c67015399d75c874de81005e663d3a9e6c646fdfa06818669f9edfc",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 1.0,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 29.475625000486616,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "request_id": "7d958c0174ac0d23a0ca059650334d074665b48de742f8fb6017cbf56e93a139",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "output_sha256": "c93b452a2eb5bde8eb07decff44b8488319ac74491240f1e01215927bd16e8a1",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 0,
+            "satisfied": true
+          },
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.6248340010643,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "request_id": "7fb12b30cb452f55cb41af2c656f3185572b7c3638cf20d5716d565f2b0105aa",
+      "policy": "first_round",
+      "repeat": 0,
+      "output_sha256": "f31bb3dfb1785823d96803aba9a80dd7f10d98d54295bd9c8eb21c1cd851a4ae",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": "100",
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 29.191582998464582,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "request_id": "870a605c36ef6377f8cbf4298ac3f3086c7b38358e3e83a1e9865b0de452787e",
+      "policy": "full",
+      "repeat": 0,
+      "output_sha256": "f31bb3dfb1785823d96803aba9a80dd7f10d98d54295bd9c8eb21c1cd851a4ae",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": "100",
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 29.09450000151992,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "request_id": "8a6a683e2239ed7e23d8bf2cfbd0d1ad101c7ca95ab4782a3131de8de1331d81",
+      "policy": "full",
+      "repeat": 1,
+      "output_sha256": "4ff822cb1ad75b2519e171508f0cb66a8356389919510957aefcc11abfd05168",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              0.0,
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 30.899582998245023,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "request_id": "8ef6d6ed25207aa7a0b8c23970c909641cfb790acadfffe8eb5dd41d6a485384",
+      "policy": "direct",
+      "repeat": 1,
+      "output_sha256": "7e0cdbc51ce6bb6a20fd6f859ee050bd690b51b593a85e06c44ca2a9405081ca",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 0,
+            "satisfied": true
+          },
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.43158300270443,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "request_id": "95141d1d32adf84658a57bd9e21a053a131348e6983600f32839ee0cd7e1b06b",
+      "policy": "direct",
+      "repeat": 0,
+      "output_sha256": "56f676d4e964d65a23cd723a6ddd5037ae76a570ad8cfa30dcc82a67a8238738",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              0.0,
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 30.864125001244247,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "request_id": "9c36c2d9cdbfda2118688f4897df98bec8c73d541f1f6ecab7798318726840b0",
+      "policy": "direct",
+      "repeat": 1,
+      "output_sha256": "6cf4946f90efd18bba164bdfe9b5c668c348ade72eee163485496c3020551491",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              1,
+              4,
+              12,
+              20
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": [
+              2,
+              6
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 24.683292002009694,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "request_id": "9dfcb87f279da5b73f509f55ae7dc896803915f4c1a91fe1276d7b5faa3b2b66",
+      "policy": "first_round",
+      "repeat": 1,
+      "output_sha256": "01683a4bd71f62d692ae7cf902430ede0ff6cf4570ddd8daa855cfd0335e94b7",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": false,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.872667000134243,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "request_id": "9e96b42c24057caba3c4bf01acf782d0a5b10e503969f17a7bf59809333d50ab",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "output_sha256": "c1f7bd71ef859f36a29ff4357eb0549e3b4b2e8e36551112efe2eb0bca3012d2",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              1,
+              4,
+              12,
+              20
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": [
+              2,
+              6
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.032207999378443,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "request_id": "a04588fb08b343f0be7e9be22d7db87ceae51764ea6cd2adfc751f20dad757bf",
+      "policy": "first_round",
+      "repeat": 1,
+      "output_sha256": "62fdeee0a141ae6e4eb5613183942ccc7e2e305e49279573104659e4965dee5c",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.765708000108134,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "request_id": "a09f6ba66230e45699c33dd88b8da3bd147f3ecfd38b2e5a7603d15efe5ee094",
+      "policy": "direct",
+      "repeat": 0,
+      "output_sha256": "01683a4bd71f62d692ae7cf902430ede0ff6cf4570ddd8daa855cfd0335e94b7",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": false,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.787417001993163,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/36",
+      "request_id": "a17383e07e3ec5f0eedc12f5b7b0cad6f12840e909ba573560312361e2ab49a4",
+      "policy": "full",
+      "repeat": 1,
+      "output_sha256": "dfa637fb2efa82c91b14fda4025a6f764b4db625ba18529d66da25e9b760e9be",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 0,
+            "satisfied": true
+          },
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.389125003130175,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "request_id": "a6d0451614101f396c3eb6009579113dcbf2ae5ba0966f4c11c62cd8eaa6f60b",
+      "policy": "full",
+      "repeat": 1,
+      "output_sha256": "a035a5c24fef46269efc957d899cad302e20490007fbabef0ac511647bf73bd5",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 24.91879200169933,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "request_id": "a9591de2f50a4a0f5ab9adf70d86b4f76fea305dbe2b98ea0dd46e0bf9e74bcd",
+      "policy": "first_round",
+      "repeat": 1,
+      "output_sha256": "f31bb3dfb1785823d96803aba9a80dd7f10d98d54295bd9c8eb21c1cd851a4ae",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": "100",
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.422999999747844,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "request_id": "aea2024d266883bcfd59d3a7d99168def5bdf28e0ba0559d4881291d583ef7e1",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "output_sha256": "63117531bd24b1c2aa2520ec7b309064909caf4a67fa7fe0e50a4541a2169308",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.499542000034126,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "request_id": "b11f975e09a144d783935bf079396506f77bff85374bbb8ca62abca70e0f95b6",
+      "policy": "direct",
+      "repeat": 1,
+      "output_sha256": "01683a4bd71f62d692ae7cf902430ede0ff6cf4570ddd8daa855cfd0335e94b7",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": false,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.276083997800015,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "request_id": "b321748acab1bda9a17e20ac674996026665c9fdda29b7c7b74e1a42e53850e6",
+      "policy": "first_round",
+      "repeat": 0,
+      "output_sha256": "4ff822cb1ad75b2519e171508f0cb66a8356389919510957aefcc11abfd05168",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              0.0,
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.797708000638522,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "request_id": "b480223dea5b98d9629a7577db986ebcc4b5e8751811160c1c74138fbed5b1e6",
+      "policy": "first_round",
+      "repeat": 0,
+      "output_sha256": "63117531bd24b1c2aa2520ec7b309064909caf4a67fa7fe0e50a4541a2169308",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 27.010750000044936,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "request_id": "b6efa7a1d832179bcb1622c0ef7763c01e3169a31c08c75e9611f35f300da43a",
+      "policy": "first_round",
+      "repeat": 1,
+      "output_sha256": "a9a3ea030019a8ef66670394572d90a11ce090be54999b3e4857ef141ed94c61",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              3,
+              5,
+              7
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.29795800021384,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "request_id": "b751186b84c90b5c48328fad47c3a2aa41a46618268ec0fa526471a5ee31dd54",
+      "policy": "first_round_control",
+      "repeat": 1,
+      "output_sha256": "4ff822cb1ad75b2519e171508f0cb66a8356389919510957aefcc11abfd05168",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              0.0,
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.802374999941094,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/11",
+      "request_id": "b7adb08d3920ff9031d7f9196e249e0f83ef8fb5bcf8725508938b09d8672ce5",
+      "policy": "full",
+      "repeat": 1,
+      "output_sha256": "f31bb3dfb1785823d96803aba9a80dd7f10d98d54295bd9c8eb21c1cd851a4ae",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": "100",
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 27.568417001020862,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "request_id": "ba3173d42c2d27d3059ac6d75315e479210fccf748e955b0385a7575867e3708",
+      "policy": "first_round",
+      "repeat": 1,
+      "output_sha256": "4ff822cb1ad75b2519e171508f0cb66a8356389919510957aefcc11abfd05168",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              0.0,
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 31.746332999318838,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/4",
+      "request_id": "bd31bfb5c727350662c3183bd5b8a677edd0c143a19cb098ebef81ad8fb950e7",
+      "policy": "full",
+      "repeat": 0,
+      "output_sha256": "52e43b2f1c67015399d75c874de81005e663d3a9e6c646fdfa06818669f9edfc",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 1.0,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 28.776458002539584,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/48",
+      "request_id": "c13faf10e550b9d4c4d8ab3381d79d799e0476d34648893f40fb4ba31302d682",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "output_sha256": "01683a4bd71f62d692ae7cf902430ede0ff6cf4570ddd8daa855cfd0335e94b7",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": true,
+            "satisfied": true
+          },
+          {
+            "actual": false,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.166499999613734,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "request_id": "c1520f10856507afd4a352d5003c8dff83bdc434d4392de36b4d4003db236704",
+      "policy": "first_round",
+      "repeat": 0,
+      "output_sha256": "c1f7bd71ef859f36a29ff4357eb0549e3b4b2e8e36551112efe2eb0bca3012d2",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              1,
+              4,
+              12,
+              20
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": [
+              2,
+              6
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.32466699994984,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/62",
+      "request_id": "c5a69f48d5398bd3d164dda2f080fe5ac289a361bc087c207205b4366b27addf",
+      "policy": "full",
+      "repeat": 1,
+      "output_sha256": "c1f7bd71ef859f36a29ff4357eb0549e3b4b2e8e36551112efe2eb0bca3012d2",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              1,
+              4,
+              12,
+              20
+            ],
+            "satisfied": true
+          },
+          {
+            "actual": [
+              2,
+              6
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 24.96025000073132,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "request_id": "c5f17813b7da9ef5a312eecf75af586dbdcfe2ede516da2e2682f866855e51b1",
+      "policy": "full",
+      "repeat": 0,
+      "output_sha256": "a9a3ea030019a8ef66670394572d90a11ce090be54999b3e4857ef141ed94c61",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              3,
+              5,
+              7
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 25.447042000450892,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "request_id": "ebf5bc5783ca409b7cff540f7213be248521910f6f1b4f2989d5b96f09155e06",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "output_sha256": "a9a3ea030019a8ef66670394572d90a11ce090be54999b3e4857ef141ed94c61",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              3,
+              5,
+              7
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 26.364459001342766,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/100",
+      "request_id": "efc749fc8017d15b614f079092389cb3c7249df3d9fcce7e9bbf7b631931758e",
+      "policy": "direct",
+      "repeat": 0,
+      "output_sha256": "bcfdec95a6286a1dc7be5d24bf72c241e5decc618f3af67af5ec5ad1f73c2241",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              3,
+              5,
+              7
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 24.708207998628495,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/21",
+      "request_id": "f89135e2f1de554713042ac1774f029073219f7733be409e5409b45c73c258d1",
+      "policy": "direct",
+      "repeat": 1,
+      "output_sha256": "765eec7462c755cf02328b9caf685c38714d1a2cdaecd579faa447c58b23fc36",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": [
+              0.0,
+              0.25,
+              0.5,
+              0.75,
+              1.0
+            ],
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 27.458917000330985,
+      "benchmark_passed": true
+    },
+    {
+      "task_id": "HumanEval/64",
+      "request_id": "fd819442bad8668e1e45aec6909769ded1783f203c03db0b78bab313bdc7f131",
+      "policy": "first_round_control",
+      "repeat": 0,
+      "output_sha256": "62fdeee0a141ae6e4eb5613183942ccc7e2e305e49279573104659e4965dee5c",
+      "public_status": "examples_satisfied",
+      "public_evaluation": {
+        "status": "executed",
+        "checks": [
+          {
+            "actual": 2,
+            "satisfied": true
+          },
+          {
+            "actual": 3,
+            "satisfied": true
+          }
+        ]
+      },
+      "elapsed_ms": 23.28995800053235,
+      "benchmark_passed": true
+    }
+  ],
+  "limitations": [
+    "Literal >>> examples only; prose Input/Output, mathematical derivations and unknown syntax abstain. No task-ID exceptions or manual certificates.",
+    "A public example may contradict the prose or benchmark specification. False alarms are disagreement with recorded benchmark labels, not proof that a general-purpose verifier is wrong.",
+    "Repeated outputs are descriptive diagnostics, not independent tasks. No datasets, policies or protocols are pooled to infer predictive validity.",
+    "Satisfying examples does not certify correctness; execution errors are not counted as literal counterexamples.",
+    "Labels are joined after evaluation; hidden tests and reference answers are never used to extract examples or choose public outcomes.",
+    "Timings are one local run including child-process startup, not a production latency benchmark or an optimized concurrency recommendation.",
+    "Executes archived code in timed local processes, not a security sandbox.",
+    "Semantic adapters were designed after observing failures; applicability depends on public syntax and wording, not task IDs, but is not held-out validation.",
+    "Only explicitly provided coefficient-order polynomials get a residual test; recognized popcount specification conflicts cause abstention, not correction.",
+    "No new inputs are generated; coverage loss through abstention must be reported alongside false-alarm changes, not hidden by denominator changes."
+  ],
+  "semantic_adapter_sha256": "4acb2dd253a0729175dc92ac33ef4ec2bb745ed725569b05001f57de42cc5643",
+  "comparison_with_literal_snapshot": {
+    "common_outputs": 64,
+    "abstained_previously_covered_outputs": 0,
+    "newly_covered_outputs": 0,
+    "matched_by_policy": {
+      "direct": {
+        "literal": {
+          "covered_outputs": 16,
+          "benchmark_passed_outputs": 16,
+          "benchmark_failed_outputs": 0,
+          "literal_contradiction_on_passed": 0,
+          "literal_contradiction_on_failed": 0,
+          "false_alarm_rate_on_covered_passed": 0.0,
+          "failure_detection_rate_on_covered_failed": null,
+          "benchmark_failure_fraction_among_contradictions": null,
+          "benchmark_failures_despite_satisfied_examples": 0,
+          "execution_error_outputs": 0
+        },
+        "semantic": {
+          "covered_outputs": 16,
+          "benchmark_passed_outputs": 16,
+          "benchmark_failed_outputs": 0,
+          "literal_contradiction_on_passed": 0,
+          "literal_contradiction_on_failed": 0,
+          "false_alarm_rate_on_covered_passed": 0.0,
+          "failure_detection_rate_on_covered_failed": null,
+          "benchmark_failure_fraction_among_contradictions": null,
+          "benchmark_failures_despite_satisfied_examples": 0,
+          "execution_error_outputs": 0
+        }
+      },
+      "first_round": {
+        "literal": {
+          "covered_outputs": 16,
+          "benchmark_passed_outputs": 16,
+          "benchmark_failed_outputs": 0,
+          "literal_contradiction_on_passed": 0,
+          "literal_contradiction_on_failed": 0,
+          "false_alarm_rate_on_covered_passed": 0.0,
+          "failure_detection_rate_on_covered_failed": null,
+          "benchmark_failure_fraction_among_contradictions": null,
+          "benchmark_failures_despite_satisfied_examples": 0,
+          "execution_error_outputs": 0
+        },
+        "semantic": {
+          "covered_outputs": 16,
+          "benchmark_passed_outputs": 16,
+          "benchmark_failed_outputs": 0,
+          "literal_contradiction_on_passed": 0,
+          "literal_contradiction_on_failed": 0,
+          "false_alarm_rate_on_covered_passed": 0.0,
+          "failure_detection_rate_on_covered_failed": null,
+          "benchmark_failure_fraction_among_contradictions": null,
+          "benchmark_failures_despite_satisfied_examples": 0,
+          "execution_error_outputs": 0
+        }
+      },
+      "first_round_control": {
+        "literal": {
+          "covered_outputs": 16,
+          "benchmark_passed_outputs": 16,
+          "benchmark_failed_outputs": 0,
+          "literal_contradiction_on_passed": 0,
+          "literal_contradiction_on_failed": 0,
+          "false_alarm_rate_on_covered_passed": 0.0,
+          "failure_detection_rate_on_covered_failed": null,
+          "benchmark_failure_fraction_among_contradictions": null,
+          "benchmark_failures_despite_satisfied_examples": 0,
+          "execution_error_outputs": 0
+        },
+        "semantic": {
+          "covered_outputs": 16,
+          "benchmark_passed_outputs": 16,
+          "benchmark_failed_outputs": 0,
+          "literal_contradiction_on_passed": 0,
+          "literal_contradiction_on_failed": 0,
+          "false_alarm_rate_on_covered_passed": 0.0,
+          "failure_detection_rate_on_covered_failed": null,
+          "benchmark_failure_fraction_among_contradictions": null,
+          "benchmark_failures_despite_satisfied_examples": 0,
+          "execution_error_outputs": 0
+        }
+      },
+      "full": {
+        "literal": {
+          "covered_outputs": 16,
+          "benchmark_passed_outputs": 16,
+          "benchmark_failed_outputs": 0,
+          "literal_contradiction_on_passed": 0,
+          "literal_contradiction_on_failed": 0,
+          "false_alarm_rate_on_covered_passed": 0.0,
+          "failure_detection_rate_on_covered_failed": null,
+          "benchmark_failure_fraction_among_contradictions": null,
+          "benchmark_failures_despite_satisfied_examples": 0,
+          "execution_error_outputs": 0
+        },
+        "semantic": {
+          "covered_outputs": 16,
+          "benchmark_passed_outputs": 16,
+          "benchmark_failed_outputs": 0,
+          "literal_contradiction_on_passed": 0,
+          "literal_contradiction_on_failed": 0,
+          "false_alarm_rate_on_covered_passed": 0.0,
+          "failure_detection_rate_on_covered_failed": null,
+          "benchmark_failure_fraction_among_contradictions": null,
+          "benchmark_failures_despite_satisfied_examples": 0,
+          "execution_error_outputs": 0
+        }
+      }
+    },
+    "changed_outcomes_on_common_outputs": []
+  },
+  "literal_snapshot_sha256": "0bc146bf9f173f99274b5798fd80a3d6b35693ba7bac3b66fde7fb06721eaeb5"
+}
