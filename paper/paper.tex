@@ -32,7 +32,8 @@
 
 %% ---- Title / authors ----
 \title{How Much Communication Do LLM Teams Need?\\An Empirical Study of Lightweight Message Gating}
-\author{Zhanxiang Qu\\Independent Researcher\\\texttt{zhanxiangqu@126.com}}
+\author{Zhanxiang Qu\\Independent Researcher\\\texttt{zhanxiangqu@126.com}\\
+  \href{https://orcid.org/0009-0000-0137-9751}{ORCID: 0009-0000-0137-9751}}
 \date{}
 \hypersetup{pdfauthor={Zhanxiang Qu},pdftitle={How Much Communication Do LLM Teams Need?}}
 
@@ -352,7 +353,11 @@ The \textbf{random drop} uses Bernoulli admission with task-salted reproducible 
 
 \paragraph{Historical synthesis and accounting.} The merged headline artifact records refreshed synthesis over historical histories, not one end-to-end batch under a verified snapshot. In HumanEval, refresh replaces output and pass fields but inherits token counters from the old variant. Its $3.88\%$ is therefore an archival counter difference, not verified complete refreshed-run savings. In MBPP, failed probes may also be absent from selected-branch counters. Preserving old fields during re-scoring prevents historical mutation; it does not certify their billing completeness. Missing usage must remain unknown rather than be estimated and silently inserted.
 
-\paragraph{Zero-API parameter probe and historical verification.} A recording client configured at temperature $0$ and output limit $77$ receives explicit arguments $0.2/256$ from an agent, $0.1/1024$ from code synthesis, and $0.1/256$ from math synthesis. The client prioritizes these caller arguments. Consequently, CLI configuration alone does not verify the nominal zero-temperature protocol. Four archived HumanEval batches are also re-evaluated, yielding $1312$ code checks and no label changes; this confirms the earlier positive batch observations, not statistical independence. Fixed-input old/current VIB comparisons use deterministic test embeddings, not a live encoder or new model inference, and provide only a limited numerical regression check.
+\paragraph{Zero-API parameter probe and historical verification.} Before protocol repair, a recording client configured at temperature $0$ and output limit $77$ received explicit arguments $0.2/256$ from an agent, $0.1/1024$ from code synthesis, and $0.1/256$ from math synthesis. The client prioritized these caller arguments. Consequently, historical CLI configuration alone does not verify the nominal zero-temperature protocol. Four archived HumanEval batches are also re-evaluated, yielding $1312$ code checks and no label changes; this confirms the earlier positive batch observations, not statistical independence. Fixed-input old/current VIB comparisons use deterministic test embeddings, not a live encoder or new model inference, and provide only a limited numerical regression check.
+
+\paragraph{Subsequent engineering repair.} Zero-API transport tests now verify explicit global and stage-specific parameters across agents, team synthesis, Vanilla synthesis and code-repair retries, while omitted settings retain historical stage defaults. Append-only request evidence links parameters, prompt and output hashes, response identity and known usage; missing usage and unresolved attempts remain unknown. Discarded probes are retained in new-run accounting, and new refreshes link their parent output and incremental requests without claiming complete historical cost. These checks repair prospective instrumentation, not the old data, and provide no new model-performance or monetary-saving evidence.
+
+\paragraph{Budget and recovery component.} A separate SQLite-backed session freezes request specifications, evaluation version and proxy prices. Zero-API tests exercise atomic reservations across worker threads and independent database connections, unresolved-request stopping, and recovery of cached responses without another model call. Budget guarantees are conditional on verified prompt-token bounds and provider output caps; bound violations preserve actual usage and stop the session. Received outputs can resume local evaluation, while missing usage retains the reservation. This component is not an end-to-end migration of the historical benchmark drivers. Price calibration, complete driver integration and a frozen causal-comparison manifest remain prerequisites for paid confirmation runs.
 
 \paragraph{Known sources of run-to-run variance.}
 (i)~The public \texttt{deepseek-chat} endpoint is a rolling alias, so cross-batch differences cannot be cleanly assigned to the gate alone. Gating controls use one named gateway model ID and a same-day anchor, but this does not independently verify the served provider snapshot.
@@ -374,7 +379,11 @@ The \textbf{random drop} uses Bernoulli admission with task-salted reproducible 
 
 \paragraph{Transparency.} Two asymmetries that could otherwise make our numbers hard to interpret are disclosed in the paper rather than left implicit: the backbone used by the main results is a \emph{rolling alias} whose snapshot shifts over time (\Cref{app:sensitivity}), and the reference row of \Cref{tab:crossmodel} comes from a private gateway on a different model version than \S3 (\Cref{app:crossmodel}).
 
-\paragraph{Submission metadata.} This working draft uses the author's confirmed independent-researcher affiliation and contact email. Funding, competing-interest statements, optional ORCID and final journal formatting require author confirmation; independent affiliation does not imply absence of funding or competing interests.
+\paragraph{Funding.} This research received no external funding.
+
+\paragraph{Competing interests.} The author declares no competing interests.
+
+\paragraph{Submission metadata.} This working draft uses the author's confirmed independent-researcher affiliation, contact email and author-supplied ORCID \href{https://orcid.org/0009-0000-0137-9751}{0009-0000-0137-9751}. Data and code release permissions and final journal formatting remain to be verified before submission.
 
 %% ================================================================
 %% References

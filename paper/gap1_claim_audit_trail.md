@@ -1,9 +1,9 @@
 # 阶段性论文审计与下一阶段研究路线
 
-更新日期：2026-10-27。当前论文事实源是 `paper/paper.tex` 和生成表格对应的 JSON。
-本次只改写、审计和运行本地验证，没有启动新付费实验，也没有改动核心路由。
+更新日期：2026-10-28。当前论文事实源是 `paper/paper.tex` 和生成表格对应的 JSON。
+本阶段修复推理参数协议和请求账目，更新论文并运行本地验证，没有启动新付费实验，也没有改动核心路由或提示词。
 
-**最新回溯警告（2026-10-27）：** 本文先前将`*_t0`批次称为贪心，并将刷新后HumanEval标签和历史Token字段并列展示；本轮发现实验CLI温度/输出上限被调用层硬编码覆盖，且合成刷新没有更新其费用字段。因此不能据这些文件名宣称真实温度零稳健性，刷新后的Token也不能冒充最终输出的完整费用。中英文PDF现已撤回这些声称并补入历史正收益，导表不再生成双温度稳健标记。下文旧“贪心”表格是历史命名记录，不表示已验证请求协议；以“历史版本回溯”及中英文同步节为最新判断。核心参数/费用缺陷尚未修复，不能将文案修订当作实现修复。
+**最新回溯警告（2026-10-27；工程状态更新至2026-10-28）：** 本文先前将`*_t0`批次称为贪心，并将刷新后HumanEval标签和历史Token字段并列展示；回溯发现实验CLI温度/输出上限被调用层硬编码覆盖，且合成刷新没有更新其费用字段。因此不能据这些文件名宣称真实温度零稳健性，刷新后的Token也不能冒充最终输出的完整费用。中英文PDF现已撤回这些声称并补入历史正收益，导表不再生成双温度稳健标记。下文旧“贪心”表格是历史命名记录，不表示已验证请求协议；以“历史版本回溯”、“参数与请求账目修复”和“共享预算与恢复”节为最新判断。新代码已通过零API参数、请求证据及独立预算会话测试，但历史缺失账单仍不可恢复，旧benchmark的完整实验恢复流程尚未接入。
 
 ## Journal Readiness Implementation Plan
 
@@ -516,7 +516,181 @@ return stars + (r"$^*$" if mcnemar < 0.05 else "")
 3. **P1：最小因果对照。** 固定现有共同候选流、模型和stage参数，比较旧简洁提示、现有仲裁提示、公开规格优先提示。全任务manifest先冻结，禁止按当前通过/失败挑有利样本；旧94.51%是复现锚点而非直接回退目标。预算在协议和真实请求估算之后确认；初始$3上限，不因原始正收益情绪化扩样。
 4. **P2：独立任务与等实际费用。** 对未用于研究设计的题目做哈希排重，校准完整费用，加入预算受限单智能体与简单门控。预先定义精度容忍界值和统计功效，再讨论稳定优势或投稿确认性主张。
 
-投稿元数据还需作者确认：是否存在资助、是否有利益冲突、ORCID（如有）、公开数据/代码的许可和仓库地址，以及最终目标期刊。独立研究者身份不自动意味着无资助、无利益冲突。本轮两稿仍是研究工作稿，不宣称达到投稿验收门。
+投稿元数据最新确认：作者无资助、不存在利益冲突，已写入两稿；作者随后提供ORCID `0009-0000-0137-9751`，名为`Zhanxiang`、姓为`Qu`，已同步署名。公开数据/代码的许可和仓库地址、最终目标期刊仍待确认。两稿仍是研究工作稿，不宣称达到投稿验收门。
+
+## 参数与请求账目修复 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. 此子技能未安装，按用户“继续”授权在当前会话内联执行，不创建子代理。
+
+**Goal:** 让显式推理参数到达真实请求，建立不会将未知用量算作零的请求证据，并同步作者声明。
+**Architecture:** 不改路由、提示词、评测决策或原始结果。未指定参数时保留历史stage默认；显式全局参数覆盖stage默认，显式stage参数优先。请求在发送前记录pending，完成后关联响应、usage与哈希；刷新保留历史Token字段并单独声明不完整总费用。
+**Tech Stack:** Python dataclasses、threading、JSONL、pytest fake OpenAI transport、Tectonic。
+
+### Task 1: 参数与凭证（零API）
+
+**Files:** 创建`src/inference_protocol.py`、`tests/test_inference_protocol.py`；修改`src/llm_agents.py`、`src/llm_client.py`、`experiments/run_multi_benchmark.py`、`experiments/run_vanilla_baseline.py`。
+
+- [x] 添加失败测试，截获Agent、code三次重试和math请求；修复前8项失败、1项历史默认测试通过：
+
+```python
+client = RecordingClient(temperature=0, max_tokens=77)
+assert all(call["temperature"] == 0 and call["max_tokens"] == 77
+           for call in client.calls)
+```
+
+- [x] 实现优先级`显式调用 > 显式stage > 显式global > 历史stage默认`；历史agent为`0.2/256`，code为`0.1/1024`，math为`0.1/256`。CLI默认改为未指定，避免无意改变历史协议；输出保存effective stage配置。Vanilla使用同一协议，两个CLI的序列化配置均用fake harness验证。
+- [x] 支持`VIB_PRIVATE_API_KEY_ENV=PRIVATE_API_KEY_1`凭证选择；只选择变量名，缺失时fail-fast，不自动切回耗尽key。tmp env文件使用假凭证测试；本地忽略的`configs/pro.env`只新增selector，不改秘密值、端点或模型表。实际配置解析也已确认选择第二key，未创建HTTP客户端、未打印秘密。
+- [x] 运行`python3 -m pytest -q tests/test_inference_protocol.py`，验证温度0、非零值、stage覆盖和历史默认。
+
+### Task 2: 请求证据与刷新关联（零API）
+
+**Files:** 创建`src/request_ledger.py`、`tests/test_request_accounting.py`；修改`src/llm_client.py`、`experiments/targeted_refresh_synthesis.py`、`experiments/run_multi_benchmark.py`、`experiments/run_vanilla_baseline.py`。
+
+- [x] fake transport分别返回正常usage、缺usage、空content后成功、异常后成功；断言全部attempt入账，已收到但废弃的响应仍计Token，缺usage与未确认失败保留unknown。初始8项账目测试全失败；实现后新增截断、无效usage、写盘失败和秘密日志保护回归。
+- [x] 请求账目结构包含本地request ID、provider response/request ID、模型/端点、prompt及output SHA256、effective参数、耗时、状态与usage；不保存key，不打印异常文本。JSONL在发送前fsync pending、完成后fsync终态，禁用SDK隐藏重试。写盘失败不重发付费请求；恢复pending仅恢复证据，不自动重发。
+- [x] 刷新保留`token_stats`为历史计数，独立写`refresh_accounting`，包含parent/output哈希、请求账目和新增已知用量；历史完整费用缺失标unknown。同来源及协议已完成刷新可复用，失败或来源变化拒绝自动重发。缺usage但已完成的输出可复用，账目仍标未知，不为补费用再次生成。
+
+```python
+assert refreshed["token_stats"] == original["token_stats"]
+assert refreshed["refresh_accounting"]["combined_cost_status"] == "unknown"
+```
+
+- [x] 运行`python3 -m pytest -q tests/test_request_accounting.py tests/test_posthoc_scripts.py tests/test_multi_benchmark.py`；不启动刷新CLI或API实验。废弃MBPP probe的新运行账目计入总Token，选中输出计数独立保留；不改oracle早停决策，不移回主结果。
+
+### Task 3: 投稿与验收
+
+**Files:** 修改`paper/paper.tex`、`paper/paper_zh.tex`与本文件；重编译两份PDF。
+
+- [x] 写入作者确认的无资助、无利益冲突；该阶段ORCID尚未提供，后续共享预算阶段已补入作者提供的标识。历史实验的参数与费用缺陷叙述继续保留，修代码不追溯改变旧协议。
+- [x] 运行`python3 -m pytest -q`与`git diff --check`；最终232项通过（10.96s）。英文18页、中文11页，Overfull/未定义引用/缺字均0；英文Underfull120，中文0。PDFKit文本与声明页渲染核对通过。原始结果和表图无变更；本地凭证文件仅新增非秘密selector。
+- [x] 记录工程修复证据和剩余付费前置门：累计预算、幂等调度及独立任务manifest另行验收；本轮零新增API，不自动启动P1。
+
+### 本轮验收与剩余边界
+
+有效配置不再由文件名猜测，必须使用`inference_protocol.effective`并核对`request_records.parameters`。账目数字只汇总已知usage；`usage_complete=false`不能解释为完整费用节省。新主/Vanilla报告保存逐请求记录和完整性标记，JSONL按活跃client独占文件使用；不能让两个client同时恢复和写入同一文件。新CLI拒绝已有输出或账目目录，是防止误覆盖、误重发的守卫，不是完整断点续跑实现。
+
+刷新parent、输出、上下文和合成源哈希已关联；raw response与净化代码artifact哈希分层保存。缺账目的历史产物仍不可恢复成完整费用；新账目也不自动产生官方美元账单，缓存计价及价目版本须另行校准。所有数学/代码历史结果、路由、提示词不变；截断响应的新调用被标记并拒绝静默接纳。
+
+下一步先补共享预算预留、未知用量时的保守停机、不可变manifest及恢复状态机的零API测试，再确认小额P1预算并运行固定候选提示词对照。没有从当前232项工程测试推导出精度改进、稳定VIB优势或新费用节省。本轮未创建Git提交、未推送；上一轮7个分组提交保持原样。
+
+## 共享预算与恢复 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. 子技能未安装，按用户继续授权内联执行，不创建子代理。
+
+**Goal:** 建立不可变任务清单、原子共享预留、未知用量停机和已收到输出的零重复付费恢复；同步作者ORCID。
+**Architecture:** 新增SQLite会话守卫，不改变旧runner或旧结果。任务清单和代理价目表在请求前冻结；`planned → reserved → received → completed`，未知响应进入`unknown`并停止新请求。事务中执行预算检查及预留，网络和评测在事务外；已收到输出只重做本地评测，不重发API。
+**Tech Stack:** Python sqlite3、Decimal、pytest、ThreadPoolExecutor、Tectonic。
+
+### Task 1: 冻结清单与预算
+
+**Files:** 创建`src/experiment_session.py`、`tests/test_experiment_session.py`。
+
+- [x] 先写失败测试：预算刚好只够一份预留时，48个任务/8个worker同时claim只有一份获得预留；拒绝重复job ID、协议漂移、NaN价目和凭证字段。
+- [x] 实现`ExperimentSession(path, manifest)`，清单包含模型/端点、价目版本、预算、评测版本及完整请求spec；正整数prompt token上界由调用者验证，不把字节估算声称为硬保证。SQLite `BEGIN IMMEDIATE`原子检查全部已支出加未决预留。
+
+```python
+session.claim(job_id)
+assert session.summary()["committed_units"] <= session.summary()["budget_units"]
+```
+
+- [x] 用纳美元整数与Decimal向上取整，不用浮点累计；实际用量超出冻结上界立即停止并如实保存超支，不能声称预留公式能约束不遵守上界的提供方。
+- [x] 运行`python3 -m pytest -q tests/test_experiment_session.py`，先确认缺少模块而失败，再实现最小状态机。
+
+### Task 2: 请求与恢复
+
+**Files:** 修改`src/llm_client.py`以返回可核验的响应元数据；继续扩展`tests/test_experiment_session.py`。
+
+- [x] 实现`session.execute(job_id, client)`：核对冻结模型/端点，使用真实客户端的单次请求入口（关闭内部重试），所有重试必须是清单中不同job ID；已received/completed直接返回缓存。
+- [x] 持久化`received`及输出指纹后再评测；实现`session.evaluate(job_id, evaluator, evaluation_version)`，只接受冻结评测版本和布尔结果。评测异常只阻止后续请求，不重发已收到响应。
+
+```python
+session.execute(job_id, fake_transport_client)
+restored = ExperimentSession(path, manifest)
+restored.execute(job_id, fake_transport_client)
+assert len(fake_transport_calls) == 1
+```
+
+- [x] 测试未知usage、429、模型漂移、截断、崩溃后pending、响应/评测之间恢复、数据库响应篡改；未知/未完成保留预留，不自动免费释放。
+- [x] 零API测试完成后才讨论新实验driver接入及已确认预算；不把此独立会话模块的测试当作旧benchmark已支持端到端续跑。
+
+### Task 3: 作者与验收
+
+**Files:** 修改`paper/paper.tex`、`paper/paper_zh.tex`、本文件；重编译两稿。
+
+- [x] 离线验证`0009-0000-0137-9751`的格式及ISO校验位有效；作者姓名为`Zhanxiang Qu`。这不是对ORCID线上资料/身份的独立核验。
+- [x] 署名增加ORCID链接，保留无资助、无利益冲突声明；论文如实区分已测会话机制与未接入的全流程付费driver。
+- [x] 运行全量`python3 -m pytest -q`及`git diff --check`，编译两稿、检查Overfull与引用并核对首页ORCID。历史结果、密钥及路由不变，零新增API。
+
+### 共享预算阶段验收与后续门槛
+
+全量回归269项通过（12.82s）。受控并发测试覆盖48任务/8 worker共享会话，以及2、8、16 worker独立SQLite连接：预算仅够一份时只批准一份预留；同任务并发仅发送一次fake transport请求。这不是生产最优并发或真实模型质量的证据。
+
+实现源SHA256也被绑定到会话，源码变化拒绝旧会话恢复；operation ID同时绑定manifest与job ID，避免不同实验的同名任务串账。未知用量、请求中断和未完成预留均保守停机；已收到或完成的输出恢复不再调用模型。评测仍在推理清单之外，字段守卫不能自动证明任意prompt没有答案泄漏。
+
+英文19页、中文11页；两稿Overfull、未定义引用、缺字均0。英文Underfull124，中文0；英文首页仍有双栏纵向留白，正式期刊模板阶段需精排。中文编译依赖本机字体，跨平台源稿重编译仍需配置字体。PDFKit文本及首页渲染已核对ORCID，保留无资助和无利益冲突声明。
+
+下一阶段先接入隔离的新实验driver、构造并校验真实prompt Token上界、冻结共同候选流的因果对照清单，并校准含缓存计价的价目版本。完成零API预检及请求/费用估算后，再确认小额预算；不能把代理纳美元当作官方账单。本轮未改历史结果、表图、核心路由或`.qoder`，未调用API、未创建Git提交、未推送，也没有新精度或费用节省结论。
+
+## 隔离调度与离线预检 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. 子技能未安装，沿用当前会话内联执行；不创建子代理，不自动提交已有改动。
+
+**Goal:** 为不可变请求清单提供离线费用预检和可恢复的独立调度入口，不改旧benchmark，不启动付费实验。
+**Architecture:** CLI只预检，不导入客户端或读取凭证。调度函数接受可信的客户端与本地评测适配器，先核对价目、Token上界、评测材料及源码指纹，再检查绑定清单的预算批准；SQLite保留单次请求与恢复状态。证据文件及人工核验声明是实验输入，不把“文件有哈希”当作正确性的证明。
+**Tech Stack:** Python pathlib、hashlib、ThreadPoolExecutor、sqlite3、pytest fake transport。
+
+### Task 1: 预检契约
+
+**Files:** 创建`src/experiment_driver.py`、`tests/test_experiment_driver.py`；修改`src/experiment_session.py`增加公开的单任务预留报价。
+
+- [x] 添加失败测试：缺少或被篡改的证据、模型/参数不匹配、预算不足及源码漂移，在客户端创建前被拒绝；重复job ID沿用会话守卫及其回归测试。
+- [x] 实现以下接口；预检使用临时SQLite验证原会话格式，不创建实际会话，不读`pro.env`：
+
+```python
+def preflight(manifest):
+    """Return ready, blockers, per-job reservations and proxy cost scope."""
+
+def run_session(manifest, session_path, client_factory, evaluators, *, approval, workers=1):
+    """Require manifest-bound approval before any injected transport call."""
+```
+
+- [x] 证据契约：价目说明文件及SHA256、价格版本/上下界核验声明；逐job消息SHA256及已核验prompt上界、输出上界提供方声明；本地评测文件SHA256与评测版本；driver及底层请求/账目/会话源码SHA256。只检查一致性与文件完整性，不宣称自动完成tokenizer/账单校准。
+- [x] 运行`python3 -m pytest -q tests/test_experiment_driver.py`，确认新模块缺失导致失败，再实现最小预检。
+
+### Task 2: 有界调度与恢复
+
+**Files:** 继续实现`src/experiment_driver.py`和`tests/test_experiment_driver.py`；创建`experiments/preflight_session.py`。
+
+- [x] 先测试已received/completed任务不创建客户端、未知usage停止提交新任务、在途请求仍结算、每job客户端由工厂独立创建；factory异常保守停机而不重试。
+- [x] 实现最多`workers`个在途任务的调度，不一次提交全部清单；恢复时只对planned调用single-attempt，received仅本地评测，completed复用。
+
+```python
+report = run_session(contract, path, fake_factory, evaluators,
+                     approval={"manifest_sha256": fingerprint(contract),
+                               "budget_usd": contract["budget_usd"], "approved": True})
+assert report["summary"]["run_complete"]
+```
+
+- [x] CLI通过`python3 -m experiments.preflight_session --manifest FILE --output NEW_FILE`输出预检JSON；禁止覆盖现有文件，没有live/付费开关。
+- [x] 运行专项测试；在同一清单上恢复时fake请求次数不增加，错误报告只留异常类型，不传播含凭证的异常原文。
+
+### Task 3: 验收与使用说明
+
+**Files:** 创建`docs/experiment_session_driver.md`；更新本文件。
+
+- [x] 全量`python3 -m pytest -q`和`git diff --check`通过后记录真实测试数；CLI集成测试显式禁止网络。
+- [x] 文档明确：可信适配器边界、并发停机允许已在途请求完成、证据声明不是tokenizer正确性证明、预算只按冻结代理价格计费、真实因果清单与价格核验仍待完成。
+- [x] 不新增论文性能数字，不自动调用API、提交Git或恢复旧临时脚本。
+
+### 隔离调度阶段验收
+
+全量307项测试通过（12.58s），相对上一阶段新增38项。新模块第一次测试因缺少模块而失败；实现后首轮27项专项通过，继续补充禁网、证据临时变化、未决恢复及源码漂移等回归。CLI真实模块入口的`--help`仅列出manifest与output参数，无付费开关。
+
+4 worker对12个合成任务完成受控调度；恢复全部已完成任务时不创建客户端且fake请求总数仍为12。单worker未知usage后只发送1次fake请求，其余7项留在planned；双worker确定性测试中1个未知请求保留预留，另一已在途请求完成评测并保留15000纳美元的合成代理费用。以上数字只属于测试夹具，不能用于生产价格、最优并发或模型质量结论。
+
+预检要求全清单的最坏代理预留不超过预算，并核对绑定完整manifest的预算批准。执行前及客户端创建后复核证据；适配器仍是可信本地代码，外部证据须受控只读，哈希和reviewed声明并不是自动tokenizer/账单校准。停止后的缓存任务仍可恢复本地评测，未知请求不自动重发。
+
+本轮交付[隔离调度使用说明](../docs/experiment_session_driver.md)，没有生成或运行真实因果清单，没有校准真实价目/Token上界，也没有迁移旧benchmark。下一步应冻结真实共同候选流的完整任务与提示词版本，并接入独立进程的真实评分适配器；完成费用与上界核验后才请求用户批准该清单的付费预算。本轮历史结果、论文PDF/表图、核心路由、`.qoder`和凭证均未新增修改，未调用API、未提交Git、未推送。
 
 ## 一键导航
 
