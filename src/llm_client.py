@@ -12,8 +12,17 @@ from __future__ import annotations
 import os
 import re
 import time
-from dataclasses import dataclass
-from typing import List, Dict, Optional, Tuple
+import json
+import uuid
+from dataclasses import dataclass, field
+from typing import Any, List, Dict, Optional, Tuple
+
+try:
+    from .inference_protocol import InferenceProtocol
+    from .request_ledger import RequestLedger, LedgerError, fingerprint
+except ImportError:
+    from inference_protocol import InferenceProtocol
+    from request_ledger import RequestLedger, LedgerError, fingerprint
 
 
 # ---------------------------------------------------------------------------
@@ -143,7 +152,7 @@ class ResolvedModel:
     provider: str
     model_id: str
     base_url: str
-    api_key: str
+    api_key: str = field(repr=False)
     label: str
 
     def describe(self) -> str:
@@ -238,6 +247,14 @@ def _resolve_provider(
 
     # --- API key ----------------------------------------------------------------
     key_env = cfg["api_key_env"]
+    if provider == "private":
+        key_env = (
+            os.environ.get("VIB_PRIVATE_API_KEY_ENV", "").strip()
+            or pro_env.get("VIB_PRIVATE_API_KEY_ENV", "").strip()
+            or key_env
+        )
+        if not re.fullmatch(r"PRIVATE_API_KEY(?:_\d+)?", key_env):
+            raise ValueError("VIB_PRIVATE_API_KEY_ENV must name a PRIVATE_API_KEY variable")
     api_key = os.environ.get(key_env, "").strip() or pro_env.get(key_env, "")
     if not api_key:
         raise ValueError(
@@ -304,11 +321,12 @@ class LLMClient:
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
         model: str = "deepseek-chat",
-        temperature: float = 0.7,
-        max_tokens: int = 1024,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
         provider: Optional[str] = None,
         env_path: str = DEFAULT_PRO_ENV,
         _resolved: Optional[ResolvedModel] = None,
+        ledger_path: Optional[str] = None,
     ):
         """
         Initialise the client.
@@ -345,13 +363,17 @@ class LLMClient:
         self.model: str = resolved.model_id
         self.base_url: str = resolved.base_url
         self.api_key: str = resolved.api_key
-        self.temperature = temperature
-        self.max_tokens = max_tokens
+        self.inference_protocol = InferenceProtocol(temperature=temperature, max_tokens=max_tokens)
+        self.temperature = 0.7 if temperature is None else temperature
+        self.max_tokens = 1024 if max_tokens is None else max_tokens
 
         # Token usage tracking
         self.total_prompt_tokens = 0
         self.total_completion_tokens = 0
         self.total_calls = 0
+        self.request_ledger = RequestLedger(ledger_path)
+        self.request_context: Dict[str, str] = {}
+        self._stats_offset = 0
 
         self._client = None
 
@@ -364,6 +386,7 @@ class LLMClient:
                 self._client = OpenAI(
                     api_key=self.api_key,
                     base_url=self.base_url,
+                    max_retries=0,
                 )
             except ImportError as exc:
                 raise ImportError(
@@ -377,36 +400,64 @@ class LLMClient:
         messages: List[Dict[str, str]],
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
+        stage: Optional[str] = None,
     ) -> Dict:
         """Send a chat completion request.
 
         Returns a dict with ``content``, ``prompt_tokens``,
         ``completion_tokens``, ``total_tokens``. Transient failures are retried
-        with exponential backoff; if every attempt fails, the error string is
-        returned as ``content`` with zero token counts, matching the previous
-        ``DeepSeekClient`` contract.
+        with exponential backoff. Legacy numeric counters report known usage
+        only; ``usage_status`` and the request ledger distinguish unknown cost.
+        Error messages exclude exception text to avoid leaking credentials.
         """
         max_attempts = 3
         backoff_base = 1.5
         last_exc: Optional[Exception] = None
+        operation_id = uuid.uuid4().hex
 
         for attempt in range(max_attempts):
             try:
-                return self._chat_once(messages, temperature, max_tokens)
+                return self._chat_once(
+                    messages, temperature, max_tokens,
+                    operation_id=operation_id, attempt=attempt + 1, stage=stage,
+                )
+            except LedgerError:
+                raise
             except Exception as exc:  # pragma: no cover - network fence
                 last_exc = exc
-                print(f"[LLM API Error | {self.provider}:{self.model}] {exc} "
-                      f"(attempt {attempt + 1}/{max_attempts})")
+                print(json.dumps({
+                    "event": "llm_request_error", "provider": self.provider,
+                    "model": self.model, "operation_id": operation_id,
+                    "error_type": type(exc).__name__, "attempt": attempt + 1,
+                }))
+                if getattr(exc, "status_code", None) in (401, 403, 429):
+                    break
                 if attempt < max_attempts - 1:
                     time.sleep(backoff_base ** attempt)
 
-        print(f"[LLM API Retry Failed] {last_exc}")
         return {
-            "content": f"[API Error: {last_exc}]",
+            "content": f"[API Error: {type(last_exc).__name__}]",
             "prompt_tokens": 0,
             "completion_tokens": 0,
             "total_tokens": 0,
+            "usage_status": "unknown",
+            "operation_id": operation_id,
         }
+
+    # ------------------------------------------------------------------
+    def chat_single_attempt(
+        self, messages, temperature, max_tokens, *, operation_id, stage=None,
+    ) -> Dict:
+        """Send exactly once for an externally reserved, manifest-bound job.
+
+        Unlike ``chat``, failures propagate without automatic retries. The
+        request ledger still records every response and unresolved attempt.
+        """
+        if not isinstance(operation_id, str) or not operation_id:
+            raise ValueError("A frozen operation_id is required")
+        return self._chat_once(
+            messages, temperature, max_tokens, operation_id=operation_id, stage=stage,
+        )
 
     # ------------------------------------------------------------------
     def _chat_once(
@@ -414,47 +465,97 @@ class LLMClient:
         messages: List[Dict[str, str]],
         temperature: Optional[float],
         max_tokens: Optional[int],
+        *,
+        operation_id: Optional[str] = None,
+        attempt: int = 1,
+        stage: Optional[str] = None,
     ) -> Dict:
-        response = self.client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            temperature=temperature if temperature is not None else self.temperature,
-            max_tokens=max_tokens if max_tokens is not None else self.max_tokens,
+        parameters = {
+            "temperature": temperature if temperature is not None else self.temperature,
+            "max_tokens": max_tokens if max_tokens is not None else self.max_tokens,
+        }
+        InferenceProtocol(**parameters)
+        request_id = self.request_ledger.start(
+            {
+                "provider": self.provider, "model": self.model, "base_url": self.base_url,
+                "prompt_sha256": fingerprint(messages), "parameters": parameters,
+                "context": dict(self.request_context), "stage": stage,
+            },
+            operation_id=operation_id or uuid.uuid4().hex, attempt=attempt,
         )
-        prompt_tokens = response.usage.prompt_tokens if response.usage else 0
-        completion_tokens = response.usage.completion_tokens if response.usage else 0
-        self.total_prompt_tokens += prompt_tokens
-        self.total_completion_tokens += completion_tokens
-        self.total_calls += 1
+        started = time.monotonic()
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model, messages=messages, **parameters,
+            )
+        except Exception as exc:
+            self.request_ledger.finish(
+                request_id, status="failed", error_type=type(exc).__name__,
+                elapsed_seconds=time.monotonic() - started,
+            )
+            raise
 
-        # ``message.content`` is legitimately nullable in the OpenAI schema. An
-        # empty completion is a transient server-side condition, so raise instead
-        # of handing ``None`` downstream — that lets ``chat`` retry, and keeps
-        # callers that do ``content.strip()`` from crashing the whole task.
-        content = response.choices[0].message.content
-        if content is None:
-            raise ValueError("empty completion content")
+        raw_usage = getattr(response, "usage", None)
+        prompt_tokens = getattr(raw_usage, "prompt_tokens", None)
+        completion_tokens = getattr(raw_usage, "completion_tokens", None)
+        usage_known = all(isinstance(count, int) and not isinstance(count, bool) and count >= 0
+                          for count in (prompt_tokens, completion_tokens))
+        usage = ({"prompt_tokens": prompt_tokens, "completion_tokens": completion_tokens,
+                  "total_tokens": prompt_tokens + completion_tokens} if usage_known else None)
+        provider_usage = raw_usage.model_dump(mode="json") if hasattr(raw_usage, "model_dump") else None
+        choices = getattr(response, "choices", None)
+        content = getattr(getattr(choices[0], "message", None), "content", None) if choices else None
+        finish_reason = getattr(choices[0], "finish_reason", None) if choices else None
+        valid_content = isinstance(content, str) and bool(content.strip()) and finish_reason != "length"
+        status = "completed" if valid_content else "invalid_response"
+        if finish_reason == "length":
+            status = "truncated"
+        self.request_ledger.finish(
+            request_id, status=status,
+            response_id=getattr(response, "id", None),
+            provider_request_id=getattr(response, "_request_id", None),
+            served_model=getattr(response, "model", None),
+            output_sha256=fingerprint(content),
+            usage=usage, usage_status="known" if usage_known else "unknown",
+            provider_usage=provider_usage, finish_reason=finish_reason,
+            elapsed_seconds=time.monotonic() - started,
+        )
+        self.get_token_stats()
+        if not valid_content:
+            raise ValueError("empty or truncated completion")
 
         return {
             "content": content,
-            "prompt_tokens": prompt_tokens,
-            "completion_tokens": completion_tokens,
-            "total_tokens": prompt_tokens + completion_tokens,
+            "prompt_tokens": usage["prompt_tokens"] if usage else 0,
+            "completion_tokens": usage["completion_tokens"] if usage else 0,
+            "total_tokens": usage["total_tokens"] if usage else 0,
+            "usage_status": "known" if usage_known else "unknown",
+            "request_id": request_id,
+            "operation_id": operation_id,
+            "response_id": getattr(response, "id", None),
+            "provider_request_id": getattr(response, "_request_id", None),
+            "served_model": getattr(response, "model", None),
+            "finish_reason": finish_reason,
+            "output_sha256": fingerprint(content),
         }
 
     # ------------------------------------------------------------------
     def get_token_stats(self) -> Dict:
-        return {
-            "total_calls": self.total_calls,
-            "total_prompt_tokens": self.total_prompt_tokens,
-            "total_completion_tokens": self.total_completion_tokens,
-            "total_tokens": self.total_prompt_tokens + self.total_completion_tokens,
-        }
+        stats = self.request_ledger.summary(self._stats_offset)
+        self.total_calls = stats["total_calls"]
+        self.total_prompt_tokens = stats["total_prompt_tokens"]
+        self.total_completion_tokens = stats["total_completion_tokens"]
+        return stats
+
+    def get_request_records(self) -> List[Dict]:
+        """Return all request evidence, including retries and pre-reset attempts."""
+        return self.request_ledger.records()
 
     def reset_stats(self) -> None:
         self.total_prompt_tokens = 0
         self.total_completion_tokens = 0
         self.total_calls = 0
+        self._stats_offset = len(self.request_ledger.records())
 
 
 # Alias: old callers ``from llm_client import DeepSeekClient`` keep working
@@ -471,6 +572,7 @@ def build_client(
     max_tokens: Optional[int] = None,
     env_path: str = DEFAULT_PRO_ENV,
     log: bool = True,
+    ledger_path: Optional[str] = None,
 ) -> LLMClient:
     """Factory used by experimental entry-points.
 
@@ -498,4 +600,4 @@ def build_client(
         kwargs["temperature"] = temperature
     if max_tokens is not None:
         kwargs["max_tokens"] = max_tokens
-    return LLMClient(_resolved=resolved, **kwargs)
+    return LLMClient(_resolved=resolved, ledger_path=ledger_path, **kwargs)

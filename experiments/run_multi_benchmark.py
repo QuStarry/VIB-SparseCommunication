@@ -30,6 +30,7 @@ from typing import List, Dict, Any, Optional, Tuple
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
 from llm_client import DeepSeekClient, resolve_deepseek_api_key, build_client, list_known_provider_aliases
+from inference_protocol import InferenceProtocol, stage_parameters
 from llm_agents import LLMAgent
 from vib_router import VIBSparseCommRouter, VIBEvaluationResult
 from workflow import VIBMultiAgentWorkflow
@@ -838,9 +839,12 @@ def generate_final_code(client: DeepSeekClient, prompt: str, history: list) -> s
 
         res = client.chat(
             messages=[{"role": "user", "content": current_prompt}],
-            max_tokens=1024, temperature=0.1
+            stage="code",
+            **stage_parameters(client, "code"),
         )
         code = sanitize_code_output(res["content"])
+        if res.get("request_id") and hasattr(client, "request_ledger"):
+            client.request_ledger.annotate_artifact(res["request_id"], code)
         last_code = code
 
         if not code or code.startswith("[API Error:"):
@@ -994,7 +998,8 @@ def generate_final_answer(client: DeepSeekClient, prompt: str, history: list) ->
 
     res = client.chat(
         messages=[{"role": "user", "content": prompt_text}],
-        max_tokens=256, temperature=0.1
+        stage="math",
+        **stage_parameters(client, "math"),
     )
     return res["content"]
 
@@ -1005,15 +1010,17 @@ def generate_final_answer(client: DeepSeekClient, prompt: str, history: list) ->
 
 class MultiDatasetHarness:
     def __init__(self, api_key: str, max_steps: int = 2, workers: int = 1, experiment_config: Optional[ExperimentConfig] = None,
-                 llm_model: str = "deepseek-chat", llm_provider: Optional[str] = None, llm_temperature: float = 0.1,
-                 llm_max_tokens: int = 1024,
+                 llm_model: str = "deepseek-chat", llm_provider: Optional[str] = None, llm_temperature: Optional[float] = None,
+                 llm_max_tokens: Optional[int] = None,
                  router_beta0: Optional[float] = None,
                  router_lambda: Optional[float] = None,
                  router_gamma: Optional[float] = None,
                  router_gating_mode: str = "vib",
                  router_keep_rate: Optional[float] = None,
                  router_sim_threshold: Optional[float] = None,
-                 router_random_seed: int = 20260812):
+                 router_random_seed: int = 20260812,
+                 inference_protocol: Optional[InferenceProtocol] = None,
+                 request_ledger_dir: Optional[str] = None):
         self.api_key = api_key
         self.max_steps = max_steps
         self.workers = max(1, workers)
@@ -1023,6 +1030,10 @@ class MultiDatasetHarness:
         self.llm_provider = llm_provider
         self.llm_temperature = llm_temperature
         self.llm_max_tokens = llm_max_tokens
+        self.inference_protocol = inference_protocol or InferenceProtocol(
+            temperature=llm_temperature, max_tokens=llm_max_tokens,
+        )
+        self.request_ledger_dir = request_ledger_dir
         self.router_beta0 = router_beta0
         self.router_lambda = router_lambda
         self.router_gamma = router_gamma
@@ -1088,13 +1099,24 @@ class MultiDatasetHarness:
         router,
         max_steps_override: Optional[int] = None
     ) -> Dict[str, Any]:
+        ledger_kwargs = {}
+        if self.request_ledger_dir:
+            import uuid
+            ledger_kwargs["ledger_path"] = os.path.join(self.request_ledger_dir, f"{uuid.uuid4().hex}.jsonl")
         client = build_client(
             self.llm_model,
             self.llm_provider,
             temperature=self.llm_temperature,
             max_tokens=self.llm_max_tokens,
             log=False,
+            **ledger_kwargs,
         )
+        client.inference_protocol = self.inference_protocol
+        client.request_context = {
+            "task_id": sample.task_id, "dataset": sample.dataset_name,
+            "variant": "full" if isinstance(router, BypassVIBRouter) else "vib",
+            "purpose": "oracle_probe" if max_steps_override == 1 else "benchmark",
+        }
         agents = create_agents_fn(client)
         workflow_options = self._workflow_options_for_sample(sample)
         workflow = VIBMultiAgentWorkflow(
@@ -1116,6 +1138,8 @@ class MultiDatasetHarness:
             "output": final_output,
             "passed": passed,
             "token_stats": token_stats,
+            "inference_protocol": self.inference_protocol.describe(),
+            "request_records": client.get_request_records() if hasattr(client, "get_request_records") else [],
             "early_stopped": False
         }
 
@@ -1137,7 +1161,31 @@ class MultiDatasetHarness:
             "output": variant_result["output"],
             "workflow_stats": variant_result["workflow_stats"],
             "token_stats": token_stats,
+            "inference_protocol": variant_result.get("inference_protocol"),
+            "request_records": variant_result.get("request_records", []),
+            "discarded_attempts": variant_result.get("discarded_attempts", []),
+            "selected_token_stats": variant_result.get("selected_token_stats"),
             "early_stopped": variant_result.get("early_stopped", False),
+        }
+
+    @staticmethod
+    def _include_discarded_probe(selected, probe):
+        """Preserve the selected history but charge and retain the rejected probe."""
+        selected_stats = selected["token_stats"]
+        probe_stats = probe["token_stats"]
+        combined = {
+            name: selected_stats.get(name, 0) + probe_stats.get(name, 0)
+            for name in ("total_calls", "total_prompt_tokens", "total_completion_tokens", "total_tokens",
+                         "total_attempts", "known_usage_requests", "unknown_usage_requests")
+        }
+        combined["usage_complete"] = all(
+            stats.get("usage_complete", False) for stats in (selected_stats, probe_stats)
+        )
+        combined["counter_scope"] = "all_attempts_known_usage_only"
+        return {
+            **selected, "selected_token_stats": selected_stats, "token_stats": combined,
+            "discarded_attempts": [probe],
+            "request_records": probe.get("request_records", []) + selected.get("request_records", []),
         }
 
     def run_single_task_with_trace(self, sample: TaskSample) -> Dict[str, Any]:
@@ -1166,6 +1214,7 @@ class MultiDatasetHarness:
                         generate_fn=generate_fn,
                         router=BypassVIBRouter()
                     )
+                    full_result = self._include_discarded_probe(full_result, probe_full)
 
                 probe_vib = self._run_variant(
                     sample=sample,
@@ -1184,6 +1233,7 @@ class MultiDatasetHarness:
                         generate_fn=generate_fn,
                         router=self._create_vib_router(sample.task_id)
                     )
+                    vib_result = self._include_discarded_probe(vib_result, probe_vib)
             else:
                 full_result = self._run_variant(
                     sample=sample,
@@ -1463,6 +1513,12 @@ class MultiDatasetHarness:
 
             all_results[ds_name] = [asdict(r) for r in results if r is not None]
             trace_results[ds_name] = [trace for trace in traces if trace is not None]
+            summary[ds_name]["usage_complete"] = bool(trace_results[ds_name]) and all(
+                trace.get(arm) and trace[arm].get("token_stats", {}).get("usage_complete", False)
+                for trace in trace_results[ds_name] for arm in ("full", "vib")
+            ) and len(trace_results[ds_name]) == total
+            summary[ds_name]["token_counter_scope"] = "all_attempts_known_usage_only"
+            summary[ds_name]["currency_cost_status"] = "not_priced"
 
         # 打印总报告
         self._print_summary_report(summary)
@@ -1475,6 +1531,8 @@ class MultiDatasetHarness:
             "detailed_results": all_results,
             "trace_results": trace_results,
             "experiment_config": asdict(self.experiment_config),
+            "inference_protocol": self.inference_protocol.describe(),
+            "request_ledger_directory": self.request_ledger_dir,
         }
 
     def _print_summary_report(self, summary: Dict[str, Any]):
@@ -1491,6 +1549,8 @@ class MultiDatasetHarness:
                   f"{metrics['vib_pass_rate']:>10.2f}% | "
                   f"{metrics['msg_compression_pct']:>11.2f}% | "
                   f"{metrics['token_saving_pct']:>11.2f}%")
+            if not metrics.get("usage_complete", False):
+                print(f"  [{ds_name}] 用量不完整：Token列仅为已知计数，不能解释为完整费用节省。")
 
         print(f"\n{'='*80}")
         print(" 📋 数据集内部分组统计（仅针对存在 early-stop 或分组拆分的数据集）")
@@ -1535,6 +1595,8 @@ def main():
                         help="允许联网拉取/更新 HuggingFace 数据集缓存（默认离线）")
     parser.add_argument("--output", type=str, default="results/multi_benchmark.json",
                         help="输出 JSON 文件路径")
+    parser.add_argument("--request-ledger-dir", default=None,
+                        help="逐请求持久化目录；默认使用输出路径旁的.requests目录")
     parser.add_argument("--disable-gsm8k-frozen-history", action="store_true",
                         help="关闭 GSM8K 同轮 frozen-history 修复（默认开启）")
     parser.add_argument("--enable-math-role-weights", action="store_true",
@@ -1557,10 +1619,15 @@ def main():
                              "并路由到私有 gateway。默认 deepseek-chat。")
     parser.add_argument("--provider", default=None, choices=sorted(["deepseek", "private"]),
                         help="强制指定后端提供方。默认根据 model 名推断。")
-    parser.add_argument("--temperature", type=float, default=0.1,
-                        help="LLM 采样温度（synthesis 阶段与 VIB Full/Van 全链路保持一致）。默认 0.1。")
-    parser.add_argument("--max-tokens", type=int, default=1024,
-                        help="单次 LLM 调用的最大输出 token 数。默认 1024。")
+    parser.add_argument("--temperature", type=float, default=None,
+                        help="显式覆盖所有阶段温度；省略时保持历史分阶段默认值。")
+    parser.add_argument("--max-tokens", type=int, default=None,
+                        help="显式覆盖所有阶段输出上限；省略时保持历史分阶段默认值。")
+    for stage in ("agent", "code", "math"):
+        parser.add_argument(f"--{stage}-temperature", type=float, default=None,
+                            help=f"覆盖{stage}阶段温度，优先于--temperature。")
+        parser.add_argument(f"--{stage}-max-tokens", type=int, default=None,
+                            help=f"覆盖{stage}阶段输出上限，优先于--max-tokens。")
     parser.add_argument("--list-models", action="store_true",
                         help="打印当前 pro.env 可解析的模型 alias 并退出。")
     parser.add_argument("--router-beta0", type=float, default=None,
@@ -1581,6 +1648,15 @@ def main():
     parser.add_argument("--router-random-seed", type=int, default=20260812,
                         help="RNG seed for --router-gating-mode random. Default 20260812.")
     args = parser.parse_args()
+    try:
+        inference_protocol = InferenceProtocol(
+            temperature=args.temperature, max_tokens=args.max_tokens,
+            **{f"{stage}_{name}": getattr(args, f"{stage}_{name}")
+               for stage in ("agent", "code", "math")
+               for name in ("temperature", "max_tokens")},
+        )
+    except ValueError as exc:
+        parser.error(str(exc))
 
     if args.list_models:
         aliases = list_known_provider_aliases()
@@ -1589,6 +1665,10 @@ def main():
             for name in names:
                 print(f"  · {name}")
         sys.exit(0)
+
+    ledger_dir = args.request_ledger_dir or str(Path(args.output).with_suffix(".requests"))
+    if Path(args.output).exists() or Path(ledger_dir).exists():
+        parser.error("输出或账目目录已存在；先审计历史/pending请求，不能自动覆盖或重发")
 
     offline = not args.online
     os.environ["HF_HUB_OFFLINE"] = "1" if offline else "0"
@@ -1653,6 +1733,8 @@ def main():
         llm_provider=llm_provider,
         llm_temperature=args.temperature,
         llm_max_tokens=args.max_tokens,
+        inference_protocol=inference_protocol,
+        request_ledger_dir=ledger_dir,
         router_beta0=getattr(args, "router_beta0", None),
         router_lambda=getattr(args, "router_lambda", None),
         router_gamma=getattr(args, "router_gamma", None),
@@ -1662,6 +1744,7 @@ def main():
         router_random_seed=args.router_random_seed,
     )
     report = harness.run_benchmark(datasets=args.datasets, limit=args.limit)
+    report["inference_protocol"] = inference_protocol.describe()
 
     # 保存 JSON 报告
     if args.output:

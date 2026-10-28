@@ -26,6 +26,8 @@ import time
 import json
 import argparse
 import threading
+import uuid
+from pathlib import Path
 from dataclasses import asdict
 from typing import List, Dict, Any, Tuple
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -40,11 +42,17 @@ class VanillaBaselineHarness:
     """单 agent baseline：直接跳过讨论阶段，synthesis 端到端生成 final code/answer。"""
 
     def __init__(self, api_key: str, workers: int = 1,
-                 experiment_config: mb.ExperimentConfig = None):
+                 experiment_config: mb.ExperimentConfig = None,
+                 llm_model: str = "deepseek-chat", llm_provider=None,
+                 inference_protocol=None, request_ledger_dir=None):
         self.api_key = api_key
         self.workers = max(1, workers)
         self._print_lock = threading.Lock()
         self.experiment_config = experiment_config or mb.ExperimentConfig()
+        self.llm_model = llm_model
+        self.llm_provider = llm_provider
+        self.inference_protocol = inference_protocol or mb.InferenceProtocol()
+        self.request_ledger_dir = request_ledger_dir
 
     # ------------------------------------------------------------------
     # Core executor
@@ -61,17 +69,19 @@ class VanillaBaselineHarness:
         同时返回用于 trace 的 payload 字段。
         """
         _, generate_fn = self._select_components(sample)
-        # 单 agent，用 synthesis 的配置（temperature=0.1，max_tokens=1024）——与主脚本 synthesis
-        # 保持相同参数，保证 apples-to-apples 对比。
-        client = mb.DeepSeekClient(api_key=self.api_key, max_tokens=1024)
+        ledger_kwargs = {}
+        if self.request_ledger_dir:
+            ledger_kwargs["ledger_path"] = str(Path(self.request_ledger_dir) / f"{uuid.uuid4().hex}.jsonl")
+        client = mb.build_client(self.llm_model, self.llm_provider, log=False, **ledger_kwargs)
+        if self.api_key:
+            client.api_key = self.api_key
+        client.inference_protocol = self.inference_protocol
+        client.request_context = {"task_id": sample.task_id, "variant": "vanilla", "purpose": "benchmark"}
         start = time.time()
         final_output = generate_fn(client, sample.prompt, history=[])
         exec_time = time.time() - start
         passed = mb.UnifiedEvaluator.evaluate(sample, final_output)
         token_stats = client.get_token_stats()
-        total_tokens = int(token_stats.get("total_tokens", 0))
-        total_prompt = int(token_stats.get("total_prompt_tokens", 0))
-        total_completion = int(token_stats.get("total_completion_tokens", 0))
         # 人为规定：单 agent 对外暴露 total_approved=1 条「最终输出消息」，避免 0 做分母
         workflow_stats = {
             "total_approved": 1,
@@ -84,11 +94,9 @@ class VanillaBaselineHarness:
             "workflow_stats": workflow_stats,
             "output": final_output,
             "passed": passed,
-            "token_stats": {
-                "total_tokens": total_tokens,
-                "total_prompt_tokens": total_prompt,
-                "total_completion_tokens": total_completion,
-            },
+            "token_stats": token_stats,
+            "request_records": client.get_request_records(),
+            "inference_protocol": self.inference_protocol.describe(),
             "execution_time": exec_time,
         }
 
@@ -108,6 +116,8 @@ class VanillaBaselineHarness:
             "output": variant_result["output"],
             "workflow_stats": variant_result["workflow_stats"],
             "token_stats": variant_result["token_stats"],
+            "request_records": variant_result.get("request_records", []),
+            "inference_protocol": variant_result.get("inference_protocol"),
             "early_stopped": variant_result.get("early_stopped", False),
         }
 
@@ -385,6 +395,12 @@ class VanillaBaselineHarness:
 
             all_results[ds_name] = [asdict(r) for r in results if r is not None]
             trace_results[ds_name] = [t for t in traces if t is not None]
+            summary[ds_name]["usage_complete"] = bool(trace_results[ds_name]) and all(
+                trace.get("full") and trace["full"]["token_stats"].get("usage_complete", False)
+                for trace in trace_results[ds_name]
+            ) and len(trace_results[ds_name]) == total
+            summary[ds_name]["token_counter_scope"] = "all_attempts_known_usage_only"
+            summary[ds_name]["currency_cost_status"] = "not_priced"
 
         total_time = (time.time() - global_start) / 60.0
         print(f"\nVanilla 评测总耗时: {total_time:.2f} 分钟")
@@ -395,6 +411,8 @@ class VanillaBaselineHarness:
             "detailed_results": all_results,
             "trace_results": trace_results,
             "experiment_config": asdict(self.experiment_config),
+            "inference_protocol": self.inference_protocol.describe(),
+            "request_ledger_directory": self.request_ledger_dir,
             "meta": {"mode": "vanilla_single_agent_synthesis_direct",
                      "description": "full/vib 双列写入同一 vanilla 结果，便于复用 analyze/generate_report"},
         }
@@ -410,6 +428,8 @@ class VanillaBaselineHarness:
             print(f"{ds:<12} | {m['full_pass_rate']:>8.2f}% | "
                   f"{m['full_tokens'] / tt:>10.1f} | "
                   f"{m['full_messages'] / tt:>9.2f}")
+            if not m.get("usage_complete", False):
+                print(f"  [{ds}] 用量不完整：仅展示已知Token，不代表完整费用。")
 
 
 def main():
@@ -421,17 +441,39 @@ def main():
     parser.add_argument("--output", default="results/vanilla_baseline_3dataset.json",
                         help="输出 JSON 路径")
     parser.add_argument("--api-key", default=None, help="可选；否则读 env DEEPSEEK_API_KEY / .env")
+    parser.add_argument("--model", default="deepseek-chat")
+    parser.add_argument("--provider", default=None, choices=["deepseek", "private"])
+    parser.add_argument("--temperature", type=float, default=None)
+    parser.add_argument("--max-tokens", type=int, default=None)
+    parser.add_argument("--request-ledger-dir", default=None)
+    for stage in ("agent", "code", "math"):
+        parser.add_argument(f"--{stage}-temperature", type=float, default=None)
+        parser.add_argument(f"--{stage}-max-tokens", type=int, default=None)
     args = parser.parse_args()
 
-    api_key = args.api_key or mb.resolve_deepseek_api_key()
-    if not api_key:
-        print("❌ 找不到 DeepSeek API Key。请设置 DEEPSEEK_API_KEY 或在 .env 中配置。")
-        sys.exit(1)
+    ledger_dir = args.request_ledger_dir or str(Path(args.output).with_suffix(".requests"))
+    if Path(args.output).exists() or Path(ledger_dir).exists():
+        parser.error("输出或账目目录已存在；不能自动覆盖或重发")
+    try:
+        protocol = mb.InferenceProtocol(
+            temperature=args.temperature, max_tokens=args.max_tokens,
+            **{f"{stage}_{name}": getattr(args, f"{stage}_{name}")
+               for stage in ("agent", "code", "math")
+               for name in ("temperature", "max_tokens")},
+        )
+        endpoint = mb.build_client(args.model, args.provider, log=False)
+    except ValueError as exc:
+        parser.error(str(exc))
+    api_key = args.api_key or endpoint.api_key
 
     os.makedirs(os.path.dirname(args.output), exist_ok=True)
 
     cfg = mb.ExperimentConfig()
-    harness = VanillaBaselineHarness(api_key=api_key, workers=args.workers, experiment_config=cfg)
+    harness = VanillaBaselineHarness(
+        api_key=api_key, workers=args.workers, experiment_config=cfg,
+        llm_model=endpoint.model, llm_provider=endpoint.provider,
+        inference_protocol=protocol, request_ledger_dir=ledger_dir,
+    )
     result = harness.run_benchmark(args.datasets, limit=args.limit)
 
     with open(args.output, "w", encoding="utf-8") as f:

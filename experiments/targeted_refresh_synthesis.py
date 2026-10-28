@@ -1,22 +1,25 @@
 """Targeted 重跑 synthesis 阶段（不重跑团队讨论，只替换 generate_final_code）。
 
 用途：P2 修复后，把冻结 baseline 的 HumanEval 164 / MBPP 257 的 synthesis 阶段重新跑一遍。
-- 保持原 history（消息数、Token 数完全不变）
-- 只替换最终 generate_final_code 的输出 + passed 判定
+- 保持原 history 与历史Token计数，不将它们冒充刷新后完整费用
+- 替换最终输出和评测标签，并独立保存逐请求刷新账目
 - 对数学题 GSM8K 不改动（数学题的 synthesis 是 generate_final_answer，没改）
 
 可选：--resplit-from <trace_refreshed_json> 模式不调用 API，仅在 trace 已刷新的前提下，
 对 AND/OR 两种 split_mode 重新调用 offline_backfill_mbpp_split 的核心函数重算 summary。
 """
-import argparse, importlib.util, json, os, sys, threading
+import argparse, hashlib, importlib.util, json, os, sys, threading
 from pathlib import Path
 from typing import Any, Dict, List
 
 sys.path.insert(0, os.path.dirname(__file__))
 import run_multi_benchmark as mb
+from request_ledger import fingerprint, summarize_requests
+from inference_protocol import stage_parameters
 
 
 _BACKFILL_PATH = os.path.join(os.path.dirname(__file__), "offline_backfill_mbpp_split.py")
+_SYNTHESIS_SHA256 = hashlib.sha256(Path(mb.__file__).read_bytes()).hexdigest()
 
 
 def _load_backfill_module():
@@ -254,7 +257,29 @@ def _process_variant(
     if sample.dataset_name == "GSM8K":
         return {**variant_trace, "output": output_old, "passed": passed_old}
 
+    context_hash = fingerprint({
+        "task_id": sample.task_id, "dataset": sample.dataset_name, "variant": variant_key,
+        "prompt": prompt, "history": history,
+        "evaluation": {"tests": sample.test_cases, "entry_point": sample.entry_point},
+        "parameters": stage_parameters(client, "code"),
+        "model": getattr(client, "model", None), "provider": getattr(client, "provider", None),
+        "base_url": getattr(client, "base_url", None), "synthesis_sha256": _SYNTHESIS_SHA256,
+    })
+    previous = variant_trace.get("refresh_accounting")
+    if previous:
+        if (previous.get("context_sha256") == context_hash
+                and previous.get("output_sha256") == fingerprint(output_old)
+                and previous.get("status") == "completed"):
+            return variant_trace
+        raise ValueError("Existing refresh is unresolved or has different provenance; do not resend automatically")
+
+    if not hasattr(client, "get_request_records"):
+        raise ValueError("Refresh requires a request-accounting client")
+    request_start = len(client.get_request_records())
+    client.request_context = {"task_id": sample.task_id, "variant": variant_key, "purpose": "refresh"}
     output_new = mb.generate_final_code(client, prompt, history)
+    requests = client.get_request_records()[request_start:]
+    output_hash = fingerprint(output_new)
 
     passed_new = _evaluate_code(
         sample.task_id, sample.test_cases, output_new, sample.entry_point or ""
@@ -269,6 +294,22 @@ def _process_variant(
         **variant_trace,
         "output": output_new,
         "passed": passed_new,
+        "refresh_accounting": {
+            "version": "request_linked_refresh_v1",
+            "status": "failed" if not output_new or output_new.startswith("[API Error:") else "completed",
+            "context_sha256": context_hash,
+            "synthesis_sha256": _SYNTHESIS_SHA256,
+            "parent_output_sha256": fingerprint(output_old),
+            "output_sha256": output_hash,
+            "requests": requests,
+            "matching_artifact_request_ids": [
+                request["request_id"] for request in requests
+                if request.get("artifact_sha256") == output_hash
+            ],
+            "incremental_usage": summarize_requests(requests),
+            "historical_counter_scope": "pre_refresh_only",
+            "combined_cost_status": "unknown",
+        },
     }
 
 
@@ -276,7 +317,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--input", required=False, help="冻结 baseline JSON（API 刷新模式必填）")
     ap.add_argument("--output", required=False, help="输出 synthesis-refreshed 后的新 JSON 路径")
-    ap.add_argument("--api-key", default=os.environ.get("DEEPSEEK_API_KEY", ""))
+    ap.add_argument("--api-key", default=None, help="可选显式凭证；默认由provider及pro.env选择")
+    ap.add_argument("--model", default="deepseek-chat")
+    ap.add_argument("--provider", default=None, choices=["deepseek", "private"])
+    ap.add_argument("--temperature", type=float, default=None)
+    ap.add_argument("--max-tokens", type=int, default=None)
+    ap.add_argument("--ledger-dir", default=None, help="逐请求持久化账目目录；默认在输出旁创建")
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--limit", type=int, default=-1, help="仅处理前 N 题，用于快速 smoke test")
     ap.add_argument("--resplit-from", required=False,
@@ -291,11 +337,20 @@ def main():
 
     if not args.input or not args.output:
         sys.exit("API 刷新模式需要 --input 和 --output")
-    if not args.api_key:
-        sys.exit("需要 --api-key 或 DEEPSEEK_API_KEY")
-
     in_path = Path(args.input)
     out_path = Path(args.output)
+    if in_path.resolve() == out_path.resolve() or out_path.exists():
+        sys.exit("必须使用不存在的新输出路径，不能覆盖输入或历史结果")
+    ledger_dir = Path(args.ledger_dir) if args.ledger_dir else out_path.with_suffix(".requests")
+    if ledger_dir.exists():
+        sys.exit("账目目录已存在；先审计pending请求，不自动重发")
+    # Resolve and validate before worker threads; no network request is made here.
+    try:
+        endpoint = mb.build_client(
+            args.model, args.provider, temperature=args.temperature, max_tokens=args.max_tokens, log=False,
+        )
+    except (ValueError, KeyError) as exc:
+        sys.exit(f"请求配置无效: {type(exc).__name__}")
     with in_path.open("r", encoding="utf-8") as f:
         data = json.load(f)
 
@@ -318,11 +373,20 @@ def main():
     trace_results = data.get("trace_results", {})
     _lock = threading.Lock()
     _summary_changed = {"pass_switches": 0, "total": 0}
+    stop_event = threading.Event()
+    errors = []
 
     def _process_dataset(ds_key: str):
         traces: List[Dict[str, Any]] = trace_results.get(ds_key, [])
-        client = mb.DeepSeekClient(api_key=args.api_key, max_tokens=256)
+        client = mb.build_client(
+            endpoint.model, endpoint.provider, temperature=args.temperature, max_tokens=args.max_tokens,
+            log=False, ledger_path=str(ledger_dir / f"{ds_key}.jsonl"),
+        )
+        if args.api_key:
+            client.api_key = args.api_key
         for idx, trace in enumerate(traces):
+            if stop_event.is_set():
+                return
             if args.limit > 0 and idx >= args.limit:
                 break
             task_id = trace.get("task_id")
@@ -335,8 +399,11 @@ def main():
                 new_full = _process_variant(trace["full"], sample, client, "full")
                 new_vib = _process_variant(trace["vib"], sample, client, "vib")
             except Exception as e:
-                print(f"[error] {task_id}: {type(e).__name__}: {e}")
-                continue
+                print(f"[error] {task_id}: {type(e).__name__}")
+                with _lock:
+                    errors.append({"task_id": task_id, "error_type": type(e).__name__})
+                stop_event.set()
+                return
             trace["full"] = new_full
             trace["vib"] = new_vib
             full_switched = (new_full.get("passed") != full_old_p)
@@ -356,6 +423,8 @@ def main():
             t.start()
     for t in threads:
         t.join()
+    if errors:
+        sys.exit("刷新已停止；保留请求账目，不生成可被误认为完整的结果文件")
 
     # 刷新 summary / detailed_results（与 refreshed trace.passed 重新对齐，消息/Token 保持不变）
     new_summary: Dict[str, Any] = {}
@@ -388,6 +457,9 @@ def main():
     data["refreshed_synthesis"] = True
     data["refreshed_synthesis_source"] = str(args.input)
     data["refreshed_summary"] = _summary_changed.copy()
+    data["refreshed_cost_status"] = "unknown"
+    data["refreshed_token_counter_scope"] = "pre_refresh_only"
+    data["request_ledger_directory"] = str(ledger_dir)
     print(f"[done] synthesis 刷新题数: {_summary_changed['total']}，其中 pass 变更: {_summary_changed['pass_switches']}")
 
     out_path.parent.mkdir(parents=True, exist_ok=True)

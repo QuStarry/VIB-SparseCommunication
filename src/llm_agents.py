@@ -8,8 +8,10 @@ from typing import List, Dict, Optional
 
 try:
     from .llm_client import DeepSeekClient
+    from .inference_protocol import stage_parameters
 except ImportError:
     from llm_client import DeepSeekClient
+    from inference_protocol import stage_parameters
 
 
 # ============================================
@@ -56,7 +58,8 @@ class LLMAgent:
         name: str,
         system_prompt: str,
         llm_client: DeepSeekClient,
-        max_tokens: int = 256
+        max_tokens: Optional[int] = None,
+        temperature: Optional[float] = None,
     ):
         """
         Initialize LLM agent.
@@ -65,12 +68,14 @@ class LLMAgent:
             name: Agent name/role
             system_prompt: System prompt defining agent behavior
             llm_client: Shared DeepSeek client instance
-            max_tokens: Max tokens per response (keep short for sparse comm)
+            max_tokens: Explicit limit; otherwise use the client's stage protocol.
+            temperature: Explicit temperature; otherwise use the stage protocol.
         """
         self.name = name
         self.system_prompt = system_prompt
         self.llm_client = llm_client
         self.max_tokens = max_tokens
+        self.temperature = temperature
         
         # Track per-agent token usage
         self.tokens_used = 0
@@ -111,8 +116,11 @@ class LLMAgent:
         
         result = self.llm_client.chat(
             messages=messages,
-            max_tokens=self.max_tokens,
-            temperature=0.2  # 修改点：从 0.7 降至 0.2，增强代码逻辑严谨度
+            stage="agent",
+            **stage_parameters(
+                self.llm_client, "agent",
+                temperature=self.temperature, max_tokens=self.max_tokens,
+            ),
         )
         
         # Track usage
@@ -159,7 +167,6 @@ def create_llm_agents(
                 name=role,
                 system_prompt=role_configs[role],
                 llm_client=llm_client,
-                max_tokens=256
             )
             agents.append(agent.to_agent_dict())
     
