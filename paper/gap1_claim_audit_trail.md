@@ -1,7 +1,7 @@
 # 阶段性论文审计与下一阶段研究路线
 
 更新日期：2026-10-28。当前论文事实源是 `paper/paper.tex` 和生成表格对应的 JSON。
-本阶段修复推理参数协议和请求账目，更新论文并运行本地验证，没有启动新付费实验，也没有改动核心路由或提示词。
+本阶段修复推理参数协议和请求账目，更新论文并运行本地验证，没有启动新付费实验，也没有改动核心路由或旧runner的提示词。独立准备阶段新增实验用“公开规格优先”prompt，不替换旧流程。
 
 **最新回溯警告（2026-10-27；工程状态更新至2026-10-28）：** 本文先前将`*_t0`批次称为贪心，并将刷新后HumanEval标签和历史Token字段并列展示；回溯发现实验CLI温度/输出上限被调用层硬编码覆盖，且合成刷新没有更新其费用字段。因此不能据这些文件名宣称真实温度零稳健性，刷新后的Token也不能冒充最终输出的完整费用。中英文PDF现已撤回这些声称并补入历史正收益，导表不再生成双温度稳健标记。下文旧“贪心”表格是历史命名记录，不表示已验证请求协议；以“历史版本回溯”、“参数与请求账目修复”和“共享预算与恢复”节为最新判断。新代码已通过零API参数、请求证据及独立预算会话测试，但历史缺失账单仍不可恢复，旧benchmark的完整实验恢复流程尚未接入。
 
@@ -691,6 +691,543 @@ assert report["summary"]["run_complete"]
 预检要求全清单的最坏代理预留不超过预算，并核对绑定完整manifest的预算批准。执行前及客户端创建后复核证据；适配器仍是可信本地代码，外部证据须受控只读，哈希和reviewed声明并不是自动tokenizer/账单校准。停止后的缓存任务仍可恢复本地评测，未知请求不自动重发。
 
 本轮交付[隔离调度使用说明](../docs/experiment_session_driver.md)，没有生成或运行真实因果清单，没有校准真实价目/Token上界，也没有迁移旧benchmark。下一步应冻结真实共同候选流的完整任务与提示词版本，并接入独立进程的真实评分适配器；完成费用与上界核验后才请求用户批准该清单的付费预算。本轮历史结果、论文PDF/表图、核心路由、`.qoder`和凭证均未新增修改，未调用API、未提交Git、未推送。
+
+## 真实候选流提示词对照准备 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. 子技能未安装，沿用内联执行；仅零API准备，不自动批准费用。
+
+**Goal:** 冻结164题真实共同候选流与三种提示词，接入独立Python进程评分并产出不能被误当作付费批准的准备清单。
+**Architecture:** 只读`results/3dataset_cli_frozen_only_default.json`，用本地官方HumanEval gzip核对题面、入口和测试；每题三种提示词共享同一Full六候选历史，不根据旧标签筛选。从固定Git版本提取历史/当前prompt函数而不导入旧runner的顶层状态；隐藏测试单独输出到评测bundle。评分在不继承凭证环境的独立解释器内重复执行，父进程不exec生成代码。
+**Tech Stack:** Python ast、gzip、subprocess、ThreadPoolExecutor、pytest；沿用既有request fingerprint。
+
+### Task 1: 冻结prompt与任务投影
+
+**Files:** 创建`experiments/prepare_prompt_contrast.py`、`tests/test_prompt_contrast_preparation.py`。
+
+- [x] 失败测试验证：所有任务均被保留，旧passed/output/reference变动不改变请求消息，三种prompt共享history指纹，官方题面或测试漂移拒绝准备。
+- [x] 固定历史来源`25f1288:experiments/run_multi_benchmark.py`中的原简洁prompt、当前来源`f97ce19`中的仲裁prompt；只抽取所需函数/生成prompt前缀，保存独立prompt源码snapshot和SHA256，不导入整个runner。
+- [x] 新“规格优先”prompt不采用多数派或Reviewer身份作裁决，只把题面/公开接口作为约束。全部prompt参数统一`temperature=0/max_tokens=1024`，每题每prompt预声明2次独立合成，不做best-of选择。
+
+```python
+draft, bundle = build_preparation(source, canonical, renderers, repeats=2, seed=20261028)
+assert len(draft["jobs"]) == 164 * 3 * 2
+assert draft["readiness"]["paid_ready"] is False
+```
+
+- [x] 先运行`python3 -m pytest -q tests/test_prompt_contrast_preparation.py`确认缺模块失败，再实现最小构建。价目、真实prompt上界和端点未核验时保留None及blockers，不填猜测值。
+
+### Task 2: 独立评分
+
+**Files:** 创建`src/isolated_code_evaluation.py`、`tests/test_isolated_code_evaluation.py`。
+
+- [x] 失败测试验证check必须调用、错误代码false、超时false、子进程SystemExit不能成为通过、stdout不影响结果、父进程随机状态/环境不被污染。
+- [x] 评分子进程使用独立解释器`-I -S`、临时工作目录及最小环境；以冻结seed分别执行2次，结果不一致抛错而不是投票。超时杀死工作进程，POSIX同时清理进程组；不宣称这是恶意代码安全沙箱。
+
+```python
+passed = score_code(output, task, seed=20261028, timeout=5)
+evaluators = load_evaluators(bundle_path, expected_sha256)
+assert set(evaluators) == set(frozen_task_ids)
+```
+
+- [x] 适配器验证bundle指纹和评分实现/协议，不读候选标签、不调用LLM；本地官方参考实现仅用于评分设施自检，绝不进入清单或prompt。
+
+### Task 3: 实际准备与验收
+
+**Files:** 生成`results/prompt_contrast_preparation_20261028/`下的draft、evaluation bundle、prompt snapshots、准备报告与本地评分验收；更新本文件。
+
+- [x] CLI拒绝已有输出目录，原始文件保持只读；在system临时目录保留测试中间结果。
+- [x] 产出完整984请求草案；输入/输出Token、美元费用暂不估计，不启动模型。对164官方参考实现及164历史Full输出各做2次隔离检查，记录不一致或标签差异，不改旧标签。
+- [x] 全量pytest和diff检查通过后记录真实数字；保存使用说明与一键导航。此阶段复用已审计任务，标为exploratory，不宣称独立确认或新模型性能改善。
+
+### 分组提交与真实准备阶段验收
+
+按用户要求先提交已有改动，四组均使用新commit、保留原Git身份，未包含凭证或历史结果，未推送：
+
+| Commit | 功能组 |
+|---|---|
+| `f97ce19` | 参数透传、逐请求证据、废弃probe账目与刷新来源关联 |
+| `b2eb087` | SQLite共享预算预留与无重复请求恢复 |
+| `ce44d4a` | 隔离调度、离线预检、证据与预算批准守卫 |
+| `100c5b3` | 双语论文ORCID、声明与工程验收边界 |
+
+四组提交后工作区干净，再开始本节准备。新阶段全量336项测试通过（12.60s），相对307项新增29项；第一次专项因两个新模块缺失而失败，首轮实现后28项通过，再增加会话恢复接入真实隔离评分的集成回归。`git diff --check`通过。
+
+实际[准备报告与导航](../results/prompt_contrast_preparation_20261028/README.md)保存164份唯一公开题面和164份唯一六候选Full历史；每题三prompt各2次，共984个请求，仅预声明，模型调用0。官方数据与存档SHA256前后保持一致；全部题面、入口、隐藏测试逐题一致，无按历史标签筛选。推理草案不包含reference实现或test_cases，隐藏测试仅在独立evaluation bundle。
+
+共656次独立Python进程执行验证164个官方参考实现与164个历史Full输出：参考实现164/164通过，历史Full147/164通过，旧标签变化0，全部设施检查完成且没有重复结果不一致。这里的147/164是所选存档的重评，不是新模型准确率；不能用于更新论文主实验结果。评分固定Python random seed，但不固定解释器hash随机化，已在协议中披露；进程隔离不等于恶意代码安全沙箱。
+
+冻结草案版本为`archival_prompt_contrast_draft_v1`，不直接接收为可执行会话manifest；端点、价目和prompt Token上界保留None，`paid_ready=false`。1,007,616输出Token只是全部输出上限之和，不是实测费用或总Token。`$3`只是未获批准的预算提案，不能在费用未知时声称足以覆盖984次请求。
+
+下一付费门槛：核验实际模型/端点、提供方含缓存价目和真实prompt Token上界，将草案转换为完整可执行manifest并再次预检，然后就该manifest确认预算。提示词长度不同，不把本设计称为等实际费用对照；已审计题集用于探索，不当作独立确认。新阶段源代码、测试、准备产物与本节记录尚未提交；原结果、论文PDF/表图、核心路由、`.qoder`和凭证未新增修改，仍零API。
+
+## 执行前证据与清单转换 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. 子技能未安装，内联执行；不创建子代理，不自动提交或发送付费请求。
+
+**Goal:** 解析第二密钥对应的非秘密端点元数据，量化984请求的条件费用场景，只有绑定草案的完整核验证据通过时才输出新的候选执行清单。
+**Architecture:** 新CLI只读原草案/config和外部证据，不修改环境变量或原产物。沿用现有配置别名解析器与端点注册表，仅导出白名单字段、密钥变量名和是否存在，不导出/哈希密钥值。代理价取2026-10-23历史口径，字节场景明确不等于Token上界；完整证据转换仍调用现有preflight，批准单独取得。
+**Tech Stack:** Python Decimal、pathlib、argparse、pytest、现有artifact SHA256。
+
+### Task 1: 非秘密配置与条件费用
+
+**Files:** 创建`experiments/check_prompt_contrast_readiness.py`、`tests/test_prompt_contrast_readiness.py`。
+
+- [x] 先写失败测试：第二密钥缺失不回退、结果不含密钥/密钥哈希、全局环境不变、别名解析与既有解析器一致、URL含内嵌凭证时拒绝。
+
+```python
+metadata = endpoint_metadata(env_path, model="deepseek-v4-flash", credential_env="PRIVATE_API_KEY_1")
+assert metadata["credential_env"] == "PRIVATE_API_KEY_1"
+assert "api_key" not in metadata
+scenario = planning_scenario(draft)
+assert scenario["guaranteed_budget_compliance"] is False
+```
+
+- [x] `python3 -m pytest -q tests/test_prompt_contrast_readiness.py`先确认缺模块失败，再实现端点白名单及Decimal场景费用，不把场景数字写成核验价目或prompt_token_limit。
+
+### Task 2: 证据绑定与转换
+
+**Files:** 继续实现上述两文件。
+
+- [x] 失败测试：证据须绑定原draft SHA和实际端点，eval证据须指向原bundle；prompt缺项/篡改、未核验标记、源码漂移、预算不足均拒绝输出候选清单。
+
+```python
+candidate, report = convert_draft(draft_path, endpoint, evidence)
+assert (candidate is not None) == report["ready"]
+```
+
+- [x] 转换保留全部job、messages、参数及候选指纹；只补充来自核验证据的Token上界。使用现有preflight核对全部预留与预算，不输出approval或直接运行模型。
+- [x] 对原草案与外部证据文件在读取前后及输出前复核指纹，核对snapshot/bundle哈希；CLI拒绝已有目录，不覆盖原draft。无证据时产出明确blocked的报告，不产出伪执行manifest。外部材料仍须受控只读，哈希检查不构成恶意并发替换的安全证明。
+
+### Task 3: 实际报告与验收
+
+**Files:** 生成`results/prompt_contrast_readiness_20261028/`下JSON及可读报告；更新本文件。
+
+- [x] 实际解析既有private Flash端点，显式选择`PRIVATE_API_KEY_1`，全程不构造客户端/发HTTP；模型身份仅为配置声明，不冒充在线认证或官方snapshot证明。
+- [x] 全量pytest与diff检查通过，记录实测测试数和条件场景值。报告明确：历史代理价格授权不自动批准新984请求；私有网关实际计费、tokenizer/chat template及新manifest批准仍需核验。
+
+### 执行前就绪阶段验收
+
+全量356项测试通过（15.51s），本阶段新增20项。新模块首次collection因缺模块失败，实现后首轮14项专项通过，继续覆盖配置与原resolver一致、源码/snapshot漂移、未核验标记以及完整合成证据成功转换。合成测试价格和Token上界不是生产证据；测试转换成功也不会产生付费批准。
+
+实际[就绪报告](../results/prompt_contrast_readiness_20261028/README.md)解析到private `deepseek-v4-flash-0817`，显式选`PRIVATE_API_KEY_1`且该变量存在。不导出、哈希密钥值或修改环境；未认证端点、未证明官方不可变snapshot。
+
+按既有2026-10-23历史代理价，采用UTF-8内容字节数加每请求1024假设开销作为输入单位时，完整984请求的条件场景为$2.6758938。其中当前仲裁328次$1.1603394、历史简洁328次$0.735834、新规格优先328次$0.7797204。全部输出上限按旧价计为$1.2091392，包含在前述场景总值中，不能再加一次。上述是明确假设下的规划算术，不是实测Token、Token上界证明、当前实际账单或新实验的费用保证。
+
+虽然该场景值低于$3提案，仍缺当前价目/可接受代理计价的核验证据、提供方tokenizer/chat template上界及新manifest的预算批准。CLI按预期以2退出，记录`candidate_ready=false/paid_authorized=false`，没有生成`candidate_manifest.json`，模型调用0。转换器只读已有984草案，不少选任务，不用历史标签补充参数或批准。
+
+后续必须先明确核验路线：取得网关价目与分词/封装协议，或者另行冻结并确认小额协议标定；少量观测usage仅能核对返回模型、参数和账目，不足以证明全量984的上界。不能用“接近官方价”或配置密钥存在替代真实计费/认证结论。原草案、评分bundle、历史结果、论文PDF/表图、核心路由和凭证未新增修改，本阶段仍零API、未提交、未推送。
+
+## 小响应真实协议标定 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. 子技能未安装，内联执行，不创建子代理。
+
+**Goal:** 按用户本轮“请进行实际测试、不是一次性一百人民币以上不用太计较”授权，执行最多6次小响应请求，实测身份、参数及usage，不启动984请求全量。
+**Architecture:** 从冻结草案按每种prompt的UTF-8内容长度取最短/最长各1，温度0/max_tokens32、单worker、single-attempt、SDK重试0。先持久化协议和pending请求，再发送；缺usage、配额/认证错误、身份漂移或费用越线停止。短输出导致length可作为协议响应计费，但不计为代码正确。
+**Tech Stack:** 既有LLMClient/JSONL RequestLedger、Decimal、argparse、pytest fake transport。
+
+### Task 1: 冻结小标定
+
+**Files:** 创建`experiments/calibrate_prompt_protocol.py`、`tests/test_prompt_protocol_calibration.py`。
+
+- [x] 测试选择只依赖messages长度，不读passed/reference；6个请求输出上限32且原984草案不变。
+
+```python
+manifest = freeze_probe(draft_path, endpoint)
+assert len(manifest["jobs"]) == 6
+assert all(job["parameters"] == {"temperature": 0, "max_tokens": 32} for job in manifest["jobs"])
+```
+
+- [x] 代理输入价0.30、输出价1.20/百万，停机阈值$0.05；预调用使用字节+1024的规划值，不将其当作已证明Token上界。实际网关账单未知，阈值是代理口径的fail-fast线，不保证提供方异常响应或未核验单价下的实付上限。
+- [x] 先运行`python3 -m pytest -q tests/test_prompt_protocol_calibration.py`确认缺模块失败，再实现最小入口。
+
+### Task 2: 单次调用与恢复
+
+**Files:** 继续实现上述两文件。
+
+- [x] 测试截断仍累计用量、未知usage/429/模型漂移停止且无重试、pending恢复不重发、完成缓存不创建客户端；异常信息只留类型。
+
+```python
+report = execute_probe(manifest, output_dir, fake_factory)
+assert report["summary"]["new_attempts"] <= 6
+```
+
+- [x] 准备协议后才初始化客户端，显式`VIB_PRIVATE_API_KEY_ENV=PRIVATE_API_KEY_1`且不改变父进程环境；共享client账目必须独占。CLI使用`--execute`才可实际调用，用户授权scope写入manifest，不替全量产生approval。
+- [x] 目录用互斥锁防并发重复执行；复用既有完整report，遇pending或未知账目立即停止，不自动清除或重发。
+
+### Task 3: 实测及交付
+
+**Files:** 生成`results/prompt_protocol_calibration_20261028/`中的manifest、JSONL账目、实测报告与README；更新本文件。
+
+- [x] 专项通过后按本轮授权实际执行6次以内小标定；核对返回模型、发送参数、真实prompt/output Token与缓存字段、耗时，保留失败/截断账目。
+- [x] 全量回归通过，记录真实请求与代理费用；不猜测人民币实付金额，不改984草案的Token上界或核验标记，不据少量观测证明全量上界。
+
+### 小响应真实API标定验收
+
+本轮用户明确要求实际测试，并接受不是一次性超过100人民币的合理花费。本次按独立的小响应协议实际发送6次，而非继续只做准备；没有把这次小标定的scope当作984请求的完整实验批准。实际私有账单仍未取得，不将历史代理金额换算成猜测的人民币实付。
+
+全量370项测试通过（15.96s），本阶段新增14项；首次新模块缺失collection失败，首轮9项专项通过，补充429、实际用量越线、输出cap破坏、SDK显式超时及初始化失败等回归后14项通过。基础LLMClient没有显式60秒超时，本入口单独用SDK `with_options(timeout=60,max_retries=0)`修正，不更改旧benchmark客户端。
+
+真实调用[逐请求报告](../results/prompt_protocol_calibration_20261028/README.md)：
+
+| Prompt | 任务 | 实测prompt Token | 实测completion Token | 秒 |
+|---|---|---:|---:|---:|
+| 当前仲裁 | HumanEval/45 | 1545 | 32 | 2.421 |
+| 当前仲裁 | HumanEval/129 | 2090 | 32 | 1.566 |
+| 历史简洁 | HumanEval/45 | 477 | 32 | 1.532 |
+| 历史简洁 | HumanEval/129 | 957 | 32 | 1.217 |
+| 规格优先 | HumanEval/45 | 581 | 32 | 1.990 |
+| 规格优先 | HumanEval/129 | 1061 | 32 | 2.164 |
+
+六次返回模型均为`deepseek-v4-flash-0817`；实际发送温度0/max_tokens32，响应usage完整，reported cached_tokens均0。合计prompt6711、completion192、total6903 Token；按历史代理价计算$0.0022437，低于$0.05停机阈值；预调用字节规划场景$0.0099627。这不是网关实付账单，也不证明官方不可变snapshot或服务端采样语义。
+
+六次finish_reason均length，均按截断计账，符合低输出cap的标定设计；没有进入代码评分，不可描述为“六次代码全通过/全失败”。每请求发送前pending与终态均JSONL落盘，没有自动重试。实际运行一次缓存恢复验证，不初始化客户端、不调用transport，账目文件哈希不变。
+
+同两份候选流下，当前仲裁输入3635 Token、历史简洁1434、新规格优先1642。这是本轮真实输入消耗差异，不是质量或等费用优势结论，也不外推为全部984的已验证上界。下一实际研究步骤应恢复1024输出cap，做小规模完整代码的三prompt配对对照与隔离评测，全部预声明请求不按隐藏测试早停/选优。原984草案、旧结果、评分bundle、论文PDF/表图、核心路由与凭证未新增修改；新代码与实测产物尚未提交、未推送。
+
+## 24题完整代码配对小试验 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans task-by-task. 本环境未安装该子技能，按当前用户“继续”授权在本线程内联执行，不另创建代理或提交。
+
+**Goal:** 用真实完整输出比较三种冻结提示，24题各重复两次，不按测试选题或选优。
+
+**Architecture:** 独立探索性执行入口保留严格预算会话不变。固定seed从164题均匀抽24题，固定144个任务顺序，先完成生成再载入隐藏评分；原文与请求终态分别fsync。历史代理价$1观察停机，并非实际invoice硬保证；字节场景不冒充已验证Token上界。
+
+**Tech Stack:** Python、现有LLMClient/RequestLedger、隔离HumanEval评分、任务级配对bootstrap。
+
+### Task 1: 冻结与安全测试
+
+**Files:** 创建`experiments/run_prompt_contrast_pilot.py`、`tests/test_prompt_contrast_pilot.py`；本节持续更新。
+
+- [x] 先写失败测试，运行`python3 -m pytest tests/test_prompt_contrast_pilot.py -q`，预期首次缺模块。固定抽样与顺序逻辑：
+
+```python
+task_ids = sorted({job["task_id"] for job in draft["jobs"]})
+selected = random.Random(20261028).sample(task_ids, 24)
+jobs = [job for job in draft["jobs"] if job["task_id"] in selected]
+random.Random(20261029).shuffle(jobs)
+assert len(jobs) == 144
+```
+
+- [x] 实现`freeze_pilot(draft_path, endpoint)`与`execute_pilot(manifest, output_dir, client_factory)`。调用`chat_single_attempt(..., temperature=0, max_tokens=1024)`，SDK timeout60/retries0；每次创建SDK响应原文快照后才返回给账目层。
+- [x] 对缓存复用、正常终态中断恢复、pending不重发、unknown/429/模型漂移/实际越预算停机、截断计费不重试、输出hash漂移、显式第二密钥与无隐藏评分生成分别测试；专项24项通过（15.98s），全量394项通过（30.11s）。
+
+### Task 2: 真实生成
+
+**Files:** 新建`results/prompt_contrast_pilot_20261028/manifest.json`、`requests.jsonl`、逐请求原文`responses/`、`generation_report.json`。
+
+- [x] 冻结scope为探索性archive prompt-only，不是VIB/Full因果对照；保存源码及输入指纹、两次重复、抽样seed、请求顺序、历史价目与$1观察阈值。实际冻结规划场景$0.3930384，不是invoice或已验证Token上界。
+- [x] 专项通过后实际执行：
+
+```bash
+VIB_PRIVATE_API_KEY_ENV=PRIVATE_API_KEY_1 python3 -m experiments.run_prompt_contrast_pilot --output-dir results/prompt_contrast_pilot_20261028 --execute
+```
+
+预期最多144次新调用，任何unknown/quota/身份漂移即停止；截断保留原文与usage，作为失败不补生成。已持久化响应绝不重发；不运行984全量。
+
+### Task 3: 评分、分析与交付
+
+**Files:** 创建`experiments/analyze_prompt_contrast_pilot.py`及其专项测试；生成新目录内`analysis.json`和`README.md`，更新本文件。
+
+- [x] 实现`analyze_pilot(output_dir)`，只接收完整144请求且用量完整的生成报告；核对manifest、源码、响应和账目hash，随后用`load_evaluators`做两次独立进程评分。截断直接记失败，设施错误拒绝生成完整分析，恢复仅重做本地评分。
+- [x] 每题先对两次评分取均值，再做10000次任务级配对bootstrap，seed20261028；报告每组48次生成成功数、24个任务均值、真实input/output与历史代理金额。置信区间跨零不称等效，小样本不称确认性结论。
+- [x] 最终`python3 -m pytest -q`、`git diff --check`及真实缓存恢复验收；记录费用scope和局限，不改旧产物、论文主表、核心路由、密钥，不自动提交或推送。
+
+### 24题配对真实测试验收
+
+真实发送144次，各三提示48次，温度0、输出上限1024、串行single-attempt。全部返回模型匹配`deepseek-v4-flash-0817`，全部终态stop，没有截断、没有未知usage、没有自动重试。输入151516、输出15525、总计167041 Token；历史代理金额$0.0640848，低于$1观察停机阈值；实际美元/人民币invoice未知。没有执行984全量或新VIB/Full路由对照。
+
+全部生成结束后才加载隐藏评分，每份输出两次独立进程，共288次检查；未按通过结果选题、选优、补生成或修改代码。
+
+| 提示 | 成功/生成 | 任务均值准确率 | 输入Token | 输出Token | 历史代理金额 |
+|---|---:|---:|---:|---:|---:|
+| 历史简洁 | 42/48 | 87.50% | 31322 | 5661 | $0.0161898 |
+| 规格优先 | 40/48 | 83.33% | 36314 | 5364 | $0.017331 |
+| 当前仲裁 | 35/48 | 72.92% | 83880 | 4500 | $0.030564 |
+
+同题两次先聚合，独立单位24题；当前仲裁减历史简洁为-14.58pp，10000次任务级bootstrap区间[-29.17,-2.08]pp。当前减规格优先-10.42pp，区间[-22.92,0]；历史减规格优先+4.17pp，区间[0,12.50]。所有区间为探索性未校正比较，不称独立确认。
+
+结果之后补充明确标注的事后精确符号检查，原manifest及analysis未改：不同结果任务分别只有4、3、1题，双侧p分别0.125、0.250、1.000。因此不能只看到首个bootstrap区间不含零就宣布稳定总体退化；需要扩大冻结验证。当前仲裁HumanEval/1两次一过一不过，温度0不代表响应确定性。
+
+事后原文观察集中在HumanEval/1（组内空格未删除）、147（错误按索引模3分组）、108（负号施加错误位/全部位）、32（Newton退出未收敛且无可靠回退）。这支持回查提示词变化的研究方向，但不证明模型内部原因，也不证明历史数值实现全域正确。历史简洁本轮少62.66%输入Token、少47.03%历史代理生成费用；仅本轮prompt-only差异，不是门控收益。
+
+新增24项专项，全量394项测试最终通过（28.90s）。真实目录缓存恢复使用禁止客户端工厂：报告与分析复用，账目hash不变，新API调用0。首次分析模块collection失败符合TDD；测试第二密钥守卫首次失败后显式设置变量，未移除守卫。重复hash计算优化只改本轮新入口，未改旧client或严格driver。
+
+交付：[真实结果与事后诊断](../results/prompt_contrast_pilot_20261028/README.md)、[冻结生成证据](../results/prompt_contrast_pilot_20261028/generation_report.json)、[任务级评分与统计](../results/prompt_contrast_pilot_20261028/analysis.json)、[复用操作文档](../docs/prompt_contrast_pilot.md)。新阶段产物未提交、未推送；旧结果、核心路由、密钥与两版论文主表/PDF保持不变。下一步建议保留历史简洁作为冻结基线，扩大独立验证后再决定是否更新默认提示与论文正文。
+
+## 48题不重叠提示词复验 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans task-by-task. 该子技能未安装，遵循用户“继续”授权内联执行，无子代理、无自动提交。
+
+**Goal:** 冻结首轮以外48题，实际288次请求，检查历史简洁提示的首轮信号能否复现。
+
+**Architecture:** 保留已绑定首轮证据的源码与全部产物。新`src/exploratory_prompt_session.py`负责后续冻结协议的执行，复用旧账目及响应核验帮助函数，不更改严格预算driver。新复验入口只根据首轮manifest的任务ID排除24题，不读取首轮通过标签；统计主比较为历史简洁减当前仲裁，48题单独报告，不合并成独立确认。
+
+**Tech Stack:** Python、LLMClient、JSONL/fsync、两次独立解释器评分、任务级bootstrap及精确符号检验。
+
+### Task 1: 冻结协议与测试
+
+**Files:** 创建`experiments/run_prompt_contrast_replication.py`、`src/exploratory_prompt_session.py`、`tests/test_prompt_contrast_replication.py`。
+
+- [x] 先写失败测试，运行`python3 -m pytest tests/test_prompt_contrast_replication.py -q`预期缺模块；固定抽样：
+
+```python
+remaining = sorted(set(all_task_ids) - set(prior_manifest["task_ids"]))
+selected = random.Random(20261030).sample(remaining, 48)
+assert not set(selected) & set(prior_manifest["task_ids"])
+```
+
+- [x] 实现`freeze_replication(draft_path, prior_manifest_path, endpoint)`，保持三提示原消息hash、温度0、max_tokens1024、两次重复；顺序seed20261031，单次请求，串行，timeout60，第二密钥，历史代理$1观察停机。冻结主比较、10000 bootstrap seed20261030及精确符号检验；不声称此前已审计存档是全新数据。
+- [x] 实现`execute_exploratory(manifest, output_dir, client_factory, validator)`；验证正常完整缓存、partial received恢复、pending/unknown停机、模型漂移、429、原文漂移、截断计费、用量缺失非零、预算守卫与互斥锁。不引入隐藏评分或重试。
+- [x] 专项通过后运行`python3 -m pytest -q`，并核验首轮缓存仍可复用，账目hash不变。新增24项，全量418项通过（79.73s）。
+
+### Task 2: 实际请求
+
+**Files:** 新建`results/prompt_contrast_replication_20261028/`，保存manifest、原文responses、requests.jsonl、generation_report.json。
+
+- [x] 离线冻结与检验288请求规划场景不超过$1。实际场景$0.7801236；字节估计不是verified Token上界，代理阈值不是invoice硬保证。
+- [x] 实际执行：
+
+```bash
+VIB_PRIVATE_API_KEY_ENV=PRIVATE_API_KEY_1 python3 -m experiments.run_prompt_contrast_replication --output-dir results/prompt_contrast_replication_20261028 --execute
+```
+
+最多288次，无隐藏测试选优/补生成。unknown/quota/身份漂移停止，截断计失败且不重试。不运行984全量。
+
+### Task 3: 隔离评分与单独报告
+
+**Files:** 创建`experiments/analyze_prompt_contrast_replication.py`、`tests/test_prompt_contrast_replication_analysis.py`；生成新目录analysis.json与README.md。
+
+- [x] 实现`analyze_replication(output_dir)`，全部生成结束后才载入评分，两次独立进程；完整缓存不重复评分，失败恢复仅本地。首轮24题和复验48题分表；不变更首轮原analysis或结果。
+- [x] 调用`paired_statistics(rows, samples=10000, seed=20261030)`；主比较历史减当前，精确方向检验`min(1, 2*sum(comb(n,k), k=0..min(left,right))/2**n)`预先声明，另外两对探索性报告。不能把均值bootstrap与符号检验混为同一估计，跨零不称等效。
+- [x] 全量回归、真实缓存no-client/no-new-request、hash核验和`git diff --check`，更新本审计与复验README。保留核心默认、论文主表、凭证与历史产物，不自动提交或推送。
+
+### 48题不重叠复验验收与结论更新
+
+使用第二密钥完成288次真实single-attempt请求，无重试、无截断、usage完整、模型均匹配`deepseek-v4-flash-0817`。输入286662、输出26754、总313416 Token；历史代理金额$0.1181034，低于$1观察阈值；实际invoice仍未知。48题与首轮24题不重叠，原三提示、候选流、温度0、max_tokens1024不变。生成全部结束后载入隐藏测试，每份输出两次独立进程，共576次检查。
+
+| 提示 | 成功/96次生成 | 48题均值准确率 | 输入Token | 输出Token | 历史代理金额 |
+|---|---:|---:|---:|---:|---:|
+| 当前仲裁 | 88/96 | 91.667% | 162198 | 7624 | $0.0578082 |
+| 历史简洁 | 87/96 | 90.625% | 57240 | 8835 | $0.027774 |
+| 规格优先 | 88/96 | 91.667% | 67224 | 10295 | $0.0325212 |
+
+预声明主比较历史简洁减当前仲裁为-1.042pp，任务级bootstrap95%区间[-7.292,+5.208]pp。48题中历史均值更高1题、当前更高2题、45题平局，双侧精确方向检验p=1.0。当前减规格优先0pp、区间[-3.125,+3.125]pp；历史减规格优先-1.042pp、区间[-7.292,+5.208]pp；另外两对探索性符号p亦1.0。
+
+**结论更新：首轮历史简洁的明显精度优势未在这48题复现，不能声称当前仲裁普遍造成退化。** 首轮24题结果保持真实有效，不删、不改、不与本轮合并成确认性72题主结果。两轮都来自已审计存档，题目不重叠不是全新独立数据集，也不能排除预训练污染。
+
+成本方向在两輪一致：本轮历史简洁相对当前少64.71%输入Token和51.95%历史代理费用；规格优先少58.55%输入和43.74%代理费用，成功次数与当前相同。这支持关注提示开销，但没有非劣margin，不称等效、不证明VIB门控收益，也不替换核心默认。
+
+评分后描述差异集中于HumanEval/10、38、119、120，其余44题均值相同；主比较仅3题有差异。规格优先2题、历史简洁1题的两次通过状态不一致，temperature0不能当确定性保证。不做针对这些题的补生成或模型修复。
+
+新增24项安全/统计回归，全量418项最终通过（76.46s）；首轮source保持不变并再次完整缓存复用。复验真实缓存验收使用禁止客户端工厂，生成及分析复用，ledger SHA不变，新增API调用0。新增恢复守卫明确missing request evidence即使此前已有known usage仍将总费用标未知；未修改首轮已冻结类或严格预算driver。原文、源文件、manifest、operation和usage一致性最终核验通过。
+
+交付：[48题复验及两轮分表](../results/prompt_contrast_replication_20261028/README.md)、[复验逐题分析](../results/prompt_contrast_replication_20261028/analysis.json)、[真实账目](../results/prompt_contrast_replication_20261028/generation_report.json)、[操作文档](../docs/prompt_contrast_pilot.md)。未提交、未推送，核心默认、凭证、论文主表/PDF和历史结果保持不变。下一阶段应从VIB自身共同候选与等预算的因果问题出发设计实验，不继续把提示词局部效果当门控收益。
+
+## 共同候选门控接收端对照 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans task-by-task. 该子技能未安装，按用户“继续”内联执行，无代理或自动提交。
+
+**Goal:** 从前两轮之外固定抽32题，用真实编码器对照Full、实际VIB门控、逐轮消息数匹配随机、逐轮消息数匹配余弦选择，256次真实合成。
+
+**Architecture:** 先离线冻结真实384维MiniLM嵌入、逐条VIB决策和三种接收历史，再执行同一冻结规格优先提示与温度0/max_tokens1024。对齐HumanEval主流程incremental历史，不沿用旧回放的frozen语义；不改任何旧源码或产物。门控仅改变历史候选接收，不能模拟下一轮生成反馈或节省已发生的候选生成成本。
+
+**Tech Stack:** 本地SentenceTransformer缓存、NumPy、现有JSONL/fsync探索性会话、独立代码评分、任务级bootstrap及精确方向检验。
+
+### Task 1: 冻结投影与真实编码器
+
+**Files:** 创建`experiments/prepare_gate_receiver.py`、`tests/test_gate_receiver.py`。
+
+- [x] 写失败测试，运行`python3 -m pytest tests/test_gate_receiver.py -q`预期缺模块。固定抽样与对齐：
+
+```python
+remaining = sorted(all_task_ids - prior24_ids - prior48_ids)
+selected = random.Random(20261101).sample(remaining, 32)
+result = router.evaluate_detailed(candidate_msg=body, history=approved_history,
+                                 goal=prompt, step_t=index // 3 + 1, role=role)
+```
+
+- [x] 实现`prepare_gate_receiver(draft_path, prior_paths, output_dir, encoder)`，输出冻结`design.json`，以真实encoder CPU/eval模式对prompt、六条正文及六条带角色历史做批量encode，L2归一化；保存embedding向量、模型snapshot文件hash、库版本、实际max_seq_length与截断规则、逐消息utility/阈值等，不声称完整语义编码或训练VIB下界。
+- [x] 使用当前路由配置(beta3.2/lambda0.08/tau0.5/gamma-0.4/adaptive/alpha0.35/min-1)，编码回放采用实际路由公式不另写公式。随机每轮不放回抽k，k为该题VIB本轮通过数；余弦对每个选择按已选历史贪心最小最大相似度选k；均保留原候选时间顺序。测试逐轮k精确一致、无测试/标签参与、incremental历史、真实编码器身份、source与原消息hash一致、原文件未变。
+
+### Task 2: 生成与评分
+
+**Files:** 创建`experiments/run_gate_receiver.py`、`experiments/analyze_gate_receiver.py`及专项测试；复用现有`src/exploratory_prompt_session.py`不修改其冻结源码。
+
+- [x] 实现`freeze_gate_session(design_path, endpoint)`和`execute_gate_session(...)`，32题四组两次，顺序seed20261102，原规格优先提示、temperature0/max_tokens1024、第二密钥、串行无重试/timeout60、$1历史代理观察停机；冻结每题共同的请求次数和输出cap预算，以及逐轮消息匹配口径。消息数匹配不是Token或实际费用相等，费用按真实usage分别报告。
+- [x] 实现`analyze_gate_session(output_dir)`：全部256个请求生成结束后才隐藏评分，完整输出两次独立进程，截断按失败；各题重复均值后bootstrap10000次seed20261101。主比较VIB减匹配随机，另报VIB/Full、VIB/匹配余弦，不冒充完整协作因果结论或等实际费用实验。
+- [x] 安全专项验证缓存无client、pending/unknown不重发、source漂移、完整评分条件、精确消息预算；新增18项专项通过，全量436项通过（171.75s），随后冻结256请求场景$0.5807178，才开始真实命令：
+
+```bash
+python3 -m experiments.prepare_gate_receiver --output-dir results/gate_receiver_design_20261028
+VIB_PRIVATE_API_KEY_ENV=PRIVATE_API_KEY_1 python3 -m experiments.run_gate_receiver --design results/gate_receiver_design_20261028/design.json --output-dir results/gate_receiver_20261028 --execute
+python3 -m experiments.analyze_gate_receiver --output-dir results/gate_receiver_20261028
+```
+
+### Task 3: 验收与解释
+
+**Files:** 新目录README.md、analysis.json、design.json、manifest.json、原文与账目，本审计。
+
+- [x] 记录真实准入消息、按组输入输出与历史代理成本，Full候选成本属于共同已发生且未新计费部分；未取当前invoice，不猜测实付。不对本轮结果有利选种子或只筛被VIB改变的题目；32题中28题历史改变，VIB接收129/192条，未按改变与否重抽。
+- [x] 全量测试、旧两轮缓存及新轮真实缓存no-client、指纹/账目核验和`git diff --check`，交付探索性结论。核心流程、密钥、论文主表与全部历史结果不改，不自动提交/推送。
+
+### 真实共同候选门控接收端验收
+
+完成256次新请求，全部single-attempt、模型匹配`deepseek-v4-flash-0817`、finish_reason stop、usage完整、无截断。输入160906、输出29599、总计190505 Token，历史代理金额$0.0837906，实际invoice未知。固定32题与此前72题不重叠；全部生成结束后隐藏评分，每输出两次独立进程，共512检查。
+
+真实本地MiniLM 384维、CPU/eval，snapshot及全部文件hash、库版本、逐消息正文/角色历史向量冻结。实际max_seq_length256，长消息截断，不称完整代码语义互信息。代码任务主流程同轮incremental，旧receiver replay曾采用frozen，本轮对齐incremental且未改旧源码。保留原router全部code-diff、fix、code-role与complexity启发式，不冒充纯VIB公式消融。
+
+| 接收组 | 准入消息/192 | 成功/64输出 | 32题准确率 | 输入Token | 输出Token | 历史代理费用 |
+|---|---:|---:|---:|---:|---:|---:|
+| Full | 192 | 60/64 | 93.75% | 46314 | 7191 | $0.0225234 |
+| VIB | 129 | 60/64 | 93.75% | 38316 | 7239 | $0.0201816 |
+| 消息数匹配随机 | 129 | 60/64 | 93.75% | 38100 | 7908 | $0.0209196 |
+| 消息数匹配余弦 | 129 | 60/64 | 93.75% | 38176 | 7261 | $0.020166 |
+
+三种筛选逐题逐轮消息数精确匹配，k来自冻结VIB通过数；实际历史字节及输入Token不相等，不称等实际费用实验。随机是每轮不放回k选择，余弦是贪心min-max similarity k选择，不是核心Bernoulli或threshold模式；每题只固定一个随机子集，不是多种子评估。
+
+**主比较VIB减匹配随机0pp，32题全部平局，精确方向p=1.0；本轮没有观察到VIB特有精度收益。** 所有组逐题两次通过状态相同；24题存在不同原文输出，非重复缓存四组同答。共同失败127（区间长度+1与公开示例不符）、132（局部深度未保证完整有效嵌套），未按失败结果补生成。
+
+所有任务差值0导致任务bootstrap区间退化[0,0]，不是总体无损、非劣或等效证明；没有预声明非劣margin。报告额外明确标注事后二项敏感性说明：若假设IID分歧事件，0/32分歧单侧95%上界`1-0.05**(1/32)=8.94%`，仅说明零样本分歧不等于零总体风险；实际是存档不放回抽样，不把该假设上界视为准确率或非劣上界。
+
+VIB对Full接收消息少32.8125%，新合成输入少17.27%，历史代理合成费用少10.40%。这是真实样本接收端观测，候选生成费用已经发生且不在本轮新账单，不能声称端到端成本收益。匹配朴素组同样保持样本精度，故不将节省全归VIB特有机制。
+
+新增18项专项通过；全量436项最终通过（181.05s）。真实冻结向量复算逐条decisions一致；256 unique operations、所有raw output与账目hash一致。真实缓存复用禁止client工厂，生成及分析复用，ledger SHA不变，新增API0。前两轮完整缓存仍有效，未修改其绑定源码和任何历史结果；无commit或push。
+
+交付：[真实门控结果及退化区间提醒](../results/gate_receiver_20261028/README.md)、[离线编码设计](../results/gate_receiver_design_20261028/README.md)、[逐消息向量和投影](../results/gate_receiver_design_20261028/design.json)、[逐题分析](../results/gate_receiver_20261028/analysis.json)、[操作与恢复文档](../docs/gate_receiver_experiment.md)。核心路由、密钥与两版论文主表/PDF不改。下一阶段应提高可识别性，在冻结新候选与新任务、严格预算与完整反馈重生成的设计下检验，不继续据小样本零差异调参或选种子。
+
+## 完整两轮反馈与综合交付 Implementation Plan
+
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans task-by-task. 子技能未安装，按用户“一并做后续几项工作”授权内联执行，无子代理，无自动提交。
+
+**Goal:** 完成新候选的两轮策略反馈实验、真实账目与统计、缓存验收、综合报告及中英文论文补充说明。
+
+**Architecture:** 固定从此前104题之外抽16题，第一轮48条新候选共享；第二轮四策略读取各自第一轮接收历史，重新生成192条候选，再各合成两次共128输出。三阶段采用不可覆盖的子manifest与父输出hash连接，共368次，固定阶段预算$0.15/$0.45/$0.40合计$1历史代理观察上限。复用既有请求守卫但不改其已冻结源码；无隐藏评分参与候选、门控、修复或调度。
+
+**Tech Stack:** Python、真实本地MiniLM、三阶段JSONL/fsync、两次独立进程评分、任务级配对bootstrap与精确方向检验、Markdown双语补充。
+
+### Task 1: 协议与单元测试
+
+**Files:** 创建`experiments/feedback_protocol.py`、`experiments/run_feedback_experiment.py`、`tests/test_feedback_experiment.py`。
+
+- [x] 先写失败测试，运行`python3 -m pytest tests/test_feedback_experiment.py -q`确认缺模块。抽题只使用ID：
+
+```python
+remaining = sorted(all_task_ids - previous104_ids)
+selected = random.Random(20261103).sample(remaining, 16)
+assert len(set(selected)) == 16
+```
+
+- [x] 冻结`freeze_feedback_protocol(endpoint)`，固定读取已声明draft及三个prior manifest，原benchmark三角色system和LLMAgent user模板，候选温度0/max_tokens256，合成温度0/max_tokens1024，两轮固定，不completion早停、不doctest修复。每轮三个Agent同读轮前历史，生成结束后按incremental主门控评估。
+- [x] 实现`stage_manifest(protocol, phase, parents, routes)`及`run_feedback(...)`。第一轮空历史共享；随机、余弦逐轮消息k与VIB相等；第二轮控制组的k使用本轮VIB在其自产候选上计算的数量，属于预声明耦合数量对照，不是独立恒定k。Full独立全部接收。候选截断保留非空原文当作截断候选，不修复；最终输出截断计失败。
+- [x] 阶段完成响应/账目hash绑定下一阶段；pending/unknown停止所有下游。缓存不重发，收到候选后中断只恢复路由计算。局部`StageClient`适配，不改旧源码或模块全局状态；阶段账目真实stage标agent/code，预算先冻结且不能从已失败阶段挪用。测试unknown非零、无重试、阶段依赖漂移、反馈prompt不同、真实stage与用量、候选截断规则、隐藏评测分离。
+
+### Task 2: 实际执行与隔离评分
+
+**Files:** 创建`experiments/analyze_feedback_experiment.py`及其专项测试；生成`results/feedback_experiment_20261028/`根协议、三阶段请求与raw、routes、pipeline_report与analysis。
+
+- [x] 实现`analyze_feedback(output_dir)`只对完整三阶段评分；每题先聚合两次最终合成，不把重复当新候选团队样本。主比较VIB减数量匹配随机，10000次task bootstrap seed20261103，方向检验alpha0.05；次比较探索性，零分歧区间不称等效。新增14项专项；全量450项通过（120.42s），完整回归通过后才发送实际请求。
+- [x] 专项与全量回归通过后执行：
+
+```bash
+VIB_PRIVATE_API_KEY_ENV=PRIVATE_API_KEY_1 python3 -m experiments.run_feedback_experiment --output-dir results/feedback_experiment_20261028 --execute
+python3 -m experiments.analyze_feedback_experiment --output-dir results/feedback_experiment_20261028
+```
+
+每阶段规划场景超过固定分配即停止，不选有利子集；总代价为历史代理观察值，不是实际invoice或verified Token硬保证。
+
+### Task 3: 综合证据与双语补充
+
+**Files:** 新结果README、`paper/prospective_experiments_zh.md`、`paper/prospective_experiments_en.md`，更新本审计。
+
+- [x] 实现独立成本口径：共享第一轮真实请求用量只计一次，第二轮与合成按策略计费。假想单策略独立运行预算为完整第一轮加本策略第二轮加一次合成平均费用（不把其他策略或两次最终候选选优费用算进单次），另报真实实验总用量及历史代理费用，不重复累计shared实际支出；尚无实付invoice，不能把代理费用叫作实付账目。
+- [x] 完整反馈相比receiver仍只两轮、同源已审计题、一个团队轨迹、固定随机子集种子，未验证多种子或全链路最优；不声称等实际Token或等invoice费用。已交付各阶段可读流程图、此前实验分表、中英文可引用方法/局限与证据导航，论文主表/PDF不混写新结果。
+- [x] 全量回归、三轮旧缓存及新pipeline禁止client恢复、全部源/输出/ledger hash、`git diff --check`，保留所有历史结果、密钥及核心默认，无commit或push。
+
+补充离线报告交付：`scripts/export_prospective_report.py`从完整反馈分析构建自包含`report.html`，零基线图表支持质量、消息、单策略代理成本、后续输入Token切换；`scripts/check_prospective_evidence.py`执行禁止客户端的全批次恢复验收并输出`acceptance.json`。报告不修改科学计算来源，也不请求外部图片、字体或数据。反馈专项17项、报告专项2项；最新全量455项通过（126.61s）。
+
+## 真实两轮反馈结果（2026-10-28）
+
+固定16题与此前104题无重叠，按ID采样而非评分。共享第一轮48请求、各策略自产第二轮192请求、最终128合成共368请求全部完成，模型声明均匹配`deepseek-v4-flash-0817`，temperature0正确透传，候选cap256、合成cap1024，无截断、重试、补生成或隐藏反馈。
+
+第一轮输入12028/输出2831，历史代理$0.0070056；第二轮输入78907/输出12624，$0.0388209；最终合成输入86234/输出15995，$0.0450642。总输入177169、输出31450、208619 Token，$0.0908907；usage全部完整，actual USD/RMB invoice仍未知。三个阶段规划及观察值均在固定$0.15/$0.45/$0.40分配内。共享首轮实际只计一次。
+
+| 策略 | 成功/32 | 16题均值 | 准入/96 | 第一轮/第二轮 | 单策略一次合成代理费 |
+|---|---:|---:|---:|---|---:|
+| Full | 32 | 100% | 96 | 48 / 48 | $0.0230670 |
+| VIB | 32 | 100% | 74 | 39 / 35 | $0.0219567 |
+| 随机消息数匹配 | 32 | 100% | 74 | 39 / 35 | $0.0220185 |
+| 余弦消息数匹配 | 32 | 100% | 74 | 39 / 35 | $0.0223332 |
+
+单策略费用为完整第一轮 + 本策略第二轮 + 一次最终合成平均费用，对应112请求的组件构造口径，不是额外付款记录。VIB相对Full消息少22.9167%，总输入44642减至42029（少5.8532%），该代理费用少4.8134%；不把消息减少换称总推理成本减少。VIB相对随机费用仅少0.2807%，无重复成本试验或区间，不能声称稳定优于随机。
+
+主比较VIB减随机为0pp，全部16题平局、精确方向p=1，任务bootstrap退化[0,0]；`-0.0`仅符号显示，不改冻结analysis源码或结果。四组100%呈精度天花板，不能区分策略、证明非劣/等效或VIB特有优势。11/16题最终原文有差异，128份输出44个不同hash；通过当前测试不证明全输入域语义正确。
+
+128份最终输出各执行两次独立评分，共256个评分进程。禁止client恢复验收涵盖旧三轮及新流水线，新增API0，六份ledger SHA前后不变，全部逐题逐轮数量匹配。首次将验收和报告导出并行执行，因两者均读取并验证同一pipeline触发互斥锁，正确拒绝第二调用；随后顺序验收成功，未删除锁或改动任何请求证据。
+
+离线HTML浏览器验收使用本机Chrome，1280×720桌面与390×844移动布局检查通过，消息及成本按钮切换有效，移动页面scrollWidth=390等于viewport，无全页横向溢出，外部resource请求0，页面JS errors0。临时截图仅留系统临时目录，不放代码库。
+
+交付：[离线综合HTML](../results/feedback_experiment_20261028/report.html)、[综合README](../results/feedback_experiment_20261028/README.md)、[逐题评分与成本](../results/feedback_experiment_20261028/analysis.json)、[禁止客户端验收](../results/feedback_experiment_20261028/acceptance.json)、[中文论文补充](prospective_experiments_zh.md)、[英文论文补充](prospective_experiments_en.md)、[执行与恢复文档](../docs/feedback_experiment.md)。
+
+工程反馈闭环缺口已补齐；研究上仍没有VIB独有质量优势、多种子或等实际费用证明。保留历史正收益，按严谨实证研究组织，不因本轮满分直接升级顶会结论。下一关键证据应为新数据、多独立团队轨迹与随机子集、预声明功效/非劣界限、实际账单及等费用控制，不在这16题上按评分继续调参。
+
+## 增强重评来源审计（2026-10-29）
+
+用户授权继续后，先核查旧MBPP入口发现其公开原测试及参考辅助早停不适合直接作为新的隐藏独立验证。本轮转为固定输出的增强覆盖验收，未自动运行跨数据集、多团队轨迹或等费用实验；这些研究缺口仍保留。
+
+发布方`evalplus/humanevalplus`HF修订`d32357cf319e50e9c8d8dab5ea876c72b0fd321b`，完整导出JSONL包含164题。GitHub CLI无可用认证、HF直连下载失败，使用同修订镜像；SHA-256 `908377f1daf28dcb36846db73a5662b2e05a9907407c2696c89ad9d3b0b04492`与发布方HF API的LFS对象完全一致。只声称固定HF导出资产身份，不声称已认证GitHub release v0.1.10或执行官方EvalPlus CLI。
+
+新增独立`src/isolated_plus_evaluation.py`，不改原评分器。`python -I -S`显式绑定NumPy依赖目录、最小环境不继承凭证，两次固定Python/NumPy种子独立检查，断言、异常、整体30秒超时分别记录，不一致停机。整体超时与官方逐输入参考时间缩放不同；是进程隔离，不是恶意代码网络/文件系统沙箱。数据、旧128份输出与八份旧协议/账目/analysis证据绑定，新记录独立保存。
+
+静态AST统计：全164题声明125037组输入，原16题声明13243组。最初按字面`inputs/results`列表对齐检查，六题没有字面results；核查确认这六题使用原样`ref_func`计算预期，并非漏结果。数组数量不是已通过覆盖或统计独立单位。
+
+全量472项回归通过后启动参考验收，HumanEval/32处确定性runtime_exception停止，任何候选尚未评分。其原导出断言：
+
+```python
+assert _poly(*candidate(*inp), inp) <= 0.0001
+```
+
+接口`find_zero`应返回浮点根，断言却先用`*`展开该浮点数；独立最小环境复现输出`TypeError: Value after * must be an iterable, not float`。这是发布方导出oracle的错误，不是模型失败、VIB退化或运行环境缺失NumPy。未修补原测试或参考实现。
+
+随后独立`audit_plus_reference_suite.py`只继续完成所有参考源诊断，共164题×2=328次执行，163参考通过、唯一32失败；全部记录保留，不移除失败题，不授权候选评分。失败32不在原16题中，但不事后放宽已冻结的全库参考守卫。
+
+**实际状态：128份候选增强评分未执行，没有candidate_checks或候选analysis.json，也没有全通过reference_acceptance.json。** 原四策略32/32、100%记录不改，增强成绩标“未执行”，不填为0或100%。同源增强测试并非新数据，不据本次审计声称精度天花板已证实或消除。
+
+缓存禁止本地评分调用验收通过，新增本地重算0、新模型请求0，八份旧证据前后SHA一致；旧生成历史代理费用$0.0908907保持不变。最终25项专项、全量480项测试通过（145.07s）。离线报告1280×720及390×844布局通过，移动scrollWidth=viewport=390，外部资源0、页面错误0；未执行标识清晰。没有commit、push、密钥或核心默认变更，原论文主表/PDF不改。
+
+交付：[离线来源审计](../results/feedback_plus_rescore_20261029/report.html)、[完整说明](../results/feedback_plus_rescore_20261029/README.md)、[164题参考结果](../results/feedback_plus_rescore_20261029/source_audit.json)、[原证据与缓存验收](../results/feedback_plus_rescore_20261029/acceptance.json)、[原样增强数据](../results/feedback_plus_rescore_20261029/publisher_test.jsonl)、[隔离方法](../docs/enhanced_rescoring.md)、[计划与未执行项](../docs/superpowers/plans/2026-10-29-plus-rescoring.md)。
+
+下一动作应取得并验证正确官方输入型资产或另行冻结独立测试协议；不能自行修补导出oracle后冒称官方成绩。真实候选增强重评、跨数据集和多团队轨迹仍未执行。
+
+## 用户授权本地修订与真实重评（2026-10-29）
+
+用户明确要求修复32导出断言并继续；执行过程中两次确认：①有限精度保护；②仅32题验收参考使用发布方预期根表。独立入口`experiments/rescore_repaired_plus.py`与新目录`results/feedback_plus_repaired_20261029/`，不改已冻结源码、原发布方数据或旧失败记录，也不冒称官方EvalPlus成绩。
+
+修复参数打包后必须检查绝对残差，但直接abs≤1e-4又暴露浮点表达限制。输入217，原Newton根与发布方预期同为17.3124550475086；浮点求和残差−0.0023150274。80位诊断在该值与下一float得到+0.0048929085及−0.0038379341，真实零点介于相邻可表示数之间，固定绝对1e-4不可达。
+
+经用户确认使用精确有理数Horner多项式：绝对残差≤1e-4，或返回值前后相邻浮点数的精确多项式值符号跨零（连续性证明局部根）。不任意扩大绝对阈值，但数值接受范围已扩展，receipt明确披露。正确根、错误根、巨大负残差、NaN/Inf、非数值及无零点反例通过守卫测试。
+
+精度保护后继续发现输入275原Newton确实未收敛：系数`[9,-6,20999,2,8,-4,-10,26,6,5,-1,8]`，返回−4.4399586099514305，残差−111705260.2034939；发布方预期−2.3440476479552648通过精确检查。用户确认仅32验收参考改用886组预期根表；原canonical字段不改，原Newton失败双检查另存。不能说164个原canonical全部通过。
+
+派生数据只替换32题test字段，其他163题、输入及canonical字段不改，SHA-256 `78f2c0b38d1b32f184c9ecad9fe794b16b2b9e2b913751101e00f0a4c7d8d336`。32不在原16候选题中，此补丁不直接修改16题测试，不按候选评分选择修订。原128份输出、prompt、账目和费用不变。
+
+全量496项通过（197.26s）后正式执行：163个原参考加32预期根表共164个验收参考×2=328次检查全部通过；原Newton诊断另2次失败；128候选×2=256次独立评分完整结束。新模型请求0，旧生成历史代理费用$0.0908907不变，无新invoice证据。
+
+| 策略 | 原通过/32 | 本地修订增强通过/32 | 准确率 | 原通过转失败 |
+|---|---:|---:|---:|---:|
+| Full | 32 | 32 | 100% | 0 |
+| VIB | 32 | 32 | 100% | 0 |
+| 随机数量匹配 | 32 | 31 | 96.875% | 1 |
+| 余弦数量匹配 | 32 | 30 | 93.75% | 2 |
+
+全部新失败在HumanEval/137。余弦0仅一位逗号小数替换，其他删除；余弦1将三位逗号小数当千分位；随机0遇到`"1,"`空小数尾不替换而异常。公开契约将逗号视为小数分隔符，原增强输入确有这些边界；是原代码错误，不修复或重新生成。只做静态分支解读，不冒称已定位每份输出第一个失败输入。
+
+沿用主方向VIB−随机+3.125pp，任务bootstrap95%区间[0,+9.375]，方向p=1，VIB高1题、平局15题。VIB−Full仍0，全16题平局。此为事后本地覆盖审计，不是新预注册确认；不能将一题差异包装为稳健VIB特有优势、等效或多种子/等费用因果结论。
+
+最终497项回归通过（196.66s），新17项专项通过。禁止候选及参考评分回退的缓存验收通过，新增本地评分0、模型请求0，八份旧证据及本地评分记录hash前后不变，旧source_audit失败hash保留。桌面报告视觉检查、原/增强切换与单变化题筛选通过；移动DOM检查scrollWidth=viewport=390、变化题可见1、外部资源0、页面错误0。移动截图本身因上传工具故障未能视觉查看，未将其冒称完整视觉验收。
+
+交付：[本地修订离线报告](../results/feedback_plus_repaired_20261029/report.html)、[完整结果](../results/feedback_plus_repaired_20261029/README.md)、[失败解读](../results/feedback_plus_repaired_20261029/failure_analysis.md)、[精确补丁](../results/feedback_plus_repaired_20261029/patch.json)、[原Newton失败](../results/feedback_plus_repaired_20261029/original_task32_reference.json)、[缓存验收](../results/feedback_plus_repaired_20261029/acceptance.json)、[方法说明](../docs/local_plus_repair.md)；双语补充已同步，主表/PDF不改，无commit或push。
+
+本地修订后原128输出增强评分已完成；修订前源审计目录仍按原协议保留“未执行”。跨数据集、多团队/多随机子集、真实账单及等费用验证仍未完成，不因本轮结果直接升级顶会结论。
 
 ## 一键导航
 
