@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/133/cosine_matched/Coder",
+  "content": "建议补充对空列表和极端值的测试，如 `[]` 应返回 `0`，`[1e10]` 应返回 `1e20`，确保浮点精度不影响结果。另外，`math.ceil` 对 `-0.0` 会返回 `0`，平方后为 `0`，符合预期。",
+  "output_sha256": "9fcca362f5d25bc75f4d47ba0c5fe30b701bffd638a6e6c2ae4dc1535d0cb4ab",
+  "response_id": "2fdb10a7929db2d837f44906ef8831c4-227cfd71",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

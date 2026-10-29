@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/71/shared/Coder",
+  "content": "使用海伦公式计算面积，先验证三角不等式，再对结果保留两位小数。注意浮点精度，用round处理。",
+  "output_sha256": "6d8ba88e08a7369766f822314b0e69efda4d459ff79417afca01ec2a8886b2e1",
+  "response_id": "4ca51d1e84e7fca38330d73f24d8c53b-e20a71bd",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/74/cosine_matched/Coder",
+  "content": "直接使用`sum(len(s) for s in lst)`计算总字符数，通过比较两个总和值返回较小者，相等时返回`lst1`，代码简洁且符合所有示例。",
+  "output_sha256": "81bd0c5b47c20f92bc907e77c4bb44321dea5ea9a66341529e119ad4fbf9af86",
+  "response_id": "00a924d541784f6a9a3c9af9436f5968",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

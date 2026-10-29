@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/full/Architect",
+  "content": "建议补充输入类型校验，确保n为整数，否则抛出TypeError；同时明确n为0时返回0，负整数时返回0或抛出ValueError，并在文档字符串中注明。",
+  "output_sha256": "ba3c45a3d4276a1df981ca6163c5963f001d7431ff99c49df388082a6ae910d1",
+  "response_id": "60589a728ad631cc63625f05d0b06e14-e2864152",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

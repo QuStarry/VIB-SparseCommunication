@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/random_matched/Architect",
+  "content": "建议采用高斯公式并补充输入校验：当n≤0时返回0，同时更新docstring明确约束条件，确保函数对非正整数输入行为可预测。",
+  "output_sha256": "a317f9ec629a21b469b07afe6fa180dab85bd1a71006e72f50b34b46988f8191",
+  "response_id": "c441019c02be358575dfff57bc3c7de4-5ae08873",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

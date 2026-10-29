@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/41/random_matched/Coder",
+  "content": "直接返回 `n * n` 即可，无需模拟。需确保 `n` 为非负整数，否则抛出 `ValueError`。建议补充 `n=0` 和 `n=1` 的测试用例验证边界行为。",
+  "output_sha256": "5166dde9b591f6857e41d676238c28b92757c6ce1058fd71cac703235e38af9a",
+  "response_id": "93b4ad0da8a640b57b00c5f0a6dae2b0-ebd128bc",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

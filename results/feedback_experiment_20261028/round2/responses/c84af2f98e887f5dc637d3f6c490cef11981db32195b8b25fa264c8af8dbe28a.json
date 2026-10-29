@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/50/full/Coder",
+  "content": "建议在decode_shift中直接复用encode_shift的取模逻辑，将`+5`改为`-5`，并添加`if ch.islower()`条件过滤非小写字符，确保逆操作严格对称且安全。",
+  "output_sha256": "790db7e249a581e4ec8180dc5957be592e4c61b41af3bb01a9d51231c9e92815",
+  "response_id": "chatcmpl-1793192222042503000080111bc5#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

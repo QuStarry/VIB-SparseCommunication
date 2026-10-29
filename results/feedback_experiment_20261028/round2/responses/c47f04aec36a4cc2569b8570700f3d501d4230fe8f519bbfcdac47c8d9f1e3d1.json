@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/14/random_matched/Coder",
+  "content": "实现时用 `range(1, len(string)+1)` 确保空字符串返回空列表，且前缀按长度自然递增。若需优化可改用 `itertools.accumulate`，但当前列表推导式已足够清晰。",
+  "output_sha256": "0dd3a367e350fe93c25d956076710bc119e66fd6d2367d25fdf232c0805d1b13",
+  "response_id": "b147530d696815e0235adb7be72bd970-5656fdcd",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

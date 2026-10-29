@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/41/vib/Coder",
+  "content": "补充说明：该问题的时间复杂度为O(1)，空间复杂度为O(1)，无需任何循环或数组。对于n为负数或非整数的情况，建议在函数开头添加类型检查并抛出ValueError，以保证代码健壮性。",
+  "output_sha256": "fb93169df2808e8b0f47d0858bdc6f9e022cd41c5ef07767f2725cfc93466ca0",
+  "response_id": "c8eabc2f45f44c6d93a0247a1897869d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

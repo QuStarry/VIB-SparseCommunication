@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/42/random_matched/Coder",
+  "content": "建议在函数文档字符串中明确标注“仅支持整数列表”，并在实现中保持列表推导式的简洁性。对于空列表，当前实现已正确返回空列表，无需额外处理。若需防御非整数输入，可考虑使用`isinstance(x, int)`过滤，但会牺牲性能，故不推荐。",
+  "output_sha256": "03732fb3b369f3e175c926c13056b2ae7aa39da24e346f8a96ac9597c1939f3e",
+  "response_id": "4a2fff4bf72f48462e097e88de056556-07505280",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

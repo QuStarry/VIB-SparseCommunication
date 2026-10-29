@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/shared/Coder",
+  "content": "直接用高斯求和公式 `n * (n + 1) // 2` 实现，时间复杂度 O(1)，避免循环。代码简洁且符合文档字符串中的示例。",
+  "output_sha256": "32e1cb383027eff34aa765f3fc248388edf5d5fe7c827d30bedb6d76f7d8d3fc",
+  "response_id": "9feaa66a453a8bc20284205f1c0c6635-1df7a530",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

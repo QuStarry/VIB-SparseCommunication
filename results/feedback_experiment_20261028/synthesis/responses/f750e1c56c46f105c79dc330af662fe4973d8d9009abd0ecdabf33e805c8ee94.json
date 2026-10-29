@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/vib/0",
+  "content": "def sum_to_n(n: int):\n    \"\"\"sum_to_n is a function that sums numbers from 1 to n.\n    >>> sum_to_n(30)\n    465\n    >>> sum_to_n(100)\n    5050\n    >>> sum_to_n(5)\n    15\n    >>> sum_to_n(10)\n    55\n    >>> sum_to_n(1)\n    1\n    \"\"\"\n    return n * (n + 1) // 2",
+  "output_sha256": "1f089897191d96b86e535d3ed1e1a16be380a583169e20892f6577f9058d5912",
+  "response_id": "57eadcf50c5a415f977e4e05a5216544",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

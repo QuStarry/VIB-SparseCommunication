@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/42/cosine_matched/0",
+  "content": "```python\ndef incr_list(l: list):\n    \"\"\"Return list with elements incremented by 1.\n    >>> incr_list([1, 2, 3])\n    [2, 3, 4]\n    >>> incr_list([5, 3, 5, 2, 3, 3, 9, 0, 123])\n    [6, 4, 6, 3, 4, 4, 10, 1, 124]\n    \"\"\"\n    return [x + 1 for x in l]\n```",
+  "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+  "response_id": "cb60fd87635d61082bd16bb6d0496505-7157f470",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

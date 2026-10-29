@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/random_matched/Coder",
+  "content": "采纳边界检查建议，补充 `if n <= 0: return 0` 并更新文档字符串说明输入需为正整数，同时保留高斯公式实现。",
+  "output_sha256": "8d6cb2bc3605b56f0e3eec88bc950e8d5387fb2514ddddf377a1b99f6385cd2c",
+  "response_id": "7fd0964b462ad6d8015822b7d276bb62-cc730716",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

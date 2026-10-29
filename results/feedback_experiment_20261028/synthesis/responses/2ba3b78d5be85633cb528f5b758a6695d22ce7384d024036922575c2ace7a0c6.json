@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/71/vib/0",
+  "content": "```python\nimport math\n\ndef triangle_area(a, b, c):\n    if a <= 0 or b <= 0 or c <= 0:\n        return -1\n    if a + b <= c or a + c <= b or b + c <= a:\n        return -1\n    s = (a + b + c) / 2\n    area = math.sqrt(s * (s - a) * (s - b) * (s - c))\n    return round(area, 2)\n```",
+  "output_sha256": "9fb9aedeb83b788de163433391224d161ba92886c345f4afe7c7036060e7f5cb",
+  "response_id": "a31b1839656b4536b51684cbd65ae971",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

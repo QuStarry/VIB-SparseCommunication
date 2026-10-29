@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/full/Coder",
+  "content": "补充边界条件：当n<=0时返回0，并更新文档字符串明确输入范围。实现采用高斯公式，确保O(1)时间复杂度和整数精确性。",
+  "output_sha256": "f24072c56583e8636c7ca400a738701ff1bb5094c66383abfe00c08772973d3f",
+  "response_id": "83edf4ddcf2e3386badf4302efe7c04a-f68599a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

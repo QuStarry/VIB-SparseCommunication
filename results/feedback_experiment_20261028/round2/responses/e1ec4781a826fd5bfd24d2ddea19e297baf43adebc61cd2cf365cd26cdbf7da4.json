@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/71/cosine_matched/Coder",
+  "content": "建议直接使用`math.sqrt`和`round`实现，避免引入额外依赖；同时将边长非正数或非数值类型的情况统一返回-1，确保鲁棒性。另外，可先对三边排序，仅需检查`a+b>c`一次即可，减少冗余比较。",
+  "output_sha256": "895bd46ad7e9723d991a61909fe472609dbe7eadb6399d2e759ce11a4be206a4",
+  "response_id": "5cc4c1c503c44cf7a06a89e734350c76",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

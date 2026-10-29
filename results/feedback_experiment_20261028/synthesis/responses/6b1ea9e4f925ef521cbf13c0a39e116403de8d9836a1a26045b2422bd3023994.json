@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/cosine_matched/1",
+  "content": "```python\ndef select_words(s, n):\n    if not s:\n        return []\n    vowels = set(\"aeiouAEIOU\")\n    result = []\n    for word in s.split(\" \"):\n        if word == \"\":\n            continue\n        consonant_count = sum(1 for char in word if char not in vowels)\n        if consonant_count == n:\n            result.append(word)\n    return result\n```",
+  "output_sha256": "3ae99f1fc8169b7974893f69bf39d9581c0525c008452ccac81fce6c9bcff98d",
+  "response_id": "chatcmpl-1793192481481543000080c80595#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/115/cosine_matched/0",
+  "content": "```python\ndef max_fill(grid, capacity):\n    import math\n    total = 0\n    for row in grid:\n        count = sum(row)\n        total += (count + capacity - 1) // capacity\n    return total\n```",
+  "output_sha256": "8d7cddfa4792f29a6985f78c53dad859b6ff389f2a894dd3a4772d2a9bb94f29",
+  "response_id": "97ab3f95666a485db3c130c77a52f1c5",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

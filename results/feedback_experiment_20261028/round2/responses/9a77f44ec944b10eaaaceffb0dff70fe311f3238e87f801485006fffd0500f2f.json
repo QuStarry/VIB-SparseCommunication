@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/50/random_matched/Coder",
+  "content": "建议在decode_shift中直接复用encode_shift的取模逻辑，将`+5`改为`-5`，并添加输入校验确保仅处理小写字母，否则抛出ValueError。同时可考虑将移位值提取为常量，避免魔法数字，提高代码可维护性。",
+  "output_sha256": "52452580189c12f64c3e80c0e8cb8aba7e150bda840236a8f3722aef6a1286d9",
+  "response_id": "chatcmpl-179319197566441800007554bac9#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

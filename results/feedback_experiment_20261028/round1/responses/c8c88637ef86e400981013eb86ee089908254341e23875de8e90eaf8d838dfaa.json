@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/115/shared/Coder",
+  "content": "直接计算每行中1的总数，然后对每行用容量向上取整累加即可，无需模拟过程。注意空行贡献为0，且总操作次数等于所有行所需桶数之和。",
+  "output_sha256": "d8c883d361dad3a08f72d519ae0dd50ab543a298c33b7c9c300f113772b1a7de",
+  "response_id": "1215c75b1b4e4100a0679f570cccc098",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

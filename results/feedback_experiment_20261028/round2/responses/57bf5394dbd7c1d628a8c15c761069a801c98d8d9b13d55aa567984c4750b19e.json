@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/41/full/Coder",
+  "content": "直接返回 `n * n` 即可，无需模拟。需确保 `n` 为非负整数，否则可抛出 `ValueError` 或使用 `assert` 明确约束。",
+  "output_sha256": "cb20f12ac610766077ad02fc5e7831ca044c6f92d4d331b6e3215864e6ad58fb",
+  "response_id": "da63dc5acdfb6f1ab2903d3c76a66ad6-8f99a606",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

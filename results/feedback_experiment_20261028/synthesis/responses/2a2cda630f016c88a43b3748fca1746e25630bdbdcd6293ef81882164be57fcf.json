@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/50/random_matched/1",
+  "content": "```python\ndef encode_shift(s: str):\n    \"\"\"\n    returns encoded string by shifting every character by 5 in the alphabet.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) + 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n\n\ndef decode_shift(s: str):\n    \"\"\"\n    takes as input string encoded with encode_shift function. Returns decoded string.\n    \"\"\"\n    return \"\".join([chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\")) for ch in s])\n```",
+  "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+  "response_id": "6f3e4cc5e17ff2e601c4df2e98e9eb2f-ea8b1364",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

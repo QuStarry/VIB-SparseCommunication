@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/50/shared/Coder",
+  "content": "decode_shift 应实现 encode_shift 的逆操作，即每个字符向前移动 5 位，并处理字母环绕。建议直接复用 encode_shift 的逻辑，将 `+5` 改为 `-5`，并确保只对 a-z 范围内的字符操作。",
+  "output_sha256": "b63137cdbcc89379b111d50d46dc291d1b4749b4982aa581fc566b5293c800fc",
+  "response_id": "chatcmpl-17931916304868300000987215f2#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

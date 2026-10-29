@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/full/Reviewer",
+  "content": "需注意 `split()` 默认按任意空白字符分割，但题目明确仅含空格，因此行为一致；同时需确保辅音统计时排除所有元音（含大小写），且单词中可能包含连续空格，`split()` 能正确处理。另外，边界情况如单词全为元音时计数为0，若n=0应返回这些单词，但题目未明确n的范围，建议补充测试。",
+  "output_sha256": "faf87609255c94d749c323fb630e286bc5678b363294afed3814bd1af7b4f5af",
+  "response_id": "chatcmpl-179319169924505200005d895ff8#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

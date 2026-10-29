@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/133/cosine_matched/1",
+  "content": "```python\nimport math\n\ndef sum_squares(lst):\n    return sum(math.ceil(x) ** 2 for x in lst)\n```",
+  "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+  "response_id": "0dfc46054ce27c86ffb78a27b7502b91-c153cf27",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

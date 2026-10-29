@@ -1,0 +1,97 @@
+{
+  "complete": true,
+  "summaries": {
+    "round1": {
+      "requests_with_evidence": 48,
+      "planned_requests": 48,
+      "new_attempts": 48,
+      "prompt_tokens": 12028,
+      "completion_tokens": 2831,
+      "total_tokens": 14859,
+      "usage_complete": true,
+      "proxy_cost_usd": "0.0070056",
+      "known_usage_proxy_cost_usd": "0.0070056",
+      "price_scope": "historical_proxy_not_actual_invoice",
+      "actual_invoice_usd": null,
+      "actual_invoice_rmb": null,
+      "truncated_responses": 0,
+      "stop_reason": null,
+      "run_complete": true,
+      "full_benchmark_executed": false,
+      "full_prompt_token_bounds_proven": false
+    },
+    "round2": {
+      "requests_with_evidence": 192,
+      "planned_requests": 192,
+      "new_attempts": 192,
+      "prompt_tokens": 78907,
+      "completion_tokens": 12624,
+      "total_tokens": 91531,
+      "usage_complete": true,
+      "proxy_cost_usd": "0.0388209",
+      "known_usage_proxy_cost_usd": "0.0388209",
+      "price_scope": "historical_proxy_not_actual_invoice",
+      "actual_invoice_usd": null,
+      "actual_invoice_rmb": null,
+      "truncated_responses": 0,
+      "stop_reason": null,
+      "run_complete": true,
+      "full_benchmark_executed": false,
+      "full_prompt_token_bounds_proven": false
+    },
+    "synthesis": {
+      "requests_with_evidence": 128,
+      "planned_requests": 128,
+      "new_attempts": 128,
+      "prompt_tokens": 86234,
+      "completion_tokens": 15995,
+      "total_tokens": 102229,
+      "usage_complete": true,
+      "proxy_cost_usd": "0.0450642",
+      "known_usage_proxy_cost_usd": "0.0450642",
+      "price_scope": "historical_proxy_not_actual_invoice",
+      "actual_invoice_usd": null,
+      "actual_invoice_rmb": null,
+      "truncated_responses": 0,
+      "stop_reason": null,
+      "run_complete": true,
+      "full_benchmark_executed": false,
+      "full_prompt_token_bounds_proven": false
+    }
+  },
+  "protocol_sha256": "88d73396b1209bbe5ba285fd6009b44a78c2ab1c15f4c4a804507698aa2c32b8",
+  "artifacts": {
+    "round1": {
+      "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/round1/generation_report.json",
+      "sha256": "67242b1aaebbec61bb92292556fc9ada5a0a83244614abd95285d48998f11005"
+    },
+    "round1_manifest": {
+      "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/round1/manifest.json",
+      "sha256": "6a133f9c9c42d69138dc1b21ce40b523631471ab0a72e971253b93ccdfe42802"
+    },
+    "routes_round1": {
+      "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/routes_round1.json",
+      "sha256": "60baed6cfd05b014d04722575485ef6e5e9ffe75351483cde7d84cb8c5b26cd7"
+    },
+    "round2": {
+      "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/round2/generation_report.json",
+      "sha256": "0d5e42240948767e411065a5e0acc246c18dd1d2a1c5b12340255133bcd26782"
+    },
+    "round2_manifest": {
+      "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/round2/manifest.json",
+      "sha256": "124519ad8518e207ff5b85a4f0d4d33511dc6cd49feef915ccce03a4b6b1c40e"
+    },
+    "routes_round2": {
+      "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/routes_round2.json",
+      "sha256": "5badc563a045454807f5795ecc576fd0f483bbc1d26e76d0a94e343038b22ba6"
+    },
+    "synthesis": {
+      "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/generation_report.json",
+      "sha256": "09b91a903336f77367820e82580564796fa4587b1880bc45c118893b3b0fb42f"
+    },
+    "synthesis_manifest": {
+      "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/manifest.json",
+      "sha256": "5ac1d9434aab07f08cdedc2785002d199cac805c8b82950bdb3caaabf420347d"
+    }
+  }
+}

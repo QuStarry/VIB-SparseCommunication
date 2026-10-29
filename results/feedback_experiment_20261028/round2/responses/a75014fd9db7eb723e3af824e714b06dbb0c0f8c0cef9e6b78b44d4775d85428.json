@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/vib/Coder",
+  "content": "实现时可用 `word.lower()` 统一大小写，再通过 `sum(1 for ch in word if ch not in 'aeiou')` 统计辅音数，注意 `split()` 会自动处理连续空格，且空字符串 `s.split()` 返回空列表，无需额外判断。",
+  "output_sha256": "a96b51585bc088ca7da8da4623d34ee822619aeb6bbdc39dd88c80992f385122",
+  "response_id": "7fc4c20d69ff11fcbf9c74c0577b2b07-0830838a",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/random_matched/Coder",
+  "content": "实现时可用 `word.lower()` 统一大小写，再通过集合或 `str.count` 统计非元音字母；注意 `split()` 默认按任意空白分割，但题目保证只有空格，因此直接使用即可。",
+  "output_sha256": "520eace29b31718d31e330eab3f682af5876e052e2e80a34684d5749227d29f3",
+  "response_id": "8207e52bd1b51e04c8580e8e3bb2c383-1cec6f95",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

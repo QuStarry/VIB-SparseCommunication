@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/full/Coder",
+  "content": "实现时可用 `word.lower()` 统一大小写，再通过 `sum(1 for ch in word if ch not in \"aeiou\")` 统计辅音数，注意 `split()` 默认按任意空白分割，但题目保证只有空格，因此直接使用即可。",
+  "output_sha256": "beda5ca65b83696546187c3fffc0b87165c6c0104326c783bc5d7701e1ecacf8",
+  "response_id": "10fe90b7f102e5a9ed309b43864942e9-aeefb30f",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/41/cosine_matched/Coder",
+  "content": "直接返回 `n * n` 即可，但需确保 `n` 为非负整数，否则应抛出 `ValueError`。建议添加类型检查或文档说明，避免负数或非整数输入导致逻辑错误。",
+  "output_sha256": "b06c90f3459643de1d552e6a860741c94a2e900ad3c592b6e5aeedd19319a593",
+  "response_id": "6cfd7b81be6625aa6291dfdbecbdbfa0-58b69fc3",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

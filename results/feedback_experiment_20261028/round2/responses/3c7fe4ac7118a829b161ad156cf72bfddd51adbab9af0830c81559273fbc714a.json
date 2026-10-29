@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/153/random_matched/Architect",
+  "content": "补充边界条件：若extensions为空列表，应返回空字符串或抛出明确异常，建议返回空字符串以避免崩溃；同时强度计算应仅统计字母字符，非字母字符（如数字、下划线）不参与CAP和SM计数，但需保持原字符串不变用于拼接。",
+  "output_sha256": "cd1da9e9a0675f22cfda9a711d99ed19818da7416c05a4b507a778b660b32ee4",
+  "response_id": "chatcmpl-179319225734435900001bef866c#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

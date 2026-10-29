@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/shared/Architect",
+  "content": "建议将字符串按空格分割后，对每个单词统计辅音字母数量（排除元音a/e/i/o/u，注意大小写不敏感），再筛选出计数等于n的单词。需注意空字符串直接返回空列表，且单词顺序保持原样。",
+  "output_sha256": "3c0b3d6b7ef95ed5bed6d47ee8fbb393bd9c27788951f611213a78bafc0693d1",
+  "response_id": "da08c2789ef24943a75060924e516d09",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/137/cosine_matched/1",
+  "content": "```python\ndef compare_one(a, b):\n    def to_float(x):\n        if isinstance(x, str):\n            x = x.strip()\n            if ',' in x and '.' in x:\n                if x.rfind(',') > x.rfind('.'):\n                    x = x.replace(',', '')\n                else:\n                    x = x.replace('.', '')\n                    x = x.replace(',', '.')\n            elif ',' in x:\n                if x.count(',') == 1:\n                    left, right = x.split(',')\n                    if left.isdigit() and right.isdigit() and len(right) == 3:\n                        x = x.replace(',', '')\n                    else:\n                        x = x.replace(',', '.')\n                else:\n                    x = x.replace(',', '')\n            return float(x)\n        return float(x)\n\n    fa = to_float(a)\n    fb = to_float(b)\n    if fa == fb:\n        return None\n    return a if fa > fb else b\n```",
+  "output_sha256": "f212c860f84a3ff05197defff6d08a22327969937edf59509e13e07664fce012",
+  "response_id": "5c5e7dae9f4449f7a368bfa37380a23d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

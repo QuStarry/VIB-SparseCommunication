@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/50/shared/Reviewer",
+  "content": "`decode_shift` 函数未实现，需补充与 `encode_shift` 对称的逆操作：`chr(((ord(ch) - 5 - ord(\"a\")) % 26) + ord(\"a\"))`。同时注意 `encode_shift` 仅处理小写字母，若输入含大写或非字母字符会得到错误结果，建议增加输入校验或明确限制。",
+  "output_sha256": "79b01b534ddd67be8370c353581a5acabb9f34f04f1f1c26b651dd7c213d3dd0",
+  "response_id": "e2e34da4b71d122e978a6d5a43456705-2273b0e7",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/vib/Architect",
+  "content": "补充边界条件：单词中可能包含大写字母，需统一转为小写后判断元音；同时需明确“辅音”指除a/e/i/o/u外的字母，不包含空格或标点（题目已保证仅字母和空格）。",
+  "output_sha256": "2830656f9453ff7e1b6195e73c066e4f2421ea014ef8cf1c80a09be23a88467b",
+  "response_id": "6d945c63f6af290c86bf40307afd26eb-a2e64974",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

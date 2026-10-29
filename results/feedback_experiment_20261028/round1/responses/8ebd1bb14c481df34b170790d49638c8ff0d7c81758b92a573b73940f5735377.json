@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/61/shared/Coder",
+  "content": "直接维护一个计数器，遇到\"(\"加一，遇到\")\"减一，若中途出现负数则提前返回False，最后计数器为0即为True。这样时间复杂度O(n)，空间O(1)。",
+  "output_sha256": "d4c54f606932c85b41d934b33ed6082be2a99e8ea4eedad685462cc53a98af26",
+  "response_id": "a71d6f55bbea49638a427fb85ef808c2",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/random_matched/1",
+  "content": "```python\ndef select_words(s, n):\n    if not s:\n        return []\n    vowels = set(\"aeiouAEIOU\")\n    result = []\n    for word in s.split():\n        consonant_count = sum(1 for ch in word if ch not in vowels)\n        if consonant_count == n:\n            result.append(word)\n    return result\n```",
+  "output_sha256": "bdc97099a8d691efb9c8340d9dce7253142a79068b41c3e544413894333eb37d",
+  "response_id": "2c5ac08825b6400697767866d12872b1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

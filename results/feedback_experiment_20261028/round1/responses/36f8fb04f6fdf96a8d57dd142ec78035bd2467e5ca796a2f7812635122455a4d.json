@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/shared/Reviewer",
+  "content": "需注意元音字母包含大小写（a/e/i/o/u），且单词间以空格分隔，空字符串应直接返回空列表。建议先按空格分割，再对每个单词统计非元音字母数量，最后按原顺序筛选。",
+  "output_sha256": "bb388539d0f6e3d950db539d2f7cc4e82b47910f520248f43851fd3993f8f65c",
+  "response_id": "41181f8f068cd1edbf7924ffc000b791-2f7ef0b4",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

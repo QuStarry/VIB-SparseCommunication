@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/vib/Architect",
+  "content": "采纳高斯公式，并补充边界条件：当n<=0时返回0，同时更新docstring明确输入为非负整数。",
+  "output_sha256": "456385fc8625de6f0df20047a82fbd6b4f26446876bb75ad8ff4516f181e617e",
+  "response_id": "c5558e501eca4792808d958f92ccf624",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

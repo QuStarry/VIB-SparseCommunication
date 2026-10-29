@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/74/full/0",
+  "content": "```python\ndef total_match(lst1, lst2):\n    '''\n    Write a function that accepts two lists of strings and returns the list that has \n    total number of chars in the all strings of the list less than the other list.\n\n    if the two lists have the same number of chars, return the first list.\n\n    Examples\n    total_match([], []) ➞ []\n    total_match(['hi', 'admin'], ['hI', 'Hi']) ➞ ['hI', 'Hi']\n    total_match(['hi', 'admin'], ['hi', 'hi', 'admin', 'project']) ➞ ['hi', 'admin']\n    total_match(['hi', 'admin'], ['hI', 'hi', 'hi']) ➞ ['hI', 'hi', 'hi']\n    total_match(['4'], ['1', '2', '3', '4', '5']) ➞ ['4']\n    '''\n    sum1 = sum(len(s) for s in lst1)\n    sum2 = sum(len(s) for s in lst2)\n    if sum1 <= sum2:\n        return lst1\n    else:\n        return lst2\n```",
+  "output_sha256": "b0fa8d5c8be00aa0bd0f7c6b3d52a2a63a50fca3f18edfce390b864d1a322f61",
+  "response_id": "ea3a159c55d24a782d514c1c8f2396b0-b90d5d38",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

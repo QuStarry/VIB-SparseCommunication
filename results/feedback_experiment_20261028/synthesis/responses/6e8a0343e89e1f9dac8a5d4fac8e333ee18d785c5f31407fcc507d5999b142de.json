@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/115/random_matched/0",
+  "content": "```python\ndef max_fill(grid, capacity):\n    import math\n    if not grid or not grid[0]:\n        return 0\n    total = 0\n    for row in grid:\n        count = sum(row)\n        if count > 0:\n            total += (count + capacity - 1) // capacity\n    return total\n```",
+  "output_sha256": "f2b88a2b8030a2b46c5ba3ff278af592c0c0c56145d70c27e7d65b52b10d0e55",
+  "response_id": "fb70f7ffffe3fd2e3f43d33dd9ddb498-9efc040d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

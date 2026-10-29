@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/9/vib/0",
+  "content": "```python\nfrom typing import List, Tuple\nfrom itertools import accumulate\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    return list(accumulate(numbers, max))\n```",
+  "output_sha256": "12077b10bfb35a53676183d8c1d4bdc0482c0bfae83782aa7ea12a55bf0a6a7f",
+  "response_id": "d99aaddd97fbad08cc8ad2ed25654b3f-acdd94fd",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

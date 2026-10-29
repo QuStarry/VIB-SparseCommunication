@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/cosine_matched/0",
+  "content": "```python\ndef sum_to_n(n: int):\n    \"\"\"sum_to_n is a function that sums numbers from 1 to n.\n    >>> sum_to_n(30)\n    465\n    >>> sum_to_n(100)\n    5050\n    >>> sum_to_n(5)\n    15\n    >>> sum_to_n(10)\n    55\n    >>> sum_to_n(1)\n    1\n    \"\"\"\n    return n * (n + 1) // 2\n```",
+  "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02",
+  "response_id": "chatcmpl-179319261166269500004fcf6015#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

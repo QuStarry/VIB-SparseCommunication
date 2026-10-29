@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/74/random_matched/Coder",
+  "content": "直接使用`sum(len(s) for s in lst)`计算总字符数，比较后返回对应列表即可，无需额外处理空列表或大小写。注意示例中`['hI', 'Hi']`与`['hi', 'admin']`总字符数相同（4 vs 4），此时应返回第一个列表，符合规则。",
+  "output_sha256": "1ce49779c9dd51a77a6c74b40fbaf159e5afb1ec6643ea0d4576747400640302",
+  "response_id": "c7e2c7b2154bb697a5829a52fa3a4aac-12746539",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

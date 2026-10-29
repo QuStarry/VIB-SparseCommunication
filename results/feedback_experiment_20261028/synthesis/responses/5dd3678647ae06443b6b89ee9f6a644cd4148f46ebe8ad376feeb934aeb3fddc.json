@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/14/vib/1",
+  "content": "```python\nfrom typing import List\n\n\ndef all_prefixes(string: str) -> List[str]:\n    \"\"\" Return list of all prefixes from shortest to longest of the input string\n    >>> all_prefixes('abc')\n    ['a', 'ab', 'abc']\n    \"\"\"\n    return [string[:i+1] for i in range(len(string))]\n```",
+  "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671",
+  "response_id": "62fc3533bb1ba5944e96c458ebedeb7a-8e4bdb29",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/153/shared/Coder",
+  "content": "直接实现该函数：遍历extensions列表，用`sum(c.isupper() for c in ext) - sum(c.islower() for c in ext)`计算强度，记录最大强度及首个索引，最后返回`f\"{class_name}.{extensions[idx]}\"`。注意大小写判断需排除非字母字符，但题目未要求，按原样处理即可。",
+  "output_sha256": "472f399fe2a1877efb67fd3f2ec10d77291ccb0c056c4b1c2081ebf8156f8efe",
+  "response_id": "c47c81fa94544e73ba30fc2f9a13e761",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

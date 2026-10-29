@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/74/vib/0",
+  "content": "```python\ndef total_match(lst1, lst2):\n    total1 = sum(len(s) for s in lst1)\n    total2 = sum(len(s) for s in lst2)\n    if total1 <= total2:\n        return lst1\n    else:\n        return lst2\n```",
+  "output_sha256": "24bee5d871b77380a39b5b6722eee221b0b32e1a91e73f4689ade49974dc2d1e",
+  "response_id": "40b55ee1fcaf96571e25347b73fa898b-ab9770b3",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

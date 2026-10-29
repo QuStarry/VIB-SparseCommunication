@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/153/full/1",
+  "content": "```python\ndef Strongest_Extension(class_name, extensions):\n    if not extensions:\n        return \"\"\n    strongest_idx = 0\n    strongest_strength = None\n    for i, ext in enumerate(extensions):\n        cap = sum(1 for c in ext if c.isupper())\n        sm = sum(1 for c in ext if c.islower())\n        strength = cap - sm\n        if strongest_strength is None or strength > strongest_strength:\n            strongest_strength = strength\n            strongest_idx = i\n    return f\"{class_name}.{extensions[strongest_idx]}\"\n```",
+  "output_sha256": "3ccfc5d7d07f6bb512dab38db156e87f4b37375ba8d43aee662d502d556b4743",
+  "response_id": "29deff851b6d1faf3242af281964a109-734de00c",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

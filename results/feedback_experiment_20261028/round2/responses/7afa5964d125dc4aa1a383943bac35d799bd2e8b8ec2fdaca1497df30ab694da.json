@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/153/vib/Coder",
+  "content": "直接按上述逻辑实现即可，注意用`>`而非`>=`确保并列时保留首个索引。若`extensions`为空，建议返回空字符串以避免索引错误。",
+  "output_sha256": "48e4aa87b0d2d6486a58b51a652e8f38fabee7e9324686249245803e9d309090",
+  "response_id": "49f6da53d1f940a3aca00c1507e13308",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/vib/Coder",
+  "content": "建议采用高斯公式实现，并补充 `if n <= 0: return 0` 的边界处理，确保负数和零输入安全返回。同时更新docstring，明确输入需为非负整数，并添加对应测试用例。",
+  "output_sha256": "5d7e341d46b3d18dc65879b851ca8d99aaa783462c8f44444512005a830dc109",
+  "response_id": "b8643bf88ae7407f808c317022b39562",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

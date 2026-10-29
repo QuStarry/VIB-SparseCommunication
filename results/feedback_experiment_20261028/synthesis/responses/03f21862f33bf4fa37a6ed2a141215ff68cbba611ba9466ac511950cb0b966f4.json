@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/9/full/0",
+  "content": "```python\nfrom typing import List, Tuple\n\n\ndef rolling_max(numbers: List[int]) -> List[int]:\n    \"\"\" From a given list of integers, generate a list of rolling maximum element found until given moment\n    in the sequence.\n    >>> rolling_max([1, 2, 3, 2, 3, 4, 2])\n    [1, 2, 3, 3, 3, 4, 4]\n    \"\"\"\n    if not numbers:\n        return []\n    result = []\n    current_max = numbers[0]\n    for num in numbers:\n        if num > current_max:\n            current_max = num\n        result.append(current_max)\n    return result\n```",
+  "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8",
+  "response_id": "67dbf924101e4e6b84765c47391e9486",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

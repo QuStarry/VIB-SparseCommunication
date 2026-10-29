@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/50/full/Reviewer",
+  "content": "确保`decode_shift`严格逆操作`encode_shift`，但需注意`encode_shift`对非小写字母（如大写或数字）会生成非字母字符，导致解码后无法还原原输入；建议在`encode_shift`中增加输入校验或仅处理`a-z`，否则`decode_shift`应明确假设输入仅含小写字母。",
+  "output_sha256": "ea32ae3275c2ad0fd1402376a6a196e6be0afa3d2f59ebf8bf9a814bbc571fac",
+  "response_id": "2c420ddbf1d24f9ea520bf7fb5a8eb7e",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

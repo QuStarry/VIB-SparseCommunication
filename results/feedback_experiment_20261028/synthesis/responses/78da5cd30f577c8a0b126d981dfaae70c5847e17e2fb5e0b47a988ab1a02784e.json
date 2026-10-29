@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/137/random_matched/0",
+  "content": "```python\ndef compare_one(a, b):\n    def to_float(x):\n        if isinstance(x, str):\n            s = x.strip()\n            if ',' in s:\n                parts = s.split(',')\n                if len(parts) == 2 and parts[1].replace('.', '', 1).isdigit():\n                    s = s.replace(',', '.')\n            return float(s)\n        return float(x)\n\n    fa, fb = to_float(a), to_float(b)\n    if abs(fa - fb) < 1e-12:\n        return None\n    return a if fa > fb else b\n```",
+  "output_sha256": "14c40d4ee531b74b259d917411eb298699e0eab8e3097738c7ac4d74de0aff88",
+  "response_id": "61f2bff5e9b443e9ac4269c4cfffef91",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

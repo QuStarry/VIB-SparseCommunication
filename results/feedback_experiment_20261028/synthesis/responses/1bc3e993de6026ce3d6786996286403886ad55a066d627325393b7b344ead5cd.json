@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/137/full/0",
+  "content": "```python\ndef compare_one(a, b):\n    def to_float(x):\n        if isinstance(x, str):\n            x = x.replace(',', '.')\n        return float(x)\n\n    fa, fb = to_float(a), to_float(b)\n    if fa == fb:\n        return None\n    return a if fa > fb else b\n```",
+  "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3",
+  "response_id": "cbc69231639a06d96fa42ff05a94d5f9-f971985e",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

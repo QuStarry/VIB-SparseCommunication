@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/41/cosine_matched/0",
+  "content": "def car_race_collision(n: int):\n    return n * n",
+  "output_sha256": "7baa258a1ddeae57915d0be07bb97270d2273b68e93aebc957e6a14d797d9381",
+  "response_id": "0adc6cdd6750bdbb5bc0fee30f5b7763-f0a111ec",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

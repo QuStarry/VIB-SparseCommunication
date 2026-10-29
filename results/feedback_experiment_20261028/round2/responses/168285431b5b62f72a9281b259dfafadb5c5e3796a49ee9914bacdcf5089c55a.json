@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/60/cosine_matched/Coder",
+  "content": "建议采用高斯公式实现，并补充文档说明输入需为正整数，对非正数返回0。同时添加类型检查，确保n为int类型，避免隐式转换导致意外结果。",
+  "output_sha256": "d2f392faa06781f107b6cd53a76c34d976faae50475adeae950aa9e4cf66e649",
+  "response_id": "5f5147197419b6bceb23831ebeac661b-00bee6e4",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

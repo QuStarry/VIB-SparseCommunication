@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/shared/Coder",
+  "content": "可以先用 `split()` 分割单词，再对每个单词统计辅音字母数量（排除元音 aeiou，大小写不敏感），最后筛选出计数等于 n 的单词。注意空字符串直接返回空列表，且辅音判断需包含所有非元音字母。",
+  "output_sha256": "f0e6dd7815c1f4bf0e4b8590a84605d3836c99a979242a3656f853d4c1f627bd",
+  "response_id": "3bd9e1b4dd79d79e400f3ebdf05363b7-15e9ed7e",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

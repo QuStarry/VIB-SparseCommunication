@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/117/random_matched/Reviewer",
+  "content": "边界条件需确认：`n` 为0时，应返回不含任何辅音字母的单词（如“a”），且空单词（连续空格导致）应被忽略。另外，`split()` 默认按任意空白分割，但题目仅含空格，需确保不引入额外空白处理逻辑。",
+  "output_sha256": "16f6b62e8228cd0755c393694881e11c970465d4865c9ff70b7041b3594178c1",
+  "response_id": "d242c8bc23b29b626495c4d82f74bc8f-4c691c53",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

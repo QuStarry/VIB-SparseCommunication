@@ -1,0 +1,1439 @@
+{
+  "protocol_sha256": "32e74594710fd9c76e7140eec882a22f6cf304a6d58af0efebac9c1f2c393447",
+  "implementation_sha256": "0435a33a932583f21661e64fb21128e68c17cd427753ce61dfb468757bbbc2b8",
+  "phase_report_sha256": {
+    "round1": "67242b1aaebbec61bb92292556fc9ada5a0a83244614abd95285d48998f11005",
+    "round2": "0d5e42240948767e411065a5e0acc246c18dd1d2a1c5b12340255133bcd26782",
+    "synthesis": "09b91a903336f77367820e82580564796fa4587b1880bc45c118893b3b0fb42f"
+  },
+  "statistics": {
+    "groups": {
+      "cosine_matched": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      },
+      "full": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      },
+      "random_matched": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      },
+      "vib": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      }
+    },
+    "comparisons": [
+      {
+        "left": "cosine_matched",
+        "right": "full",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "cosine_matched",
+        "right": "random_matched",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "cosine_matched",
+        "right": "vib",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "full",
+        "right": "random_matched",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "full",
+        "right": "vib",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "random_matched",
+        "right": "vib",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      }
+    ],
+    "bootstrap_samples": 10000,
+    "seed": 20261103,
+    "unit": "task_mean_over_two_repetitions",
+    "interval_method": "empirical_percentile_order_statistics",
+    "interpretation": "exploratory_unadjusted_not_equivalence_or_confirmation"
+  },
+  "primary_comparison": {
+    "left": "vib",
+    "right": "random_matched",
+    "delta_pp": -0.0,
+    "ci95_pp": [
+      -0.0,
+      -0.0
+    ],
+    "independent_tasks": 16,
+    "left_higher_tasks": 0,
+    "right_higher_tasks": 0,
+    "tied_tasks": 16,
+    "exact_sign_p": 1.0,
+    "alpha": 0.05,
+    "role": "prospectively_fixed_primary_contrast"
+  },
+  "evaluations": [
+    {
+      "task_id": "HumanEval/42",
+      "job_id": "HumanEval/42/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "job_id": "HumanEval/137/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "977f82a2f30b280f6443586c97fe304868978d95b861b3b5dc5d7d57d40d3a23"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "job_id": "HumanEval/41/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "job_id": "HumanEval/81/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "job_id": "HumanEval/41/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "7baa258a1ddeae57915d0be07bb97270d2273b68e93aebc957e6a14d797d9381"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "job_id": "HumanEval/134/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "job_id": "HumanEval/50/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "job_id": "HumanEval/61/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8fba6beac0ef72f4ef5f1d6529470b313b9d287fc53d1b2cdca51e5e55ba6114"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "job_id": "HumanEval/115/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "job_id": "HumanEval/115/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f2b88a2b8030a2b46c5ba3ff278af592c0c0c56145d70c27e7d65b52b10d0e55"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "job_id": "HumanEval/9/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "job_id": "HumanEval/61/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "job_id": "HumanEval/133/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "job_id": "HumanEval/14/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "7762ed2a8eea9ba2bc2bea344f507a963407e9abcb620b4bb90374945d82b226"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "job_id": "HumanEval/50/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "job_id": "HumanEval/9/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "job_id": "HumanEval/50/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "job_id": "HumanEval/153/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f9eaadc6a924aaa8b4c52692a4f3a3c16584e58fb99a4d7464194323f5189aad"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "job_id": "HumanEval/117/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e8fb4de152ccd0db9ecac05933e18f5af3458bdf04922982a100d563a12ba4f9"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "job_id": "HumanEval/14/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "job_id": "HumanEval/81/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "job_id": "HumanEval/9/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "12077b10bfb35a53676183d8c1d4bdc0482c0bfae83782aa7ea12a55bf0a6a7f"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "job_id": "HumanEval/74/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "b0fa8d5c8be00aa0bd0f7c6b3d52a2a63a50fca3f18edfce390b864d1a322f61"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "job_id": "HumanEval/117/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e8fb4de152ccd0db9ecac05933e18f5af3458bdf04922982a100d563a12ba4f9"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "job_id": "HumanEval/41/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3cdc3c046d70fae8a27245fe113135864eb37fd60ce78aa83c5def522b53a66d"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "job_id": "HumanEval/153/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3ccfc5d7d07f6bb512dab38db156e87f4b37375ba8d43aee662d502d556b4743"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "job_id": "HumanEval/133/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "job_id": "HumanEval/134/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "job_id": "HumanEval/41/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "job_id": "HumanEval/60/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1f089897191d96b86e535d3ed1e1a16be380a583169e20892f6577f9058d5912"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "job_id": "HumanEval/71/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8d2052427763934c853a4587b02d32202c4414b450ecfc58731aa7db19df997e"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "job_id": "HumanEval/14/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "7762ed2a8eea9ba2bc2bea344f507a963407e9abcb620b4bb90374945d82b226"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "job_id": "HumanEval/41/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "job_id": "HumanEval/134/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "job_id": "HumanEval/74/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "job_id": "HumanEval/9/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6d978dc818d800a4436fcbcc4f3479194d1bd898f4a1d942def314a5d6a68992"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "job_id": "HumanEval/50/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "job_id": "HumanEval/117/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "85d71d885e8528b85d1701000a036976db9066f4baab90e461f6eb87b060d587"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "job_id": "HumanEval/41/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "job_id": "HumanEval/61/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "job_id": "HumanEval/153/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "73afd1ba019d71bb752745aea8d321f66365eb0f5782ac4f9e2c103517b60803"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "job_id": "HumanEval/60/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02"
+    },
+    {
+      "task_id": "HumanEval/42",
+      "job_id": "HumanEval/42/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "job_id": "HumanEval/50/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "job_id": "HumanEval/81/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "job_id": "HumanEval/60/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1f089897191d96b86e535d3ed1e1a16be380a583169e20892f6577f9058d5912"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "job_id": "HumanEval/61/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8fba6beac0ef72f4ef5f1d6529470b313b9d287fc53d1b2cdca51e5e55ba6114"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "job_id": "HumanEval/61/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "job_id": "HumanEval/41/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "job_id": "HumanEval/153/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "73afd1ba019d71bb752745aea8d321f66365eb0f5782ac4f9e2c103517b60803"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "job_id": "HumanEval/137/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "job_id": "HumanEval/71/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "9fb9aedeb83b788de163433391224d161ba92886c345f4afe7c7036060e7f5cb"
+    },
+    {
+      "task_id": "HumanEval/42",
+      "job_id": "HumanEval/42/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "job_id": "HumanEval/14/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "job_id": "HumanEval/115/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "job_id": "HumanEval/115/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e"
+    },
+    {
+      "task_id": "HumanEval/42",
+      "job_id": "HumanEval/42/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "job_id": "HumanEval/9/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "job_id": "HumanEval/133/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "job_id": "HumanEval/117/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e3d20bf1557ad16a5486e60056f4dd7809d2c315630fdc4a6b87fd8b632244bf"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "job_id": "HumanEval/61/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "job_id": "HumanEval/153/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "b9a4c59366d2eaba349655ccf887b7991218c9c6ca0ee67f5fbd23d20a6b6f19"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "job_id": "HumanEval/137/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "job_id": "HumanEval/81/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "job_id": "HumanEval/134/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "job_id": "HumanEval/133/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "job_id": "HumanEval/9/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5c0c271fa9caf4ab89a0ef3c53f06e6f78d6764a027987010f56a5186f54ec9f"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "job_id": "HumanEval/117/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3ae99f1fc8169b7974893f69bf39d9581c0525c008452ccac81fce6c9bcff98d"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "job_id": "HumanEval/133/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "job_id": "HumanEval/60/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "job_id": "HumanEval/9/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "job_id": "HumanEval/134/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "job_id": "HumanEval/9/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "job_id": "HumanEval/137/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "job_id": "HumanEval/50/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5"
+    },
+    {
+      "task_id": "HumanEval/42",
+      "job_id": "HumanEval/42/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "job_id": "HumanEval/74/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5ce8ea1d181038efbded7d93b0581637c3e83894ad0af868322f8ca3c3733f78"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "job_id": "HumanEval/115/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "job_id": "HumanEval/60/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "job_id": "HumanEval/74/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "job_id": "HumanEval/153/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f9eaadc6a924aaa8b4c52692a4f3a3c16584e58fb99a4d7464194323f5189aad"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "job_id": "HumanEval/133/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "job_id": "HumanEval/117/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "bdc97099a8d691efb9c8340d9dce7253142a79068b41c3e544413894333eb37d"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "job_id": "HumanEval/81/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "job_id": "HumanEval/133/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "job_id": "HumanEval/71/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "9fb9aedeb83b788de163433391224d161ba92886c345f4afe7c7036060e7f5cb"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "job_id": "HumanEval/74/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "job_id": "HumanEval/134/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "job_id": "HumanEval/81/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "job_id": "HumanEval/133/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "job_id": "HumanEval/137/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "14c40d4ee531b74b259d917411eb298699e0eab8e3097738c7ac4d74de0aff88"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "job_id": "HumanEval/153/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "0835c820ec05df8278df28deefd1baa16348e00a5cb260a57aa777e854915ce2"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "job_id": "HumanEval/71/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8d2052427763934c853a4587b02d32202c4414b450ecfc58731aa7db19df997e"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "job_id": "HumanEval/115/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "job_id": "HumanEval/74/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "job_id": "HumanEval/134/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "job_id": "HumanEval/74/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "job_id": "HumanEval/117/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3ae99f1fc8169b7974893f69bf39d9581c0525c008452ccac81fce6c9bcff98d"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "job_id": "HumanEval/50/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "job_id": "HumanEval/14/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "job_id": "HumanEval/14/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "job_id": "HumanEval/117/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e3d20bf1557ad16a5486e60056f4dd7809d2c315630fdc4a6b87fd8b632244bf"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "job_id": "HumanEval/61/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "job_id": "HumanEval/137/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f212c860f84a3ff05197defff6d08a22327969937edf59509e13e07664fce012"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "job_id": "HumanEval/50/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "job_id": "HumanEval/71/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "83865221c398eace3b4b5850727369c3e564bfa81f76dea5221b3c6814c2c5b6"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "job_id": "HumanEval/41/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "job_id": "HumanEval/74/vib/0",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "24bee5d871b77380a39b5b6722eee221b0b32e1a91e73f4689ade49974dc2d1e"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "job_id": "HumanEval/71/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8d2052427763934c853a4587b02d32202c4414b450ecfc58731aa7db19df997e"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "job_id": "HumanEval/60/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "job_id": "HumanEval/153/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "73afd1ba019d71bb752745aea8d321f66365eb0f5782ac4f9e2c103517b60803"
+    },
+    {
+      "task_id": "HumanEval/42",
+      "job_id": "HumanEval/42/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "job_id": "HumanEval/61/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "job_id": "HumanEval/14/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "job_id": "HumanEval/60/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "job_id": "HumanEval/81/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "job_id": "HumanEval/137/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "aa986e82645cc3914ba86d031c4fa1d48ea082be86a61f4022a472859ade2f77"
+    },
+    {
+      "task_id": "HumanEval/42",
+      "job_id": "HumanEval/42/full/1",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "job_id": "HumanEval/115/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8d7cddfa4792f29a6985f78c53dad859b6ff389f2a894dd3a4772d2a9bb94f29"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "job_id": "HumanEval/81/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "job_id": "HumanEval/134/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "job_id": "HumanEval/115/random_matched/1",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f2b88a2b8030a2b46c5ba3ff278af592c0c0c56145d70c27e7d65b52b10d0e55"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "job_id": "HumanEval/60/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "job_id": "HumanEval/137/vib/1",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "job_id": "HumanEval/71/random_matched/0",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d288ec92e4e20c1fb0afe3206d068eca6687b5baeb4399c3d60f8cf1fb69f74c"
+    },
+    {
+      "task_id": "HumanEval/42",
+      "job_id": "HumanEval/42/cosine_matched/1",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "job_id": "HumanEval/71/cosine_matched/0",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8d2052427763934c853a4587b02d32202c4414b450ecfc58731aa7db19df997e"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "job_id": "HumanEval/14/full/0",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671"
+    }
+  ],
+  "phase_costs": {
+    "round1": {
+      "requests": 48,
+      "prompt_tokens": 12028,
+      "completion_tokens": 2831,
+      "proxy_usd": "0.0070056"
+    },
+    "round2": {
+      "requests": 192,
+      "prompt_tokens": 78907,
+      "completion_tokens": 12624,
+      "proxy_usd": "0.0388209"
+    },
+    "synthesis": {
+      "requests": 128,
+      "prompt_tokens": 86234,
+      "completion_tokens": 15995,
+      "proxy_usd": "0.0450642"
+    }
+  },
+  "policy_costs": {
+    "full": {
+      "round2": {
+        "requests": 48,
+        "prompt_tokens": 20800,
+        "completion_tokens": 3204,
+        "proxy_usd": "0.0100848"
+      },
+      "synthesis": {
+        "requests": 32,
+        "prompt_tokens": 23628,
+        "completion_tokens": 4054,
+        "proxy_usd": "0.0119532"
+      },
+      "standalone_one_synthesis_proxy_usd": "0.0230670",
+      "standalone_scope": "shared_round1_full_plus_own_round2_plus_mean_one_synthesis",
+      "standalone_requests": 112
+    },
+    "vib": {
+      "round2": {
+        "requests": 48,
+        "prompt_tokens": 19444,
+        "completion_tokens": 3203,
+        "proxy_usd": "0.0096768"
+      },
+      "synthesis": {
+        "requests": 32,
+        "prompt_tokens": 21114,
+        "completion_tokens": 3512,
+        "proxy_usd": "0.0105486"
+      },
+      "standalone_one_synthesis_proxy_usd": "0.0219567",
+      "standalone_scope": "shared_round1_full_plus_own_round2_plus_mean_one_synthesis",
+      "standalone_requests": 112
+    },
+    "random_matched": {
+      "round2": {
+        "requests": 48,
+        "prompt_tokens": 19036,
+        "completion_tokens": 3056,
+        "proxy_usd": "0.009378"
+      },
+      "synthesis": {
+        "requests": 32,
+        "prompt_tokens": 20530,
+        "completion_tokens": 4259,
+        "proxy_usd": "0.0112698"
+      },
+      "standalone_one_synthesis_proxy_usd": "0.0220185",
+      "standalone_scope": "shared_round1_full_plus_own_round2_plus_mean_one_synthesis",
+      "standalone_requests": 112
+    },
+    "cosine_matched": {
+      "round2": {
+        "requests": 48,
+        "prompt_tokens": 19627,
+        "completion_tokens": 3161,
+        "proxy_usd": "0.0096813"
+      },
+      "synthesis": {
+        "requests": 32,
+        "prompt_tokens": 20962,
+        "completion_tokens": 4170,
+        "proxy_usd": "0.0112926"
+      },
+      "standalone_one_synthesis_proxy_usd": "0.0223332",
+      "standalone_scope": "shared_round1_full_plus_own_round2_plus_mean_one_synthesis",
+      "standalone_requests": 112
+    }
+  },
+  "communication": {
+    "full": {
+      "messages": 96,
+      "history_utf8_bytes": 24986,
+      "round_messages": [
+        48,
+        48
+      ],
+      "unit": "unique_task_history_not_repetition_weighted"
+    },
+    "vib": {
+      "messages": 74,
+      "history_utf8_bytes": 19794,
+      "round_messages": [
+        39,
+        35
+      ],
+      "unit": "unique_task_history_not_repetition_weighted"
+    },
+    "random_matched": {
+      "messages": 74,
+      "history_utf8_bytes": 18908,
+      "round_messages": [
+        39,
+        35
+      ],
+      "unit": "unique_task_history_not_repetition_weighted"
+    },
+    "cosine_matched": {
+      "messages": 74,
+      "history_utf8_bytes": 19723,
+      "round_messages": [
+        39,
+        35
+      ],
+      "unit": "unique_task_history_not_repetition_weighted"
+    }
+  },
+  "actual_experiment_cost": {
+    "requests": 368,
+    "prompt_tokens": 177169,
+    "completion_tokens": 31450,
+    "proxy_usd": "0.0908907"
+  },
+  "truncated_by_phase": {
+    "round1": 0,
+    "round2": 0,
+    "synthesis": 0
+  },
+  "inference_scope": "two_round_feedback_shared_round1_single_team_trajectory_conditional_count_matching",
+  "content_sha256": "2af2104c6504773c700d3b76f907e0cacebd5197cf816b66296b0b2d51e6a421"
+}

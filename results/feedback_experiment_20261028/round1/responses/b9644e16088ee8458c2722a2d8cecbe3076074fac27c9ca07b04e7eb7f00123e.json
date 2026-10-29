@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/134/shared/Coder",
+  "content": "直接实现：检查字符串非空、末字符是字母，且其前一个字符（若存在）不是字母或空格（即该字母独立成词）。注意空字符串和末尾空格直接返回False。",
+  "output_sha256": "391babf42600484b775567a031a1ed28f82f77477a768e6d55097d6c326228e7",
+  "response_id": "ebe659134660b3091fd89e7e675328a0-d82d8ec6",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

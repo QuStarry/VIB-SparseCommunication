@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/71/random_matched/1",
+  "content": "```python\ndef triangle_area(a, b, c):\n    '''\n    Given the lengths of the three sides of a triangle. Return the area of\n    the triangle rounded to 2 decimal points if the three sides form a valid triangle. \n    Otherwise return -1\n    Three sides make a valid triangle when the sum of any two sides is greater \n    than the third side.\n    Example:\n    triangle_area(3, 4, 5) == 6.00\n    triangle_area(1, 2, 10) == -1\n    '''\n    if a <= 0 or b <= 0 or c <= 0:\n        return -1\n    if a + b <= c or a + c <= b or b + c <= a:\n        return -1\n    s = (a + b + c) / 2\n    area_squared = s * (s - a) * (s - b) * (s - c)\n    if area_squared < 0:\n        area_squared = 0\n    area = area_squared ** 0.5\n    return round(area, 2)\n```",
+  "output_sha256": "83865221c398eace3b4b5850727369c3e564bfa81f76dea5221b3c6814c2c5b6",
+  "response_id": "984a3a7ac8e48a97c3cf0a77c3f0bbcc-93cb8ff7",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

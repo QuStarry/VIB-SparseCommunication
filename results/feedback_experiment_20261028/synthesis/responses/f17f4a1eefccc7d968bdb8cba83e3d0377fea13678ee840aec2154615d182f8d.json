@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/61/random_matched/0",
+  "content": "```python\ndef correct_bracketing(brackets: str):\n    \"\"\" brackets is a string of \"(\" and \")\".\n    return True if every opening bracket has a corresponding closing bracket.\n\n    >>> correct_bracketing(\"(\")\n    False\n    >>> correct_bracketing(\"()\")\n    True\n    >>> correct_bracketing(\"(()())\")\n    True\n    >>> correct_bracketing(\")(()\")\n    False\n    \"\"\"\n    count = 0\n    for b in brackets:\n        if b == \"(\":\n            count += 1\n        elif b == \")\":\n            count -= 1\n            if count < 0:\n                return False\n    return count == 0\n```",
+  "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f",
+  "response_id": "chatcmpl-1793192619873329000085c1c6f6#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

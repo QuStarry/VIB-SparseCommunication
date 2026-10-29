@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/14/shared/Coder",
+  "content": "直接实现即可，用列表推导式按长度递增生成所有前缀，复杂度为O(n²)但符合题目要求。注意空字符串应返回空列表。",
+  "output_sha256": "2dfe11f6373d4c068779d75f739b465586ec0e0b41ea346b706a6c6948601b7c",
+  "response_id": "73e529450cc5456594877eab74b095e1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}
