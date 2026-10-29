@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/97/legacy_compact/1",
+  "content": "```python\ndef multiply(a, b):\n    return (abs(a) % 10) * (abs(b) % 10)\n```",
+  "output_sha256": "95514d93d69ce5f40841ed926c5120711fa6d0fa25a0dadbcc75eb05df76728b",
+  "response_id": "c9bfdbee9eb226aef9673ab51e2756e1-1b863284",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

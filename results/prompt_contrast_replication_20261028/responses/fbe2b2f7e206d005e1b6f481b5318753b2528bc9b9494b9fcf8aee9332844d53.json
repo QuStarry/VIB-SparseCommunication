@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/131/current_arbitration/0",
+  "content": "```python\ndef digits(n):\n    if n == 0:\n        return 0\n    product = 1\n    has_odd = False\n    while n > 0:\n        digit = n % 10\n        if digit % 2 == 1:\n            product *= digit\n            has_odd = True\n        n //= 10\n    return product if has_odd else 0\n```",
+  "output_sha256": "98907c62bb7035a65806b8d0f806e1161a45b2f02ec5aa8c1636f05547b2eb25",
+  "response_id": "c21a22556e219abd5eeae0460345d6ad-65b13d0a",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

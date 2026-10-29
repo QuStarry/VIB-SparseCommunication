@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/152/specification_priority/0",
+  "content": "```python\ndef compare(game,guess):\n    return [abs(a-b) for a,b in zip(game,guess)]\n```",
+  "output_sha256": "30a42fcb78df405e741008cf7187b3eac9c1b68dde15605b2a59f7f08595417b",
+  "response_id": "72fc551214964048c920c13641ecf826-92b5b9ed",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

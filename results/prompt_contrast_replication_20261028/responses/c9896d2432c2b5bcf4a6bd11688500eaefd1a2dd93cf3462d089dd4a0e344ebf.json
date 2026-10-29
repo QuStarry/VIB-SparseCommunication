@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/59/legacy_compact/1",
+  "content": "```python\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n    # Handle factor 2\n    while n % 2 == 0:\n        n //= 2\n    if n == 1:\n        return 2\n    \n    # Check odd factors from 3 upwards\n    i = 3\n    while i * i <= n:\n        while n % i == 0:\n            n //= i\n        i += 2\n    \n    # If n is still greater than 1, it's the largest prime factor\n    return n if n > 1 else 2\n```",
+  "output_sha256": "c70940f80ca1dd01a7c6983100227fbd039d3b8c44bea8abfb91d1e0f24f85f4",
+  "response_id": "71b20a180d21ae1d975dd78757a47e10-6d2fd572",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

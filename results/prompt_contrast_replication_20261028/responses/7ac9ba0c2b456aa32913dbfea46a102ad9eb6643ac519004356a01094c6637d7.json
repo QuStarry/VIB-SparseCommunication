@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/119/specification_priority/1",
+  "content": "```python\ndef match_parens(lst):\n    def analyze(s):\n        balance = 0\n        min_prefix = 0\n        for ch in s:\n            if ch == '(':\n                balance += 1\n            else:\n                balance -= 1\n            min_prefix = min(min_prefix, balance)\n        return balance, min_prefix\n\n    b1, m1 = analyze(lst[0])\n    b2, m2 = analyze(lst[1])\n\n    if b1 + b2 != 0:\n        return 'No'\n\n    if b1 + m2 >= 0 and b2 + m1 >= 0:\n        return 'Yes'\n    return 'No'\n```",
+  "output_sha256": "7b4e0505163a520be72d4a75f42b33530360158885164e6a498c49f3ac264685",
+  "response_id": "2f0fc4917ca24059a6a2c805e510db65",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

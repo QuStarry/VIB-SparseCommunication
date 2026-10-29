@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/131/specification_priority/0",
+  "content": "```python\ndef digits(n):\n    \"\"\"Given a positive integer n, return the product of the odd digits.\n    Return 0 if all digits are even.\n    For example:\n    digits(1)  == 1\n    digits(4)  == 0\n    digits(235) == 15\n    \"\"\"\n    product = 1\n    has_odd = False\n    while n > 0:\n        digit = n % 10\n        if digit % 2 == 1:\n            product *= digit\n            has_odd = True\n        n //= 10\n    return product if has_odd else 0\n```",
+  "output_sha256": "59a393e43084c2c750d9da4f38b109f6b92e414b968f54a6e3c17227436ef94a",
+  "response_id": "42cfef0c61a94645ae0d81abcf195415",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

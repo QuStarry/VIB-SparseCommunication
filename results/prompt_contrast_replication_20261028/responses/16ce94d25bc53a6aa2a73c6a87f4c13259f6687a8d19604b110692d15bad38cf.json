@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/4/current_arbitration/0",
+  "content": "```python\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    mean = sum(numbers) / len(numbers)\n    return sum(abs(x - mean) for x in numbers) / len(numbers)\n```",
+  "output_sha256": "aa75100e27e8fc1e8a30e7f774aacecd72dd5ebfa6f92c966cf4d219f615e996",
+  "response_id": "79a1b1e99977e5f24a64d5051d1d1541-b038b9d5",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

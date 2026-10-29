@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/6/specification_priority/1",
+  "content": "```python\nfrom typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    groups = paren_string.split()\n    result = []\n    for group in groups:\n        depth = 0\n        max_depth = 0\n        for char in group:\n            if char == '(':\n                depth += 1\n                if depth > max_depth:\n                    max_depth = depth\n            elif char == ')':\n                depth -= 1\n        result.append(max_depth)\n    return result\n```",
+  "output_sha256": "1d6f93d09cee9c4329556ac21fb3e00b68fb8434fa51b0978dfbeb65c3112581",
+  "response_id": "ef5fbf6ead7d4ced92a8a23974550af9",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

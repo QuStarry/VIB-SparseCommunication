@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/79/legacy_compact/0",
+  "content": "```python\ndef decimal_to_binary(decimal):\n    if not isinstance(decimal, int):\n        raise TypeError(\"Input must be an integer\")\n    if decimal < 0:\n        raise ValueError(\"Input must be a non-negative integer\")\n    return f\"db{bin(decimal)[2:]}db\"\n```",
+  "output_sha256": "ffbb28f666a9fc8e393808a1ceae5926e8317b1f35fc4b5d51138ad2a3771f84",
+  "response_id": "6ea8b983cbe5a06d0c3b2a99b49c4fd3-e96457fa",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

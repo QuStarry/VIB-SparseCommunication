@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/112/legacy_compact/0",
+  "content": "```python\ndef reverse_delete(s, c):\n    c_set = set(c)\n    filtered = ''.join(ch for ch in s if ch not in c_set)\n    return (filtered, filtered == filtered[::-1])\n```",
+  "output_sha256": "fe3f71f119fce58bb964f6d5a5c8e080602e7691b6ab3789571217c5672c1083",
+  "response_id": "78019a7272976edf72b1f7fa2f6ac8c0-4abccf48",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

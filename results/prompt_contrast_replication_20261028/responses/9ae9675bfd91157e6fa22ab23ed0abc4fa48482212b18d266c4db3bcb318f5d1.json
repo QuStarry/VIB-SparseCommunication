@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/136/legacy_compact/0",
+  "content": "```python\ndef largest_smallest_integers(lst):\n    has_neg = False\n    has_pos = False\n    largest_neg = None\n    smallest_pos = None\n\n    for x in lst:\n        if x < 0:\n            if not has_neg or x > largest_neg:\n                largest_neg = x\n                has_neg = True\n        elif x > 0:\n            if not has_pos or x < smallest_pos:\n                smallest_pos = x\n                has_pos = True\n\n    return (largest_neg if has_neg else None,\n            smallest_pos if has_pos else None)\n```",
+  "output_sha256": "38d5614d0f854cd95fe709399e435c4abc0eceb56e85e2212130b1ba34af1069",
+  "response_id": "9d6f8c4eede441fdb67f768adf406a4f",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

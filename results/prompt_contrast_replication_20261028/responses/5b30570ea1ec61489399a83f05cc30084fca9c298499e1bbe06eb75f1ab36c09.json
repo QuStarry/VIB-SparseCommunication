@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/111/specification_priority/1",
+  "content": "```python\ndef histogram(test):\n    if not test:\n        return {}\n    counts = {}\n    for letter in test.split():\n        counts[letter] = counts.get(letter, 0) + 1\n    max_count = max(counts.values())\n    return {k: v for k, v in counts.items() if v == max_count}\n```",
+  "output_sha256": "b0a3608e42a4c9488a071e1234b4cc15a12226281c7e88570f093ecba0127b29",
+  "response_id": "a5398df130e30f076829dc71700f9e1b-936e0d32",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

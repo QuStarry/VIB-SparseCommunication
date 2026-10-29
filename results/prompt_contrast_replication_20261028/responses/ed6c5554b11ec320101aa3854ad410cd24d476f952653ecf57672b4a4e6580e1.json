@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/38/specification_priority/1",
+  "content": "```python\ndef encode_cyclic(s: str):\n    \"\"\"\n    returns encoded string by cycling groups of three characters.\n    \"\"\"\n    # split string to groups. Each of length 3.\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    # cycle elements in each group. Unless group has fewer elements than 3.\n    groups = [(group[1:] + group[0]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n\n\ndef decode_cyclic(s: str):\n    \"\"\"\n    takes as input string encoded with encode_cyclic function. Returns decoded string.\n    \"\"\"\n    # split string to groups. Each of length 3.\n    groups = [s[(3 * i):min((3 * i + 3), len(s))] for i in range((len(s) + 2) // 3)]\n    # reverse the cycle: move last character to front for groups of length 3\n    groups = [(group[-1] + group[:-1]) if len(group) == 3 else group for group in groups]\n    return \"\".join(groups)\n```",
+  "output_sha256": "1b1c1cb7c7c5681061569783fc692dbe3ee987afa4a0a8f2bc673db08911de48",
+  "response_id": "509188a85fdfd986c3cd0c7b9c150f53-b6a64c0e",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

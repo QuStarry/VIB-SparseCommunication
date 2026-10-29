@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/120/legacy_compact/1",
+  "content": "```python\ndef maximum(arr, k):\n    if k == 0:\n        return []\n    return sorted(heapq.nlargest(k, arr))\n```",
+  "output_sha256": "7b98e79792270456aac8f96aa1089f21db077058afb1a150f957b031f881c181",
+  "response_id": "chatcmpl-1793167717004198000068157fd5#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

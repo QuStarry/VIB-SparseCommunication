@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/163/legacy_compact/1",
+  "content": "```python\ndef generate_integers(a, b):\n    if a < 0 or b < 0:\n        return []\n    start, end = sorted((a, b))\n    return [n for n in range(start, end + 1) if n % 2 == 0]\n```",
+  "output_sha256": "155abb7668011301f457f67f81b9b71344143b8d3c06d09733ea8b7b461d5af6",
+  "response_id": "457b68d434faba04705f16cfc45d0dcb-c6a7c16d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

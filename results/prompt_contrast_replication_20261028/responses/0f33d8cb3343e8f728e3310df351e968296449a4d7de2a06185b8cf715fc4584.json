@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/25/current_arbitration/0",
+  "content": "```python\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    if n <= 1:\n        return []\n    factors = []\n    i = 2\n    while i * i <= n:\n        while n % i == 0:\n            factors.append(i)\n            n //= i\n        i += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n```",
+  "output_sha256": "2e7984571d53a30cc070a5ae1173eeda9dfd6d4ff8a5c82ac8874d020fe03b9f",
+  "response_id": "292643e5756f44a39d3c77eb011deb62",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

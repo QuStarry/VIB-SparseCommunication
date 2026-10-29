@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/89/legacy_compact/1",
+  "content": "```python\ndef encrypt(s):\n    result = []\n    for char in s:\n        if 'a' <= char <= 'z':\n            result.append(chr((ord(char) - ord('a') + 4) % 26 + ord('a')))\n        elif 'A' <= char <= 'Z':\n            result.append(chr((ord(char) - ord('A') + 4) % 26 + ord('A')))\n        else:\n            result.append(char)\n    return ''.join(result)\n```",
+  "output_sha256": "f3db238c5d74634c251cd8d18ce714495ea5a86a3a2aafaa42b1ef6b7bc59481",
+  "response_id": "dc57e381f951e604ed52ebdf4247cb36-b984b66b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

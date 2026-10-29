@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/25/legacy_compact/1",
+  "content": "```python\nfrom typing import List\n\n\ndef factorize(n: int) -> List[int]:\n    if n <= 1:\n        if n == 1:\n            return []\n        raise ValueError(\"Input must be a positive integer greater than 1\")\n    factors = []\n    i = 2\n    while i * i <= n:\n        while n % i == 0:\n            factors.append(i)\n            n //= i\n        i += 1\n    if n > 1:\n        factors.append(n)\n    return factors\n```",
+  "output_sha256": "bcadcfbc6ef89b116d34c5edafa42e05e03848ae42ac4b752d38216e1db2cbf0",
+  "response_id": "chatcmpl-179316775845550200007c418360#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

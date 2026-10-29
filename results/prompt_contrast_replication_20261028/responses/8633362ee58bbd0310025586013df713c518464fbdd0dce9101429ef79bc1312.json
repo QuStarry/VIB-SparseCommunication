@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/23/legacy_compact/1",
+  "content": "```python\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    >>> strlen('中文')\n    2\n    >>> strlen('😀')\n    1\n    \"\"\"\n    return len(string)\n```",
+  "output_sha256": "a025c8a44d02ce7f03e527136cc9c8866d959403d465636796586ecd75e75a1c",
+  "response_id": "f6c2975caff5e20ee4577a7992fa27e4-314317d3",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

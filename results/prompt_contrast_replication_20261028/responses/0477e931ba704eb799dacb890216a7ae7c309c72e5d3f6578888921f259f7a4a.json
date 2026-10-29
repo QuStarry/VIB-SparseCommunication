@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/12/current_arbitration/0",
+  "content": "```python\nfrom typing import List, Optional\n\n\ndef longest(strings: List[str]) -> Optional[str]:\n    return max(strings, key=len, default=None)\n```",
+  "output_sha256": "6d08cd1ee8fd8d59c9aef2f4e55a971c8c5534903285011a76328ac94116d1d0",
+  "response_id": "ae314d918fee4abb9a059d66ec26413f",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

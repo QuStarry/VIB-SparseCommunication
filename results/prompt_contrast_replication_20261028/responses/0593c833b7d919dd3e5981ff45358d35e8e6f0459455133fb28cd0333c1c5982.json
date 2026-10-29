@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/13/specification_priority/0",
+  "content": "```python\ndef greatest_common_divisor(a: int, b: int) -> int:\n    \"\"\" Return a greatest common divisor of two integers a and b\n    >>> greatest_common_divisor(3, 5)\n    1\n    >>> greatest_common_divisor(25, 15)\n    5\n    \"\"\"\n    a, b = abs(a), abs(b)\n    while b:\n        a, b = b, a % b\n    return a\n```",
+  "output_sha256": "22a0f5adaef147fd6b9b008af1f18498cbbbef56c728307266c6355b49417c02",
+  "response_id": "d3a31477c7284c2aaf606cb68e135a3c",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/21/current_arbitration/1",
+  "content": "```python\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    min_val, max_val = min(numbers), max(numbers)\n    if min_val == max_val:\n        return [0.0] * len(numbers)\n    return [(x - min_val) / (max_val - min_val) for x in numbers]\n```",
+  "output_sha256": "5578bb0eb6dc12a04ac452d4a9d875bc6678acc9e541b8b9323f653e8ef231fb",
+  "response_id": "ad75593d5e08fd02f933d149e7fa4065-9923276b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

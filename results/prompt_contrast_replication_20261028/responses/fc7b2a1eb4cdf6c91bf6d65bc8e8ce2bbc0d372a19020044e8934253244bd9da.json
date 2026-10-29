@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/4/legacy_compact/1",
+  "content": "```python\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    if not numbers:\n        raise ValueError(\"Input list cannot be empty\")\n    for x in numbers:\n        if not isinstance(x, (int, float)):\n            raise TypeError(\"All elements must be numeric\")\n    mean = sum(numbers) / len(numbers)\n    return sum(abs(x - mean) for x in numbers) / len(numbers)\n```",
+  "output_sha256": "e04a398caae89db24a2a5ddd863a469ecd25d6f13a8eea7bd4986cd711f302e9",
+  "response_id": "ad0008794568227068e3131f42ca9a90-4c7e2928",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

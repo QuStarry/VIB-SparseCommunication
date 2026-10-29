@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/123/specification_priority/0",
+  "content": "```python\ndef get_odd_collatz(n):\n    result = []\n    while n != 1:\n        if n % 2 == 1:\n            result.append(n)\n        if n % 2 == 0:\n            n = n // 2\n        else:\n            n = 3 * n + 1\n    result.append(1)\n    return sorted(set(result))\n```",
+  "output_sha256": "49319095223eb444ae31c1a9734cb1ccebd222ade9744bcec107c46114c1adb9",
+  "response_id": "82a87fdd64b845b4a10103ba12580af6",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

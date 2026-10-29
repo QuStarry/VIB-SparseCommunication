@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/13/legacy_compact/1",
+  "content": "```python\ndef greatest_common_divisor(a: int, b: int) -> int:\n    a, b = abs(a), abs(b)\n    if a == 0 and b == 0:\n        return 0\n    if a == 0:\n        return b\n    if b == 0:\n        return a\n    while b:\n        a, b = b, a % b\n    return a\n```",
+  "output_sha256": "062dbd263d07f9cf2a796e4f244911d8798ac84e862324738eaef066ec70a1fb",
+  "response_id": "chatcmpl-179316735908299100007ede3ac1#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/142/legacy_compact/1",
+  "content": "```python\ndef sum_squares(lst):\n    total = 0\n    for i, num in enumerate(lst):\n        if i % 3 == 0:\n            total += num ** 2\n        elif i % 4 == 0:\n            total += num ** 3\n        else:\n            total += num\n    return total\n```",
+  "output_sha256": "6382b53d7ce79a4ad099cb204fc69944dd662d7cddd77aba5a188ece83af7fed",
+  "response_id": "62a058adc923d4a322e9fa3888688b4f-1e697b63",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

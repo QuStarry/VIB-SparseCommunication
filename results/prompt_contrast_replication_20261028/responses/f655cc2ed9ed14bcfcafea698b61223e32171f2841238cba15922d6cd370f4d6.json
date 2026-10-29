@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/158/current_arbitration/1",
+  "content": "```python\ndef find_max(words):\n    if not words:\n        return \"\"\n    return min(words, key=lambda w: (-len(set(w)), w))\n```",
+  "output_sha256": "530234be09aaf92202bb8a0d0eb4af2a51c1696f6d6df65b8fac5a2acfaed861",
+  "response_id": "54ca014393689f2060f4f0b0e7aab940-86160a41",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

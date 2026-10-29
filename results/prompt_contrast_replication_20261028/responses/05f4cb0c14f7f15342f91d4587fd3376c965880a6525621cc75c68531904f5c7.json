@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/109/current_arbitration/1",
+  "content": "```python\ndef move_one_ball(arr):\n    if not arr:\n        return True\n    n = len(arr)\n    count = sum(arr[i] > arr[(i + 1) % n] for i in range(n))\n    return count <= 1\n```",
+  "output_sha256": "06de74bcdd0e3ca47590f83f38c72ea422ce3827bb63b79fdad8912ec6476d18",
+  "response_id": "b7a8e959c6b49bef6a71dc6220d4bd1d-492bfb8f",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

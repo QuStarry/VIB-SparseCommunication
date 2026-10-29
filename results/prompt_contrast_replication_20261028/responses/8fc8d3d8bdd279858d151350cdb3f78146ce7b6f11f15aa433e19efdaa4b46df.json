@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/89/specification_priority/0",
+  "content": "```python\ndef encrypt(s):\n    result = []\n    for c in s:\n        if 'a' <= c <= 'z':\n            result.append(chr((ord(c) - ord('a') + 4) % 26 + ord('a')))\n        elif 'A' <= c <= 'Z':\n            result.append(chr((ord(c) - ord('A') + 4) % 26 + ord('A')))\n        else:\n            result.append(c)\n    return ''.join(result)\n```",
+  "output_sha256": "e103d57c9715fe6d7211e8b6fc2131414e97f86cf59cc536b3efe171eeed454f",
+  "response_id": "22ac049c3a3292a804f29943bdc7dc68-3ef399cf",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

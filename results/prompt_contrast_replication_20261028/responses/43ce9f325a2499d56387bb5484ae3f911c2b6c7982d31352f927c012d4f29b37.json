@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/136/specification_priority/1",
+  "content": "```python\ndef largest_smallest_integers(lst):\n    negatives = [x for x in lst if x < 0]\n    positives = [x for x in lst if x > 0]\n    a = max(negatives) if negatives else None\n    b = min(positives) if positives else None\n    return (a, b)\n```",
+  "output_sha256": "4d8e570e68531bc30f1d3fd130a498ee8766c1fb350e8b48c173774e0900b9c2",
+  "response_id": "chatcmpl-1793167900017111000001a3f102#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

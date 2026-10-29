@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/102/legacy_compact/0",
+  "content": "```python\ndef choose_num(x, y):\n    if x > y:\n        return -1\n    largest = y - (y % 2)\n    return largest if largest >= x else -1\n```",
+  "output_sha256": "4f43014e57b27809c7714823ee3cadd9e3acf427491eadc799e7a48e1035882d",
+  "response_id": "8ee3c01bc7ce9bbd3bf25a2bfe2b474d-8a9cd9b5",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

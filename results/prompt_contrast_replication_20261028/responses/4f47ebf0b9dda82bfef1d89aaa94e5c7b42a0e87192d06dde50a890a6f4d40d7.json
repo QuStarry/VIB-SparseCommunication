@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/52/specification_priority/1",
+  "content": "```python\ndef below_threshold(l: list, t: int):\n    \"\"\"Return True if all numbers in the list l are below threshold t.\n    >>> below_threshold([1, 2, 4, 10], 100)\n    True\n    >>> below_threshold([1, 20, 4, 10], 5)\n    False\n    \"\"\"\n    return all(x < t for x in l)\n```",
+  "output_sha256": "351cd27f30d06e42274489524e3f54dd1e946fe5e11ef6e804ad8cbb043b036c",
+  "response_id": "chatcmpl-17931678746024140000da646ba4#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

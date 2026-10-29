@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/30/specification_priority/1",
+  "content": "```python\ndef get_positive(l: list):\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n    return [x for x in l if x > 0]\n```",
+  "output_sha256": "e42bf740e5a5089c3187133cf9b4cf5b6c5dede8230530e4a4e4933e8918efad",
+  "response_id": "6baac6aa1c8e4ee383b665ef4bd9c910",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

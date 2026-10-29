@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/39/legacy_compact/1",
+  "content": "```python\ndef prime_fib(n: int):\n    if not isinstance(n, int) or n < 1:\n        raise ValueError(\"n must be a positive integer\")\n    \n    def is_prime(num: int) -> bool:\n        if num < 2:\n            return False\n        if num == 2:\n            return True\n        if num % 2 == 0:\n            return False\n        import math\n        limit = math.isqrt(num)\n        for i in range(3, limit + 1, 2):\n            if num % i == 0:\n                return False\n        return True\n    \n    a, b = 1, 2\n    count = 0\n    while True:\n        if is_prime(a):\n            count += 1\n            if count == n:\n                return a\n        a, b = b, a + b\n```",
+  "output_sha256": "284ac28a149790d1c1e5ed878735590f28346337e9336b9d979adfabfb467549",
+  "response_id": "1fe1282179bdc47436927afca482f21e-6bdaab7f",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

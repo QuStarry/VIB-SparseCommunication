@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/6/legacy_compact/0",
+  "content": "```python\nfrom typing import List\n\n\ndef parse_nested_parens(paren_string: str) -> List[int]:\n    if not paren_string.strip():\n        return []\n    \n    result = []\n    for group in paren_string.split():\n        depth = 0\n        max_depth = 0\n        for char in group:\n            if char == '(':\n                depth += 1\n                max_depth = max(max_depth, depth)\n            elif char == ')':\n                depth -= 1\n                if depth < 0:\n                    raise ValueError(\"Unbalanced parentheses in group: \" + group)\n        if depth != 0:\n            raise ValueError(\"Unbalanced parentheses in group: \" + group)\n        result.append(max_depth)\n    return result\n```",
+  "output_sha256": "f029ca9881d2723a98195462cc45c5cb6a4bef725dcd7cb900706ab6f5c59e66",
+  "response_id": "3c63e1d045571e124ebedf7e79896d8c-7e9a7bf7",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/158/legacy_compact/0",
+  "content": "def find_max(words):\n    if not words:\n        return \"\"\n    return min(words, key=lambda w: (-len(set(w)), w))",
+  "output_sha256": "29eb1d626221f057c7cca113250d743adfd06a593e4c807052adf3da6a98b38b",
+  "response_id": "2a02cfa1859533bd51a1c85c7d573007-304917e7",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

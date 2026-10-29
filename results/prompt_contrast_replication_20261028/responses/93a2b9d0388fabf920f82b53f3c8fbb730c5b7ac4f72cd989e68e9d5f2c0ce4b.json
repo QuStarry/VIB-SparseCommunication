@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/140/specification_priority/0",
+  "content": "```python\ndef fix_spaces(text):\n    result = []\n    i = 0\n    n = len(text)\n    while i < n:\n        if text[i] == ' ':\n            j = i\n            while j < n and text[j] == ' ':\n                j += 1\n            count = j - i\n            if count > 2:\n                result.append('-')\n            else:\n                result.append('_' * count)\n            i = j\n        else:\n            result.append(text[i])\n            i += 1\n    return ''.join(result)\n```",
+  "output_sha256": "c4bfaf8ae3b41fa924ca21072b8da528671a03b63752039ada0e48bfb9c85b44",
+  "response_id": "f8c4bb3cabdd0d27e921e7dfb81316b7-cffae85f",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

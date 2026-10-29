@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/80/current_arbitration/0",
+  "content": "```python\ndef is_happy(s):\n    return len(s) >= 3 and all(a != b and b != c and a != c for a, b, c in zip(s, s[1:], s[2:]))\n```",
+  "output_sha256": "bad665f4fa83e14dd16bc6889f04d19ec15790549dad43539e6e638c28d9497f",
+  "response_id": "fb324951539b43088d39ec806ef3ca21",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

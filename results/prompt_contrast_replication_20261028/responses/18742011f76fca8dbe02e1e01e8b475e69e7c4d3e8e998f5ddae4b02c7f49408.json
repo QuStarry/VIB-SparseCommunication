@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/138/specification_priority/0",
+  "content": "```python\ndef is_equal_to_sum_even(n):\n    \"\"\"Evaluate whether the given number n can be written as the sum of exactly 4 positive even numbers\n    Example\n    is_equal_to_sum_even(4) == False\n    is_equal_to_sum_even(6) == False\n    is_equal_to_sum_even(8) == True\n    \"\"\"\n    return n >= 8 and n % 2 == 0\n```",
+  "output_sha256": "93cf31e6887f3af5dd060aa97377b66720a7934dbf39280c87d75ed84f905b5e",
+  "response_id": "2039f850cc6b26ecc9c1a776cbd86397-f50f5064",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

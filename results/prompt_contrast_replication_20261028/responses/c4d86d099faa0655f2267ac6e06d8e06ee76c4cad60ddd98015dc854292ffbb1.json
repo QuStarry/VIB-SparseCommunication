@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/15/specification_priority/0",
+  "content": "```python\ndef string_sequence(n: int) -> str:\n    return ' '.join(map(str, range(n + 1)))\n```",
+  "output_sha256": "ca128f60af1895d758e2ff289134df6dda5f65cf7abbefea909f3df2c72a1708",
+  "response_id": "chatcmpl-179316729515128600004acc5b03#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

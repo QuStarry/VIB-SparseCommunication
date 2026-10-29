@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/4/specification_priority/0",
+  "content": "```python\nfrom typing import List\n\n\ndef mean_absolute_deviation(numbers: List[float]) -> float:\n    \"\"\" For a given list of input numbers, calculate Mean Absolute Deviation\n    around the mean of this dataset.\n    Mean Absolute Deviation is the average absolute difference between each\n    element and a centerpoint (mean in this case):\n    MAD = average | x - x_mean |\n    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])\n    1.0\n    \"\"\"\n    if not numbers:\n        return 0.0\n    mean = sum(numbers) / len(numbers)\n    return sum(abs(x - mean) for x in numbers) / len(numbers)\n```",
+  "output_sha256": "aa5337239124f222fc52753451b6af1aef9d7adb206c7f3c8f9e9228a7114c85",
+  "response_id": "20651461d7f2cc87c24b07596e27dff6-8603a38b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

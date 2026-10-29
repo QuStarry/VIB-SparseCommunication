@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/163/specification_priority/0",
+  "content": "```python\ndef generate_integers(a, b):\n    start, end = sorted((a, b))\n    return [n for n in range(start, end + 1) if n % 2 == 0]\n```",
+  "output_sha256": "a496af644a201abb0aa7c07596a4765542e53655b2a989a34eb9229c341cbb8f",
+  "response_id": "b01e0181ce85d79257014b6b806d7b62-1c35203b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,2723 @@
+{
+  "manifest_sha256": "9c9bc3685c959e4328568a889d8f02e0a492807cb969c02bfa459d27429c45fd",
+  "generation_report_sha256": "6eddfb310da6fce8017e838d1bf164b0df091bd9d812337fe7b513d6fefef2e3",
+  "implementation_sha256": "b310aa0c3e8add73ab273cb46ad598e4c05a4a65ed554d86719a9414b3bf2b61",
+  "generation_summary": {
+    "requests_with_evidence": 288,
+    "planned_requests": 288,
+    "new_attempts": 288,
+    "prompt_tokens": 286662,
+    "completion_tokens": 26754,
+    "total_tokens": 313416,
+    "usage_complete": true,
+    "proxy_cost_usd": "0.1181034",
+    "known_usage_proxy_cost_usd": "0.1181034",
+    "price_scope": "historical_proxy_not_actual_invoice",
+    "actual_invoice_usd": null,
+    "actual_invoice_rmb": null,
+    "truncated_responses": 0,
+    "stop_reason": null,
+    "run_complete": true,
+    "full_benchmark_executed": false,
+    "full_prompt_token_bounds_proven": false
+  },
+  "evaluations": [
+    {
+      "job_id": "HumanEval/25/specification_priority/0",
+      "task_id": "HumanEval/25",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "52dbb29bdc610b6475458d104247a97236df574ab992339eb1aac5822fa125fd"
+    },
+    {
+      "job_id": "HumanEval/39/current_arbitration/1",
+      "task_id": "HumanEval/39",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "67f4fed16ec712b2aae199ffbad49e58be694e2bdeabbf79377cf732e88118fa"
+    },
+    {
+      "job_id": "HumanEval/82/specification_priority/0",
+      "task_id": "HumanEval/82",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "10d6a63a38add5ad70fd4df3383cb602e00907c39868bfe176cd5210ef8acdb2"
+    },
+    {
+      "job_id": "HumanEval/136/current_arbitration/0",
+      "task_id": "HumanEval/136",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4d8e570e68531bc30f1d3fd130a498ee8766c1fb350e8b48c173774e0900b9c2"
+    },
+    {
+      "job_id": "HumanEval/30/current_arbitration/0",
+      "task_id": "HumanEval/30",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e42bf740e5a5089c3187133cf9b4cf5b6c5dede8230530e4a4e4933e8918efad"
+    },
+    {
+      "job_id": "HumanEval/111/specification_priority/1",
+      "task_id": "HumanEval/111",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "b0a3608e42a4c9488a071e1234b4cc15a12226281c7e88570f093ecba0127b29"
+    },
+    {
+      "job_id": "HumanEval/142/current_arbitration/0",
+      "task_id": "HumanEval/142",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "768bffedef8a36fcdd3f3a2662b78bf0a553a5d97530dab2e7575cd677ce70ba"
+    },
+    {
+      "job_id": "HumanEval/155/current_arbitration/0",
+      "task_id": "HumanEval/155",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ce103836490fd29484c6cd1e8b84396077960128089c53e9a727cb56d031c5e6"
+    },
+    {
+      "job_id": "HumanEval/25/specification_priority/1",
+      "task_id": "HumanEval/25",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "52dbb29bdc610b6475458d104247a97236df574ab992339eb1aac5822fa125fd"
+    },
+    {
+      "job_id": "HumanEval/143/current_arbitration/1",
+      "task_id": "HumanEval/143",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d4fefeb4877e1b832425529d5157bcf6365c497a073c797edcad82d68a1100a3"
+    },
+    {
+      "job_id": "HumanEval/89/legacy_compact/0",
+      "task_id": "HumanEval/89",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f3db238c5d74634c251cd8d18ce714495ea5a86a3a2aafaa42b1ef6b7bc59481"
+    },
+    {
+      "job_id": "HumanEval/21/specification_priority/1",
+      "task_id": "HumanEval/21",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f15dfda5b470379593e1d77477a83d864a493c2dbbf511e3dc70033222142bea"
+    },
+    {
+      "job_id": "HumanEval/10/current_arbitration/0",
+      "task_id": "HumanEval/10",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "88852011cab4d41a95c120d4e8ea28cd94206d77ac876d5e3fcd7cf1d87b005f"
+    },
+    {
+      "job_id": "HumanEval/12/current_arbitration/1",
+      "task_id": "HumanEval/12",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6d08cd1ee8fd8d59c9aef2f4e55a971c8c5534903285011a76328ac94116d1d0"
+    },
+    {
+      "job_id": "HumanEval/110/current_arbitration/0",
+      "task_id": "HumanEval/110",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "463be6b014f5646f34153300daaa50fc7f5843e2e0215219e1e97a630bb264c4"
+    },
+    {
+      "job_id": "HumanEval/27/specification_priority/1",
+      "task_id": "HumanEval/27",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "cdc508062e551fc09ce325e80caa0e8e8233d492abbf8969af43bf68292a6454"
+    },
+    {
+      "job_id": "HumanEval/18/legacy_compact/0",
+      "task_id": "HumanEval/18",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4d33aaa6c2e03823386ed22f9c1dddb59d644c93ec5559ef2ab081a4baabd8cf"
+    },
+    {
+      "job_id": "HumanEval/31/legacy_compact/1",
+      "task_id": "HumanEval/31",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2264bbe6180b938675f9524b6c5d5eed7de190273e58deabbb1d8313340d92e6"
+    },
+    {
+      "job_id": "HumanEval/112/legacy_compact/0",
+      "task_id": "HumanEval/112",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fe3f71f119fce58bb964f6d5a5c8e080602e7691b6ab3789571217c5672c1083"
+    },
+    {
+      "job_id": "HumanEval/163/specification_priority/0",
+      "task_id": "HumanEval/163",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "a496af644a201abb0aa7c07596a4765542e53655b2a989a34eb9229c341cbb8f"
+    },
+    {
+      "job_id": "HumanEval/38/current_arbitration/1",
+      "task_id": "HumanEval/38",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "10fb499b790cd72c64b6d320c5947e6c92979226316abfac9ec0fe5e1a4dfe9a"
+    },
+    {
+      "job_id": "HumanEval/102/specification_priority/1",
+      "task_id": "HumanEval/102",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "dc9f81e5c472820996161da7fd2b2911c5613e7ddfa05ebb9eedec427adc2bf8"
+    },
+    {
+      "job_id": "HumanEval/23/specification_priority/0",
+      "task_id": "HumanEval/23",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a5fc91e43d35fc0b5d85fca2aee4eceeda8f2d60148a288f4b90c0f4655eddb0"
+    },
+    {
+      "job_id": "HumanEval/155/specification_priority/1",
+      "task_id": "HumanEval/155",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ce103836490fd29484c6cd1e8b84396077960128089c53e9a727cb56d031c5e6"
+    },
+    {
+      "job_id": "HumanEval/10/legacy_compact/0",
+      "task_id": "HumanEval/10",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "26a0433ac946ede2c17879edc6c4c2bfac7be9744829c265cf050e2aa2809114"
+    },
+    {
+      "job_id": "HumanEval/136/legacy_compact/1",
+      "task_id": "HumanEval/136",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "38d5614d0f854cd95fe709399e435c4abc0eceb56e85e2212130b1ba34af1069"
+    },
+    {
+      "job_id": "HumanEval/119/specification_priority/1",
+      "task_id": "HumanEval/119",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "7b4e0505163a520be72d4a75f42b33530360158885164e6a498c49f3ac264685"
+    },
+    {
+      "job_id": "HumanEval/123/legacy_compact/0",
+      "task_id": "HumanEval/123",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7cc6bdedc3cbf89478c7c93d78391454cfeb34b8dabc4b14766182d252acbb7"
+    },
+    {
+      "job_id": "HumanEval/12/specification_priority/1",
+      "task_id": "HumanEval/12",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "82cbac22f5f5d3d368e2bb2e0349b7e2987f0eeaf72c4341e7d633dc28a4f4ae"
+    },
+    {
+      "job_id": "HumanEval/39/legacy_compact/0",
+      "task_id": "HumanEval/39",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "186ff6770e94248f3c4007f0b5bf8df85d37125d01eab69d2e4f2e6d73501f79"
+    },
+    {
+      "job_id": "HumanEval/110/legacy_compact/1",
+      "task_id": "HumanEval/110",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "463be6b014f5646f34153300daaa50fc7f5843e2e0215219e1e97a630bb264c4"
+    },
+    {
+      "job_id": "HumanEval/112/specification_priority/1",
+      "task_id": "HumanEval/112",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5b67a71ee3cf1dd65cc185bb87c0ad991f70d8ebede90c24b41324abece65ad5"
+    },
+    {
+      "job_id": "HumanEval/112/legacy_compact/1",
+      "task_id": "HumanEval/112",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fe3f71f119fce58bb964f6d5a5c8e080602e7691b6ab3789571217c5672c1083"
+    },
+    {
+      "job_id": "HumanEval/21/specification_priority/0",
+      "task_id": "HumanEval/21",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f15dfda5b470379593e1d77477a83d864a493c2dbbf511e3dc70033222142bea"
+    },
+    {
+      "job_id": "HumanEval/123/current_arbitration/1",
+      "task_id": "HumanEval/123",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7cc6bdedc3cbf89478c7c93d78391454cfeb34b8dabc4b14766182d252acbb7"
+    },
+    {
+      "job_id": "HumanEval/97/specification_priority/0",
+      "task_id": "HumanEval/97",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "95514d93d69ce5f40841ed926c5120711fa6d0fa25a0dadbcc75eb05df76728b"
+    },
+    {
+      "job_id": "HumanEval/23/specification_priority/1",
+      "task_id": "HumanEval/23",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a5fc91e43d35fc0b5d85fca2aee4eceeda8f2d60148a288f4b90c0f4655eddb0"
+    },
+    {
+      "job_id": "HumanEval/15/current_arbitration/1",
+      "task_id": "HumanEval/15",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ca128f60af1895d758e2ff289134df6dda5f65cf7abbefea909f3df2c72a1708"
+    },
+    {
+      "job_id": "HumanEval/123/specification_priority/0",
+      "task_id": "HumanEval/123",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "49319095223eb444ae31c1a9734cb1ccebd222ade9744bcec107c46114c1adb9"
+    },
+    {
+      "job_id": "HumanEval/13/legacy_compact/0",
+      "task_id": "HumanEval/13",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6b11054fc8bc8cbd24fd04cce36a6e5d738081e18fe1ea3cef501c366dfcbc22"
+    },
+    {
+      "job_id": "HumanEval/21/legacy_compact/0",
+      "task_id": "HumanEval/21",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1c43222f8bd2c044afb781a454d5c8d7f647be8fd8cc9fe39f036a74748a242c"
+    },
+    {
+      "job_id": "HumanEval/120/current_arbitration/0",
+      "task_id": "HumanEval/120",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ea81230c2647e41cf104f613603abd0928e9127131961238c4053cae1bece1bb"
+    },
+    {
+      "job_id": "HumanEval/89/legacy_compact/1",
+      "task_id": "HumanEval/89",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f3db238c5d74634c251cd8d18ce714495ea5a86a3a2aafaa42b1ef6b7bc59481"
+    },
+    {
+      "job_id": "HumanEval/120/current_arbitration/1",
+      "task_id": "HumanEval/120",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "69712d46d70dcb5989ca203635488b6d9ca88e388d66e3aec8c35c30903e398b"
+    },
+    {
+      "job_id": "HumanEval/15/current_arbitration/0",
+      "task_id": "HumanEval/15",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ca128f60af1895d758e2ff289134df6dda5f65cf7abbefea909f3df2c72a1708"
+    },
+    {
+      "job_id": "HumanEval/158/specification_priority/0",
+      "task_id": "HumanEval/158",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "530234be09aaf92202bb8a0d0eb4af2a51c1696f6d6df65b8fac5a2acfaed861"
+    },
+    {
+      "job_id": "HumanEval/39/specification_priority/0",
+      "task_id": "HumanEval/39",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6fac1541b4d041c6fea9cba1aff9516edc0aafe2a6923ad9a51b1504ad50eaaf"
+    },
+    {
+      "job_id": "HumanEval/27/specification_priority/0",
+      "task_id": "HumanEval/27",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "cdc508062e551fc09ce325e80caa0e8e8233d492abbf8969af43bf68292a6454"
+    },
+    {
+      "job_id": "HumanEval/18/current_arbitration/0",
+      "task_id": "HumanEval/18",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d1c477c949d3cbba7318f11a681d746ade3be434ca5045cd185dc2058ad099e7"
+    },
+    {
+      "job_id": "HumanEval/97/current_arbitration/1",
+      "task_id": "HumanEval/97",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a396ad5c241618e79ffde5a24e849ef62979a83d144ab525b88c2dc91b460227"
+    },
+    {
+      "job_id": "HumanEval/92/current_arbitration/1",
+      "task_id": "HumanEval/92",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1fa076ff2dcb1494e701ab60a6282fbe20d6d736c7354d62b91a166d38c31021"
+    },
+    {
+      "job_id": "HumanEval/163/specification_priority/1",
+      "task_id": "HumanEval/163",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "a496af644a201abb0aa7c07596a4765542e53655b2a989a34eb9229c341cbb8f"
+    },
+    {
+      "job_id": "HumanEval/21/current_arbitration/1",
+      "task_id": "HumanEval/21",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5578bb0eb6dc12a04ac452d4a9d875bc6678acc9e541b8b9323f653e8ef231fb"
+    },
+    {
+      "job_id": "HumanEval/110/legacy_compact/0",
+      "task_id": "HumanEval/110",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "463be6b014f5646f34153300daaa50fc7f5843e2e0215219e1e97a630bb264c4"
+    },
+    {
+      "job_id": "HumanEval/123/specification_priority/1",
+      "task_id": "HumanEval/123",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "49319095223eb444ae31c1a9734cb1ccebd222ade9744bcec107c46114c1adb9"
+    },
+    {
+      "job_id": "HumanEval/119/current_arbitration/1",
+      "task_id": "HumanEval/119",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "7b4e0505163a520be72d4a75f42b33530360158885164e6a498c49f3ac264685"
+    },
+    {
+      "job_id": "HumanEval/143/specification_priority/0",
+      "task_id": "HumanEval/143",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "da9623149fca638b2bf40a6b836d16a5e9bd4679d047adbc3d151612726a5354"
+    },
+    {
+      "job_id": "HumanEval/15/specification_priority/0",
+      "task_id": "HumanEval/15",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ca128f60af1895d758e2ff289134df6dda5f65cf7abbefea909f3df2c72a1708"
+    },
+    {
+      "job_id": "HumanEval/109/current_arbitration/0",
+      "task_id": "HumanEval/109",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "26c934dd6aa66be53bd2daec730a9bf3de6514ec9ce444ad72cc5a26efed4ca1"
+    },
+    {
+      "job_id": "HumanEval/138/current_arbitration/0",
+      "task_id": "HumanEval/138",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4ce80630386840f5ce48de1f3e1237085af73e9c09a4a7531f4886e9e1358593"
+    },
+    {
+      "job_id": "HumanEval/59/specification_priority/1",
+      "task_id": "HumanEval/59",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "6606e58f7290ac589ce2e1fc626d876a1df9d8b85fdc32a406e271534d1ae1e3"
+    },
+    {
+      "job_id": "HumanEval/155/specification_priority/0",
+      "task_id": "HumanEval/155",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ce103836490fd29484c6cd1e8b84396077960128089c53e9a727cb56d031c5e6"
+    },
+    {
+      "job_id": "HumanEval/10/current_arbitration/1",
+      "task_id": "HumanEval/10",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "88852011cab4d41a95c120d4e8ea28cd94206d77ac876d5e3fcd7cf1d87b005f"
+    },
+    {
+      "job_id": "HumanEval/48/legacy_compact/0",
+      "task_id": "HumanEval/48",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3a12cfb83a8630a707f86d813e454032d8f4f5561821a92047a7d3466946d303"
+    },
+    {
+      "job_id": "HumanEval/13/current_arbitration/1",
+      "task_id": "HumanEval/13",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1c4555c379aeb9d596e74939a93ccb34c5ff606a38b6c33c3c2023c754c01322"
+    },
+    {
+      "job_id": "HumanEval/80/specification_priority/0",
+      "task_id": "HumanEval/80",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "bad665f4fa83e14dd16bc6889f04d19ec15790549dad43539e6e638c28d9497f"
+    },
+    {
+      "job_id": "HumanEval/79/specification_priority/0",
+      "task_id": "HumanEval/79",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "763af8ba05b93c818d6c24f4319def27906f5891e0b9691b737bbec4c08682f8"
+    },
+    {
+      "job_id": "HumanEval/4/current_arbitration/1",
+      "task_id": "HumanEval/4",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "aa75100e27e8fc1e8a30e7f774aacecd72dd5ebfa6f92c966cf4d219f615e996"
+    },
+    {
+      "job_id": "HumanEval/111/current_arbitration/1",
+      "task_id": "HumanEval/111",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "179483200501454e7c1e78f7568864a30903b6897248f4b1c63507447ec48f0a"
+    },
+    {
+      "job_id": "HumanEval/152/legacy_compact/0",
+      "task_id": "HumanEval/152",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "11062c51160626cbfe8a0a8cdf94fb5fcc8acef4781238a29b07bd2785375162"
+    },
+    {
+      "job_id": "HumanEval/110/specification_priority/0",
+      "task_id": "HumanEval/110",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2f200509a6ee1a44719166146c500f202e0971c9177010c0773b9924c98ca945"
+    },
+    {
+      "job_id": "HumanEval/109/specification_priority/1",
+      "task_id": "HumanEval/109",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "dbc37d84dfa86c068a17bd8773e2eff6144606673879ce67b9bda3b7e40ce6bf"
+    },
+    {
+      "job_id": "HumanEval/120/specification_priority/1",
+      "task_id": "HumanEval/120",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "69712d46d70dcb5989ca203635488b6d9ca88e388d66e3aec8c35c30903e398b"
+    },
+    {
+      "job_id": "HumanEval/140/legacy_compact/0",
+      "task_id": "HumanEval/140",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "556e7e038afe6056dfa4ca157bed4e916486817c89ee8b5412dab9364c4494ad"
+    },
+    {
+      "job_id": "HumanEval/27/legacy_compact/0",
+      "task_id": "HumanEval/27",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "910fc586418bebdd4af9afc46f6a84c71863b02a3a46e386ad1ca56f740f3382"
+    },
+    {
+      "job_id": "HumanEval/48/specification_priority/1",
+      "task_id": "HumanEval/48",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "eb699611e1b39833e16cf1b032b009ad85e66b12d3c44a782f48357add254efb"
+    },
+    {
+      "job_id": "HumanEval/52/legacy_compact/1",
+      "task_id": "HumanEval/52",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "351cd27f30d06e42274489524e3f54dd1e946fe5e11ef6e804ad8cbb043b036c"
+    },
+    {
+      "job_id": "HumanEval/80/specification_priority/1",
+      "task_id": "HumanEval/80",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "b989268da5cbc5ce53c12cf3da2307d10708449bba7d3f0c107c2e5a9f19c76d"
+    },
+    {
+      "job_id": "HumanEval/90/current_arbitration/0",
+      "task_id": "HumanEval/90",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "efcdf9042af603fbd1e9f0ad9834ac7b112333ddbe63dcdfdc3b2b9e71b7a381"
+    },
+    {
+      "job_id": "HumanEval/59/current_arbitration/1",
+      "task_id": "HumanEval/59",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "6606e58f7290ac589ce2e1fc626d876a1df9d8b85fdc32a406e271534d1ae1e3"
+    },
+    {
+      "job_id": "HumanEval/90/current_arbitration/1",
+      "task_id": "HumanEval/90",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "efcdf9042af603fbd1e9f0ad9834ac7b112333ddbe63dcdfdc3b2b9e71b7a381"
+    },
+    {
+      "job_id": "HumanEval/98/specification_priority/0",
+      "task_id": "HumanEval/98",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "47d7424fe6387263a19231d265b85f57a55bd18cf00dd736686f387c3f0092c6"
+    },
+    {
+      "job_id": "HumanEval/13/legacy_compact/1",
+      "task_id": "HumanEval/13",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "062dbd263d07f9cf2a796e4f244911d8798ac84e862324738eaef066ec70a1fb"
+    },
+    {
+      "job_id": "HumanEval/95/specification_priority/0",
+      "task_id": "HumanEval/95",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7ff63f7bca7e0fc5c2cc51bcf9fa489771dcfde4714cd8ab12b6fe85c62b34c"
+    },
+    {
+      "job_id": "HumanEval/30/current_arbitration/1",
+      "task_id": "HumanEval/30",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e42bf740e5a5089c3187133cf9b4cf5b6c5dede8230530e4a4e4933e8918efad"
+    },
+    {
+      "job_id": "HumanEval/163/current_arbitration/1",
+      "task_id": "HumanEval/163",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "a496af644a201abb0aa7c07596a4765542e53655b2a989a34eb9229c341cbb8f"
+    },
+    {
+      "job_id": "HumanEval/13/current_arbitration/0",
+      "task_id": "HumanEval/13",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1c4555c379aeb9d596e74939a93ccb34c5ff606a38b6c33c3c2023c754c01322"
+    },
+    {
+      "job_id": "HumanEval/142/legacy_compact/1",
+      "task_id": "HumanEval/142",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6382b53d7ce79a4ad099cb204fc69944dd662d7cddd77aba5a188ece83af7fed"
+    },
+    {
+      "job_id": "HumanEval/48/current_arbitration/1",
+      "task_id": "HumanEval/48",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f63fb604eb6820477add79aa01463952f80096deba7397056e009d376639cc52"
+    },
+    {
+      "job_id": "HumanEval/38/current_arbitration/0",
+      "task_id": "HumanEval/38",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "10fb499b790cd72c64b6d320c5947e6c92979226316abfac9ec0fe5e1a4dfe9a"
+    },
+    {
+      "job_id": "HumanEval/95/current_arbitration/0",
+      "task_id": "HumanEval/95",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "b71cd516f684cfc398f73d24c5936571a015f696128a59331cd3c36b71793969"
+    },
+    {
+      "job_id": "HumanEval/30/legacy_compact/1",
+      "task_id": "HumanEval/30",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "40d0cff4b9998960286d5df27ce64cb7ba8a7698897cbc356a85b2286d9c6e75"
+    },
+    {
+      "job_id": "HumanEval/109/legacy_compact/0",
+      "task_id": "HumanEval/109",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "88c8b631099171da995cc5d7459b0d3757c92ac42445402c454e9ff00d3107a3"
+    },
+    {
+      "job_id": "HumanEval/138/current_arbitration/1",
+      "task_id": "HumanEval/138",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4ce80630386840f5ce48de1f3e1237085af73e9c09a4a7531f4886e9e1358593"
+    },
+    {
+      "job_id": "HumanEval/37/specification_priority/1",
+      "task_id": "HumanEval/37",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d4f125e993c774fe33f0d1bd7fc922492a4dbdba10a5a59244d9990b5cfa01c0"
+    },
+    {
+      "job_id": "HumanEval/142/current_arbitration/1",
+      "task_id": "HumanEval/142",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "768bffedef8a36fcdd3f3a2662b78bf0a553a5d97530dab2e7575cd677ce70ba"
+    },
+    {
+      "job_id": "HumanEval/35/current_arbitration/0",
+      "task_id": "HumanEval/35",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1b457a99569c4a90a7927537349ba2affed6980d604dee4becbace6447033efa"
+    },
+    {
+      "job_id": "HumanEval/158/legacy_compact/1",
+      "task_id": "HumanEval/158",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "530234be09aaf92202bb8a0d0eb4af2a51c1696f6d6df65b8fac5a2acfaed861"
+    },
+    {
+      "job_id": "HumanEval/25/current_arbitration/0",
+      "task_id": "HumanEval/25",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2e7984571d53a30cc070a5ae1173eeda9dfd6d4ff8a5c82ac8874d020fe03b9f"
+    },
+    {
+      "job_id": "HumanEval/89/current_arbitration/1",
+      "task_id": "HumanEval/89",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f3db238c5d74634c251cd8d18ce714495ea5a86a3a2aafaa42b1ef6b7bc59481"
+    },
+    {
+      "job_id": "HumanEval/52/current_arbitration/0",
+      "task_id": "HumanEval/52",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "351cd27f30d06e42274489524e3f54dd1e946fe5e11ef6e804ad8cbb043b036c"
+    },
+    {
+      "job_id": "HumanEval/21/legacy_compact/1",
+      "task_id": "HumanEval/21",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1c43222f8bd2c044afb781a454d5c8d7f647be8fd8cc9fe39f036a74748a242c"
+    },
+    {
+      "job_id": "HumanEval/152/current_arbitration/1",
+      "task_id": "HumanEval/152",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "30a42fcb78df405e741008cf7187b3eac9c1b68dde15605b2a59f7f08595417b"
+    },
+    {
+      "job_id": "HumanEval/111/specification_priority/0",
+      "task_id": "HumanEval/111",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "b0a3608e42a4c9488a071e1234b4cc15a12226281c7e88570f093ecba0127b29"
+    },
+    {
+      "job_id": "HumanEval/31/legacy_compact/0",
+      "task_id": "HumanEval/31",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2264bbe6180b938675f9524b6c5d5eed7de190273e58deabbb1d8313340d92e6"
+    },
+    {
+      "job_id": "HumanEval/89/specification_priority/1",
+      "task_id": "HumanEval/89",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e103d57c9715fe6d7211e8b6fc2131414e97f86cf59cc536b3efe171eeed454f"
+    },
+    {
+      "job_id": "HumanEval/138/legacy_compact/0",
+      "task_id": "HumanEval/138",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4ce80630386840f5ce48de1f3e1237085af73e9c09a4a7531f4886e9e1358593"
+    },
+    {
+      "job_id": "HumanEval/131/current_arbitration/1",
+      "task_id": "HumanEval/131",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "98907c62bb7035a65806b8d0f806e1161a45b2f02ec5aa8c1636f05547b2eb25"
+    },
+    {
+      "job_id": "HumanEval/131/specification_priority/0",
+      "task_id": "HumanEval/131",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "59a393e43084c2c750d9da4f38b109f6b92e414b968f54a6e3c17227436ef94a"
+    },
+    {
+      "job_id": "HumanEval/25/current_arbitration/1",
+      "task_id": "HumanEval/25",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2e7984571d53a30cc070a5ae1173eeda9dfd6d4ff8a5c82ac8874d020fe03b9f"
+    },
+    {
+      "job_id": "HumanEval/89/current_arbitration/0",
+      "task_id": "HumanEval/89",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f3db238c5d74634c251cd8d18ce714495ea5a86a3a2aafaa42b1ef6b7bc59481"
+    },
+    {
+      "job_id": "HumanEval/4/legacy_compact/1",
+      "task_id": "HumanEval/4",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e04a398caae89db24a2a5ddd863a469ecd25d6f13a8eea7bd4986cd711f302e9"
+    },
+    {
+      "job_id": "HumanEval/15/specification_priority/1",
+      "task_id": "HumanEval/15",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "914b1493220d0a87382d54b7a0814d1098007407663e76574876e91cfbe784a2"
+    },
+    {
+      "job_id": "HumanEval/138/legacy_compact/1",
+      "task_id": "HumanEval/138",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4ce80630386840f5ce48de1f3e1237085af73e9c09a4a7531f4886e9e1358593"
+    },
+    {
+      "job_id": "HumanEval/158/current_arbitration/1",
+      "task_id": "HumanEval/158",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "530234be09aaf92202bb8a0d0eb4af2a51c1696f6d6df65b8fac5a2acfaed861"
+    },
+    {
+      "job_id": "HumanEval/35/current_arbitration/1",
+      "task_id": "HumanEval/35",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c2cfb6614c56119a5f6ff90d2c4364915c74a1791fe866341500d303c8496af1"
+    },
+    {
+      "job_id": "HumanEval/18/legacy_compact/1",
+      "task_id": "HumanEval/18",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "457111ddea21a0427163913a4effaf0795f00e998177b01a1736b7f2f8bdde22"
+    },
+    {
+      "job_id": "HumanEval/95/specification_priority/1",
+      "task_id": "HumanEval/95",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7ff63f7bca7e0fc5c2cc51bcf9fa489771dcfde4714cd8ab12b6fe85c62b34c"
+    },
+    {
+      "job_id": "HumanEval/21/current_arbitration/0",
+      "task_id": "HumanEval/21",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5578bb0eb6dc12a04ac452d4a9d875bc6678acc9e541b8b9323f653e8ef231fb"
+    },
+    {
+      "job_id": "HumanEval/23/current_arbitration/1",
+      "task_id": "HumanEval/23",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a5fc91e43d35fc0b5d85fca2aee4eceeda8f2d60148a288f4b90c0f4655eddb0"
+    },
+    {
+      "job_id": "HumanEval/37/specification_priority/0",
+      "task_id": "HumanEval/37",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d4f125e993c774fe33f0d1bd7fc922492a4dbdba10a5a59244d9990b5cfa01c0"
+    },
+    {
+      "job_id": "HumanEval/13/specification_priority/0",
+      "task_id": "HumanEval/13",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "22a0f5adaef147fd6b9b008af1f18498cbbbef56c728307266c6355b49417c02"
+    },
+    {
+      "job_id": "HumanEval/13/specification_priority/1",
+      "task_id": "HumanEval/13",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "22a0f5adaef147fd6b9b008af1f18498cbbbef56c728307266c6355b49417c02"
+    },
+    {
+      "job_id": "HumanEval/89/specification_priority/0",
+      "task_id": "HumanEval/89",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e103d57c9715fe6d7211e8b6fc2131414e97f86cf59cc536b3efe171eeed454f"
+    },
+    {
+      "job_id": "HumanEval/143/legacy_compact/1",
+      "task_id": "HumanEval/143",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "da9623149fca638b2bf40a6b836d16a5e9bd4679d047adbc3d151612726a5354"
+    },
+    {
+      "job_id": "HumanEval/102/current_arbitration/1",
+      "task_id": "HumanEval/102",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "dc9f81e5c472820996161da7fd2b2911c5613e7ddfa05ebb9eedec427adc2bf8"
+    },
+    {
+      "job_id": "HumanEval/18/current_arbitration/1",
+      "task_id": "HumanEval/18",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d1c477c949d3cbba7318f11a681d746ade3be434ca5045cd185dc2058ad099e7"
+    },
+    {
+      "job_id": "HumanEval/123/legacy_compact/1",
+      "task_id": "HumanEval/123",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "b987d5c9e4c4c46cef57b289e1baf6e5d992744d575ac52092da89a199324f93"
+    },
+    {
+      "job_id": "HumanEval/12/legacy_compact/1",
+      "task_id": "HumanEval/12",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6d08cd1ee8fd8d59c9aef2f4e55a971c8c5534903285011a76328ac94116d1d0"
+    },
+    {
+      "job_id": "HumanEval/112/current_arbitration/1",
+      "task_id": "HumanEval/112",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f358e8b3e454c018856de5802121a8bb57fd91d161034df572d500dfc1a5eadc"
+    },
+    {
+      "job_id": "HumanEval/92/legacy_compact/0",
+      "task_id": "HumanEval/92",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fe7d899c552ca901789404b2fd9fcecda2923c5f39c356b4ee487814cefa1a19"
+    },
+    {
+      "job_id": "HumanEval/90/legacy_compact/0",
+      "task_id": "HumanEval/90",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "efcdf9042af603fbd1e9f0ad9834ac7b112333ddbe63dcdfdc3b2b9e71b7a381"
+    },
+    {
+      "job_id": "HumanEval/98/current_arbitration/0",
+      "task_id": "HumanEval/98",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "47d7424fe6387263a19231d265b85f57a55bd18cf00dd736686f387c3f0092c6"
+    },
+    {
+      "job_id": "HumanEval/15/legacy_compact/0",
+      "task_id": "HumanEval/15",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "30863d01587a41fa716ee9b4d40c1ac0508b7361f26d551aed77cb05bceda83a"
+    },
+    {
+      "job_id": "HumanEval/82/legacy_compact/0",
+      "task_id": "HumanEval/82",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "974a68e6069c40e09d0de3f2e2b87e65b06593daa63f9fdfdfb184a9902714f3"
+    },
+    {
+      "job_id": "HumanEval/119/legacy_compact/0",
+      "task_id": "HumanEval/119",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ffa90e89adedbd77297af8dbef86bd6f4028fffce8d42983408a71b36c81a3f0"
+    },
+    {
+      "job_id": "HumanEval/120/specification_priority/0",
+      "task_id": "HumanEval/120",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "69712d46d70dcb5989ca203635488b6d9ca88e388d66e3aec8c35c30903e398b"
+    },
+    {
+      "job_id": "HumanEval/90/specification_priority/1",
+      "task_id": "HumanEval/90",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "efcdf9042af603fbd1e9f0ad9834ac7b112333ddbe63dcdfdc3b2b9e71b7a381"
+    },
+    {
+      "job_id": "HumanEval/30/specification_priority/0",
+      "task_id": "HumanEval/30",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e42bf740e5a5089c3187133cf9b4cf5b6c5dede8230530e4a4e4933e8918efad"
+    },
+    {
+      "job_id": "HumanEval/15/legacy_compact/1",
+      "task_id": "HumanEval/15",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "30863d01587a41fa716ee9b4d40c1ac0508b7361f26d551aed77cb05bceda83a"
+    },
+    {
+      "job_id": "HumanEval/27/current_arbitration/1",
+      "task_id": "HumanEval/27",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ec3f96388fcdcfe858b5e5ee0eaaa0d89d4c32e9c0defc77a47a0747d526dbfb"
+    },
+    {
+      "job_id": "HumanEval/95/legacy_compact/1",
+      "task_id": "HumanEval/95",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7ff63f7bca7e0fc5c2cc51bcf9fa489771dcfde4714cd8ab12b6fe85c62b34c"
+    },
+    {
+      "job_id": "HumanEval/98/current_arbitration/1",
+      "task_id": "HumanEval/98",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "47d7424fe6387263a19231d265b85f57a55bd18cf00dd736686f387c3f0092c6"
+    },
+    {
+      "job_id": "HumanEval/158/current_arbitration/0",
+      "task_id": "HumanEval/158",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "530234be09aaf92202bb8a0d0eb4af2a51c1696f6d6df65b8fac5a2acfaed861"
+    },
+    {
+      "job_id": "HumanEval/48/legacy_compact/1",
+      "task_id": "HumanEval/48",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3a12cfb83a8630a707f86d813e454032d8f4f5561821a92047a7d3466946d303"
+    },
+    {
+      "job_id": "HumanEval/38/specification_priority/1",
+      "task_id": "HumanEval/38",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1b1c1cb7c7c5681061569783fc692dbe3ee987afa4a0a8f2bc673db08911de48"
+    },
+    {
+      "job_id": "HumanEval/123/current_arbitration/0",
+      "task_id": "HumanEval/123",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7cc6bdedc3cbf89478c7c93d78391454cfeb34b8dabc4b14766182d252acbb7"
+    },
+    {
+      "job_id": "HumanEval/59/specification_priority/0",
+      "task_id": "HumanEval/59",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "6606e58f7290ac589ce2e1fc626d876a1df9d8b85fdc32a406e271534d1ae1e3"
+    },
+    {
+      "job_id": "HumanEval/138/specification_priority/1",
+      "task_id": "HumanEval/138",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "93cf31e6887f3af5dd060aa97377b66720a7934dbf39280c87d75ed84f905b5e"
+    },
+    {
+      "job_id": "HumanEval/140/current_arbitration/0",
+      "task_id": "HumanEval/140",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "75c650b94576a547b278fdaec3f9e9a2f93917682ebea63a97311e133924fd2e"
+    },
+    {
+      "job_id": "HumanEval/27/current_arbitration/0",
+      "task_id": "HumanEval/27",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ec3f96388fcdcfe858b5e5ee0eaaa0d89d4c32e9c0defc77a47a0747d526dbfb"
+    },
+    {
+      "job_id": "HumanEval/40/legacy_compact/0",
+      "task_id": "HumanEval/40",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d07fddb88f4ae26440cddcad366942c78cceb9745a2f6eaa6c4538ffcda7b8e4"
+    },
+    {
+      "job_id": "HumanEval/92/current_arbitration/0",
+      "task_id": "HumanEval/92",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1fa076ff2dcb1494e701ab60a6282fbe20d6d736c7354d62b91a166d38c31021"
+    },
+    {
+      "job_id": "HumanEval/4/specification_priority/0",
+      "task_id": "HumanEval/4",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "aa5337239124f222fc52753451b6af1aef9d7adb206c7f3c8f9e9228a7114c85"
+    },
+    {
+      "job_id": "HumanEval/80/current_arbitration/0",
+      "task_id": "HumanEval/80",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "bad665f4fa83e14dd16bc6889f04d19ec15790549dad43539e6e638c28d9497f"
+    },
+    {
+      "job_id": "HumanEval/82/current_arbitration/1",
+      "task_id": "HumanEval/82",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "10d6a63a38add5ad70fd4df3383cb602e00907c39868bfe176cd5210ef8acdb2"
+    },
+    {
+      "job_id": "HumanEval/79/legacy_compact/0",
+      "task_id": "HumanEval/79",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ffbb28f666a9fc8e393808a1ceae5926e8317b1f35fc4b5d51138ad2a3771f84"
+    },
+    {
+      "job_id": "HumanEval/152/specification_priority/0",
+      "task_id": "HumanEval/152",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "30a42fcb78df405e741008cf7187b3eac9c1b68dde15605b2a59f7f08595417b"
+    },
+    {
+      "job_id": "HumanEval/79/current_arbitration/1",
+      "task_id": "HumanEval/79",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5550bfdc8f33aabcb01aa6d0b790e994bf8929f30403910ada2e6b1ac5a03bae"
+    },
+    {
+      "job_id": "HumanEval/140/legacy_compact/1",
+      "task_id": "HumanEval/140",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "556e7e038afe6056dfa4ca157bed4e916486817c89ee8b5412dab9364c4494ad"
+    },
+    {
+      "job_id": "HumanEval/155/legacy_compact/1",
+      "task_id": "HumanEval/155",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7b19a5cb50a14a8775ceb42a89c287394a5eccae27863084141f866de6fc2b6"
+    },
+    {
+      "job_id": "HumanEval/6/specification_priority/0",
+      "task_id": "HumanEval/6",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4f50d3fb7bb142dad36ea1a5531690b07aa4f935b961d5ffe308787039262136"
+    },
+    {
+      "job_id": "HumanEval/40/current_arbitration/1",
+      "task_id": "HumanEval/40",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "414970204ba8986f344c4a821fb13883528eafd1753972c6aa479f44720028bf"
+    },
+    {
+      "job_id": "HumanEval/142/legacy_compact/0",
+      "task_id": "HumanEval/142",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6382b53d7ce79a4ad099cb204fc69944dd662d7cddd77aba5a188ece83af7fed"
+    },
+    {
+      "job_id": "HumanEval/109/legacy_compact/1",
+      "task_id": "HumanEval/109",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "26c934dd6aa66be53bd2daec730a9bf3de6514ec9ce444ad72cc5a26efed4ca1"
+    },
+    {
+      "job_id": "HumanEval/6/legacy_compact/1",
+      "task_id": "HumanEval/6",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f029ca9881d2723a98195462cc45c5cb6a4bef725dcd7cb900706ab6f5c59e66"
+    },
+    {
+      "job_id": "HumanEval/40/legacy_compact/1",
+      "task_id": "HumanEval/40",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "febd5827c3ca3ae9603d0a4f2b2a74e48c2fd0040284f8d8dba68666c4359f7f"
+    },
+    {
+      "job_id": "HumanEval/59/current_arbitration/0",
+      "task_id": "HumanEval/59",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "6606e58f7290ac589ce2e1fc626d876a1df9d8b85fdc32a406e271534d1ae1e3"
+    },
+    {
+      "job_id": "HumanEval/4/legacy_compact/0",
+      "task_id": "HumanEval/4",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f6ee8fa8af67a0e1491d736b1667e7c0d6ed8f97d707443bcdbda43aef84e728"
+    },
+    {
+      "job_id": "HumanEval/82/current_arbitration/0",
+      "task_id": "HumanEval/82",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "10d6a63a38add5ad70fd4df3383cb602e00907c39868bfe176cd5210ef8acdb2"
+    },
+    {
+      "job_id": "HumanEval/97/legacy_compact/0",
+      "task_id": "HumanEval/97",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "95514d93d69ce5f40841ed926c5120711fa6d0fa25a0dadbcc75eb05df76728b"
+    },
+    {
+      "job_id": "HumanEval/102/legacy_compact/1",
+      "task_id": "HumanEval/102",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4f43014e57b27809c7714823ee3cadd9e3acf427491eadc799e7a48e1035882d"
+    },
+    {
+      "job_id": "HumanEval/31/specification_priority/1",
+      "task_id": "HumanEval/31",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2264bbe6180b938675f9524b6c5d5eed7de190273e58deabbb1d8313340d92e6"
+    },
+    {
+      "job_id": "HumanEval/111/legacy_compact/1",
+      "task_id": "HumanEval/111",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "179483200501454e7c1e78f7568864a30903b6897248f4b1c63507447ec48f0a"
+    },
+    {
+      "job_id": "HumanEval/131/legacy_compact/0",
+      "task_id": "HumanEval/131",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "98907c62bb7035a65806b8d0f806e1161a45b2f02ec5aa8c1636f05547b2eb25"
+    },
+    {
+      "job_id": "HumanEval/6/legacy_compact/0",
+      "task_id": "HumanEval/6",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f029ca9881d2723a98195462cc45c5cb6a4bef725dcd7cb900706ab6f5c59e66"
+    },
+    {
+      "job_id": "HumanEval/102/legacy_compact/0",
+      "task_id": "HumanEval/102",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4f43014e57b27809c7714823ee3cadd9e3acf427491eadc799e7a48e1035882d"
+    },
+    {
+      "job_id": "HumanEval/131/specification_priority/1",
+      "task_id": "HumanEval/131",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "db4b8630cf5ecf5671c03884eee908819fafd371a482fc04bb3ae0d33dc17c22"
+    },
+    {
+      "job_id": "HumanEval/59/legacy_compact/1",
+      "task_id": "HumanEval/59",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "c70940f80ca1dd01a7c6983100227fbd039d3b8c44bea8abfb91d1e0f24f85f4"
+    },
+    {
+      "job_id": "HumanEval/10/legacy_compact/1",
+      "task_id": "HumanEval/10",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "26a0433ac946ede2c17879edc6c4c2bfac7be9744829c265cf050e2aa2809114"
+    },
+    {
+      "job_id": "HumanEval/80/legacy_compact/1",
+      "task_id": "HumanEval/80",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1183d1b2314a11cdb0af2ee7d46da146343acf58b21a454d714fa5475278be47"
+    },
+    {
+      "job_id": "HumanEval/95/current_arbitration/1",
+      "task_id": "HumanEval/95",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7ff63f7bca7e0fc5c2cc51bcf9fa489771dcfde4714cd8ab12b6fe85c62b34c"
+    },
+    {
+      "job_id": "HumanEval/52/current_arbitration/1",
+      "task_id": "HumanEval/52",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "351cd27f30d06e42274489524e3f54dd1e946fe5e11ef6e804ad8cbb043b036c"
+    },
+    {
+      "job_id": "HumanEval/39/specification_priority/1",
+      "task_id": "HumanEval/39",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6fac1541b4d041c6fea9cba1aff9516edc0aafe2a6923ad9a51b1504ad50eaaf"
+    },
+    {
+      "job_id": "HumanEval/40/specification_priority/1",
+      "task_id": "HumanEval/40",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8d70886d9d77ac0f22712d0bdc3e378a3461d4263309c3e865ce236f6579f5f3"
+    },
+    {
+      "job_id": "HumanEval/142/specification_priority/0",
+      "task_id": "HumanEval/142",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "768bffedef8a36fcdd3f3a2662b78bf0a553a5d97530dab2e7575cd677ce70ba"
+    },
+    {
+      "job_id": "HumanEval/48/specification_priority/0",
+      "task_id": "HumanEval/48",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f63fb604eb6820477add79aa01463952f80096deba7397056e009d376639cc52"
+    },
+    {
+      "job_id": "HumanEval/35/legacy_compact/0",
+      "task_id": "HumanEval/35",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1b457a99569c4a90a7927537349ba2affed6980d604dee4becbace6447033efa"
+    },
+    {
+      "job_id": "HumanEval/152/specification_priority/1",
+      "task_id": "HumanEval/152",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5d5537a935d3d27e8da66b2713fef29cbeb417243827f993951cb05614653c8f"
+    },
+    {
+      "job_id": "HumanEval/23/current_arbitration/0",
+      "task_id": "HumanEval/23",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a5fc91e43d35fc0b5d85fca2aee4eceeda8f2d60148a288f4b90c0f4655eddb0"
+    },
+    {
+      "job_id": "HumanEval/25/legacy_compact/0",
+      "task_id": "HumanEval/25",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "bcadcfbc6ef89b116d34c5edafa42e05e03848ae42ac4b752d38216e1db2cbf0"
+    },
+    {
+      "job_id": "HumanEval/82/legacy_compact/1",
+      "task_id": "HumanEval/82",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "726192e95296836408d91df5105cce057666c8c0494569fff8b66682305ed165"
+    },
+    {
+      "job_id": "HumanEval/52/specification_priority/0",
+      "task_id": "HumanEval/52",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "351cd27f30d06e42274489524e3f54dd1e946fe5e11ef6e804ad8cbb043b036c"
+    },
+    {
+      "job_id": "HumanEval/6/current_arbitration/0",
+      "task_id": "HumanEval/6",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "78c286cbc5d6f04759800b9cdc1a65e6fae1b14ec4751c4f43e3208d114d7417"
+    },
+    {
+      "job_id": "HumanEval/97/specification_priority/1",
+      "task_id": "HumanEval/97",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a396ad5c241618e79ffde5a24e849ef62979a83d144ab525b88c2dc91b460227"
+    },
+    {
+      "job_id": "HumanEval/136/specification_priority/0",
+      "task_id": "HumanEval/136",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4d8e570e68531bc30f1d3fd130a498ee8766c1fb350e8b48c173774e0900b9c2"
+    },
+    {
+      "job_id": "HumanEval/30/legacy_compact/0",
+      "task_id": "HumanEval/30",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "40d0cff4b9998960286d5df27ce64cb7ba8a7698897cbc356a85b2286d9c6e75"
+    },
+    {
+      "job_id": "HumanEval/136/current_arbitration/1",
+      "task_id": "HumanEval/136",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4d8e570e68531bc30f1d3fd130a498ee8766c1fb350e8b48c173774e0900b9c2"
+    },
+    {
+      "job_id": "HumanEval/37/current_arbitration/0",
+      "task_id": "HumanEval/37",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d915d1a904b38c410fa1294dba0fb640358e94c587a71fc38fc34e2d0de0468e"
+    },
+    {
+      "job_id": "HumanEval/111/legacy_compact/0",
+      "task_id": "HumanEval/111",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "179483200501454e7c1e78f7568864a30903b6897248f4b1c63507447ec48f0a"
+    },
+    {
+      "job_id": "HumanEval/119/legacy_compact/1",
+      "task_id": "HumanEval/119",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ffa90e89adedbd77297af8dbef86bd6f4028fffce8d42983408a71b36c81a3f0"
+    },
+    {
+      "job_id": "HumanEval/10/specification_priority/1",
+      "task_id": "HumanEval/10",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "3b09fb4b94def801471dd50131fa9113d68e790e773349d93284643bb3929d30"
+    },
+    {
+      "job_id": "HumanEval/48/current_arbitration/0",
+      "task_id": "HumanEval/48",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f63fb604eb6820477add79aa01463952f80096deba7397056e009d376639cc52"
+    },
+    {
+      "job_id": "HumanEval/4/current_arbitration/0",
+      "task_id": "HumanEval/4",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "aa75100e27e8fc1e8a30e7f774aacecd72dd5ebfa6f92c966cf4d219f615e996"
+    },
+    {
+      "job_id": "HumanEval/12/specification_priority/0",
+      "task_id": "HumanEval/12",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "82cbac22f5f5d3d368e2bb2e0349b7e2987f0eeaf72c4341e7d633dc28a4f4ae"
+    },
+    {
+      "job_id": "HumanEval/98/legacy_compact/1",
+      "task_id": "HumanEval/98",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "47d7424fe6387263a19231d265b85f57a55bd18cf00dd736686f387c3f0092c6"
+    },
+    {
+      "job_id": "HumanEval/102/specification_priority/0",
+      "task_id": "HumanEval/102",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "dc9f81e5c472820996161da7fd2b2911c5613e7ddfa05ebb9eedec427adc2bf8"
+    },
+    {
+      "job_id": "HumanEval/38/legacy_compact/0",
+      "task_id": "HumanEval/38",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f3ea7c9e8e0d2a774df624f268634b8b0222ce759e4b440937caa2ed17d74dc2"
+    },
+    {
+      "job_id": "HumanEval/98/legacy_compact/0",
+      "task_id": "HumanEval/98",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "47d7424fe6387263a19231d265b85f57a55bd18cf00dd736686f387c3f0092c6"
+    },
+    {
+      "job_id": "HumanEval/31/current_arbitration/1",
+      "task_id": "HumanEval/31",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2264bbe6180b938675f9524b6c5d5eed7de190273e58deabbb1d8313340d92e6"
+    },
+    {
+      "job_id": "HumanEval/112/current_arbitration/0",
+      "task_id": "HumanEval/112",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f358e8b3e454c018856de5802121a8bb57fd91d161034df572d500dfc1a5eadc"
+    },
+    {
+      "job_id": "HumanEval/10/specification_priority/0",
+      "task_id": "HumanEval/10",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "827a497c9bc6f8ce7078426cba530f6292119ce2fed89df853967e46e8ca9d52"
+    },
+    {
+      "job_id": "HumanEval/23/legacy_compact/1",
+      "task_id": "HumanEval/23",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a025c8a44d02ce7f03e527136cc9c8866d959403d465636796586ecd75e75a1c"
+    },
+    {
+      "job_id": "HumanEval/158/legacy_compact/0",
+      "task_id": "HumanEval/158",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "29eb1d626221f057c7cca113250d743adfd06a593e4c807052adf3da6a98b38b"
+    },
+    {
+      "job_id": "HumanEval/18/specification_priority/0",
+      "task_id": "HumanEval/18",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d1c477c949d3cbba7318f11a681d746ade3be434ca5045cd185dc2058ad099e7"
+    },
+    {
+      "job_id": "HumanEval/98/specification_priority/1",
+      "task_id": "HumanEval/98",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "47d7424fe6387263a19231d265b85f57a55bd18cf00dd736686f387c3f0092c6"
+    },
+    {
+      "job_id": "HumanEval/152/current_arbitration/0",
+      "task_id": "HumanEval/152",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "11062c51160626cbfe8a0a8cdf94fb5fcc8acef4781238a29b07bd2785375162"
+    },
+    {
+      "job_id": "HumanEval/120/legacy_compact/1",
+      "task_id": "HumanEval/120",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "7b98e79792270456aac8f96aa1089f21db077058afb1a150f957b031f881c181"
+    },
+    {
+      "job_id": "HumanEval/90/legacy_compact/1",
+      "task_id": "HumanEval/90",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "efcdf9042af603fbd1e9f0ad9834ac7b112333ddbe63dcdfdc3b2b9e71b7a381"
+    },
+    {
+      "job_id": "HumanEval/52/legacy_compact/0",
+      "task_id": "HumanEval/52",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "351cd27f30d06e42274489524e3f54dd1e946fe5e11ef6e804ad8cbb043b036c"
+    },
+    {
+      "job_id": "HumanEval/110/specification_priority/1",
+      "task_id": "HumanEval/110",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "a74174f809d64347e782e5a3eade0fc74395b06de5ab148607ae825c5e4ffea8"
+    },
+    {
+      "job_id": "HumanEval/143/legacy_compact/0",
+      "task_id": "HumanEval/143",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "da9623149fca638b2bf40a6b836d16a5e9bd4679d047adbc3d151612726a5354"
+    },
+    {
+      "job_id": "HumanEval/79/specification_priority/1",
+      "task_id": "HumanEval/79",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "763af8ba05b93c818d6c24f4319def27906f5891e0b9691b737bbec4c08682f8"
+    },
+    {
+      "job_id": "HumanEval/138/specification_priority/0",
+      "task_id": "HumanEval/138",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "93cf31e6887f3af5dd060aa97377b66720a7934dbf39280c87d75ed84f905b5e"
+    },
+    {
+      "job_id": "HumanEval/27/legacy_compact/1",
+      "task_id": "HumanEval/27",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "910fc586418bebdd4af9afc46f6a84c71863b02a3a46e386ad1ca56f740f3382"
+    },
+    {
+      "job_id": "HumanEval/59/legacy_compact/0",
+      "task_id": "HumanEval/59",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "90250b751aa7c2f8a3e0415a624e2750d81b60bc7840d78ebc1acb49e1db1e61"
+    },
+    {
+      "job_id": "HumanEval/35/legacy_compact/1",
+      "task_id": "HumanEval/35",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1b457a99569c4a90a7927537349ba2affed6980d604dee4becbace6447033efa"
+    },
+    {
+      "job_id": "HumanEval/155/current_arbitration/1",
+      "task_id": "HumanEval/155",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ce103836490fd29484c6cd1e8b84396077960128089c53e9a727cb56d031c5e6"
+    },
+    {
+      "job_id": "HumanEval/110/current_arbitration/1",
+      "task_id": "HumanEval/110",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "463be6b014f5646f34153300daaa50fc7f5843e2e0215219e1e97a630bb264c4"
+    },
+    {
+      "job_id": "HumanEval/6/current_arbitration/1",
+      "task_id": "HumanEval/6",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "78c286cbc5d6f04759800b9cdc1a65e6fae1b14ec4751c4f43e3208d114d7417"
+    },
+    {
+      "job_id": "HumanEval/111/current_arbitration/0",
+      "task_id": "HumanEval/111",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "179483200501454e7c1e78f7568864a30903b6897248f4b1c63507447ec48f0a"
+    },
+    {
+      "job_id": "HumanEval/31/specification_priority/0",
+      "task_id": "HumanEval/31",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2264bbe6180b938675f9524b6c5d5eed7de190273e58deabbb1d8313340d92e6"
+    },
+    {
+      "job_id": "HumanEval/80/legacy_compact/0",
+      "task_id": "HumanEval/80",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1183d1b2314a11cdb0af2ee7d46da146343acf58b21a454d714fa5475278be47"
+    },
+    {
+      "job_id": "HumanEval/25/legacy_compact/1",
+      "task_id": "HumanEval/25",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "bcadcfbc6ef89b116d34c5edafa42e05e03848ae42ac4b752d38216e1db2cbf0"
+    },
+    {
+      "job_id": "HumanEval/131/legacy_compact/1",
+      "task_id": "HumanEval/131",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "98907c62bb7035a65806b8d0f806e1161a45b2f02ec5aa8c1636f05547b2eb25"
+    },
+    {
+      "job_id": "HumanEval/109/current_arbitration/1",
+      "task_id": "HumanEval/109",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "06de74bcdd0e3ca47590f83f38c72ea422ce3827bb63b79fdad8912ec6476d18"
+    },
+    {
+      "job_id": "HumanEval/163/current_arbitration/0",
+      "task_id": "HumanEval/163",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "a496af644a201abb0aa7c07596a4765542e53655b2a989a34eb9229c341cbb8f"
+    },
+    {
+      "job_id": "HumanEval/140/specification_priority/1",
+      "task_id": "HumanEval/140",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "eeb78a3ef27b1a8cff6b755023f0d45fb10440c10e509eb685ee95c5140ef3f8"
+    },
+    {
+      "job_id": "HumanEval/95/legacy_compact/0",
+      "task_id": "HumanEval/95",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7ff63f7bca7e0fc5c2cc51bcf9fa489771dcfde4714cd8ab12b6fe85c62b34c"
+    },
+    {
+      "job_id": "HumanEval/37/current_arbitration/1",
+      "task_id": "HumanEval/37",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d915d1a904b38c410fa1294dba0fb640358e94c587a71fc38fc34e2d0de0468e"
+    },
+    {
+      "job_id": "HumanEval/119/current_arbitration/0",
+      "task_id": "HumanEval/119",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "7b4e0505163a520be72d4a75f42b33530360158885164e6a498c49f3ac264685"
+    },
+    {
+      "job_id": "HumanEval/158/specification_priority/1",
+      "task_id": "HumanEval/158",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "530234be09aaf92202bb8a0d0eb4af2a51c1696f6d6df65b8fac5a2acfaed861"
+    },
+    {
+      "job_id": "HumanEval/102/current_arbitration/0",
+      "task_id": "HumanEval/102",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "dc9f81e5c472820996161da7fd2b2911c5613e7ddfa05ebb9eedec427adc2bf8"
+    },
+    {
+      "job_id": "HumanEval/143/current_arbitration/0",
+      "task_id": "HumanEval/143",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d4fefeb4877e1b832425529d5157bcf6365c497a073c797edcad82d68a1100a3"
+    },
+    {
+      "job_id": "HumanEval/12/legacy_compact/0",
+      "task_id": "HumanEval/12",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6d08cd1ee8fd8d59c9aef2f4e55a971c8c5534903285011a76328ac94116d1d0"
+    },
+    {
+      "job_id": "HumanEval/35/specification_priority/1",
+      "task_id": "HumanEval/35",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c2cfb6614c56119a5f6ff90d2c4364915c74a1791fe866341500d303c8496af1"
+    },
+    {
+      "job_id": "HumanEval/79/legacy_compact/1",
+      "task_id": "HumanEval/79",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "ffbb28f666a9fc8e393808a1ceae5926e8317b1f35fc4b5d51138ad2a3771f84"
+    },
+    {
+      "job_id": "HumanEval/136/legacy_compact/0",
+      "task_id": "HumanEval/136",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "38d5614d0f854cd95fe709399e435c4abc0eceb56e85e2212130b1ba34af1069"
+    },
+    {
+      "job_id": "HumanEval/18/specification_priority/1",
+      "task_id": "HumanEval/18",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "d1c477c949d3cbba7318f11a681d746ade3be434ca5045cd185dc2058ad099e7"
+    },
+    {
+      "job_id": "HumanEval/152/legacy_compact/1",
+      "task_id": "HumanEval/152",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "11062c51160626cbfe8a0a8cdf94fb5fcc8acef4781238a29b07bd2785375162"
+    },
+    {
+      "job_id": "HumanEval/119/specification_priority/0",
+      "task_id": "HumanEval/119",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "7b4e0505163a520be72d4a75f42b33530360158885164e6a498c49f3ac264685"
+    },
+    {
+      "job_id": "HumanEval/38/legacy_compact/1",
+      "task_id": "HumanEval/38",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "ae57db655b0dd62f989f18c24d4008a1b7d616a598553aad90606ad5ccb0efd6"
+    },
+    {
+      "job_id": "HumanEval/39/legacy_compact/1",
+      "task_id": "HumanEval/39",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "284ac28a149790d1c1e5ed878735590f28346337e9336b9d979adfabfb467549"
+    },
+    {
+      "job_id": "HumanEval/92/specification_priority/1",
+      "task_id": "HumanEval/92",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fe7d899c552ca901789404b2fd9fcecda2923c5f39c356b4ee487814cefa1a19"
+    },
+    {
+      "job_id": "HumanEval/80/current_arbitration/1",
+      "task_id": "HumanEval/80",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "bad665f4fa83e14dd16bc6889f04d19ec15790549dad43539e6e638c28d9497f"
+    },
+    {
+      "job_id": "HumanEval/39/current_arbitration/0",
+      "task_id": "HumanEval/39",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2affa7d14a3c9dfe0bc9ee6042f0ae5b924d266eb26e57108b435dbd34b3580b"
+    },
+    {
+      "job_id": "HumanEval/30/specification_priority/1",
+      "task_id": "HumanEval/30",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e42bf740e5a5089c3187133cf9b4cf5b6c5dede8230530e4a4e4933e8918efad"
+    },
+    {
+      "job_id": "HumanEval/120/legacy_compact/0",
+      "task_id": "HumanEval/120",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "7b98e79792270456aac8f96aa1089f21db077058afb1a150f957b031f881c181"
+    },
+    {
+      "job_id": "HumanEval/140/specification_priority/0",
+      "task_id": "HumanEval/140",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c4bfaf8ae3b41fa924ca21072b8da528671a03b63752039ada0e48bfb9c85b44"
+    },
+    {
+      "job_id": "HumanEval/97/legacy_compact/1",
+      "task_id": "HumanEval/97",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "95514d93d69ce5f40841ed926c5120711fa6d0fa25a0dadbcc75eb05df76728b"
+    },
+    {
+      "job_id": "HumanEval/143/specification_priority/1",
+      "task_id": "HumanEval/143",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5a233f5ce48f11b435b0babe559a6f31ac62a7cbd071b96d2a9044ac7358eeae"
+    },
+    {
+      "job_id": "HumanEval/6/specification_priority/1",
+      "task_id": "HumanEval/6",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1d6f93d09cee9c4329556ac21fb3e00b68fb8434fa51b0978dfbeb65c3112581"
+    },
+    {
+      "job_id": "HumanEval/92/specification_priority/0",
+      "task_id": "HumanEval/92",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "fe7d899c552ca901789404b2fd9fcecda2923c5f39c356b4ee487814cefa1a19"
+    },
+    {
+      "job_id": "HumanEval/35/specification_priority/0",
+      "task_id": "HumanEval/35",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "c2cfb6614c56119a5f6ff90d2c4364915c74a1791fe866341500d303c8496af1"
+    },
+    {
+      "job_id": "HumanEval/40/current_arbitration/0",
+      "task_id": "HumanEval/40",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "414970204ba8986f344c4a821fb13883528eafd1753972c6aa479f44720028bf"
+    },
+    {
+      "job_id": "HumanEval/131/current_arbitration/0",
+      "task_id": "HumanEval/131",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "98907c62bb7035a65806b8d0f806e1161a45b2f02ec5aa8c1636f05547b2eb25"
+    },
+    {
+      "job_id": "HumanEval/82/specification_priority/1",
+      "task_id": "HumanEval/82",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "10d6a63a38add5ad70fd4df3383cb602e00907c39868bfe176cd5210ef8acdb2"
+    },
+    {
+      "job_id": "HumanEval/92/legacy_compact/1",
+      "task_id": "HumanEval/92",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "1fa076ff2dcb1494e701ab60a6282fbe20d6d736c7354d62b91a166d38c31021"
+    },
+    {
+      "job_id": "HumanEval/4/specification_priority/1",
+      "task_id": "HumanEval/4",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "b9341a5834e0de921584ba0b2e3b057b3bbd9f8a51950cbee7bb849fc830e03f"
+    },
+    {
+      "job_id": "HumanEval/37/legacy_compact/0",
+      "task_id": "HumanEval/37",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2fb640a3c555e8bf6118b4b32ff49ea76de97e73c0a89a5e62542237e58122e1"
+    },
+    {
+      "job_id": "HumanEval/40/specification_priority/0",
+      "task_id": "HumanEval/40",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "8d70886d9d77ac0f22712d0bdc3e378a3461d4263309c3e865ce236f6579f5f3"
+    },
+    {
+      "job_id": "HumanEval/97/current_arbitration/0",
+      "task_id": "HumanEval/97",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "95514d93d69ce5f40841ed926c5120711fa6d0fa25a0dadbcc75eb05df76728b"
+    },
+    {
+      "job_id": "HumanEval/155/legacy_compact/0",
+      "task_id": "HumanEval/155",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "e7b19a5cb50a14a8775ceb42a89c287394a5eccae27863084141f866de6fc2b6"
+    },
+    {
+      "job_id": "HumanEval/31/current_arbitration/0",
+      "task_id": "HumanEval/31",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2264bbe6180b938675f9524b6c5d5eed7de190273e58deabbb1d8313340d92e6"
+    },
+    {
+      "job_id": "HumanEval/37/legacy_compact/1",
+      "task_id": "HumanEval/37",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "2fb640a3c555e8bf6118b4b32ff49ea76de97e73c0a89a5e62542237e58122e1"
+    },
+    {
+      "job_id": "HumanEval/52/specification_priority/1",
+      "task_id": "HumanEval/52",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "351cd27f30d06e42274489524e3f54dd1e946fe5e11ef6e804ad8cbb043b036c"
+    },
+    {
+      "job_id": "HumanEval/38/specification_priority/0",
+      "task_id": "HumanEval/38",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "920762b1ea0f81e623569779bc26280a702e155ba3b8b4dbddfa690d4a7c8196"
+    },
+    {
+      "job_id": "HumanEval/163/legacy_compact/1",
+      "task_id": "HumanEval/163",
+      "prompt_variant": "legacy_compact",
+      "repetition": 1,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "155abb7668011301f457f67f81b9b71344143b8d3c06d09733ea8b7b461d5af6"
+    },
+    {
+      "job_id": "HumanEval/142/specification_priority/1",
+      "task_id": "HumanEval/142",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "768bffedef8a36fcdd3f3a2662b78bf0a553a5d97530dab2e7575cd677ce70ba"
+    },
+    {
+      "job_id": "HumanEval/140/current_arbitration/1",
+      "task_id": "HumanEval/140",
+      "prompt_variant": "current_arbitration",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "75c650b94576a547b278fdaec3f9e9a2f93917682ebea63a97311e133924fd2e"
+    },
+    {
+      "job_id": "HumanEval/112/specification_priority/0",
+      "task_id": "HumanEval/112",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4c2e2de1c8d00a3919db63186a4203c837eff244aa937c4647e845cef86b7242"
+    },
+    {
+      "job_id": "HumanEval/163/legacy_compact/0",
+      "task_id": "HumanEval/163",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": false,
+      "status": "completed",
+      "output_sha256": "155abb7668011301f457f67f81b9b71344143b8d3c06d09733ea8b7b461d5af6"
+    },
+    {
+      "job_id": "HumanEval/79/current_arbitration/0",
+      "task_id": "HumanEval/79",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "5550bfdc8f33aabcb01aa6d0b790e994bf8929f30403910ada2e6b1ac5a03bae"
+    },
+    {
+      "job_id": "HumanEval/12/current_arbitration/0",
+      "task_id": "HumanEval/12",
+      "prompt_variant": "current_arbitration",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "6d08cd1ee8fd8d59c9aef2f4e55a971c8c5534903285011a76328ac94116d1d0"
+    },
+    {
+      "job_id": "HumanEval/109/specification_priority/0",
+      "task_id": "HumanEval/109",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "dbc37d84dfa86c068a17bd8773e2eff6144606673879ce67b9bda3b7e40ce6bf"
+    },
+    {
+      "job_id": "HumanEval/90/specification_priority/0",
+      "task_id": "HumanEval/90",
+      "prompt_variant": "specification_priority",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "efcdf9042af603fbd1e9f0ad9834ac7b112333ddbe63dcdfdc3b2b9e71b7a381"
+    },
+    {
+      "job_id": "HumanEval/136/specification_priority/1",
+      "task_id": "HumanEval/136",
+      "prompt_variant": "specification_priority",
+      "repetition": 1,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "4d8e570e68531bc30f1d3fd130a498ee8766c1fb350e8b48c173774e0900b9c2"
+    },
+    {
+      "job_id": "HumanEval/23/legacy_compact/0",
+      "task_id": "HumanEval/23",
+      "prompt_variant": "legacy_compact",
+      "repetition": 0,
+      "passed": true,
+      "status": "completed",
+      "output_sha256": "f9a4dbe2ebad135b7c8bd0e5871b9e44ecb8cd8b36ba83f5406aaea9f75faf70"
+    }
+  ],
+  "costs": {
+    "specification_priority": {
+      "prompt_tokens": 67224,
+      "completion_tokens": 10295,
+      "proxy_usd": "0.0325212"
+    },
+    "current_arbitration": {
+      "prompt_tokens": 162198,
+      "completion_tokens": 7624,
+      "proxy_usd": "0.0578082"
+    },
+    "legacy_compact": {
+      "prompt_tokens": 57240,
+      "completion_tokens": 8835,
+      "proxy_usd": "0.027774"
+    }
+  },
+  "statistics": {
+    "groups": {
+      "current_arbitration": {
+        "passed_generations": 88,
+        "generations": 96,
+        "independent_tasks": 48,
+        "task_mean_accuracy_pct": 91.66666666666667
+      },
+      "legacy_compact": {
+        "passed_generations": 87,
+        "generations": 96,
+        "independent_tasks": 48,
+        "task_mean_accuracy_pct": 90.625
+      },
+      "specification_priority": {
+        "passed_generations": 88,
+        "generations": 96,
+        "independent_tasks": 48,
+        "task_mean_accuracy_pct": 91.66666666666667
+      }
+    },
+    "comparisons": [
+      {
+        "left": "current_arbitration",
+        "right": "legacy_compact",
+        "delta_pp": 1.0416666666666667,
+        "ci95_pp": [
+          -5.208333333333333,
+          7.291666666666667
+        ],
+        "independent_tasks": 48,
+        "left_higher_tasks": 2,
+        "right_higher_tasks": 1,
+        "tied_tasks": 45,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "current_arbitration",
+        "right": "specification_priority",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          -3.125,
+          3.125
+        ],
+        "independent_tasks": 48,
+        "left_higher_tasks": 1,
+        "right_higher_tasks": 1,
+        "tied_tasks": 46,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "legacy_compact",
+        "right": "specification_priority",
+        "delta_pp": -1.0416666666666667,
+        "ci95_pp": [
+          -7.291666666666667,
+          5.208333333333333
+        ],
+        "independent_tasks": 48,
+        "left_higher_tasks": 1,
+        "right_higher_tasks": 2,
+        "tied_tasks": 45,
+        "exact_sign_p": 1.0
+      }
+    ],
+    "bootstrap_samples": 10000,
+    "seed": 20261030,
+    "unit": "task_mean_over_two_repetitions",
+    "interval_method": "empirical_percentile_order_statistics",
+    "interpretation": "exploratory_unadjusted_not_equivalence_or_confirmation"
+  },
+  "primary_comparison": {
+    "left": "legacy_compact",
+    "right": "current_arbitration",
+    "delta_pp": -1.0416666666666667,
+    "ci95_pp": [
+      -7.291666666666667,
+      5.208333333333333
+    ],
+    "independent_tasks": 48,
+    "left_higher_tasks": 1,
+    "right_higher_tasks": 2,
+    "tied_tasks": 45,
+    "exact_sign_p": 1.0,
+    "alpha": 0.05,
+    "role": "prospectively_fixed_primary_contrast"
+  },
+  "content_sha256": "491b9b193264a07f5c88a724c97e54e4c4e9ab8b7873f9f3cb771b5c8bc8e62f"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/39/current_arbitration/0",
+  "content": "```python\ndef prime_fib(n: int):\n    \"\"\"\n    prime_fib returns n-th number that is a Fibonacci number and it's also prime.\n    >>> prime_fib(1)\n    2\n    >>> prime_fib(2)\n    3\n    >>> prime_fib(3)\n    5\n    >>> prime_fib(4)\n    13\n    >>> prime_fib(5)\n    89\n    \"\"\"\n    def is_prime(num):\n        if num < 2:\n            return False\n        if num == 2:\n            return True\n        if num % 2 == 0:\n            return False\n        i = 3\n        while i * i <= num:\n            if num % i == 0:\n                return False\n            i += 2\n        return True\n\n    count = 0\n    a, b = 1, 2\n    while True:\n        if is_prime(a):\n            count += 1\n            if count == n:\n                return a\n        a, b = b, a + b\n```",
+  "output_sha256": "2affa7d14a3c9dfe0bc9ee6042f0ae5b924d266eb26e57108b435dbd34b3580b",
+  "response_id": "ccb71daed759dda17f2e98571b525bf7-8a730705",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/152/legacy_compact/1",
+  "content": "```python\ndef compare(game, guess):\n    return [abs(a - b) for a, b in zip(game, guess)]\n```",
+  "output_sha256": "11062c51160626cbfe8a0a8cdf94fb5fcc8acef4781238a29b07bd2785375162",
+  "response_id": "ade5b8c657c344adaa09262a7ec3e3ea",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

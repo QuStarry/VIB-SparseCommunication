@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/82/legacy_compact/0",
+  "content": "```python\ndef prime_length(string):\n    if not isinstance(string, str):\n        return False\n    n = len(string)\n    if n < 2:\n        return False\n    if n == 2:\n        return True\n    if n % 2 == 0:\n        return False\n    i = 3\n    while i * i <= n:\n        if n % i == 0:\n            return False\n        i += 2\n    return True\n```",
+  "output_sha256": "974a68e6069c40e09d0de3f2e2b87e65b06593daa63f9fdfdfb184a9902714f3",
+  "response_id": "33018b89e313430a9a0837922683efb4",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

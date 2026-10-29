@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/95/current_arbitration/0",
+  "content": "```python\ndef check_dict_case(dict):\n    if not dict:\n        return False\n    lower = False\n    upper = False\n    for key in dict:\n        if not isinstance(key, str):\n            return False\n        if key.islower():\n            lower = True\n        elif key.isupper():\n            upper = True\n        else:\n            return False\n    return lower != upper\n```",
+  "output_sha256": "b71cd516f684cfc398f73d24c5936571a015f696128a59331cd3c36b71793969",
+  "response_id": "8e05422b7970968fb24c63232e4a5973-895afa3b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/27/legacy_compact/0",
+  "content": "```python\ndef flip_case(string: str) -> str:\n    if not isinstance(string, str):\n        raise TypeError(\"Input must be a string\")\n    return string.swapcase()\n```",
+  "output_sha256": "910fc586418bebdd4af9afc46f6a84c71863b02a3a46e386ad1ca56f740f3382",
+  "response_id": "38ecbe6e1bff41809a1f6cb0eb8e819d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

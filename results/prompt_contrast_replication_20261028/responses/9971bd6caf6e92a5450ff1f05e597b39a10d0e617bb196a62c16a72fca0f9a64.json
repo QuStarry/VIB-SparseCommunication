@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/138/legacy_compact/1",
+  "content": "```python\ndef is_equal_to_sum_even(n):\n    return n >= 8 and n % 2 == 0\n```",
+  "output_sha256": "4ce80630386840f5ce48de1f3e1237085af73e9c09a4a7531f4886e9e1358593",
+  "response_id": "a34611a26a84b500748770ea3e9f0379-d195809b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

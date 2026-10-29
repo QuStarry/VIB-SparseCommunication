@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/80/legacy_compact/0",
+  "content": "```python\ndef is_happy(s):\n    if len(s) < 3:\n        return False\n    return all(a != b and b != c and a != c for a, b, c in zip(s, s[1:], s[2:]))\n```",
+  "output_sha256": "1183d1b2314a11cdb0af2ee7d46da146343acf58b21a454d714fa5475278be47",
+  "response_id": "a7885e98941548e294fcdb93ceb994e8",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

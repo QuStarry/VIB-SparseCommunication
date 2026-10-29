@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/123/legacy_compact/1",
+  "content": "```python\ndef get_odd_collatz(n):\n    if n == 1:\n        return [1]\n    odds = set()\n    while n != 1:\n        if n % 2 == 1:\n            odds.add(n)\n        if n % 2 == 0:\n            n //= 2\n        else:\n            n = 3 * n + 1\n    odds.add(1)\n    return sorted(odds)\n```",
+  "output_sha256": "b987d5c9e4c4c46cef57b289e1baf6e5d992744d575ac52092da89a199324f93",
+  "response_id": "1c52b172eef848f198b4b9dda7ae1c6a",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

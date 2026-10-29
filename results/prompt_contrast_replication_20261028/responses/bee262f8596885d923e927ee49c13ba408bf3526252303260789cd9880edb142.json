@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/79/current_arbitration/1",
+  "content": "```python\ndef decimal_to_binary(decimal):\n    return f\"db{bin(decimal)[2:]}db\"\n```",
+  "output_sha256": "5550bfdc8f33aabcb01aa6d0b790e994bf8929f30403910ada2e6b1ac5a03bae",
+  "response_id": "ecf6017ae94a9a09a7cad4ddb4980840-811667ec",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

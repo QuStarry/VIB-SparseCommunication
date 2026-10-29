@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/13/current_arbitration/0",
+  "content": "```python\ndef greatest_common_divisor(a: int, b: int) -> int:\n    a, b = abs(a), abs(b)\n    while b:\n        a, b = b, a % b\n    return a\n```",
+  "output_sha256": "1c4555c379aeb9d596e74939a93ccb34c5ff606a38b6c33c3c2023c754c01322",
+  "response_id": "chatcmpl-1793167370067833000090821550#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

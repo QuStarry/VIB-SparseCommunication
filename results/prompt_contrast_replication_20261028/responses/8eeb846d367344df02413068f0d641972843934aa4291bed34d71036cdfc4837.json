@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/102/current_arbitration/0",
+  "content": "```python\ndef choose_num(x, y):\n    if x > y:\n        return -1\n    largest = y if y % 2 == 0 else y - 1\n    return largest if largest >= x else -1\n```",
+  "output_sha256": "dc9f81e5c472820996161da7fd2b2911c5613e7ddfa05ebb9eedec427adc2bf8",
+  "response_id": "7804f4f555dcb4c32c224af9a545090c-0d191796",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/30/legacy_compact/0",
+  "content": "```python\ndef get_positive(l: list) -> list:\n    \"\"\"Return only positive numbers in the list.\n    >>> get_positive([-1, 2, -4, 5, 6])\n    [2, 5, 6]\n    >>> get_positive([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    [5, 3, 2, 3, 9, 123, 1]\n    \"\"\"\n    if not isinstance(l, list):\n        raise TypeError(\"Input must be a list\")\n    return [x for x in l if x > 0]\n```",
+  "output_sha256": "40d0cff4b9998960286d5df27ce64cb7ba8a7698897cbc356a85b2286d9c6e75",
+  "response_id": "a3a653a66ff48911086ff4c5fd9f4add-0b624e4b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

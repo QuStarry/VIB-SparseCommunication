@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/18/specification_priority/0",
+  "content": "```python\ndef how_many_times(string: str, substring: str) -> int:\n    if substring == \"\":\n        return 0\n    count = 0\n    start = 0\n    while True:\n        pos = string.find(substring, start)\n        if pos == -1:\n            break\n        count += 1\n        start = pos + 1\n    return count\n```",
+  "output_sha256": "d1c477c949d3cbba7318f11a681d746ade3be434ca5045cd185dc2058ad099e7",
+  "response_id": "chatcmpl-17931677100162720000b2392783#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

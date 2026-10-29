@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/92/specification_priority/1",
+  "content": "```python\ndef any_int(x, y, z):\n    '''\n    Create a function that takes 3 numbers.\n    Returns true if one of the numbers is equal to the sum of the other two, and all numbers are integers.\n    Returns false in any other cases.\n    \n    Examples\n    any_int(5, 2, 7) ➞ True\n    \n    any_int(3, 2, 2) ➞ False\n\n    any_int(3, -2, 1) ➞ True\n    \n    any_int(3.6, -2.2, 2) ➞ False\n    '''\n    if type(x) is not int or type(y) is not int or type(z) is not int:\n        return False\n    return x == y + z or y == x + z or z == x + y\n```",
+  "output_sha256": "fe7d899c552ca901789404b2fd9fcecda2923c5f39c356b4ee487814cefa1a19",
+  "response_id": "eaf843f4e6eed67b524bce67a551be77-30dbb24d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

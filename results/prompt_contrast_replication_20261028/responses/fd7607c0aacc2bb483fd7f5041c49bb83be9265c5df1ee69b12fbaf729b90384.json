@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/142/current_arbitration/0",
+  "content": "```python\ndef sum_squares(lst):\n    total = 0\n    for i, x in enumerate(lst):\n        if i % 3 == 0:\n            total += x ** 2\n        elif i % 4 == 0:\n            total += x ** 3\n        else:\n            total += x\n    return total\n```",
+  "output_sha256": "768bffedef8a36fcdd3f3a2662b78bf0a553a5d97530dab2e7575cd677ce70ba",
+  "response_id": "c7ee93e8bb1f33390c695c8d184a3074-251a390d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

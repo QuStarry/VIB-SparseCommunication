@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/18/legacy_compact/1",
+  "content": "```python\ndef how_many_times(string: str, substring: str) -> int:\n    if not substring:\n        return 0\n    count = 0\n    start = 0\n    while True:\n        pos = string.find(substring, start)\n        if pos == -1:\n            break\n        count += 1\n        start = pos + 1\n    return count\n```",
+  "output_sha256": "457111ddea21a0427163913a4effaf0795f00e998177b01a1736b7f2f8bdde22",
+  "response_id": "07c7e1bc25e8bb0e18e255193a202656-fd2f08c1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/140/legacy_compact/0",
+  "content": "```python\ndef fix_spaces(text):\n    import re\n    text = re.sub(r' {3,}', '-', text)\n    text = re.sub(r' ', '_', text)\n    return text\n```",
+  "output_sha256": "556e7e038afe6056dfa4ca157bed4e916486817c89ee8b5412dab9364c4494ad",
+  "response_id": "chatcmpl-1793167333826124000097dd825d#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

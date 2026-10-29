@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/98/legacy_compact/1",
+  "content": "```python\ndef count_upper(s):\n    vowels = {'A', 'E', 'I', 'O', 'U'}\n    count = 0\n    for i in range(0, len(s), 2):\n        if s[i] in vowels:\n            count += 1\n    return count\n```",
+  "output_sha256": "47d7424fe6387263a19231d265b85f57a55bd18cf00dd736686f387c3f0092c6",
+  "response_id": "0bed70d0c659b871af48bfcf49b2770f-f0451bab",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

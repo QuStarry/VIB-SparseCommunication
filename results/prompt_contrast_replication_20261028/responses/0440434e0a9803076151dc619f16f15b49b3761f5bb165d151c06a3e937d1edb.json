@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/59/current_arbitration/1",
+  "content": "```python\ndef largest_prime_factor(n: int):\n    \"\"\"Return the largest prime factor of n. Assume n > 1 and is not a prime.\n    >>> largest_prime_factor(13195)\n    29\n    >>> largest_prime_factor(2048)\n    2\n    \"\"\"\n    i = 2\n    while i * i <= n:\n        while n % i == 0:\n            n //= i\n        i += 1 if i == 2 else 2\n    return n\n```",
+  "output_sha256": "6606e58f7290ac589ce2e1fc626d876a1df9d8b85fdc32a406e271534d1ae1e3",
+  "response_id": "f5b82f3b52ae6e5dac3fd951d8301816-1b9d07c7",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

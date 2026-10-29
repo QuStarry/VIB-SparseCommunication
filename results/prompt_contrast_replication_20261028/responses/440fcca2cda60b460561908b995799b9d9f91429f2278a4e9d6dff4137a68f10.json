@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/23/current_arbitration/1",
+  "content": "```python\ndef strlen(string: str) -> int:\n    \"\"\" Return length of given string\n    >>> strlen('')\n    0\n    >>> strlen('abc')\n    3\n    \"\"\"\n    return len(string)\n```",
+  "output_sha256": "a5fc91e43d35fc0b5d85fca2aee4eceeda8f2d60148a288f4b90c0f4655eddb0",
+  "response_id": "32446d1cd7e341bd8b46e5f36e2e8ea2",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

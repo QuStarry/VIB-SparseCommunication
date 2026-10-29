@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/120/current_arbitration/0",
+  "content": "```python\ndef maximum(arr, k):\n    return sorted(arr)[-k:] if k else []\n```",
+  "output_sha256": "ea81230c2647e41cf104f613603abd0928e9127131961238c4053cae1bece1bb",
+  "response_id": "chatcmpl-17931672576405170000eddb53ba#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

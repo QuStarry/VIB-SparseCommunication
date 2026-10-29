@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/110/specification_priority/1",
+  "content": "```python\ndef exchange(lst1, lst2):\n    odd_lst1 = sum(1 for x in lst1 if x % 2)\n    even_lst2 = sum(1 for x in lst2 if x % 2 == 0)\n    return \"YES\" if odd_lst1 <= even_lst2 else \"NO\"\n```",
+  "output_sha256": "a74174f809d64347e782e5a3eade0fc74395b06de5ab148607ae825c5e4ffea8",
+  "response_id": "f4c6d52a4c185ffa333720cde664da2d-77c6f7ce",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

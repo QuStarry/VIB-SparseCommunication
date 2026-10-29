@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/35/legacy_compact/0",
+  "content": "```python\ndef max_element(l: list):\n    \"\"\"Return maximum element in the list.\n    >>> max_element([1, 2, 3])\n    3\n    >>> max_element([5, 3, -5, 2, -3, 3, 9, 0, 123, 1, -10])\n    123\n    \"\"\"\n    return max(l, default=None)\n```",
+  "output_sha256": "1b457a99569c4a90a7927537349ba2affed6980d604dee4becbace6447033efa",
+  "response_id": "bec93b0702c5df230709d93b90e256d1-fc99aadf",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

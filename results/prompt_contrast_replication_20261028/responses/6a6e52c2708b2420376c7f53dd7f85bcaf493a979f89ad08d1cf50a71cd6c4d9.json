@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/120/specification_priority/1",
+  "content": "```python\ndef maximum(arr, k):\n    return sorted(arr)[-k:] if k > 0 else []\n```",
+  "output_sha256": "69712d46d70dcb5989ca203635488b6d9ca88e388d66e3aec8c35c30903e398b",
+  "response_id": "170ff201d95c470292968c6eeacb98ad",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

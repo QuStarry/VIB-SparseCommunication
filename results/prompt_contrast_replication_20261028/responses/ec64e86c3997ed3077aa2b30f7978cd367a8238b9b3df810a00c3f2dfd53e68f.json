@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/21/specification_priority/0",
+  "content": "```python\nfrom typing import List\n\n\ndef rescale_to_unit(numbers: List[float]) -> List[float]:\n    \"\"\" Given list of numbers (of at least two elements), apply a linear transform to that list,\n    such that the smallest number will become 0 and the largest will become 1\n    >>> rescale_to_unit([1.0, 2.0, 3.0, 4.0, 5.0])\n    [0.0, 0.25, 0.5, 0.75, 1.0]\n    \"\"\"\n    min_val = min(numbers)\n    max_val = max(numbers)\n    if min_val == max_val:\n        return [0.0] * len(numbers)\n    return [(x - min_val) / (max_val - min_val) for x in numbers]\n```",
+  "output_sha256": "f15dfda5b470379593e1d77477a83d864a493c2dbbf511e3dc70033222142bea",
+  "response_id": "fc0dedbd2a867c865f84632d349efdea-ce2ab604",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

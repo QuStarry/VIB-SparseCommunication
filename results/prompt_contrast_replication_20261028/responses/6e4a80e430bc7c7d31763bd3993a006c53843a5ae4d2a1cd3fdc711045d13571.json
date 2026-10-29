@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/92/legacy_compact/1",
+  "content": "```python\ndef any_int(x, y, z):\n    if type(x) is not int or type(y) is not int or type(z) is not int:\n        return False\n    return x == y + z or y == x + z or z == x + y\n```",
+  "output_sha256": "1fa076ff2dcb1494e701ab60a6282fbe20d6d736c7354d62b91a166d38c31021",
+  "response_id": "2f1e249926c5a44083b3eda8ea6bdf31-e2f8264b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

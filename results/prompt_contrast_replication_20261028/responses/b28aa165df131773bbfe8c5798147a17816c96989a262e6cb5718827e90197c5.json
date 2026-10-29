@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/90/legacy_compact/0",
+  "content": "```python\ndef next_smallest(lst):\n    unique_sorted = sorted(set(lst))\n    if len(unique_sorted) < 2:\n        return None\n    return unique_sorted[1]\n```",
+  "output_sha256": "efcdf9042af603fbd1e9f0ad9834ac7b112333ddbe63dcdfdc3b2b9e71b7a381",
+  "response_id": "chatcmpl-179316748997692600008681d88c#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

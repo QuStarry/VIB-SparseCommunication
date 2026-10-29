@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/155/current_arbitration/0",
+  "content": "```python\ndef even_odd_count(num):\n    num = abs(num)\n    even = odd = 0\n    for ch in str(num):\n        if int(ch) % 2 == 0:\n            even += 1\n        else:\n            odd += 1\n    return (even, odd)\n```",
+  "output_sha256": "ce103836490fd29484c6cd1e8b84396077960128089c53e9a727cb56d031c5e6",
+  "response_id": "6938eb240403695afa118461b0add2ff-97f5153c",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/143/specification_priority/1",
+  "content": "```python\ndef words_in_sentence(sentence):\n    def is_prime(n):\n        if n < 2:\n            return False\n        for i in range(2, int(n ** 0.5) + 1):\n            if n % i == 0:\n                return False\n        return True\n\n    words = sentence.split()\n    result = [word for word in words if is_prime(len(word))]\n    return ' '.join(result)\n```",
+  "output_sha256": "5a233f5ce48f11b435b0babe559a6f31ac62a7cbd071b96d2a9044ac7358eeae",
+  "response_id": "chatcmpl-17931678335149440000f459ad3f#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}
