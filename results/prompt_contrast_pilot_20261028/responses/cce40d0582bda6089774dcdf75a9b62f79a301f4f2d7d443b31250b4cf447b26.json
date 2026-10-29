@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/159/specification_priority/1",
+  "content": "```python\ndef eat(number, need, remaining):\n    eaten = number + min(need, remaining)\n    left = remaining - min(need, remaining)\n    return [eaten, left]\n```",
+  "output_sha256": "a4e2820f62505e36e98eab046a065e77336bcbde35d7a56a4fa1846c8a514595",
+  "response_id": "4e8803345b5873e60d08ca985571708e-ee0613d2",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

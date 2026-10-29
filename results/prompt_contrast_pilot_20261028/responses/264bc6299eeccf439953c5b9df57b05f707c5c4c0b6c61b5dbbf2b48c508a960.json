@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/8/legacy_compact/0",
+  "content": "```python\nfrom typing import List, Tuple\nfrom math import prod\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    Empty sum should be equal to 0 and empty product should be equal to 1.\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n    return sum(numbers), prod(numbers)\n```",
+  "output_sha256": "3e293734b25d7e7e949a51508266a8139b5bfe3cd67197aff021651b2fd28999",
+  "response_id": "chatcmpl-17931587924648490000f0fb9ae9#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

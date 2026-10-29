@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/105/legacy_compact/1",
+  "content": "```python\ndef by_length(arr):\n    num_to_word = {\n        1: \"One\", 2: \"Two\", 3: \"Three\", 4: \"Four\",\n        5: \"Five\", 6: \"Six\", 7: \"Seven\", 8: \"Eight\", 9: \"Nine\"\n    }\n    filtered = [x for x in arr if 1 <= x <= 9]\n    filtered.sort(reverse=True)\n    return [num_to_word[x] for x in filtered]\n```",
+  "output_sha256": "6a55a3921d043d1036bdcc787eaef5de94f2edbdcc7dc9cc12e6f2d8b7e880b3",
+  "response_id": "fd03e6c066e8094106bd21f911d15a6c-be6da7d5",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

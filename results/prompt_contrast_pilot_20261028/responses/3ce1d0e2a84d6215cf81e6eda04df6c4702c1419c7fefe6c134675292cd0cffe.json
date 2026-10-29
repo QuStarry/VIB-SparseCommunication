@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/99/legacy_compact/0",
+  "content": "```python\nfrom decimal import Decimal, ROUND_HALF_UP, InvalidOperation\n\ndef closest_integer(value):\n    try:\n        d = Decimal(value)\n    except (InvalidOperation, ValueError):\n        raise ValueError(\"Invalid number format\")\n    if d == 0:\n        return 0\n    result = d.quantize(Decimal('1'), rounding=ROUND_HALF_UP)\n    if result == 0:\n        return 0\n    return int(result)\n```",
+  "output_sha256": "e50d961c2e9d0c112f51a8faa3fd0d037388fafcb15d78f37f221f849bdae7c9",
+  "response_id": "7d5748b80cdf4bbc994590b5a5a1c58a",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

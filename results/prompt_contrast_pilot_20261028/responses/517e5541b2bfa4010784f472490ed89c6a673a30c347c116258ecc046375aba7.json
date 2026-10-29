@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/130/specification_priority/1",
+  "content": "```python\ndef tri(n):\n    if n == 0:\n        return [1]\n    if n == 1:\n        return [1, 3]\n    arr = [0] * (n + 1)\n    arr[0] = 1\n    arr[1] = 3\n    for i in range(2, n + 1):\n        if i % 2 == 0:\n            arr[i] = 1 + i // 2\n        else:\n            arr[i] = arr[i - 1] + arr[i - 2] + arr[i + 1]\n    return arr\n```",
+  "output_sha256": "d61bfc63ae4ca0e56086861bfc4fc9f8e73210e67fd96d8ea72d46b79c4b34d8",
+  "response_id": "9b43d9455b24c77c348b38042c7f3909-bd958612",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

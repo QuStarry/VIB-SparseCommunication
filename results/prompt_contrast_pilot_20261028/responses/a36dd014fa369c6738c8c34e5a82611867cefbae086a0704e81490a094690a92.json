@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/57/legacy_compact/1",
+  "content": "```python\ndef monotonic(l: list):\n    \"\"\"Return True is list elements are monotonically increasing or decreasing.\n    >>> monotonic([1, 2, 4, 20])\n    True\n    >>> monotonic([1, 20, 4, 10])\n    False\n    >>> monotonic([4, 1, 0, -10])\n    True\n    \"\"\"\n    if len(l) < 2:\n        return True\n    inc = True\n    dec = True\n    for i in range(1, len(l)):\n        if l[i] < l[i-1]:\n            inc = False\n        if l[i] > l[i-1]:\n            dec = False\n    return inc or dec\n```",
+  "output_sha256": "6a8e859f1ccfa2da779321b37dfc381b1f22fba8a713ef0e1f535a885f71e96e",
+  "response_id": "0885372b74551bc11df8a07fbd8427b9-4702ba36",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

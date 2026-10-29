@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/148/current_arbitration/0",
+  "content": "```python\ndef bf(planet1, planet2):\n    planets = [\"Mercury\", \"Venus\", \"Earth\", \"Mars\", \"Jupiter\", \"Saturn\", \"Uranus\", \"Neptune\"]\n    if planet1 not in planets or planet2 not in planets:\n        return ()\n    i1, i2 = planets.index(planet1), planets.index(planet2)\n    start, end = min(i1, i2) + 1, max(i1, i2)\n    return tuple(planets[start:end])\n```",
+  "output_sha256": "1a5b39c5294f4bc0d5d2615b3b9a00ee21986e54a170ba3d243c09136b4a54f2",
+  "response_id": "d054c4c294e40d9564e5f3103f7991d6-82dfabd2",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

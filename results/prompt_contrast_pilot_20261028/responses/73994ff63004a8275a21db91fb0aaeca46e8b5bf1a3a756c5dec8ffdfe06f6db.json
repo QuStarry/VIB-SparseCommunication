@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/83/current_arbitration/0",
+  "content": "```python\ndef starts_one_ends(n):\n    if n == 1:\n        return 1\n    return 10 ** (n - 1) + 8 * 10 ** (n - 2)\n```",
+  "output_sha256": "0614d2293eb368af6f354844b263ba05fd35166cd89f1c785b56a448f8712030",
+  "response_id": "9f09f520774b69ff339b9087031d17e9-360d750d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

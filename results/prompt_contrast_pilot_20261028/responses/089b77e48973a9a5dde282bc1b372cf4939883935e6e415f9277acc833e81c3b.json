@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/88/current_arbitration/0",
+  "content": "```python\ndef sort_array(array):\n    if len(array) <= 1:\n        return array[:]\n    if (array[0] + array[-1]) % 2 == 1:\n        return sorted(array[:])\n    else:\n        return sorted(array[:], reverse=True)\n```",
+  "output_sha256": "58f4f1abfbbee99964d091e17d3dde945f733c59f3e73b9645ad8134795b033a",
+  "response_id": "e01c5dacd1677427dce8b2721d76a4f6-cb9325c2",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

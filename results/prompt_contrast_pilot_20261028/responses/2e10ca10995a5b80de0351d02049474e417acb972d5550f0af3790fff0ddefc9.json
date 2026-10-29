@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/1/current_arbitration/1",
+  "content": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    depth = 0\n    start = 0\n    for i, ch in enumerate(paren_string):\n        if ch == ' ':\n            continue\n        if ch == '(':\n            if depth == 0:\n                start = i\n            depth += 1\n        elif ch == ')':\n            depth -= 1\n            if depth == 0:\n                result.append(paren_string[start:i+1])\n    return result\n```",
+  "output_sha256": "7f1d257e8763c5e9eb9ccb2301fe82c8d42714bf86068579dd7213f9a36e9c57",
+  "response_id": "990094ba905bf34dd2d848b636650a8a-923dee70",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

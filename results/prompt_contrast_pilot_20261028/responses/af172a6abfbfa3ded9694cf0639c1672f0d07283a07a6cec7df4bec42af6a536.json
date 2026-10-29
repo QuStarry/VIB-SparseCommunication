@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/8/specification_priority/0",
+  "content": "```python\nfrom typing import List, Tuple\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    \"\"\" For a given list of integers, return a tuple consisting of a sum and a product of all the integers in a list.\n    Empty sum should be equal to 0 and empty product should be equal to 1.\n    >>> sum_product([])\n    (0, 1)\n    >>> sum_product([1, 2, 3, 4])\n    (10, 24)\n    \"\"\"\n    if not numbers:\n        return (0, 1)\n    total_sum = sum(numbers)\n    total_product = 1\n    for num in numbers:\n        total_product *= num\n    return (total_sum, total_product)\n```",
+  "output_sha256": "b2b0ee8ec8cc01bc335b7cb1829ee964c9ca093fb858a83ee32eb1fa87697080",
+  "response_id": "chatcmpl-17931588932099950000829314c3#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

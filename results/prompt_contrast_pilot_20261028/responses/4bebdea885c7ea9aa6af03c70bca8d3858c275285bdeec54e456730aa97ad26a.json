@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/147/legacy_compact/1",
+  "content": "```python\ndef get_max_triples(n):\n    if n < 3:\n        return 0\n    cnt0 = cnt1 = cnt2 = 0\n    for i in range(1, n + 1):\n        r = (i * i - i + 1) % 3\n        if r == 0:\n            cnt0 += 1\n        elif r == 1:\n            cnt1 += 1\n        else:\n            cnt2 += 1\n    return (cnt0 * (cnt0 - 1) * (cnt0 - 2)) // 6 + \\\n           (cnt1 * (cnt1 - 1) * (cnt1 - 2)) // 6 + \\\n           (cnt2 * (cnt2 - 1) * (cnt2 - 2)) // 6 + \\\n           cnt0 * cnt1 * cnt2\n```",
+  "output_sha256": "582eda56352b28a44ade5c096b3ab0e3963cb984f28d19c097a5e99ae2b1861b",
+  "response_id": "10ebe8b63769d9b33845fbdd2a276251-92d7e3e6",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

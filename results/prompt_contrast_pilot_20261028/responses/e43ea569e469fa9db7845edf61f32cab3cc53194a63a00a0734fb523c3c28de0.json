@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/99/legacy_compact/1",
+  "content": "```python\nfrom decimal import Decimal, ROUND_HALF_UP\n\ndef closest_integer(value):\n    '''\n    Create a function that takes a value (string) representing a number\n    and returns the closest integer to it. If the number is equidistant\n    from two integers, round it away from zero.\n\n    Examples\n    >>> closest_integer(\"10\")\n    10\n    >>> closest_integer(\"15.3\")\n    15\n\n    Note:\n    Rounding away from zero means that if the given number is equidistant\n    from two integers, the one you should return is the one that is the\n    farthest from zero. For example closest_integer(\"14.5\") should\n    return 15 and closest_integer(\"-14.5\") should return -15.\n    '''\n    d = Decimal(value)\n    rounded = d.quantize(Decimal('1'), rounding=ROUND_HALF_UP)\n    return int(rounded)\n```",
+  "output_sha256": "7e119ea2ff49390a24c5c8b022913aeb4475e9adc382d9061c6f6638542df95e",
+  "response_id": "fd560065c09cb68716f787b4edd9d3aa-1f2c9e3a",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

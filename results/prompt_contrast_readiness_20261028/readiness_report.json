@@ -1,0 +1,69 @@
+{
+  "draft_sha256": "c0e7112e7bc638e51ccd54a55fb19c3e83adb31758e44bae46259841c8a0d419",
+  "endpoint": {
+    "provider": "private",
+    "model": "deepseek-v4-flash-0817",
+    "base_url": "https://ai.ctaigw.cn/v1",
+    "credential_env": "PRIVATE_API_KEY_1",
+    "credential_present": true,
+    "identity_scope": "local_catalogue_resolution_not_online_verification",
+    "authentication_tested": false,
+    "official_snapshot_verified": false
+  },
+  "job_count": 984,
+  "candidate_ready": false,
+  "paid_authorized": false,
+  "blockers": [
+    "current_price_evidence_missing",
+    "provider_prompt_bounds_missing",
+    "manifest_budget_not_approved"
+  ],
+  "scenario": {
+    "historical_rate_date": "2026-10-23",
+    "input_usd_per_million": "0.30",
+    "output_usd_per_million": "1.20",
+    "price_scope": "historical_proxy_not_current_gateway_invoice",
+    "input_measure": "utf8_content_bytes_plus_assumed_1024_overhead_per_request",
+    "prompt_tokens": null,
+    "planning_only": true,
+    "guaranteed_budget_compliance": false,
+    "output_cap_only_historical_proxy_usd": "1.2091392",
+    "scenario_proxy_usd": "2.6758938",
+    "groups": [
+      {
+        "variant": "current_arbitration",
+        "jobs": 328,
+        "assumed_input_units": 2524310,
+        "declared_output_cap": 335872,
+        "scenario_proxy_usd": "1.1603394"
+      },
+      {
+        "variant": "legacy_compact",
+        "jobs": 328,
+        "assumed_input_units": 1109292,
+        "declared_output_cap": 335872,
+        "scenario_proxy_usd": "0.735834"
+      },
+      {
+        "variant": "specification_priority",
+        "jobs": 328,
+        "assumed_input_units": 1255580,
+        "declared_output_cap": 335872,
+        "scenario_proxy_usd": "0.7797204"
+      }
+    ]
+  },
+  "readiness": {
+    "ready": false,
+    "paid_authorized": false,
+    "blockers": [
+      "current_price_evidence_missing",
+      "provider_prompt_bounds_missing",
+      "manifest_budget_not_approved"
+    ],
+    "draft_sha256": "c0e7112e7bc638e51ccd54a55fb19c3e83adb31758e44bae46259841c8a0d419"
+  },
+  "input_unchanged": true,
+  "new_model_calls": 0,
+  "implementation_sha256": "4d60de7470d458502023c09a86d6efb47d17693be4695fe74a2208002dfc5244"
+}

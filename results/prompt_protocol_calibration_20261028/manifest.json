@@ -1,0 +1,145 @@
+{
+  "version": "small_prompt_protocol_calibration_v1",
+  "scope": "small_protocol_calibration_not_benchmark",
+  "endpoint": {
+    "provider": "private",
+    "model": "deepseek-v4-flash-0817",
+    "base_url": "https://ai.ctaigw.cn/v1",
+    "credential_env": "PRIVATE_API_KEY_1",
+    "credential_present": true,
+    "identity_scope": "local_catalogue_resolution_not_online_verification",
+    "authentication_tested": false,
+    "official_snapshot_verified": false
+  },
+  "draft_sha256": "c0e7112e7bc638e51ccd54a55fb19c3e83adb31758e44bae46259841c8a0d419",
+  "jobs": [
+    {
+      "job_id": "probe/current_arbitration/shortest",
+      "source_job_id": "HumanEval/45/current_arbitration/0",
+      "task_id": "HumanEval/45",
+      "prompt_variant": "current_arbitration",
+      "length_selection": "shortest",
+      "messages": [
+        {
+          "role": "user",
+          "content": "请阅读团队讨论历史，补全并实现以下 Python 函数。\n\n【需求与签名】:\n\n\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n\n\n【题面可见示例】:\n>>> triangle_area(5, 3)\n7.5\n\n【团队讨论历史】:\n[Architect]: 该函数实现简单，直接返回 `a * h / 2` 即可，但需注意输入应为正数，否则应抛出 `ValueError` 或返回 `None`。建议添加类型检查或文档说明，以增强健壮性。\n[Coder]: 直接实现公式 `0.5 * a * h` 即可，注意返回浮点数以匹配示例输出。代码简洁，无需额外检查。\n[Reviewer]: 该函数实现正确，但需注意输入应为正数，否则会返回负面积或零面积。建议添加参数校验，例如 `if a <= 0 or h <= 0: raise ValueError`，以符合几何语义。\n[Architect]: 建议在函数文档字符串中明确说明参数必须为正数，并添加 `if a <= 0 or h <= 0: raise ValueError` 的校验，同时返回 `float(a * h) / 2` 以确保结果始终为浮点数，与示例输出一致。\n[Coder]: 建议在函数开头添加文档字符串，明确参数必须为正数，并直接使用 `return a * h / 2` 保持简洁。若需严格校验，可加一行 `if a <= 0 or h <= 0: raise ValueError`，但示例未要求，故保持原样即可。\n[Reviewer]: 建议补充类型检查，确保`a`和`h`为数值类型（如`int`或`float`），否则`0.5 * a * h`可能因字符串拼接等操作产生意外结果。同时，明确返回类型为`float`，避免整数除法在Python 2中导致精度丢失。\n\n【极其重要的输出要求】:\n0. 【第 0 步 强制算法过滤器，优先级高于 1-13 条，不接受例外】：严格按下列 4 小步执行，一步都不能跳：\n   第 1 小步：先从【题面可见示例】中把所有 doctest / Input-Output / ➞ / => / == 对全部抄下来，做成一张明确的「输入 → 期望输出」映射表。\n   第 2 小步：从【团队讨论历史】中把所有明确提到过的候选算法 / 实现方案全部列出来（例如 A=set() 比较字符种类、B=Counter() 比较字符频次、C=sorted() 比较、D=牛顿法、E=二分法、F=加 raise ValueError、G=不加 raise 等）。\n   第 3 小步：对第 2 小步中的**每一个候选方案**，逐个对第 1 小步映射表中的**每一对 输入→期望输出**做一次**具体数值/语义代入计算**（不能只看表面描述）：\n      - 若该候选在任何一对上计算出的结果 ≠ 期望输出 → 该候选被**永久淘汰**（哪怕该候选在其余所有对都正确，也必须直接排除，不能再考虑）。\n      - 若该候选在**全部**输入对上计算出的结果都 == 期望 → 保留为\"全通候选\"。\n   第 4 小步：根据保留下来的\"全通候选\"集合作最终决策：\n      - 若全通候选 **只剩 1 个** → 直接选择该候选，**完全忽略**讨论中支持任何已淘汰候选的所有文字（哪怕 Reviewer / Architect 反复强调已淘汰的方案多少次，你也只选这一个全通方案）。\n      - 若全通候选 ≥ 2 个 → 再按下面规则 11 的多数派 / 仲裁优先级裁决。\n      - 若全通候选为 0 个 → 选择通过示例最多的那个候选。\n1. 仅输出最终可执行的 Python 代码实现。\n2. 必须包含完整的函数定义并直接可被调用。\n3. 不要包含任何 markdown 说明文字或解说，直接写代码。\n4. 若团队讨论存在冲突，以题面函数签名、docstring 示例和隐含测试语义为最高优先级，不要臆造额外约束。\n5. 优先选择最直接、最贴合示例的正确实现，避免为了“泛化”而偏离题目真实语义。\n6. 若【题面可见示例】存在，它们是最终代码必须优先满足的显式约束。\n7. 若团队讨论与题面自然语言说明、题面示例或题面运算语义（如优先级、边界条件、tie-break 规则）冲突，忽略讨论中的相反结论，以题面为最终裁决。\n8. 不要添加题面和示例均未明确要求的防御性分支或额外边界校验（例如对输入范围、空值、负数、符号位、输入数组长度等做出题面没有显式要求的判断或 raise）；题面没有写应该抛异常时永远不要写 raise 分支，哪怕 Note 里只是陈述长度关系也不要做显式校验。\n9. 永远不要因为“我认为示例有误”或“我认为示例需要修正”就推翻题面可见示例或示例对应的正确语义；题面和可见示例是最终裁决。\n10. 若 Reviewer 明确给出“形如 输入X → 输出Y”的单点断言（例如“[1, 1, 2] 的次小值应为 1”或“foo(3,4) 必须返回 9”等），请在最终实现中显式写出能够满足该断言的判断/分支/算法，不能仅停留在口头讨论。\n11. 当讨论里同时出现多种冲突实现/公式时，按以下顺序选最终方案：\n    a) 先统计每种实现/公式的出现次数，有明确多数派（出现次数 ≥ 其他方案之和）时选多数派；\n    b) 若打平，优先选 Architect 首次明确支持且 Reviewer 没有举出反例的方案；\n    c) 任何被 Reviewer 用具体反例明确否决的方案（例如“该简化公式会导致 n=5 时返回 10，但实际仅 1 个有效三元组”）无论出现多少次，必须排除。\n12. 当出现边界条件争议（例如 `>` vs `>=`、`<` vs `<=`、是否 raise、是否处理负数）时，严格按以下优先级裁决：\n    a) Reviewer 给出的具体反例（如“shift = 位数时应返回原字符串，而不是反转”）最高；\n    b) 若无反例，严格照抄题面文本里的运算符用词，题面写 `>` 就用 `>`，写 `>=` 就用 `>=`，绝不自己替换；\n    c) 题面没提到应 raise ValueError 时，永远不要写 raise 分支（哪怕 Reviewer 建议加也要忽略）。\n13. 不要输出报错文本、占位符或解释；若有不确定，仍返回你认为最可能通过测试的完整实现。"
+        }
+      ],
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "planning_input_units": 7068
+    },
+    {
+      "job_id": "probe/current_arbitration/longest",
+      "source_job_id": "HumanEval/129/current_arbitration/0",
+      "task_id": "HumanEval/129",
+      "prompt_variant": "current_arbitration",
+      "length_selection": "longest",
+      "messages": [
+        {
+          "role": "user",
+          "content": "请阅读团队讨论历史，补全并实现以下 Python 函数。\n\n【需求与签名】:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\n\n【题面可见示例】:\nInput: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\nOutput: [1, 2, 1]\nInput: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\nOutput: [1]\n\n【团队讨论历史】:\n[Architect]: 该问题本质上是求长度为k的字典序最小路径，由于网格值唯一且k可能较大，直接BFS/DFS会超时。建议采用贪心+动态规划：从值最小的单元格开始，逐步扩展长度为i的最优路径集合，利用“若当前路径前缀已非最优则剪枝”的策略，同时结合邻接关系预计算可达性。\n[Coder]: 核心思路：由于网格值唯一且路径可重复访问，最小路径的首元素必为全局最小值1，后续每一步应优先选择当前格子的最小可达邻居值。可用BFS或动态规划按字典序逐层扩展，但需注意k可能较大，需优化状态去重。建议先实现朴素BFS验证正确性，再考虑用优先队列按路径字典序贪心扩展。\n[Reviewer]: 该实现需确保路径长度k为正整数且不超过N*N，否则可能因网格大小限制导致无解。边界条件如k=1时应直接返回最小值，且需验证移动时坐标不越界。\n[Architect]: 建议采用A*式贪心搜索：维护一个优先队列，按当前路径字典序排序，每次弹出最小路径并扩展其邻居，直到找到长度为k的路径；由于值唯一且k可能很大，需用哈希表记录每个单元格在特定长度下的最优前缀，避免重复扩展。同时，可预计算每个单元格到全局最小值的距离作为启发式剪枝，若当前路径长度加上最小剩余步数仍无法达到k则提前终止。\n[Coder]: 建议采用迭代加深的贪心搜索：每步从当前可达的最小值邻居中选择，若多个邻居值相同则递归比较后续路径，同时用记忆化剪枝避免重复状态。对于k较大时，可预计算每个单元格到全局最小值的距离，若剩余步数不足以到达更小值则提前终止。\n[Reviewer]: 需明确k的上界：若k > N*N，因路径可重复访问单元格，仍可能有解，但需验证是否存在长度k的路径（如N=2时k=3可行，但k=5需检查连通性）。另外，贪心选择当前最小邻居可能陷入局部最优，需证明全局字典序最小性，否则需回溯验证。\n\n【极其重要的输出要求】:\n0. 【第 0 步 强制算法过滤器，优先级高于 1-13 条，不接受例外】：严格按下列 4 小步执行，一步都不能跳：\n   第 1 小步：先从【题面可见示例】中把所有 doctest / Input-Output / ➞ / => / == 对全部抄下来，做成一张明确的「输入 → 期望输出」映射表。\n   第 2 小步：从【团队讨论历史】中把所有明确提到过的候选算法 / 实现方案全部列出来（例如 A=set() 比较字符种类、B=Counter() 比较字符频次、C=sorted() 比较、D=牛顿法、E=二分法、F=加 raise ValueError、G=不加 raise 等）。\n   第 3 小步：对第 2 小步中的**每一个候选方案**，逐个对第 1 小步映射表中的**每一对 输入→期望输出**做一次**具体数值/语义代入计算**（不能只看表面描述）：\n      - 若该候选在任何一对上计算出的结果 ≠ 期望输出 → 该候选被**永久淘汰**（哪怕该候选在其余所有对都正确，也必须直接排除，不能再考虑）。\n      - 若该候选在**全部**输入对上计算出的结果都 == 期望 → 保留为\"全通候选\"。\n   第 4 小步：根据保留下来的\"全通候选\"集合作最终决策：\n      - 若全通候选 **只剩 1 个** → 直接选择该候选，**完全忽略**讨论中支持任何已淘汰候选的所有文字（哪怕 Reviewer / Architect 反复强调已淘汰的方案多少次，你也只选这一个全通方案）。\n      - 若全通候选 ≥ 2 个 → 再按下面规则 11 的多数派 / 仲裁优先级裁决。\n      - 若全通候选为 0 个 → 选择通过示例最多的那个候选。\n1. 仅输出最终可执行的 Python 代码实现。\n2. 必须包含完整的函数定义并直接可被调用。\n3. 不要包含任何 markdown 说明文字或解说，直接写代码。\n4. 若团队讨论存在冲突，以题面函数签名、docstring 示例和隐含测试语义为最高优先级，不要臆造额外约束。\n5. 优先选择最直接、最贴合示例的正确实现，避免为了“泛化”而偏离题目真实语义。\n6. 若【题面可见示例】存在，它们是最终代码必须优先满足的显式约束。\n7. 若团队讨论与题面自然语言说明、题面示例或题面运算语义（如优先级、边界条件、tie-break 规则）冲突，忽略讨论中的相反结论，以题面为最终裁决。\n8. 不要添加题面和示例均未明确要求的防御性分支或额外边界校验（例如对输入范围、空值、负数、符号位、输入数组长度等做出题面没有显式要求的判断或 raise）；题面没有写应该抛异常时永远不要写 raise 分支，哪怕 Note 里只是陈述长度关系也不要做显式校验。\n9. 永远不要因为“我认为示例有误”或“我认为示例需要修正”就推翻题面可见示例或示例对应的正确语义；题面和可见示例是最终裁决。\n10. 若 Reviewer 明确给出“形如 输入X → 输出Y”的单点断言（例如“[1, 1, 2] 的次小值应为 1”或“foo(3,4) 必须返回 9”等），请在最终实现中显式写出能够满足该断言的判断/分支/算法，不能仅停留在口头讨论。\n11. 当讨论里同时出现多种冲突实现/公式时，按以下顺序选最终方案：\n    a) 先统计每种实现/公式的出现次数，有明确多数派（出现次数 ≥ 其他方案之和）时选多数派；\n    b) 若打平，优先选 Architect 首次明确支持且 Reviewer 没有举出反例的方案；\n    c) 任何被 Reviewer 用具体反例明确否决的方案（例如“该简化公式会导致 n=5 时返回 10，但实际仅 1 个有效三元组”）无论出现多少次，必须排除。\n12. 当出现边界条件争议（例如 `>` vs `>=`、`<` vs `<=`、是否 raise、是否处理负数）时，严格按以下优先级裁决：\n    a) Reviewer 给出的具体反例（如“shift = 位数时应返回原字符串，而不是反转”）最高；\n    b) 若无反例，严格照抄题面文本里的运算符用词，题面写 `>` 就用 `>`，写 `>=` 就用 `>=`，绝不自己替换；\n    c) 题面没提到应 raise ValueError 时，永远不要写 raise 分支（哪怕 Reviewer 建议加也要忽略）。\n13. 不要输出报错文本、占位符或解释；若有不确定，仍返回你认为最可能通过测试的完整实现。"
+        }
+      ],
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "planning_input_units": 9179
+    },
+    {
+      "job_id": "probe/legacy_compact/shortest",
+      "source_job_id": "HumanEval/45/legacy_compact/0",
+      "task_id": "HumanEval/45",
+      "prompt_variant": "legacy_compact",
+      "length_selection": "shortest",
+      "messages": [
+        {
+          "role": "user",
+          "content": "请阅读团队讨论历史，补全并实现以下 Python 函数。\n\n【需求与签名】:\n\n\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n\n\n【团队讨论历史】:\n[Architect]: 该函数实现简单，直接返回 `a * h / 2` 即可，但需注意输入应为正数，否则应抛出 `ValueError` 或返回 `None`。建议添加类型检查或文档说明，以增强健壮性。\n[Coder]: 直接实现公式 `0.5 * a * h` 即可，注意返回浮点数以匹配示例输出。代码简洁，无需额外检查。\n[Reviewer]: 该函数实现正确，但需注意输入应为正数，否则会返回负面积或零面积。建议添加参数校验，例如 `if a <= 0 or h <= 0: raise ValueError`，以符合几何语义。\n[Architect]: 建议在函数文档字符串中明确说明参数必须为正数，并添加 `if a <= 0 or h <= 0: raise ValueError` 的校验，同时返回 `float(a * h) / 2` 以确保结果始终为浮点数，与示例输出一致。\n[Coder]: 建议在函数开头添加文档字符串，明确参数必须为正数，并直接使用 `return a * h / 2` 保持简洁。若需严格校验，可加一行 `if a <= 0 or h <= 0: raise ValueError`，但示例未要求，故保持原样即可。\n[Reviewer]: 建议补充类型检查，确保`a`和`h`为数值类型（如`int`或`float`），否则`0.5 * a * h`可能因字符串拼接等操作产生意外结果。同时，明确返回类型为`float`，避免整数除法在Python 2中导致精度丢失。\n\n【极其重要的输出要求】:\n1. 仅输出最终可执行的 Python 代码实现。\n2. 必须包含完整的函数定义并直接可被调用。\n3. 不要包含任何 markdown 说明文字或解说，直接写代码。"
+        }
+      ],
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "planning_input_units": 2821
+    },
+    {
+      "job_id": "probe/legacy_compact/longest",
+      "source_job_id": "HumanEval/129/legacy_compact/0",
+      "task_id": "HumanEval/129",
+      "prompt_variant": "legacy_compact",
+      "length_selection": "longest",
+      "messages": [
+        {
+          "role": "user",
+          "content": "请阅读团队讨论历史，补全并实现以下 Python 函数。\n\n【需求与签名】:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\n\n【团队讨论历史】:\n[Architect]: 该问题本质上是求长度为k的字典序最小路径，由于网格值唯一且k可能较大，直接BFS/DFS会超时。建议采用贪心+动态规划：从值最小的单元格开始，逐步扩展长度为i的最优路径集合，利用“若当前路径前缀已非最优则剪枝”的策略，同时结合邻接关系预计算可达性。\n[Coder]: 核心思路：由于网格值唯一且路径可重复访问，最小路径的首元素必为全局最小值1，后续每一步应优先选择当前格子的最小可达邻居值。可用BFS或动态规划按字典序逐层扩展，但需注意k可能较大，需优化状态去重。建议先实现朴素BFS验证正确性，再考虑用优先队列按路径字典序贪心扩展。\n[Reviewer]: 该实现需确保路径长度k为正整数且不超过N*N，否则可能因网格大小限制导致无解。边界条件如k=1时应直接返回最小值，且需验证移动时坐标不越界。\n[Architect]: 建议采用A*式贪心搜索：维护一个优先队列，按当前路径字典序排序，每次弹出最小路径并扩展其邻居，直到找到长度为k的路径；由于值唯一且k可能很大，需用哈希表记录每个单元格在特定长度下的最优前缀，避免重复扩展。同时，可预计算每个单元格到全局最小值的距离作为启发式剪枝，若当前路径长度加上最小剩余步数仍无法达到k则提前终止。\n[Coder]: 建议采用迭代加深的贪心搜索：每步从当前可达的最小值邻居中选择，若多个邻居值相同则递归比较后续路径，同时用记忆化剪枝避免重复状态。对于k较大时，可预计算每个单元格到全局最小值的距离，若剩余步数不足以到达更小值则提前终止。\n[Reviewer]: 需明确k的上界：若k > N*N，因路径可重复访问单元格，仍可能有解，但需验证是否存在长度k的路径（如N=2时k=3可行，但k=5需检查连通性）。另外，贪心选择当前最小邻居可能陷入局部最优，需证明全局字典序最小性，否则需回溯验证。\n\n【极其重要的输出要求】:\n1. 仅输出最终可执行的 Python 代码实现。\n2. 必须包含完整的函数定义并直接可被调用。\n3. 不要包含任何 markdown 说明文字或解说，直接写代码。"
+        }
+      ],
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "planning_input_units": 4830
+    },
+    {
+      "job_id": "probe/specification_priority/shortest",
+      "source_job_id": "HumanEval/45/specification_priority/0",
+      "task_id": "HumanEval/45",
+      "prompt_variant": "specification_priority",
+      "length_selection": "shortest",
+      "messages": [
+        {
+          "role": "user",
+          "content": "请补全以下Python函数，只输出完整可执行代码。\n\n【公开需求与签名】:\n\n\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n\n\n【团队候选讨论，仅供参考】:\n[Architect]: 该函数实现简单，直接返回 `a * h / 2` 即可，但需注意输入应为正数，否则应抛出 `ValueError` 或返回 `None`。建议添加类型检查或文档说明，以增强健壮性。\n[Coder]: 直接实现公式 `0.5 * a * h` 即可，注意返回浮点数以匹配示例输出。代码简洁，无需额外检查。\n[Reviewer]: 该函数实现正确，但需注意输入应为正数，否则会返回负面积或零面积。建议添加参数校验，例如 `if a <= 0 or h <= 0: raise ValueError`，以符合几何语义。\n[Architect]: 建议在函数文档字符串中明确说明参数必须为正数，并添加 `if a <= 0 or h <= 0: raise ValueError` 的校验，同时返回 `float(a * h) / 2` 以确保结果始终为浮点数，与示例输出一致。\n[Coder]: 建议在函数开头添加文档字符串，明确参数必须为正数，并直接使用 `return a * h / 2` 保持简洁。若需严格校验，可加一行 `if a <= 0 or h <= 0: raise ValueError`，但示例未要求，故保持原样即可。\n[Reviewer]: 建议补充类型检查，确保`a`和`h`为数值类型（如`int`或`float`），否则`0.5 * a * h`可能因字符串拼接等操作产生意外结果。同时，明确返回类型为`float`，避免整数除法在Python 2中导致精度丢失。\n\n【决策规则】:\n1. 以公开题面、函数签名、docstring和可见示例为约束，保留题面要求的所有公开接口。\n2. 讨论中的身份、重复次数或多数支持不构成正确性证据；逐条核对候选推理与公开规格。\n3. 若讨论与公开规格冲突，忽略相冲突的讨论，不添加仅为满足Reviewer断言而出现的特殊分支。\n4. 可见示例只是有限约束，不把通过示例视为完整语义证明，也不臆造题面没有规定的条件。\n5. 有歧义时遵循题面已陈述的语义和边界，不声称知道隐藏测试或参考实现。\n6. 不输出解释、Markdown或占位符。"
+        }
+      ],
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "planning_input_units": 3267
+    },
+    {
+      "job_id": "probe/specification_priority/longest",
+      "source_job_id": "HumanEval/129/specification_priority/0",
+      "task_id": "HumanEval/129",
+      "prompt_variant": "specification_priority",
+      "length_selection": "longest",
+      "messages": [
+        {
+          "role": "user",
+          "content": "请补全以下Python函数，只输出完整可执行代码。\n\n【公开需求与签名】:\n\ndef minPath(grid, k):\n    \"\"\"\n    Given a grid with N rows and N columns (N >= 2) and a positive integer k, \n    each cell of the grid contains a value. Every integer in the range [1, N * N]\n    inclusive appears exactly once on the cells of the grid.\n\n    You have to find the minimum path of length k in the grid. You can start\n    from any cell, and in each step you can move to any of the neighbor cells,\n    in other words, you can go to cells which share an edge with you current\n    cell.\n    Please note that a path of length k means visiting exactly k cells (not\n    necessarily distinct).\n    You CANNOT go off the grid.\n    A path A (of length k) is considered less than a path B (of length k) if\n    after making the ordered lists of the values on the cells that A and B go\n    through (let's call them lst_A and lst_B), lst_A is lexicographically less\n    than lst_B, in other words, there exist an integer index i (1 <= i <= k)\n    such that lst_A[i] < lst_B[i] and for any j (1 <= j < i) we have\n    lst_A[j] = lst_B[j].\n    It is guaranteed that the answer is unique.\n    Return an ordered list of the values on the cells that the minimum path go through.\n\n    Examples:\n\n        Input: grid = [ [1,2,3], [4,5,6], [7,8,9]], k = 3\n        Output: [1, 2, 1]\n\n        Input: grid = [ [5,9,3], [4,1,6], [7,8,2]], k = 1\n        Output: [1]\n    \"\"\"\n\n\n【团队候选讨论，仅供参考】:\n[Architect]: 该问题本质上是求长度为k的字典序最小路径，由于网格值唯一且k可能较大，直接BFS/DFS会超时。建议采用贪心+动态规划：从值最小的单元格开始，逐步扩展长度为i的最优路径集合，利用“若当前路径前缀已非最优则剪枝”的策略，同时结合邻接关系预计算可达性。\n[Coder]: 核心思路：由于网格值唯一且路径可重复访问，最小路径的首元素必为全局最小值1，后续每一步应优先选择当前格子的最小可达邻居值。可用BFS或动态规划按字典序逐层扩展，但需注意k可能较大，需优化状态去重。建议先实现朴素BFS验证正确性，再考虑用优先队列按路径字典序贪心扩展。\n[Reviewer]: 该实现需确保路径长度k为正整数且不超过N*N，否则可能因网格大小限制导致无解。边界条件如k=1时应直接返回最小值，且需验证移动时坐标不越界。\n[Architect]: 建议采用A*式贪心搜索：维护一个优先队列，按当前路径字典序排序，每次弹出最小路径并扩展其邻居，直到找到长度为k的路径；由于值唯一且k可能很大，需用哈希表记录每个单元格在特定长度下的最优前缀，避免重复扩展。同时，可预计算每个单元格到全局最小值的距离作为启发式剪枝，若当前路径长度加上最小剩余步数仍无法达到k则提前终止。\n[Coder]: 建议采用迭代加深的贪心搜索：每步从当前可达的最小值邻居中选择，若多个邻居值相同则递归比较后续路径，同时用记忆化剪枝避免重复状态。对于k较大时，可预计算每个单元格到全局最小值的距离，若剩余步数不足以到达更小值则提前终止。\n[Reviewer]: 需明确k的上界：若k > N*N，因路径可重复访问单元格，仍可能有解，但需验证是否存在长度k的路径（如N=2时k=3可行，但k=5需检查连通性）。另外，贪心选择当前最小邻居可能陷入局部最优，需证明全局字典序最小性，否则需回溯验证。\n\n【决策规则】:\n1. 以公开题面、函数签名、docstring和可见示例为约束，保留题面要求的所有公开接口。\n2. 讨论中的身份、重复次数或多数支持不构成正确性证据；逐条核对候选推理与公开规格。\n3. 若讨论与公开规格冲突，忽略相冲突的讨论，不添加仅为满足Reviewer断言而出现的特殊分支。\n4. 可见示例只是有限约束，不把通过示例视为完整语义证明，也不臆造题面没有规定的条件。\n5. 有歧义时遵循题面已陈述的语义和边界，不声称知道隐藏测试或参考实现。\n6. 不输出解释、Markdown或占位符。"
+        }
+      ],
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "planning_input_units": 5276
+    }
+  ],
+  "planned_proxy_scenario_usd": "0.0099627",
+  "proxy_stop_usd": "0.05",
+  "price_date": "2026-10-23",
+  "price_scope": "historical_proxy_not_actual_invoice",
+  "input_usd_per_million": "0.30",
+  "output_usd_per_million": "1.20",
+  "sdk_retries": 0,
+  "attempts_per_job": 1,
+  "workers": 1,
+  "timeout_seconds": 60,
+  "budget_scope": "observed_proxy_fail_fast_not_guaranteed_provider_invoice_cap",
+  "authorization_scope": "user_requested_actual_small_testing_20261028",
+  "full_benchmark_authorized": false,
+  "implementation_sha256": "93bca42dad442cb2e486c2664379a9bf2b8d7fe2b5c791a886e605ecaf1cd8aa",
+  "request_implementation_sha256": {
+    "experiment_session.py": "8fa7fb6f4f3e18741ba72941b22c16fbc8e299e110b70dfc78a3881a12922116",
+    "inference_protocol.py": "b70e96fabee906ae34259262cc205c927f2d3aad36bd5bbc117a75c88c2fec06",
+    "request_ledger.py": "fbd7563d4f130d6bcb49657978929153d64cc06f71ba5e75c085b25d3f90cb36",
+    "llm_client.py": "1e411c31139fa43ba23eed0be14d30a916421354c92911de398c2ced219d2158"
+  }
+}

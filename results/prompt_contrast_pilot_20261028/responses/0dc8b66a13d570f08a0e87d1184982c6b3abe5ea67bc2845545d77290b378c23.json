@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/83/specification_priority/1",
+  "content": "```python\ndef starts_one_ends(n):\n    \"\"\"\n    Given a positive integer n, return the count of the numbers of n-digit\n    positive integers that start or end with 1.\n    \"\"\"\n    if n == 1:\n        return 1\n    return 10**(n-1) + 8 * 10**(n-2)\n```",
+  "output_sha256": "10d4740b01f48742d09d1e51c4054b23e5397c6a2a62c524653b303416d4d24e",
+  "response_id": "92a3f14731a3437a880ffaa36d1253df-4b529455",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

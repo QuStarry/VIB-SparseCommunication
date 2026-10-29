@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/76/legacy_compact/0",
+  "content": "```python\ndef is_simple_power(x, n):\n    if x == 1:\n        return True\n    if n == 1 or n == 0:\n        return False\n    if x == 0:\n        return False\n    result = 1\n    while result < x:\n        result *= n\n    return result == x\n```",
+  "output_sha256": "309058cc6a8e4e7637220fa6ed98f6d6cb2be3b2f113fe5a9f4c1adb4a681c24",
+  "response_id": "49b851458c7421fd7db71e29066a1643-ea511cd1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

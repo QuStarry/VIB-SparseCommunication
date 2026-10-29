@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/45/legacy_compact/0",
+  "content": "```python\ndef triangle_area(a, h):\n    \"\"\"Given length of a side and high return area for a triangle.\n    >>> triangle_area(5, 3)\n    7.5\n    \"\"\"\n    if a <= 0 or h <= 0:\n        raise ValueError(\"a and h must be positive numbers\")\n    return float(a * h) / 2\n```",
+  "output_sha256": "f768f07ed7d6584f25b26ff881f941d23f2249093f1f6fa97cdf6f50b9903878",
+  "response_id": "c2828ba8f86a4cc3a86ee649cf6ba68a",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

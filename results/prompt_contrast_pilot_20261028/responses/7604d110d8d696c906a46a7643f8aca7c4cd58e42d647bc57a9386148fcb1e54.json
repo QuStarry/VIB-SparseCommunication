@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/1/specification_priority/1",
+  "content": "```python\nfrom typing import List\n\n\ndef separate_paren_groups(paren_string: str) -> List[str]:\n    result = []\n    depth = 0\n    current = []\n    \n    for char in paren_string:\n        if char == ' ':\n            continue\n        if char == '(':\n            depth += 1\n            current.append(char)\n        elif char == ')':\n            depth -= 1\n            current.append(char)\n            if depth == 0:\n                result.append(''.join(current))\n                current = []\n    \n    return result\n```",
+  "output_sha256": "b1548b1cf64ecff74b05dd8a5185ed4b0a23558847265c35239bdda5e778a1c0",
+  "response_id": "3d308f840de7d7b97ff5308c5b4a55ef-45d6f724",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

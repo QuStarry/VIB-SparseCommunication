@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/0/current_arbitration/1",
+  "content": "```python\nfrom typing import List\n\n\ndef has_close_elements(numbers: List[float], threshold: float) -> bool:\n    if len(numbers) < 2:\n        return False\n    numbers = sorted(numbers)\n    for i in range(len(numbers) - 1):\n        if abs(numbers[i] - numbers[i + 1]) < threshold:\n            return True\n    return False\n```",
+  "output_sha256": "5aa87ab80ca0b00e014249f391702d01c3592645bd3a0c4155e8b0818a0823ec",
+  "response_id": "97ff678b8dd6252145e419cb5b1536b4-4e41b019",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

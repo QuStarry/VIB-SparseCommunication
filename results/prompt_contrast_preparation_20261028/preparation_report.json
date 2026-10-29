@@ -1,0 +1,30 @@
+{
+  "task_count": 164,
+  "job_count": 984,
+  "draft_sha256": "c0e7112e7bc638e51ccd54a55fb19c3e83adb31758e44bae46259841c8a0d419",
+  "source_unchanged": true,
+  "canonical_unchanged": true,
+  "paid_ready": false,
+  "blockers": [
+    "endpoint_not_frozen",
+    "provider_prices_not_calibrated",
+    "prompt_token_bounds_not_verified",
+    "manifest_budget_not_approved"
+  ],
+  "max_completion_tokens_declared": 1007616,
+  "unique_public_prompts": 164,
+  "unique_candidate_histories": 164,
+  "prompt_tokens": null,
+  "total_tokens": null,
+  "cost_usd": null,
+  "new_model_calls": 0,
+  "scoring_acceptance": {
+    "task_count": 164,
+    "completed_tasks": 164,
+    "reference_passed": 164,
+    "archived_full_passed": 147,
+    "archived_label_changes": 0,
+    "acceptance_passed": true,
+    "scope": "scoring_infrastructure_acceptance_not_new_model_performance"
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "manifest_sha256": "688a7a8336df05b783e226c0524df12a72e4390dd4db8d433abb832238f51d4b",
+  "summary": {
+    "requests_with_evidence": 6,
+    "new_attempts": 6,
+    "prompt_tokens": 6711,
+    "completion_tokens": 192,
+    "total_tokens": 6903,
+    "usage_complete": true,
+    "proxy_cost_usd": "0.0022437",
+    "known_usage_proxy_cost_usd": "0.0022437",
+    "price_scope": "historical_proxy_not_actual_invoice",
+    "actual_invoice_usd": null,
+    "actual_invoice_rmb": null,
+    "stop_reason": null,
+    "truncated_responses": 6,
+    "protocol_checks_passed": true,
+    "full_prompt_token_bounds_proven": false,
+    "full_benchmark_executed": false
+  },
+  "requests": [
+    {
+      "provider": "private",
+      "model": "deepseek-v4-flash-0817",
+      "base_url": "https://ai.ctaigw.cn/v1",
+      "prompt_sha256": "ce70ce616de471e35729cb223fb4852767994e7e0f0b9e78af99a77cceac9280",
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "context": {
+        "calibration_job_id": "probe/current_arbitration/shortest",
+        "source_task_id": "HumanEval/45"
+      },
+      "stage": "code",
+      "request_id": "fc0e877b2f884ee49657a4408b572181",
+      "operation_id": "70ded321825216372aa925f899fa4bf3bfc396ca63162a4126ada0cc4abc1ca6",
+      "attempt": 1,
+      "started_at": 1793157592.4515111,
+      "status": "truncated",
+      "usage_status": "known",
+      "usage": {
+        "prompt_tokens": 1545,
+        "completion_tokens": 32,
+        "total_tokens": 1577
+      },
+      "response_id": "0e5476adbb69416b91a787615e042f1f",
+      "provider_request_id": "04206ae169d80a7aa006ce292a72a094",
+      "served_model": "deepseek-v4-flash-0817",
+      "output_sha256": "097d2a8c18ef5234ae397e347fb9e98ceadd59548080dec537b8a418fb21eca9",
+      "provider_usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 1545,
+        "total_tokens": 1577,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        }
+      },
+      "finish_reason": "length",
+      "elapsed_seconds": 2.4205470419983612,
+      "finished_at": 1793157594.87235
+    },
+    {
+      "provider": "private",
+      "model": "deepseek-v4-flash-0817",
+      "base_url": "https://ai.ctaigw.cn/v1",
+      "prompt_sha256": "0c57b3477573df6f55045b6e34f211a12ea83e483fc4fa15b2ce787f6e49fc74",
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "context": {
+        "calibration_job_id": "probe/current_arbitration/longest",
+        "source_task_id": "HumanEval/129"
+      },
+      "stage": "code",
+      "request_id": "c2df5d1fcd3f428a8246082d41e4b0e7",
+      "operation_id": "635f6ff6c27258ec30cd409494cefd4d0b405610dfdc1781296d654d7ac4e6dd",
+      "attempt": 1,
+      "started_at": 1793157594.873017,
+      "status": "truncated",
+      "usage_status": "known",
+      "usage": {
+        "prompt_tokens": 2090,
+        "completion_tokens": 32,
+        "total_tokens": 2122
+      },
+      "response_id": "5497c698f8914da5b55f61b55f6c0302",
+      "provider_request_id": "04206ae169da0a7a2915704466b1c6cf",
+      "served_model": "deepseek-v4-flash-0817",
+      "output_sha256": "9dfc9be4126317410e31709f14c4c968ae3d177af3fea37a2293424684429e19",
+      "provider_usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 2090,
+        "total_tokens": 2122,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        }
+      },
+      "finish_reason": "length",
+      "elapsed_seconds": 1.5661908329930156,
+      "finished_at": 1793157596.4393668
+    },
+    {
+      "provider": "private",
+      "model": "deepseek-v4-flash-0817",
+      "base_url": "https://ai.ctaigw.cn/v1",
+      "prompt_sha256": "7a0eb65fc30ffebae948da2ea36cf4a750d8655f2471d10ab400df89424c8b4b",
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "context": {
+        "calibration_job_id": "probe/legacy_compact/shortest",
+        "source_task_id": "HumanEval/45"
+      },
+      "stage": "code",
+      "request_id": "3b36c07c11914d748149cbd666e5a9b3",
+      "operation_id": "877cedde51fac05652802571ed995be28e98bf8e4e369ef4e6d6a74c8cfd70dd",
+      "attempt": 1,
+      "started_at": 1793157596.442246,
+      "status": "truncated",
+      "usage_status": "known",
+      "usage": {
+        "prompt_tokens": 477,
+        "completion_tokens": 32,
+        "total_tokens": 509
+      },
+      "response_id": "fed73433104b4ffe83949248821d6fee",
+      "provider_request_id": "04206ae169dc0a7ad3198dbb4a8649e6",
+      "served_model": "deepseek-v4-flash-0817",
+      "output_sha256": "097d2a8c18ef5234ae397e347fb9e98ceadd59548080dec537b8a418fb21eca9",
+      "provider_usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 477,
+        "total_tokens": 509,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        }
+      },
+      "finish_reason": "length",
+      "elapsed_seconds": 1.5323120829998516,
+      "finished_at": 1793157597.974991
+    },
+    {
+      "provider": "private",
+      "model": "deepseek-v4-flash-0817",
+      "base_url": "https://ai.ctaigw.cn/v1",
+      "prompt_sha256": "e90030ac80b425f4422e4e813bba2e6dbec972bd0395eba792c3c0f6054b04ec",
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "context": {
+        "calibration_job_id": "probe/legacy_compact/longest",
+        "source_task_id": "HumanEval/129"
+      },
+      "stage": "code",
+      "request_id": "e52dc644aac34cfd87c2473701a4df04",
+      "operation_id": "6b4df1cf8ee502bda133c015f533ccdd873b92ffe660848f19f55aa30abf399e",
+      "attempt": 1,
+      "started_at": 1793157597.976989,
+      "status": "truncated",
+      "usage_status": "known",
+      "usage": {
+        "prompt_tokens": 957,
+        "completion_tokens": 32,
+        "total_tokens": 989
+      },
+      "response_id": "2df6f1ce75d542abbd52eb4e3a01db02",
+      "provider_request_id": "04206ae169dd0a7a1a799b0a381c1a04",
+      "served_model": "deepseek-v4-flash-0817",
+      "output_sha256": "9dfc9be4126317410e31709f14c4c968ae3d177af3fea37a2293424684429e19",
+      "provider_usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 957,
+        "total_tokens": 989,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        }
+      },
+      "finish_reason": "length",
+      "elapsed_seconds": 1.216524457995547,
+      "finished_at": 1793157599.19385
+    },
+    {
+      "provider": "private",
+      "model": "deepseek-v4-flash-0817",
+      "base_url": "https://ai.ctaigw.cn/v1",
+      "prompt_sha256": "bec0b85baa1cb06ad6d427d98f840e3939592b7b95622f9979c52fd2a2ab4abf",
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "context": {
+        "calibration_job_id": "probe/specification_priority/shortest",
+        "source_task_id": "HumanEval/45"
+      },
+      "stage": "code",
+      "request_id": "896126129f0740919cd6320612738fb5",
+      "operation_id": "1939405c4433cd171bf47ef2d5afbfb57278038eadef7c265bb7fbce88dfb8ee",
+      "attempt": 1,
+      "started_at": 1793157599.19561,
+      "status": "truncated",
+      "usage_status": "known",
+      "usage": {
+        "prompt_tokens": 581,
+        "completion_tokens": 32,
+        "total_tokens": 613
+      },
+      "response_id": "e0ab4d85ce44964ba642149c02c13d5b-347259ef",
+      "provider_request_id": "04206ae169df0a7acac572f9c54808a4",
+      "served_model": "deepseek-v4-flash-0817",
+      "output_sha256": "097d2a8c18ef5234ae397e347fb9e98ceadd59548080dec537b8a418fb21eca9",
+      "provider_usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 581,
+        "total_tokens": 613,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 0,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        }
+      },
+      "finish_reason": "length",
+      "elapsed_seconds": 1.9901297080068616,
+      "finished_at": 1793157601.1860611
+    },
+    {
+      "provider": "private",
+      "model": "deepseek-v4-flash-0817",
+      "base_url": "https://ai.ctaigw.cn/v1",
+      "prompt_sha256": "9d014d74b3074f8340a8cf906ce3b26134fb5bd1a0ec3da7d0c44bb1d5c02a47",
+      "parameters": {
+        "temperature": 0,
+        "max_tokens": 32
+      },
+      "context": {
+        "calibration_job_id": "probe/specification_priority/longest",
+        "source_task_id": "HumanEval/129"
+      },
+      "stage": "code",
+      "request_id": "c8a40e5211ec4fb3a40d94e9e380216b",
+      "operation_id": "0c61e029b324f972e812566486aef388a44fd5b9cdc44d3652dba005fe79f814",
+      "attempt": 1,
+      "started_at": 1793157601.186954,
+      "status": "truncated",
+      "usage_status": "known",
+      "usage": {
+        "prompt_tokens": 1061,
+        "completion_tokens": 32,
+        "total_tokens": 1093
+      },
+      "response_id": "chatcmpl-17931576013677180000aaedd01a#a1",
+      "provider_request_id": "04206ae169e10a7a19a8317459fb1df4",
+      "served_model": "deepseek-v4-flash-0817",
+      "output_sha256": "9dfc9be4126317410e31709f14c4c968ae3d177af3fea37a2293424684429e19",
+      "provider_usage": {
+        "completion_tokens": 32,
+        "prompt_tokens": 1061,
+        "total_tokens": 1093,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0
+        }
+      },
+      "finish_reason": "length",
+      "elapsed_seconds": 2.163509707999765,
+      "finished_at": 1793157603.350718
+    }
+  ]
+}

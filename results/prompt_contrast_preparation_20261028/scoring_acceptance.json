@@ -1,0 +1,1325 @@
+{
+  "summary": {
+    "task_count": 164,
+    "completed_tasks": 164,
+    "reference_passed": 164,
+    "archived_full_passed": 147,
+    "archived_label_changes": 0,
+    "acceptance_passed": true,
+    "scope": "scoring_infrastructure_acceptance_not_new_model_performance"
+  },
+  "tasks": [
+    {
+      "task_id": "HumanEval/0",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/1",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/2",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/3",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/4",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/5",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/6",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/7",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/8",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/9",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/10",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/11",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/12",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/13",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/14",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/15",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/16",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/17",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/18",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/19",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/20",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/21",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/22",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/23",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/24",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/25",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/26",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/27",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/28",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/29",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/30",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/31",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/32",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/33",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/34",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/35",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/36",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/37",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/38",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/39",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/40",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/41",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/42",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/43",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/44",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/45",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/46",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/47",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/48",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/49",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/50",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/51",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/52",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/53",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/54",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/55",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/56",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/57",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/58",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/59",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/60",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/61",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/62",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/63",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/64",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/65",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/66",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/67",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/68",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/69",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/70",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/71",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/72",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/73",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/74",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/75",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/76",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/77",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/78",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/79",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/80",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/81",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/82",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/83",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/84",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/85",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/86",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/87",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/88",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/89",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/90",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/91",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/92",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/93",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/94",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/95",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/96",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/97",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/98",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/99",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/100",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/101",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/102",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/103",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/104",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/105",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/106",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/107",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/108",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/109",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/110",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/111",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/112",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/113",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/114",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/115",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/116",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/117",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/118",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/119",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/120",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/121",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/122",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/123",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/124",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/125",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/126",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/127",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/128",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/129",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/130",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/131",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/132",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/133",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/134",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/135",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/136",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/137",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/138",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/139",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/140",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/141",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/142",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/143",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/144",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/145",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/146",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/147",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/148",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/149",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/150",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/151",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/152",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/153",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/154",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/155",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/156",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/157",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/158",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/159",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/160",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/161",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/162",
+      "archived_recorded": true,
+      "reference_passed": true,
+      "archived_full_passed": true,
+      "archived_label_changed": false,
+      "status": "completed"
+    },
+    {
+      "task_id": "HumanEval/163",
+      "archived_recorded": false,
+      "reference_passed": true,
+      "archived_full_passed": false,
+      "archived_label_changed": false,
+      "status": "completed"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/58/legacy_compact/0",
+  "content": "```python\ndef common(l1: list, l2: list):\n    try:\n        return sorted(set(l1) & set(l2))\n    except TypeError:\n        seen = set()\n        result = []\n        for x in l1:\n            if x in l2 and x not in seen:\n                try:\n                    seen.add(x)\n                except TypeError:\n                    pass\n                result.append(x)\n        return sorted(result)\n```",
+  "output_sha256": "03da82eeb677a597263f2aedeaf08bf133f03520de21173f74eb87717b72f3e6",
+  "response_id": "199c1d917dc2259f9831200b27b2be9d-34a43aee",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

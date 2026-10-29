@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/108/specification_priority/0",
+  "content": "```python\ndef count_nums(arr):\n    count = 0\n    for n in arr:\n        if n == 0:\n            continue\n        s = str(n)\n        if s[0] == '-':\n            total = -int(s[1])\n            for c in s[2:]:\n                total += int(c)\n        else:\n            total = sum(int(c) for c in s)\n        if total > 0:\n            count += 1\n    return count\n```",
+  "output_sha256": "09bd8e771b910939903ec4052dba70eb5039ef693f0d6c2e66bf7cb6a479d3a1",
+  "response_id": "chatcmpl-179315897924828500007fa87c3a#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

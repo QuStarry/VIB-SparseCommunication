@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/76/specification_priority/1",
+  "content": "```python\ndef is_simple_power(x, n):\n    if n == 1:\n        return x == 1\n    if x == 1:\n        return True\n    if x == 0:\n        return False\n    power = 1\n    while power < x:\n        power *= n\n    return power == x\n```",
+  "output_sha256": "2bccd0bcb448f3ff452bcfffb08eecac7d2fa40caf6078f0f27d56eabdb2b24a",
+  "response_id": "838e4e0e4ef884a55016baa5609c1023-05d304bb",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

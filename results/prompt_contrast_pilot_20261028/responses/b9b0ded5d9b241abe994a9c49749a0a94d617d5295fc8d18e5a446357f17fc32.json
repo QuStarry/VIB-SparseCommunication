@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/88/legacy_compact/0",
+  "content": "```python\ndef sort_array(array):\n    if len(array) <= 1:\n        return array[:]\n    first = array[0]\n    last = array[-1]\n    if (first + last) % 2 == 1:\n        return sorted(array[:])\n    else:\n        return sorted(array[:], reverse=True)\n```",
+  "output_sha256": "d0237e0646ac01c8fecd8adca84c267261036279fd2cc96fb0a72589bbb2f579",
+  "response_id": "3e647e4a7f08bf4665c0900c5b54a73a-14ee5c50",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

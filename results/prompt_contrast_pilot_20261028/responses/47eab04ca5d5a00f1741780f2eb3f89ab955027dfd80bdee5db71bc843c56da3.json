@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/58/specification_priority/1",
+  "content": "```python\ndef common(l1: list, l2: list):\n    \"\"\"Return sorted unique common elements for two lists.\n    >>> common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121])\n    [1, 5, 653]\n    >>> common([5, 3, 2, 8], [3, 2])\n    [2, 3]\n\n    \"\"\"\n    return sorted(set(l1) & set(l2))\n```",
+  "output_sha256": "29c6b10df5dfd7376089df5c53efb6ee9fba5dc3c93fde5176d4d989aad066b7",
+  "response_id": "e765cced3a116c6936a2d37b78d0bd39-64c0d170",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

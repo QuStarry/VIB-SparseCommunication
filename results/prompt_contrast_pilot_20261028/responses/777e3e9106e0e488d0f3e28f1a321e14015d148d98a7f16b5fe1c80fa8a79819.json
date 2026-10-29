@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/58/current_arbitration/1",
+  "content": "```python\ndef common(l1: list, l2: list):\n    return sorted(set(l1) & set(l2))\n```",
+  "output_sha256": "a3a23ad374065316da87f22e5c7a5ceabe8bdb3f4d52e5d64aac2bdad626405f",
+  "response_id": "8bd1ed0bd5dd4381b7e7fec7e6d045c3",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

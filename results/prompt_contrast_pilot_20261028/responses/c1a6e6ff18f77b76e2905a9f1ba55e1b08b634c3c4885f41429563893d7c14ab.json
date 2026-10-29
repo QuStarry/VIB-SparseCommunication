@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/8/current_arbitration/0",
+  "content": "```python\nfrom typing import List, Tuple\nfrom math import prod\n\n\ndef sum_product(numbers: List[int]) -> Tuple[int, int]:\n    return sum(numbers), prod(numbers)\n```",
+  "output_sha256": "d19df6b67fe4ea17f4142a7a9c6b39dbcf6da4a631a5e84dfe6cb7693e08e5b0",
+  "response_id": "291b2e7cfe6ef8e0b62f70d851443dfc-c5b4ce61",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

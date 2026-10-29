@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/83/legacy_compact/1",
+  "content": "```python\ndef starts_one_ends(n):\n    if n == 1:\n        return 1\n    return 10**(n-1) + 8 * 10**(n-2)\n```",
+  "output_sha256": "286629e4d797c0f9b8cfabff56c540a786fb914da802ae940359be0bbb6c8bad",
+  "response_id": "3f30cf14f18eedcb6f06b4da6a99d263-15b4a6e8",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

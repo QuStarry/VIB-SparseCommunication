@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/108/current_arbitration/0",
+  "content": "```python\ndef count_nums(arr):\n    def digit_sum(n):\n        if n == 0:\n            return 0\n        sign = 1 if n > 0 else -1\n        n = abs(n)\n        total = 0\n        first = True\n        while n > 0:\n            d = n % 10\n            if first:\n                total += sign * d\n                first = False\n            else:\n                total += d\n            n //= 10\n        return total\n\n    return sum(1 for x in arr if digit_sum(x) > 0)\n```",
+  "output_sha256": "60f8640a291c0127bbe9df71459b9ade4478ee81752580a28e92a5eeab005e49",
+  "response_id": "377ad6cad97740f0b24f2e5620b16f8e",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

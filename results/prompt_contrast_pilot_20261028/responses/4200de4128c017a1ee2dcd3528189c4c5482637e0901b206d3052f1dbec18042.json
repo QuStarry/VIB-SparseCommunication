@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/86/legacy_compact/1",
+  "content": "```python\ndef anti_shuffle(s):\n    import re\n    if not s or not s.strip():\n        return s\n    parts = re.split(r'(\\s+)', s)\n    result = []\n    for part in parts:\n        if part.isspace():\n            result.append(part)\n        else:\n            result.append(''.join(sorted(part)))\n    return ''.join(result)\n```",
+  "output_sha256": "5daee8691d50edcc7dae4a703883cce53bcd66ba754d18615e1e90b8d9f667f0",
+  "response_id": "chatcmpl-17931589309514330000f8b62ec5#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

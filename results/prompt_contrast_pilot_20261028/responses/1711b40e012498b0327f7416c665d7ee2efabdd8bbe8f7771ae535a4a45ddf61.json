@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/105/current_arbitration/0",
+  "content": "```python\ndef by_length(arr):\n    mapping = {1: \"One\", 2: \"Two\", 3: \"Three\", 4: \"Four\", 5: \"Five\", 6: \"Six\", 7: \"Seven\", 8: \"Eight\", 9: \"Nine\"}\n    filtered = [x for x in arr if 1 <= x <= 9]\n    filtered.sort(reverse=True)\n    return [mapping[x] for x in filtered]\n```",
+  "output_sha256": "8ea3c73532d36d946cd8c90075433cc7655c5d496ba126222eede126a7aae482",
+  "response_id": "980ff6e2a1ec6ccd6c540a1c54759059-87b5b16d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

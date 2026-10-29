@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/99/specification_priority/0",
+  "content": "```python\ndef closest_integer(value):\n    from decimal import Decimal, ROUND_HALF_UP\n    return int(Decimal(value).quantize(Decimal('1'), rounding=ROUND_HALF_UP))\n```",
+  "output_sha256": "c8ad372854c26fddce99a71b93c22ba5da791e00e2579e26951c4afe6236a80e",
+  "response_id": "2c18af1b704d2c3eac907433d0f8e2b9-89e17c25",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

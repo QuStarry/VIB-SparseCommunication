@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/66/current_arbitration/1",
+  "content": "```python\ndef digitSum(s):\n    return sum(ord(c) for c in s if 'A' <= c <= 'Z')\n```",
+  "output_sha256": "88fadba60223901a276baf7893f63cc7bcf0cfdaa55efee78791da64670ede45",
+  "response_id": "chatcmpl-179315879058699100008b7c9f5e#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

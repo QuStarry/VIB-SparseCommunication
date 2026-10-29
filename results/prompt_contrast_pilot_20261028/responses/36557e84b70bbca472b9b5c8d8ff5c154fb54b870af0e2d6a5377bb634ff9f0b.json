@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/151/legacy_compact/1",
+  "content": "```python\ndef double_the_difference(lst):\n    return sum(x*x for x in lst if type(x) is int and x > 0 and x % 2)\n```",
+  "output_sha256": "2db0e287e745398b8d47e386169aca284f54d0bd7742f54f7fea63412e0f45f0",
+  "response_id": "21fbdb907d12487482c4dc7e79a5c6ab",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

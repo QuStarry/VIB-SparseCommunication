@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/85/specification_priority/1",
+  "content": "```python\ndef add(lst):\n    \"\"\"Given a non-empty list of integers lst. add the even elements that are at odd indices..\n\n    Examples:\n        add([4, 2, 6, 7]) ==> 2 \n    \"\"\"\n    return sum(v for i, v in enumerate(lst) if i % 2 == 1 and v % 2 == 0)\n```",
+  "output_sha256": "b14d362c578ae9548b5cfa89a3c7745fbe005ba9fea615c52a4cfa21fc1855b1",
+  "response_id": "chatcmpl-179315906905997600009b2e8e8a#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

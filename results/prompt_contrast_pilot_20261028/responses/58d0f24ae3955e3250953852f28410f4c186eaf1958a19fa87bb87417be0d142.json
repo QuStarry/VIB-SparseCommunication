@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/108/current_arbitration/1",
+  "content": "```python\ndef count_nums(arr):\n    return sum(1 for n in arr if sum(int(d) for d in str(abs(n))) * (1 if n >= 0 else -1) > 0)\n```",
+  "output_sha256": "fcf2dda7d55e89f035801ccbca870872389d3af23336e0d1f261dffbb2c38bc3",
+  "response_id": "24b40e28a7545bd9a1a8e403a64b483c-9a18e706",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

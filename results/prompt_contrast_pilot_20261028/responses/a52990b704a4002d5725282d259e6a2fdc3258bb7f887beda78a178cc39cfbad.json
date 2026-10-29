@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/145/current_arbitration/1",
+  "content": "```python\ndef order_by_points(nums):\n    return [x[1] for x in sorted(enumerate(nums), key=lambda x: (sum(map(int, str(abs(x[1])))), x[0]))]\n```",
+  "output_sha256": "d7d486cc748e896b9c053c125b5505e7c9a136fe79e2eb7b258da5f9ecf2a3a9",
+  "response_id": "fe7cc38a3b4aea71169873020358ff1f-73a91cf7",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

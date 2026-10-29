@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/106/legacy_compact/0",
+  "content": "def f(n):\n    if n == 0:\n        return []\n    result = []\n    fact = 1\n    sum_ = 0\n    for i in range(1, n + 1):\n        if i % 2 == 0:\n            fact *= i\n            result.append(fact)\n        else:\n            sum_ += i\n            result.append(sum_)\n    return result",
+  "output_sha256": "2d72e7ae640a324fce2c1b840afd6a9dfc6df051ac1a1771854a41f4d256b595",
+  "response_id": "976c8773d0714342bdc7d37cfc79b64c",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/88/specification_priority/0",
+  "content": "```python\ndef sort_array(array):\n    if not array:\n        return []\n    if len(array) == 1:\n        return array[:]\n    first = array[0]\n    last = array[-1]\n    if (first + last) % 2 == 1:\n        return sorted(array[:])\n    else:\n        return sorted(array[:], reverse=True)\n```",
+  "output_sha256": "d01f602c957f54ef9ba548a5d0d8ea79b00ccb2a36e213753a9956a49f96a348",
+  "response_id": "chatcmpl-179315881680015300003631f104#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}
