@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/68/full/1",
+  "content": "```python\ndef pluck(arr):\n    min_val = float('inf')\n    min_idx = -1\n    for i, v in enumerate(arr):\n        if v % 2 == 0 and v < min_val:\n            min_val = v\n            min_idx = i\n    if min_idx == -1:\n        return []\n    return [min_val, min_idx]\n```",
+  "output_sha256": "d838a11413ce839816052e416529f056967fd2dcd3ca38512e7268d6cec60ea7",
+  "response_id": "ec9aff18ab4dc1ab50ec9a120878b3e0-c4668cd3",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/100/full/1",
+  "content": "```python\ndef make_a_pile(n):\n    \"\"\"\n    Given a positive integer n, you have to make a pile of n levels of stones.\n    The first level has n stones.\n    The number of stones in the next level is:\n        - the next odd number if n is odd.\n        - the next even number if n is even.\n    Return the number of stones in each level in a list, where element at index\n    i represents the number of stones in the level (i+1).\n\n    Examples:\n    >>> make_a_pile(3)\n    [3, 5, 7]\n    \"\"\"\n    return [n + 2 * i for i in range(n)]\n```",
+  "output_sha256": "33a9a8364982f3ad78de24d3eb54498ca0e2cd1a697b9b29670a18e01b0f3146",
+  "response_id": "0c14d85dbf10ae64668df60560a0bd4a-1e558ee7",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

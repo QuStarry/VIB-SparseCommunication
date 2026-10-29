@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/157/random_matched/1",
+  "content": "```python\ndef right_angle_triangle(a, b, c):\n    sides = sorted([a, b, c])\n    return abs(sides[0]**2 + sides[1]**2 - sides[2]**2) < 1e-9\n```",
+  "output_sha256": "5d5fedde977e6bde701c22f4c048d3209343cec3277d854ecf96c1866cdfdd36",
+  "response_id": "a85895d682da4257b42bb2f2b7c191dd",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

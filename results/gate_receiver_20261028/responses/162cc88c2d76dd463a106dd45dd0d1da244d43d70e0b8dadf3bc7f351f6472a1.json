@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/70/full/0",
+  "content": "```python\ndef strange_sort_list(lst):\n    if not lst:\n        return []\n    dq = sorted(lst)\n    result = []\n    left, right = 0, len(dq) - 1\n    while left <= right:\n        if left == right:\n            result.append(dq[left])\n            break\n        result.append(dq[left])\n        result.append(dq[right])\n        left += 1\n        right -= 1\n    return result\n```",
+  "output_sha256": "ff74a81240d2626f9452c4cc392c293d70c05efee0f7ea01bb963e552453ce83",
+  "response_id": "ae0f49c5fecd42f28fa60ea9f69702f6",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/100/vib/1",
+  "content": "```python\ndef make_a_pile(n):\n    return [n + 2 * i for i in range(n)]\n```",
+  "output_sha256": "f007f83788a18f8c42ad58fab08c3d7869d5148a2603c9d16043642034cee74a",
+  "response_id": "8516266612d410a4d9eb294757be10cd-338471c3",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

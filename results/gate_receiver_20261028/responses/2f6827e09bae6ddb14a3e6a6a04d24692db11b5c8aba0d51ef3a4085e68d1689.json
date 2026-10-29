@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/122/random_matched/0",
+  "content": "```python\ndef add_elements(arr, k):\n    total = 0\n    for i in range(k):\n        if abs(arr[i]) < 100:\n            total += arr[i]\n    return total\n```",
+  "output_sha256": "b01ec6f7caae5620da26ef697a82e4bce74bebc6704bd5358c8c2f8a83976466",
+  "response_id": "a40f45d4ec6d6cf1c7494bf7f78b5e7a-b94da234",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

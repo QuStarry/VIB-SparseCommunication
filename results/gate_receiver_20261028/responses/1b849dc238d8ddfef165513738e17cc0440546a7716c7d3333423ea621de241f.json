@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/129/random_matched/1",
+  "content": "```python\ndef minPath(grid, k):\n    n = len(grid)\n    if k == 1:\n        return [min(min(row) for row in grid)]\n    \n    # 记录每个值的位置\n    pos = {}\n    for i in range(n):\n        for j in range(n):\n            pos[grid[i][j]] = (i, j)\n    \n    # 从值1开始\n    start = pos[1]\n    # 当前最优路径\n    best = None\n    \n    # 使用BFS按字典序扩展\n    from collections import deque\n    # 队列元素: (路径, 当前位置)\n    q = deque()\n    q.append(([1], start))\n    \n    while q:\n        path, (x, y) = q.popleft()\n        if len(path) == k:\n            if best is None or path < best:\n                best = path\n            continue\n        \n        # 获取邻居值并排序\n        neighbors = []\n        for dx, dy in [(-1,0),(1,0),(0,-1),(0,1)]:\n            nx, ny = x+dx, y+dy\n            if 0 <= nx < n and 0 <= ny < n:\n                neighbors.append(grid[nx][ny])\n        neighbors.sort()\n        \n        for val in neighbors:\n            nx, ny = pos[val]\n            new_path = path + [val]\n            # 剪枝：如果当前路径已经比best差，跳过\n            if best is not None:\n                # 比较前缀\n                prefix_len = len(new_path)\n                if prefix_len > len(best):\n                    prefix_len = len(best)\n                if new_path[:prefix_len] > best[:prefix_len]:\n                    continue\n            q.append((new_path, (nx, ny)))\n    \n    return best\n```",
+  "output_sha256": "8f082d2a539541d55d46b1e70b98c8dfe0ad67bd8b0851648d796f92659a1095",
+  "response_id": "18dc4e48f369436ea408fa1ea69fed61",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

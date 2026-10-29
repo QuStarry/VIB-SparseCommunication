@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/122/vib/0",
+  "content": "```python\ndef add_elements(arr, k):\n    return sum(x for x in arr[:k] if abs(x) < 100)\n```",
+  "output_sha256": "a2e0be2809e22828c2a7c336e6da698cd0478a7a04c9439e38a356bdb5a9de22",
+  "response_id": "f9414c10b0eb7bb8ae55090d3aa3d091-14d2aa5c",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

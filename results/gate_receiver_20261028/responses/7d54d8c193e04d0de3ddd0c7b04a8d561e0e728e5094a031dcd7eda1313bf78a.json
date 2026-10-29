@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/77/cosine_matched/1",
+  "content": "```python\ndef iscube(a):\n    if a < 0:\n        a = -a\n    root = round(a ** (1/3))\n    return root ** 3 == a\n```",
+  "output_sha256": "fc8c61ddbda8f22451e204f36aa15fe38e1531986fb73f250ae9fbfbedc9463f",
+  "response_id": "9290ff8f9f56403693c53c4e9ec27d39",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

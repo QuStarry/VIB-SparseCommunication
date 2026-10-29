@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/53/cosine_matched/1",
+  "content": "```python\ndef add(x: int, y: int):\n    \"\"\"Add two numbers x and y\n    >>> add(2, 3)\n    5\n    >>> add(5, 7)\n    12\n    \"\"\"\n    return x + y\n```",
+  "output_sha256": "f3ed9d27c3462d20a60cc5f79d3604c6a6846966ad0b12ab0a08bf431a71c058",
+  "response_id": "7e9f57e62b3f409ebfbd6c2b46ac7aed",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

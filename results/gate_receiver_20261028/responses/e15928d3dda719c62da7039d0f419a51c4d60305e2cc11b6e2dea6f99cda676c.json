@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/129/vib/1",
+  "content": "```python\ndef minPath(grid, k):\n    n = len(grid)\n    if k == 1:\n        min_val = min(min(row) for row in grid)\n        return [min_val]\n    \n    # Precompute positions of each value\n    pos = {}\n    for i in range(n):\n        for j in range(n):\n            pos[grid[i][j]] = (i, j)\n    \n    # For each cell, find the smallest neighbor value\n    best_next = {}\n    for i in range(n):\n        for j in range(n):\n            neighbors = []\n            for di, dj in [(1,0),(-1,0),(0,1),(0,-1)]:\n                ni, nj = i+di, j+dj\n                if 0 <= ni < n and 0 <= nj < n:\n                    neighbors.append(grid[ni][nj])\n            best_next[(i,j)] = min(neighbors) if neighbors else None\n    \n    # Start from the smallest value cell\n    start_val = min(min(row) for row in grid)\n    start_pos = pos[start_val]\n    \n    # Greedy: at each step, move to the neighbor with smallest value\n    path = [start_val]\n    cur_pos = start_pos\n    for _ in range(k-1):\n        next_val = best_next[cur_pos]\n        next_pos = pos[next_val]\n        path.append(next_val)\n        cur_pos = next_pos\n    \n    return path\n```",
+  "output_sha256": "33067e07de99cb4e80cf7f2f30ef0d91b369e560add22148395a02d38ab4afdb",
+  "response_id": "cc14b04e9d24ad56746c04fb0ab06446-e943d5e4",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

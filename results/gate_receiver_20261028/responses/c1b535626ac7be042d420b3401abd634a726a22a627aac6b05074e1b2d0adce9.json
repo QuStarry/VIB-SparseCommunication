@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/2/vib/1",
+  "content": "```python\ndef truncate_number(number: float) -> float:\n    return number % 1.0\n```",
+  "output_sha256": "f68b6e7422a867e62d31df3e41ed986de201fa321f1932a34e3be3d03e5fc0f6",
+  "response_id": "f036ab1f7e11664ab185776a66b1a440-8d41fee0",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

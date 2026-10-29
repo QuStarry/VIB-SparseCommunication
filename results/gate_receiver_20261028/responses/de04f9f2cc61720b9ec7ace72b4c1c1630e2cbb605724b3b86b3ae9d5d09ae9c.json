@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/124/cosine_matched/0",
+  "content": "```python\ndef valid_date(date):\n    import re\n    if not isinstance(date, str) or not date:\n        return False\n    if not re.fullmatch(r'\\d{2}-\\d{2}-\\d{4}', date):\n        return False\n    mm, dd, yyyy = date.split('-')\n    month = int(mm)\n    day = int(dd)\n    year = int(yyyy)\n    if month < 1 or month > 12:\n        return False\n    if month in {1, 3, 5, 7, 8, 10, 12}:\n        max_day = 31\n    elif month in {4, 6, 9, 11}:\n        max_day = 30\n    else:  # month == 2\n        if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):\n            max_day = 29\n        else:\n            max_day = 28\n    if day < 1 or day > max_day:\n        return False\n    return True\n```",
+  "output_sha256": "89ff39ad6c0626e9e936eff7d4a54179c37550445c10fc6e9a9107a047a929d6",
+  "response_id": "d6956125834dfb5affac741f21f4bcbb-2f39ac06",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

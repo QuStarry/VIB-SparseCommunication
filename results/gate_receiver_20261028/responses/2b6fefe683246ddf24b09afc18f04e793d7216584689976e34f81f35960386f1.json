@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/114/random_matched/1",
+  "content": "```python\ndef minSubArraySum(nums):\n    if not nums:\n        raise ValueError(\"Input array must not be empty\")\n    current_min = nums[0]\n    global_min = nums[0]\n    for num in nums[1:]:\n        current_min = min(num, current_min + num)\n        global_min = min(global_min, current_min)\n    return global_min\n```",
+  "output_sha256": "a85990a9164c0d26f223c4c9d34176c1789d2adda008d246c70d09c473774d5f",
+  "response_id": "c75c4d9ae4cf47eda0188b03cf8cb9a3",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

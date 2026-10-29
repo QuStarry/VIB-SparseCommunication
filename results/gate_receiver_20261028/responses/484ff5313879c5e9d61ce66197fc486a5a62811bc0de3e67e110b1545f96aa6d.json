@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/24/full/0",
+  "content": "```python\ndef largest_divisor(n: int) -> int:\n    \"\"\" For a given number n, find the largest number that divides n evenly, smaller than n\n    >>> largest_divisor(15)\n    5\n    \"\"\"\n    if n <= 1:\n        return 1\n    for i in range(n // 2, 1, -1):\n        if n % i == 0:\n            return i\n    return 1\n```",
+  "output_sha256": "ef36a0913d976f88865a2b763ca6eb09deed962886a1d43b217213ca363878d4",
+  "response_id": "884c5c3a2eca62190c3cc5cc0797561b-624b9c4a",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/33/random_matched/0",
+  "content": "```python\ndef sort_third(l: list):\n    \"\"\"This function takes a list l and returns a list l' such that\n    l' is identical to l in the indicies that are not divisible by three, while its values at the indicies that are divisible by three are equal\n    to the values of the corresponding indicies of l, but sorted.\n    >>> sort_third([1, 2, 3])\n    [1, 2, 3]\n    >>> sort_third([5, 6, 3, 4, 8, 9, 2])\n    [2, 6, 3, 4, 8, 9, 5]\n    \"\"\"\n    result = l[:]\n    third_indices = list(range(0, len(l), 3))\n    third_values = [l[i] for i in third_indices]\n    third_values.sort()\n    for i, val in zip(third_indices, third_values):\n        result[i] = val\n    return result\n```",
+  "output_sha256": "1a3c269e99da7e020deffe87cd44f013a66ef2498c402aa8a683852c59878066",
+  "response_id": "a31ef10cac6029f17a6be809101e0a0a-57e844ca",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

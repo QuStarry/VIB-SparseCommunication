@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/64/vib/1",
+  "content": "```python\ndef vowels_count(s):\n    vowels = set('aeiouAEIOU')\n    count = 0\n    for i, ch in enumerate(s):\n        if ch in vowels:\n            count += 1\n        elif ch in 'yY' and i == len(s) - 1:\n            count += 1\n    return count\n```",
+  "output_sha256": "8c48eda5904ddc9db9662192918ec2486f38eacb8bf3a6338d8379514f151fd8",
+  "response_id": "02c16cd86f60b87491bec76425ff94fa-da8b024c",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

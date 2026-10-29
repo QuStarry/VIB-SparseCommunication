@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/135/full/0",
+  "content": "```python\ndef can_arrange(arr):\n    if len(arr) < 2:\n        return -1\n    for i in range(len(arr) - 1, 0, -1):\n        if arr[i] < arr[i - 1]:\n            return i\n    return -1\n```",
+  "output_sha256": "df3d31bf39d83c1418443362e89fe5dcfdfe39d3c65eddf2bc36aeb2fb23f3ae",
+  "response_id": "718994099a4e52819e306635158f41d4-59e2ebab",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

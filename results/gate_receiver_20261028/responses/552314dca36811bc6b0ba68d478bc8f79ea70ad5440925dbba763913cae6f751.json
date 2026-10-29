@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/77/vib/1",
+  "content": "```python\ndef iscube(a):\n    if a < 0:\n        a = -a\n    if a == 0:\n        return True\n    low, high = 0, a\n    while low <= high:\n        mid = (low + high) // 2\n        cube = mid ** 3\n        if cube == a:\n            return True\n        elif cube < a:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return False\n```",
+  "output_sha256": "cd3cb53e2eb3c016de0b78c16dbc7b783c2d5b4efbf8f084e41c3f3894ec79bd",
+  "response_id": "chatcmpl-179317323802650100008d4ab4cd#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

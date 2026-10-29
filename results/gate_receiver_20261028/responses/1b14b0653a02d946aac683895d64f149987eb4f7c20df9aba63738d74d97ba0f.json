@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/64/cosine_matched/1",
+  "content": "```python\ndef vowels_count(s):\n    \"\"\"Write a function vowels_count which takes a string representing\n    a word as input and returns the number of vowels in the string.\n    Vowels in this case are 'a', 'e', 'i', 'o', 'u'. Here, 'y' is also a\n    vowel, but only when it is at the end of the given word.\n\n    Example:\n    >>> vowels_count(\"abcde\")\n    2\n    >>> vowels_count(\"ACEDY\")\n    3\n    \"\"\"\n    count = 0\n    vowels = set(\"aeiouAEIOU\")\n    for i, ch in enumerate(s):\n        if ch in vowels:\n            count += 1\n        elif ch.lower() == 'y' and i == len(s) - 1:\n            count += 1\n    return count\n```",
+  "output_sha256": "a4d99ec247e5330ae8e70a7d98681fa6173af773b2670d6ad87bd12123208948",
+  "response_id": "chatcmpl-179317307428885600009ef60414#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

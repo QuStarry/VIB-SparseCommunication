@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/75/vib/1",
+  "content": "```python\ndef is_multiply_prime(a):\n    \"\"\"Write a function that returns true if the given number is the multiplication of 3 prime numbers\n    and false otherwise.\n    Knowing that (a) is less then 100. \n    Example:\n    is_multiply_prime(30) == True\n    30 = 2 * 3 * 5\n    \"\"\"\n    if a < 8:\n        return False\n\n    primes = []\n    for num in range(2, 100):\n        is_prime = True\n        for i in range(2, int(num ** 0.5) + 1):\n            if num % i == 0:\n                is_prime = False\n                break\n        if is_prime:\n            primes.append(num)\n\n    for p in primes:\n        for q in primes:\n            for r in primes:\n                if p * q * r == a:\n                    return True\n    return False\n```",
+  "output_sha256": "436d345cba5b17655fb284b8777b6ec51aa90ee372b9c60846c93840c95a5380",
+  "response_id": "aac3da83d38e4604a73afc3791a735af",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

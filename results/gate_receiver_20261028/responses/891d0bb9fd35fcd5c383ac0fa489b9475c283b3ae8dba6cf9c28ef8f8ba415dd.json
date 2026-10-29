@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/68/random_matched/0",
+  "content": "```python\ndef pluck(arr):\n    smallest_even = float('inf')\n    smallest_index = -1\n    for i, value in enumerate(arr):\n        if value % 2 == 0 and value < smallest_even:\n            smallest_even = value\n            smallest_index = i\n    if smallest_index == -1:\n        return []\n    return [smallest_even, smallest_index]\n```",
+  "output_sha256": "fe00d3a17af1af3da5d986512c03a9427c397aae1e073de9559729f929b71a63",
+  "response_id": "chatcmpl-17931726204147210000bfcae656#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/132/full/1",
+  "content": "```python\ndef is_nested(string):\n    open_count = 0\n    has_nested = False\n    for ch in string:\n        if ch == '[':\n            open_count += 1\n        elif ch == ']':\n            if open_count > 0:\n                if open_count >= 2:\n                    has_nested = True\n                open_count -= 1\n            else:\n                open_count = 0\n    return has_nested\n```",
+  "output_sha256": "e4a437bcd72f627fddb930ab917accbc043505d24dd71ccdd7ac665946b9e7ba",
+  "response_id": "ad515c85597acdeaff13b027b4690ce3-cc386efe",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

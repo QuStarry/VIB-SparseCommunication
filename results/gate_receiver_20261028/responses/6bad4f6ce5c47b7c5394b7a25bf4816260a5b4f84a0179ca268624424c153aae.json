@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/157/vib/0",
+  "content": "```python\ndef right_angle_triangle(a, b, c):\n    sides = sorted([a, b, c])\n    if sides[0] <= 0 or sides[0] + sides[1] <= sides[2]:\n        return False\n    return abs(sides[0]**2 + sides[1]**2 - sides[2]**2) < 1e-9\n```",
+  "output_sha256": "e8bacaf14c1b11e10f12e7062249f5f8efd430fe7ee20d7bc661661896ca7380",
+  "response_id": "3e29aa3bb80f4f399464e14c120ef736",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

@@ -1,0 +1,17 @@
+{
+  "design_sha256": "ff3fa3378b88b01ebe36df3e60fb570b7260ab0e2ba98b7cefb6c74309ac4f80",
+  "summary": {
+    "task_count": 32,
+    "candidate_messages": 192,
+    "admitted_messages": {
+      "full": 192,
+      "vib": 129,
+      "random_matched": 129,
+      "cosine_matched": 129
+    },
+    "vib_changed_tasks": 28,
+    "new_api_requests": 0,
+    "encoder_dimension": 384,
+    "encoder_max_seq_length": 256
+  }
+}

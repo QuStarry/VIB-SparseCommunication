@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/7/full/0",
+  "content": "```python\nfrom typing import List\n\n\ndef filter_by_substring(strings: List[str], substring: str) -> List[str]:\n    \"\"\" Filter an input list of strings only for ones that contain given substring\n    >>> filter_by_substring([], 'a')\n    []\n    >>> filter_by_substring(['abc', 'bacd', 'cde', 'array'], 'a')\n    ['abc', 'bacd', 'array']\n    \"\"\"\n    return [s for s in strings if substring in s]\n```",
+  "output_sha256": "d99fbea731ea4c26deb7dab7ecce91cff69d741bbc0d4a2f56b93c20068b7bcd",
+  "response_id": "chatcmpl-17931731043171220000cbb773cb#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

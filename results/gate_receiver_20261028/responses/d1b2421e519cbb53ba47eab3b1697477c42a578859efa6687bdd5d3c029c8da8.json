@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/104/cosine_matched/1",
+  "content": "```python\ndef unique_digits(x):\n    return sorted(n for n in x if all(int(d) % 2 == 1 for d in str(n)))\n```",
+  "output_sha256": "dbd41b7f796ef2521e070ceb9a789f3cbd6524b0e489011e6257d0a8d5c1a6f6",
+  "response_id": "6d435825398745a2b15411818047a5da",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

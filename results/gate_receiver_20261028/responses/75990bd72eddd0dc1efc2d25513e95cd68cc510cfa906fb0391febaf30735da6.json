@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/150/cosine_matched/1",
+  "content": "```python\ndef x_or_y(n, x, y):\n    if n <= 1:\n        return y\n    if n <= 3:\n        return x\n    if n % 2 == 0 or n % 3 == 0:\n        return y\n    i = 5\n    while i * i <= n:\n        if n % i == 0 or n % (i + 2) == 0:\n            return y\n        i += 6\n    return x\n```",
+  "output_sha256": "ec77a3a12e7d2282be9a44db155d898560c59c71eee0039dbf57605941761908",
+  "response_id": "chatcmpl-17931729340590020000bbbefa93#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

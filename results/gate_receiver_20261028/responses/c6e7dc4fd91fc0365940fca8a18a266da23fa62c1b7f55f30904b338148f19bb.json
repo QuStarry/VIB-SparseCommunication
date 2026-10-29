@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/129/full/1",
+  "content": "```python\ndef minPath(grid, k):\n    n = len(grid)\n    if k == 1:\n        return [min(min(row) for row in grid)]\n    \n    # 记录每个值对应的坐标\n    pos = {}\n    for i in range(n):\n        for j in range(n):\n            pos[grid[i][j]] = (i, j)\n    \n    # 从值最小的单元格开始\n    start_val = 1\n    start_i, start_j = pos[start_val]\n    \n    # 动态规划：dp[length][cell] = 从该cell出发长度为length的最小路径（列表）\n    # 但为了节省空间，我们只保留当前长度和下一长度\n    # 初始化长度为1：每个cell的路径就是它自己\n    dp = {}\n    for i in range(n):\n        for j in range(n):\n            dp[(i, j)] = [grid[i][j]]\n    \n    # 逐步扩展长度\n    for length in range(2, k + 1):\n        new_dp = {}\n        for (i, j), path in dp.items():\n            # 尝试所有邻居\n            for di, dj in [(1,0), (-1,0), (0,1), (0,-1)]:\n                ni, nj = i + di, j + dj\n                if 0 <= ni < n and 0 <= nj < n:\n                    new_path = [grid[ni][nj]] + path\n                    key = (ni, nj)\n                    if key not in new_dp or new_path < new_dp[key]:\n                        new_dp[key] = new_path\n        dp = new_dp\n    \n    # 找到所有长度为k的路径中字典序最小的\n    best = None\n    for path in dp.values():\n        if best is None or path < best:\n            best = path\n    return best\n```",
+  "output_sha256": "050445a52734a927c5030030e9147fb121e7da98f780ff4ec321639baa3a9ec6",
+  "response_id": "272656fc6b6c9f0f31e0bc81c0523c34-617f6963",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

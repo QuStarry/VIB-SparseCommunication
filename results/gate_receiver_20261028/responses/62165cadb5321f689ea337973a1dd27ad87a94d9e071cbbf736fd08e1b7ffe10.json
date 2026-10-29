@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/104/full/0",
+  "content": "```python\ndef unique_digits(x):\n    return sorted(n for n in x if all(int(d) % 2 == 1 for d in str(n)))\n```",
+  "output_sha256": "dbd41b7f796ef2521e070ceb9a789f3cbd6524b0e489011e6257d0a8d5c1a6f6",
+  "response_id": "69862e165da47cd319377b11911cde33-182b8bef",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

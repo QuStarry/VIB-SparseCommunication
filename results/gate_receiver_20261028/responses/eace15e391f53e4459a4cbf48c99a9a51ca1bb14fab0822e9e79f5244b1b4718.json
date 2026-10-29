@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/144/cosine_matched/1",
+  "content": "```python\ndef simplify(x, n):\n    x_num, x_den = map(int, x.split('/'))\n    n_num, n_den = map(int, n.split('/'))\n    return (x_num * n_num) % (x_den * n_den) == 0\n```",
+  "output_sha256": "e581159adb4847395e59ed34cf3cf49c28c085bda736b34a3867ac5f23c4c049",
+  "response_id": "414fa48c33bb4eefae85053d919c8bc7",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

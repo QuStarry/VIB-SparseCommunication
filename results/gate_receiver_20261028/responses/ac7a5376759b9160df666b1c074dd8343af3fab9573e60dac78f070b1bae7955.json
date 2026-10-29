@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/75/full/1",
+  "content": "```python\ndef is_multiply_prime(a):\n    if a < 8:\n        return False\n    primes = []\n    for num in range(2, 100):\n        is_prime = True\n        for i in range(2, int(num**0.5) + 1):\n            if num % i == 0:\n                is_prime = False\n                break\n        if is_prime:\n            primes.append(num)\n    for p in primes:\n        for q in primes:\n            for r in primes:\n                if p * q * r == a:\n                    return True\n    return False\n```",
+  "output_sha256": "555859f874675604190b876e97fc3a76ef298439dcf9a37963a1818bb3bd49fc",
+  "response_id": "d227ded9de86ad53fb50801e1ecfbf9f-3c715148",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

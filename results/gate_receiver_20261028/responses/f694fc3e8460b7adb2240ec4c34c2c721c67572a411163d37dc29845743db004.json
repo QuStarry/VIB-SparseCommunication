@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/114/cosine_matched/1",
+  "content": "```python\ndef minSubArraySum(nums):\n    if not nums:\n        return 0\n    current_min = nums[0]\n    global_min = nums[0]\n    for num in nums[1:]:\n        current_min = min(num, current_min + num)\n        global_min = min(global_min, current_min)\n    return global_min\n```",
+  "output_sha256": "3386b3f5ed536dbdee93996d8fc6441bcf9a10b74bfbb22510fbafdd986535a1",
+  "response_id": "22d89d53bff0def8a5b9bee1021d9b46-f98f1450",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

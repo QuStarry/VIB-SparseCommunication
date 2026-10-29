@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/62/random_matched/1",
+  "content": "```python\ndef derivative(xs: list):\n    \"\"\" xs represent coefficients of a polynomial.\n    xs[0] + xs[1] * x + xs[2] * x^2 + ....\n     Return derivative of this polynomial in the same form.\n    >>> derivative([3, 1, 2, 4, 5])\n    [1, 4, 12, 20]\n    >>> derivative([1, 2, 3])\n    [2, 6]\n    \"\"\"\n    return [i * xs[i] for i in range(1, len(xs))]\n```",
+  "output_sha256": "63d82906a9c9552bf561bf845e1b6c5430321ec3bd89482ce3de9dbddac40a0d",
+  "response_id": "6cc79552ca799eb82059ddca05d5c52f-4e8fbf73",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

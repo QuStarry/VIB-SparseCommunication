@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/150/full/0",
+  "content": "```python\ndef x_or_y(n, x, y):\n    if n < 2:\n        return y\n    if n == 2:\n        return x\n    if n % 2 == 0:\n        return y\n    i = 3\n    while i * i <= n:\n        if n % i == 0:\n            return y\n        i += 2\n    return x\n```",
+  "output_sha256": "77dc86a591f4c8df670eb03ea9983ac0a771d05a06b3fef2a575aa7cf91d4d9b",
+  "response_id": "f4e9d22a1f2843ef9f11041cfc0c7c15",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

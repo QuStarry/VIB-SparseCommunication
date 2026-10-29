@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/118/vib/1",
+  "content": "```python\ndef get_closest_vowel(word):\n    vowels = set('aeiouAEIOU')\n    for i in range(len(word) - 2, 0, -1):\n        if word[i] in vowels and word[i-1] not in vowels and word[i+1] not in vowels:\n            return word[i]\n    return \"\"\n```",
+  "output_sha256": "6a96a9ac28c713e1514f7f524b9c2f0245a4ec57680ff72a19c557e09a45acfb",
+  "response_id": "chatcmpl-179317279665314400005dbf6901#a1",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

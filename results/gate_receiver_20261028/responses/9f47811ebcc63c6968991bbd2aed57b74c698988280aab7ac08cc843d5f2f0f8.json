@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/113/vib/0",
+  "content": "```python\ndef odd_count(lst):\n    result = []\n    for s in lst:\n        count = sum(1 for c in s if int(c) % 2 == 1)\n        result.append(\"the number of odd elements \" + str(count) + \"n the str\" + str(count) + \"ng \" + str(count) + \" of the \" + str(count) + \"nput.\")\n    return result\n```",
+  "output_sha256": "c1e57a8b9c43bdd0746dfc40511ac302dc7c56a974b1a7c8c68167f5f4cf641a",
+  "response_id": "c1568514486b8e993e6c65fa8ea0ee2b-1eccb763",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

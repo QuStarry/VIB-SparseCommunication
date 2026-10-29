@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/46/cosine_matched/1",
+  "content": "def fib4(n: int):\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n    if n == 0:\n        return 0\n    if n == 1:\n        return 0\n    if n == 2:\n        return 2\n    if n == 3:\n        return 0\n    \n    a, b, c, d = 0, 0, 2, 0\n    for _ in range(4, n + 1):\n        a, b, c, d = b, c, d, a + b + c + d\n    return d",
+  "output_sha256": "4115df558b9304f2662eefafabd098aa5d2d5cfbc056bb1f6228bbe23c0d517b",
+  "response_id": "547246469b02c0ca4448aa4a4ee51e3e-2824981c",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

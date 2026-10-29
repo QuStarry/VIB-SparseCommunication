@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/128/full/0",
+  "content": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    sign = 1\n    total = 0\n    for x in arr:\n        total += abs(x)\n        if x == 0:\n            sign = 0\n        elif x < 0:\n            sign *= -1\n    return sign * total\n```",
+  "output_sha256": "ba3c80967bb7fb867136e2171b23105a6ba953cdd5f7a391e00435d52b278254",
+  "response_id": "14f7c51da5c743ad89ce436a773fc69f",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

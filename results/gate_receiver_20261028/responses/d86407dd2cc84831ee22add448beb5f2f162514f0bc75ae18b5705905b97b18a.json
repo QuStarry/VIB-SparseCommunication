@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/157/cosine_matched/1",
+  "content": "```python\ndef right_angle_triangle(a, b, c):\n    sides = sorted([a, b, c])\n    return abs(sides[0]**2 + sides[1]**2 - sides[2]**2) < 1e-9\n```",
+  "output_sha256": "5d5fedde977e6bde701c22f4c048d3209343cec3277d854ecf96c1866cdfdd36",
+  "response_id": "09a5b759fec190f60211881c0e228c44-6ab76cdf",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

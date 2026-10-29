@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/62/vib/0",
+  "content": "```python\ndef derivative(xs: list):\n    return [i * xs[i] for i in range(1, len(xs))]\n```",
+  "output_sha256": "9d1dd2658d595d6757f297762257e690a74e43ad2cfc0728684a25ffbedc2f2a",
+  "response_id": "f1c22097382e3d2b3b2b6d1b4df1cc6d-b1508c4d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

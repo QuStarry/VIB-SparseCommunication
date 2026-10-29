@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/128/vib/1",
+  "content": "```python\ndef prod_signs(arr):\n    if not arr:\n        return None\n    sign_product = 1\n    sum_magnitudes = 0\n    for num in arr:\n        if num > 0:\n            sign_product *= 1\n        elif num < 0:\n            sign_product *= -1\n        else:\n            sign_product = 0\n        sum_magnitudes += abs(num)\n    return sum_magnitudes * sign_product\n```",
+  "output_sha256": "848e8a23cad8b2975f6908680ad5a810d21df0c2eec214d57259d435ca5eadfc",
+  "response_id": "dffdc9611d7e1f4e1b993af34114a361-74540ec3",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

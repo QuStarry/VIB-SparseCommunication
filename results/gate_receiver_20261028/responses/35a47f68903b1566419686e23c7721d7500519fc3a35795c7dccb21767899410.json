@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/129/full/0",
+  "content": "```python\ndef minPath(grid, k):\n    n = len(grid)\n    if k == 1:\n        return [min(min(row) for row in grid)]\n    \n    # 记录每个值的位置\n    pos = {}\n    for i in range(n):\n        for j in range(n):\n            pos[grid[i][j]] = (i, j)\n    \n    # 从值1开始\n    start_i, start_j = pos[1]\n    \n    # 动态规划：dp[length][cell] = 从该cell出发长度为length的最小路径（列表）\n    # 但为了效率，我们只保留每个cell在特定长度下的最优路径\n    # 由于k可能很大，我们使用迭代方法，从长度1开始逐步扩展\n    \n    # 初始化：长度为1的路径就是每个cell本身\n    dp = {}\n    for i in range(n):\n        for j in range(n):\n            dp[(i, j)] = [grid[i][j]]\n    \n    # 逐步扩展长度\n    for length in range(2, k+1):\n        new_dp = {}\n        for i in range(n):\n            for j in range(n):\n                # 从当前cell出发，选择邻居中能产生最小路径的\n                best_path = None\n                for di, dj in [(-1,0),(1,0),(0,-1),(0,1)]:\n                    ni, nj = i+di, j+dj\n                    if 0 <= ni < n and 0 <= nj < n:\n                        candidate = [grid[i][j]] + dp[(ni, nj)]\n                        if best_path is None or candidate < best_path:\n                            best_path = candidate\n                new_dp[(i, j)] = best_path\n        dp = new_dp\n    \n    # 最终答案：从任意cell出发长度为k的最小路径\n    answer = None\n    for i in range(n):\n        for j in range(n):\n            if answer is None or dp[(i, j)] < answer:\n                answer = dp[(i, j)]\n    return answer\n```",
+  "output_sha256": "9438caf13ff7d5f8575c20955801b7137e5f762fd9fab75ef9e53c32dcb29eb7",
+  "response_id": "9c3a976fc11558d4ccb9268a803a6935-3b54cdfc",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

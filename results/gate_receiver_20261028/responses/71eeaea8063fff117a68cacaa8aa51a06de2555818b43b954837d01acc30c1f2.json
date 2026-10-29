@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/51/vib/0",
+  "content": "```python\ndef remove_vowels(text):\n    return ''.join(c for c in text if c.lower() not in 'aeiou')\n```",
+  "output_sha256": "f7172e3ed96f217a3cfb230b4df954bf459fe744ea2899827fd14fbc0dd8927e",
+  "response_id": "161282282f53fe9e7d56b3eb2224a0f9-2bfeb52e",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

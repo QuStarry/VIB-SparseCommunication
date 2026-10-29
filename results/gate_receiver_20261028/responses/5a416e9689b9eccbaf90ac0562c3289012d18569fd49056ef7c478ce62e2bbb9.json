@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/3/vib/0",
+  "content": "```python\nfrom typing import List\n\n\ndef below_zero(operations: List[int]) -> bool:\n    balance = 0\n    for op in operations:\n        balance += op\n        if balance < 0:\n            return True\n    return False\n```",
+  "output_sha256": "599498483e27243c33c184ed345ee35d84d71bf33a21742ca9dcfbdd4bcc1bb6",
+  "response_id": "85fb0a20d05dbc84ea0a86b75c62a21a-f139f91d",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

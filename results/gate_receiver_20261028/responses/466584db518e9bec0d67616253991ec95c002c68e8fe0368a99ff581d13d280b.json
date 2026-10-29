@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/11/random_matched/0",
+  "content": "```python\nfrom typing import List\n\n\ndef string_xor(a: str, b: str) -> str:\n    \"\"\" Input are two strings a and b consisting only of 1s and 0s.\n    Perform binary XOR on these inputs and return result also as a string.\n    >>> string_xor('010', '110')\n    '100'\n    \"\"\"\n    return ''.join(str(int(x) ^ int(y)) for x, y in zip(a, b))\n```",
+  "output_sha256": "18ff899c41abbeb5a1c1d2ff17289691eec1b3241ac72b5364a201ce896c273d",
+  "response_id": "a9920b8b3e00fe4af4fb349f49b3cf9f-e35214fa",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

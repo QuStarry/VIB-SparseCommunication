@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/118/random_matched/0",
+  "content": "```python\ndef get_closest_vowel(word):\n    vowels = set('aeiouAEIOU')\n    consonants = set('bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ')\n    \n    for i in range(len(word) - 2, 0, -1):\n        if word[i] in vowels and word[i-1] in consonants and word[i+1] in consonants:\n            return word[i]\n    return \"\"\n```",
+  "output_sha256": "e6b327854e0f7ed1a2a4d0630127c36c48af941049ce8a2f12574446a5d19a9e",
+  "response_id": "07b00d6439a2487f3c080b52fb3ddc65-0211eb20",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}

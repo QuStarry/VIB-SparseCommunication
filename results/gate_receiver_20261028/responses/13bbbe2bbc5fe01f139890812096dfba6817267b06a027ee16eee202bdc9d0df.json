@@ -1,0 +1,8 @@
+{
+  "job_id": "HumanEval/70/full/1",
+  "content": "```python\ndef strange_sort_list(lst):\n    '''\n    Given list of integers, return list in strange order.\n    Strange sorting, is when you start with the minimum value,\n    then maximum of the remaining integers, then minimum and so on.\n\n    Examples:\n    strange_sort_list([1, 2, 3, 4]) == [1, 4, 2, 3]\n    strange_sort_list([5, 5, 5, 5]) == [5, 5, 5, 5]\n    strange_sort_list([]) == []\n    '''\n    if not lst:\n        return []\n    sorted_lst = sorted(lst)\n    result = []\n    left, right = 0, len(sorted_lst) - 1\n    while left <= right:\n        if left == right:\n            result.append(sorted_lst[left])\n            break\n        result.append(sorted_lst[left])\n        result.append(sorted_lst[right])\n        left += 1\n        right -= 1\n    return result\n```",
+  "output_sha256": "03eb247e491ec1544519c80de78a6a15eca400dd1ffc811f8907f3e8e280273b",
+  "response_id": "5272cf129c1514101d0c89895dbc1f8b-810eae5b",
+  "served_model": "deepseek-v4-flash-0817",
+  "finish_reason": "stop"
+}
