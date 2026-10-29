@@ -234,6 +234,9 @@ docs/chatHistory.md
 # Ad-hoc scratch files (one-off dumps, probes)
 _tmp_*
 
+# Trae HTML share/build artifacts (zipped report previews)
+.trae-html-share-packages/
+
 # LaTeX build artifacts (paper/paper.pdf is the tracked deliverable)
 paper/*.aux
 paper/*.bbl
