@@ -1,0 +1,33 @@
+{
+  "version": "humaneval32_exact_residual_adjacent_float_local_repair_v2",
+  "task_id": "HumanEval/32",
+  "before": "assert _poly(*candidate(*inp), inp) <= 0.0001",
+  "after": "assert _vib_local_root_check(inp[0], candidate(*inp))",
+  "helper_source": "\ndef _vib_local_root_check(coefficients, root):\n    from fractions import Fraction\n    import math\n    from numbers import Real\n\n    if isinstance(root, bool) or not isinstance(root, Real):\n        return False\n    try:\n        root = float(root)\n        if not math.isfinite(root):\n            return False\n        exact_coefficients = [Fraction(value) for value in coefficients]\n\n        def evaluate(value):\n            argument = Fraction.from_float(value)\n            residual = Fraction(0)\n            for coefficient in reversed(exact_coefficients):\n                residual = residual * argument + coefficient\n            return residual\n\n        if abs(evaluate(root)) <= Fraction(1, 10000):\n            return True\n        lower = math.nextafter(root, -math.inf)\n        upper = math.nextafter(root, math.inf)\n        if not math.isfinite(lower) or not math.isfinite(upper):\n            return False\n        lower_residual, upper_residual = evaluate(lower), evaluate(upper)\n        return (lower_residual <= 0 <= upper_residual\n                or upper_residual <= 0 <= lower_residual)\n    except (TypeError, ValueError, OverflowError, ZeroDivisionError):\n        return False\n",
+  "reason": "scalar_root_not_iterable_absolute_residual_and_finite_precision_root_interval",
+  "tolerance": 0.0001,
+  "tolerance_changed": false,
+  "inputs_changed": false,
+  "numerical_acceptance_extended": true,
+  "precision_guard": "exact_fraction_sign_change_between_adjacent_float_neighbors",
+  "precision_guard_user_confirmed": true,
+  "reference_changed": false,
+  "changed_tasks": 1,
+  "original_file_sha256": "908377f1daf28dcb36846db73a5662b2e05a9907407c2696c89ad9d3b0b04492",
+  "local_file_sha256": "78f2c0b38d1b32f184c9ecad9fe794b16b2b9e2b913751101e00f0a4c7d8d336",
+  "task32_original_test_sha256": "47f364ff54e11b7131ad138b053b27509dbea1d8fcfb1c7210ff9b4491018b25",
+  "task32_local_test_sha256": "73edbd9a13d2fe1645235458b8d1cb2931a92620a312d2756afae8b81acb1738",
+  "task32_in_candidate_cohort": false,
+  "scope": "user_authorized_local_oracle_revision_not_official_evalplus_score",
+  "reference_validation_override": {
+    "task_id": "HumanEval/32",
+    "mode": "publisher_expected_root_table",
+    "user_confirmed": true,
+    "input_root_pairs": 886,
+    "original_canonical_preserved": true,
+    "remaining_original_canonicals": 163,
+    "original_code_sha256": "53c868414980a3967dd3aefc022954262425c23ed9dcc0bf17465d437423c386",
+    "validation_code_sha256": "e7b5464606f6a75d76275e507b3a7394e37eb8a8fe91e680db80efdf9a8042ff",
+    "reason": "original_newton_can_fail_to_converge_under_valid_expanded_inputs"
+  }
+}

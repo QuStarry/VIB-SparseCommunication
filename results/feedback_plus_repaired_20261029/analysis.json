@@ -1,0 +1,3039 @@
+{
+  "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+  "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+  "statistics": {
+    "groups": {
+      "cosine_matched": {
+        "passed_generations": 30,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 93.75
+      },
+      "full": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      },
+      "random_matched": {
+        "passed_generations": 31,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 96.875
+      },
+      "vib": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      }
+    },
+    "comparisons": [
+      {
+        "left": "cosine_matched",
+        "right": "full",
+        "delta_pp": -6.25,
+        "ci95_pp": [
+          -18.75,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 1,
+        "tied_tasks": 15,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "cosine_matched",
+        "right": "random_matched",
+        "delta_pp": -3.125,
+        "ci95_pp": [
+          -9.375,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 1,
+        "tied_tasks": 15,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "cosine_matched",
+        "right": "vib",
+        "delta_pp": -6.25,
+        "ci95_pp": [
+          -18.75,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 1,
+        "tied_tasks": 15,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "full",
+        "right": "random_matched",
+        "delta_pp": 3.125,
+        "ci95_pp": [
+          0.0,
+          9.375
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 1,
+        "right_higher_tasks": 0,
+        "tied_tasks": 15,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "full",
+        "right": "vib",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "random_matched",
+        "right": "vib",
+        "delta_pp": -3.125,
+        "ci95_pp": [
+          -9.375,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 1,
+        "tied_tasks": 15,
+        "exact_sign_p": 1.0
+      }
+    ],
+    "bootstrap_samples": 10000,
+    "seed": 20261103,
+    "unit": "task_mean_over_two_repetitions",
+    "interval_method": "empirical_percentile_order_statistics",
+    "interpretation": "exploratory_unadjusted_not_equivalence_or_confirmation"
+  },
+  "primary_comparison": {
+    "left": "vib",
+    "right": "random_matched",
+    "delta_pp": 3.125,
+    "ci95_pp": [
+      -0.0,
+      9.375
+    ],
+    "independent_tasks": 16,
+    "left_higher_tasks": 1,
+    "right_higher_tasks": 0,
+    "tied_tasks": 15,
+    "exact_sign_p": 1.0,
+    "alpha": 0.05,
+    "role": "prospectively_fixed_primary_contrast"
+  },
+  "original_statistics": {
+    "groups": {
+      "cosine_matched": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      },
+      "full": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      },
+      "random_matched": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      },
+      "vib": {
+        "passed_generations": 32,
+        "generations": 32,
+        "independent_tasks": 16,
+        "task_mean_accuracy_pct": 100.0
+      }
+    },
+    "comparisons": [
+      {
+        "left": "cosine_matched",
+        "right": "full",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "cosine_matched",
+        "right": "random_matched",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "cosine_matched",
+        "right": "vib",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "full",
+        "right": "random_matched",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "full",
+        "right": "vib",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      },
+      {
+        "left": "random_matched",
+        "right": "vib",
+        "delta_pp": 0.0,
+        "ci95_pp": [
+          0.0,
+          0.0
+        ],
+        "independent_tasks": 16,
+        "left_higher_tasks": 0,
+        "right_higher_tasks": 0,
+        "tied_tasks": 16,
+        "exact_sign_p": 1.0
+      }
+    ],
+    "bootstrap_samples": 10000,
+    "seed": 20261103,
+    "unit": "task_mean_over_two_repetitions",
+    "interval_method": "empirical_percentile_order_statistics",
+    "interpretation": "exploratory_unadjusted_not_equivalence_or_confirmation"
+  },
+  "transitions": {
+    "cosine_matched": {
+      "pass_to_fail": 2,
+      "fail_to_pass": 0,
+      "both_pass": 30,
+      "both_fail": 0
+    },
+    "full": {
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "both_pass": 32,
+      "both_fail": 0
+    },
+    "random_matched": {
+      "pass_to_fail": 1,
+      "fail_to_pass": 0,
+      "both_pass": 31,
+      "both_fail": 0
+    },
+    "vib": {
+      "pass_to_fail": 0,
+      "fail_to_pass": 0,
+      "both_pass": 32,
+      "both_fail": 0
+    }
+  },
+  "evaluations": [
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/42/full/0",
+      "task_id": "HumanEval/42",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/976eaeb1651ff2a324bbd1fff91634b3e956f56a1b8b85478daa1a392b0485bd.json",
+        "sha256": "6a9b1acb230de6d9060fdbdcccd9fbc64bbb7c05cd3e03011f7f710683decf2b"
+      },
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "55446f68f20497e5125223c8b1402c9b76aafc1328723c5e752359621ad48e85",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3576970410067588,
+      "content_sha256": "24690528d3069191bddf0b2967290ca124fb79db45697469ce7a978ce602b3fb"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/137/cosine_matched/0",
+      "task_id": "HumanEval/137",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/1a96ebcd2e0f030a72ae345fd51bbcbdf7f812643546542a952f3bf68141eb2e.json",
+        "sha256": "b88d1b4fb959def901650e2e2b19344f138b3554290bcb81122b9eaee2fac4ba"
+      },
+      "output_sha256": "977f82a2f30b280f6443586c97fe304868978d95b861b3b5dc5d7d57d40d3a23",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "a940fa7213c2f36d953e597cd04952cbe33a752b6bfbc9f329438be00cd57558",
+      "passed": false,
+      "status": "assertion_failure",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.43997641597525217,
+      "content_sha256": "9bd68066f2664ebdbe2e965de0ab5b48de4dea02b5dca5578ace9716e9eaf3fe"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/41/vib/1",
+      "task_id": "HumanEval/41",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/735ec3e9a837333ef6712f1b2300c330791685b93ec5711a17266090012522f6.json",
+        "sha256": "f2c357ea9f223f30305ccb564e88bdd5b6ce957569e1c5dfc45ee957a135d595"
+      },
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "64f2ecef8447d2da2fc31930b20012a917b1c8c606c660f612662624b032754a",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31223725000745617,
+      "content_sha256": "fcaf016a76f1c1b276d373ba4ddfc4daa6c884039fa2ac7ea13000f13f6064f8"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/81/random_matched/1",
+      "task_id": "HumanEval/81",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/3c7fbe279bc4a71236e6e671fad89daeaadbcc14c561ef0732daeac6d4a26259.json",
+        "sha256": "1c85daf07d9d0075d65c182deef12d6b6fa0fc5935eabb680e929b1424aab187"
+      },
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "5daa59edbce32d3a769fcfcec63dc73fd275d69ebe31f653a500298864a4467b",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.35923975001787767,
+      "content_sha256": "60c37d584621e6b030b9d33c78d47571046b8857f6b7978ddbb1882719e6203f"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/41/cosine_matched/0",
+      "task_id": "HumanEval/41",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/3c2ac4714a150c99e8c981621bc4a09d6fc5168be127dc6f718d439ef18c1525.json",
+        "sha256": "cde0fd0994ae5e8e1fa693f345f70e89146dfd3c2319c0f59c081fc5cdf8b006"
+      },
+      "output_sha256": "7baa258a1ddeae57915d0be07bb97270d2273b68e93aebc957e6a14d797d9381",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "64f2ecef8447d2da2fc31930b20012a917b1c8c606c660f612662624b032754a",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3119615000032354,
+      "content_sha256": "5a9e2833a02d778c0fa94affda15159d99d1faa35bf08dd31f34424eb09a1be3"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/134/vib/1",
+      "task_id": "HumanEval/134",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/db3693b5445fcaee162096d192c3cffb66704100b40d8cdf46eca56093b7cb23.json",
+        "sha256": "26becfaba672fafa23f3189a43157a073352f8ac12a5139935baabb40411c2a2"
+      },
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "466b2386997f6dbef04282707a3c623bf7efcba0b3080e778996ee9d7c35e7c2",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.32956070799264126,
+      "content_sha256": "d36aafd53da69cc147c45c3aebe4f2960372672b40b95fa400d9197ff68fd154"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/50/cosine_matched/0",
+      "task_id": "HumanEval/50",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/c49c36db8b9f3d988fbbc4a529baa675046398c68c6edcbbedba4898447eaf10.json",
+        "sha256": "fb2be7f397c1d3a4423a9baae5ff98e4b93c966366b189d8383feb44643f0ceb"
+      },
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "092362793d445b5277e2ba6952b224be6f6bb4411eb360002b58504fd26c6a61",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3796258329821285,
+      "content_sha256": "9e96919bfc389fe4153f3387d31d7b2d7dc3869e85733b82e0fe7d19fc8c99d1"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/61/vib/0",
+      "task_id": "HumanEval/61",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/39fd417658a41ec49e5fcf50163d8ccff4e1435159734e546ea7ba51d0ab225b.json",
+        "sha256": "e67be97203700faf20f64bb27a30c9a32b479afed51f216a760e63e176a6bda5"
+      },
+      "output_sha256": "8fba6beac0ef72f4ef5f1d6529470b313b9d287fc53d1b2cdca51e5e55ba6114",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f978c5f11d412bd380d797bde9ece6032d1f1311ea42dbea46bc75a88ce13c67",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31830337501014583,
+      "content_sha256": "7796341993bc0f76b6fdc61081b7b73f6fd8334bd18aedff0e98728be020427e"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/115/vib/1",
+      "task_id": "HumanEval/115",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/c29387826bb1892b55dc3f1fee8311c1b0c67323a0101a290bcf9271818ae06b.json",
+        "sha256": "acd81b640b9d8712f37323572784b86f80042e79a740d6f2dd954b7fda8521b2"
+      },
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "43f300a5cf75d6337425305ede31bdbb7b369884e848b959a873f335b8cea8c6",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36862987498170696,
+      "content_sha256": "36351b74235521d0efd15a9c658eccc3cdfd2a2ae48d99eac55e7a2ac3e1dcb0"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/115/random_matched/0",
+      "task_id": "HumanEval/115",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/6e8a0343e89e1f9dac8a5d4fac8e333ee18d785c5f31407fcc507d5999b142de.json",
+        "sha256": "e327d1d9a9abd86506c16d258c523ad1e620d3a2f88e262c25e249cd7648a36a"
+      },
+      "output_sha256": "f2b88a2b8030a2b46c5ba3ff278af592c0c0c56145d70c27e7d65b52b10d0e55",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "43f300a5cf75d6337425305ede31bdbb7b369884e848b959a873f335b8cea8c6",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3732482499908656,
+      "content_sha256": "0290b95f78be0dfcba2543e91aa9769725011063cc0c4203be013fa011f33a31"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/9/full/0",
+      "task_id": "HumanEval/9",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/03f21862f33bf4fa37a6ed2a141215ff68cbba611ba9466ac511950cb0b966f4.json",
+        "sha256": "ae65139659522a6ce971aea50c1c6ac5ce1b217f30ac22c965135881bc129f38"
+      },
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.43042983300983906,
+      "content_sha256": "7ddeeab75279fffbb97223041abdc0c2c9bfc45cde41c845acaa364ff2c6ad2b"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/61/cosine_matched/0",
+      "task_id": "HumanEval/61",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/6b347ebbcc1a8ad19102cebc50dd72d3169660ba801cd7a09619c9cf568513d3.json",
+        "sha256": "40ccec0db752a0a4fa1d8561b8767dd179badd105625fd923f881a9f64510505"
+      },
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f978c5f11d412bd380d797bde9ece6032d1f1311ea42dbea46bc75a88ce13c67",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.38412633299594745,
+      "content_sha256": "61811444230cb00020e6cb09d3280489f67446586a4f2660f1aefdb90c051e25"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/133/vib/1",
+      "task_id": "HumanEval/133",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/b6adb86f1245cccf9cec5c1acfa10f4fc8f81aeff22b48146b2b2dc940500571.json",
+        "sha256": "04bd05b435e45c51da216985928a2ce0b799b62be4989fe0de00a5fc460c6b33"
+      },
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "32566aad8225f4744edbbb8a8893853c4f4e7438bcefb62c0d4358738c794754",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37813291599741206,
+      "content_sha256": "66ea1e1a2b93cafa2f99d62380eaf0e0980e10189e02a993dccca85365f498a3"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/14/random_matched/0",
+      "task_id": "HumanEval/14",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/ee8f6225222c209bb619f750ca5ea4c2a4ff4fa3268301ae0fe316067ef2b757.json",
+        "sha256": "58a6f3f1ab5e9306712470d37b1cf8ec61c58f5bca8c6dde83a764a63b8f551d"
+      },
+      "output_sha256": "7762ed2a8eea9ba2bc2bea344f507a963407e9abcb620b4bb90374945d82b226",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "6c579b507742d55e0be5220790a95555611000d1cd0a0b56167fc641b01f1bcc",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36702783301007,
+      "content_sha256": "ce09e7d887a79b3e1425952056d4c85aca27fed28233d4018ca326d7fc7a732b"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/50/random_matched/1",
+      "task_id": "HumanEval/50",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2a2cda630f016c88a43b3748fca1746e25630bdbdcd6293ef81882164be57fcf.json",
+        "sha256": "8e34a183ff3111bd03a40d29eb1735b09aae2bf78406d4d133c005102fc5ce51"
+      },
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "092362793d445b5277e2ba6952b224be6f6bb4411eb360002b58504fd26c6a61",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3642680000048131,
+      "content_sha256": "9f82f37ce1cf76b183c510878b535b0e3cdec83a5f80d5606269eb64f0c55ad6"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/9/cosine_matched/0",
+      "task_id": "HumanEval/9",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/ea63aa7d1db4781b152d95c7f9e0a30692cf9900eb850fb19214456d8f809b89.json",
+        "sha256": "ee5d30636c07ea2ebc4f91a8d0ebd5496b173c7ec01f021335b67244e435e2a8"
+      },
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3692665830021724,
+      "content_sha256": "51f5e7e3de4047521929a15fcd3b233fb7fbedacec3be844bacf11871fc1fff1"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/50/cosine_matched/1",
+      "task_id": "HumanEval/50",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/46435ca20648a05fbb9138840b4c1c7d5728a3213150fcc91a3a1fc6c6319719.json",
+        "sha256": "8bfb6603fd5ef429866db836e8addabc9e03c7c7cc58b9fb682512d157858e3c"
+      },
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "092362793d445b5277e2ba6952b224be6f6bb4411eb360002b58504fd26c6a61",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37100108302547596,
+      "content_sha256": "d96307a007e06b33e330b3cfd0ac89dbad9ce8f6cda17b011681441443d701ac"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/153/random_matched/0",
+      "task_id": "HumanEval/153",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/e302284fc67ccf4cce2f1f632b0b87fbdf3c9efb17970d797ce9d03000fa6ad8.json",
+        "sha256": "74989d84c5c6659828b024b991fe4f6ecf8a0e01b430ae814fd5bbd03932af79"
+      },
+      "output_sha256": "f9eaadc6a924aaa8b4c52692a4f3a3c16584e58fb99a4d7464194323f5189aad",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f7f3f0dd7e482f90e6683c7cdfa28f43cf87763ef1e692cc2c524c316b753912",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.24362341698724777,
+      "content_sha256": "889564cf3a89522ec4e6a6405c82fb8984fe56e64fefc1df083b11ad1b4e6bc1"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/117/full/0",
+      "task_id": "HumanEval/117",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/a5f6a504b84feee35445cc7f020c7c7e2f4636d7951dde305f7520e1ad4528d9.json",
+        "sha256": "dbdfb1a5a7d49df71eee987f5c723d01142a54ad24bf858b359f373047826ef1"
+      },
+      "output_sha256": "e8fb4de152ccd0db9ecac05933e18f5af3458bdf04922982a100d563a12ba4f9",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "31b5e48f4c9a846da957c8b5a53c99d17df981dcf68090cd03d0737a8a15ffc5",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3632199169951491,
+      "content_sha256": "feecc9ca913d7007daa48b8de9cec95e8770a5f6814f202a07df14dee34f1e65"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/14/vib/1",
+      "task_id": "HumanEval/14",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/5dd3678647ae06443b6b89ee9f6a644cd4148f46ebe8ad376feeb934aeb3fddc.json",
+        "sha256": "6c41cca1ff99f2c897c6db7aec8f77bcc090e7238a5d1723a0f5192644e647de"
+      },
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "6c579b507742d55e0be5220790a95555611000d1cd0a0b56167fc641b01f1bcc",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3891601249924861,
+      "content_sha256": "fae4cbd49b86cf5a281554d1faccb7db03438348e4de61127382aa6a6bccdde6"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/81/full/1",
+      "task_id": "HumanEval/81",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/895618191062028709a3f4ec9ed7c3919b0e778fd02fe0ca2d5edb0b186b8191.json",
+        "sha256": "930b371d2d7d9afec5ec227a8134da36464c02eca90d437510261afff8fc5590"
+      },
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "5daa59edbce32d3a769fcfcec63dc73fd275d69ebe31f653a500298864a4467b",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3583823330118321,
+      "content_sha256": "b294628b8f66c834d72cefabf8d9e630917b5f191a58a55389594d3c916f6888"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/9/vib/0",
+      "task_id": "HumanEval/9",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/f28664ddb91348cabf84fec99ec6aac3a9d3f4ddbee60dc13b686581077e78a5.json",
+        "sha256": "06f9a6e1567da070616601651a98aeab0cf610de0fe3e0d7f6dbd0a13f1eca92"
+      },
+      "output_sha256": "12077b10bfb35a53676183d8c1d4bdc0482c0bfae83782aa7ea12a55bf0a6a7f",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3855776669806801,
+      "content_sha256": "0ea27c04bbb80aaacb28209b22dbc253d2cb26d0c5f2b2b46b1eb4098b195252"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/74/full/0",
+      "task_id": "HumanEval/74",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/cf10760e68bd6d88cdc12bcfecb449cadb9b7fb034bf5df005a204fe3712f31e.json",
+        "sha256": "f42924b4970f515888e37187a44ce6bfca7865cddb03b14574a4b6cef764324c"
+      },
+      "output_sha256": "b0fa8d5c8be00aa0bd0f7c6b3d52a2a63a50fca3f18edfce390b864d1a322f61",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.48817612501443364,
+      "content_sha256": "466845883fb0696a3d03074f06cf5e2c4467d8b648682f8f4d109dd35e76c1db"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/117/full/1",
+      "task_id": "HumanEval/117",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/8530882233504035d3fe699607aad6b08c6d7f634ce20604c35c95ca8104c7fc.json",
+        "sha256": "a19b4fbd3236b2a74c8a1fc699f4949d6ab4cd5fb692bcd34167e60d8df81f8e"
+      },
+      "output_sha256": "e8fb4de152ccd0db9ecac05933e18f5af3458bdf04922982a100d563a12ba4f9",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "31b5e48f4c9a846da957c8b5a53c99d17df981dcf68090cd03d0737a8a15ffc5",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.327926291996846,
+      "content_sha256": "bdbf9a1fbf88b934e124188b128d6591c141b918e8cf913c30d90569e0e541f7"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/41/cosine_matched/1",
+      "task_id": "HumanEval/41",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/c292e5d66c9d875c6ec1f18ec886250c556fafcff391f22346c5da4010c777ed.json",
+        "sha256": "2d12ed7f9df03baffccf3123877390d3fa0cf87119629ae1050c75cf716cfe52"
+      },
+      "output_sha256": "3cdc3c046d70fae8a27245fe113135864eb37fd60ce78aa83c5def522b53a66d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "64f2ecef8447d2da2fc31930b20012a917b1c8c606c660f612662624b032754a",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3159214159823023,
+      "content_sha256": "e1b5a0f3ae2cf7713031d2ee7135a081fb3a2859f642d6bbc2158304ed7673be"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/153/full/1",
+      "task_id": "HumanEval/153",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/7a9a59bf035ae7b8ff1bb9a71b780adf426b7feaf6c2bdfd5cef25c9771e5ae9.json",
+        "sha256": "4d54c1cf01bcfae1f34c4fa00296207b3902d7b5965743c20bb53ef0045be81c"
+      },
+      "output_sha256": "3ccfc5d7d07f6bb512dab38db156e87f4b37375ba8d43aee662d502d556b4743",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f7f3f0dd7e482f90e6683c7cdfa28f43cf87763ef1e692cc2c524c316b753912",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.2454103330092039,
+      "content_sha256": "154978124c325be4fae3ca3d700ff8a8599cd6755ccaaa418682da404631edf5"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/133/cosine_matched/0",
+      "task_id": "HumanEval/133",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/1daf5cba4e3940281cdc6cee1f4d86a35f4d23261378f972fea0aa7f0e89f8ba.json",
+        "sha256": "56d183bc4b38bf5a9321e5fd23512804d4dcf7fa05038038c19312b387fbb841"
+      },
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "32566aad8225f4744edbbb8a8893853c4f4e7438bcefb62c0d4358738c794754",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3646350000053644,
+      "content_sha256": "e35d0e299f332536f69850085b7cb709e073f5efd31640fa5e469604c2821f0f"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/134/vib/0",
+      "task_id": "HumanEval/134",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2282d1ede7dea406f4a76232c147b4388324e7ab2fca8ab6b81ab06b14f8b419.json",
+        "sha256": "bd3224bcbbf662a307bc32241982f908200ba3864efe0ed550dfa8526182ac93"
+      },
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "466b2386997f6dbef04282707a3c623bf7efcba0b3080e778996ee9d7c35e7c2",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.2571741249994375,
+      "content_sha256": "4b4a4f3933cb46e097fe7ced98be4dd57d8767dc01ab596f82ad3a273764fe06"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/41/random_matched/1",
+      "task_id": "HumanEval/41",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/bcfd6970676e859c47d6996825f91d4a63edce543ddcafbc7fd154bdbf011fee.json",
+        "sha256": "3a6f68f047261de3a1e0ee944ef192bad40cc329ed9a31977cd8ebb6824c72a5"
+      },
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "64f2ecef8447d2da2fc31930b20012a917b1c8c606c660f612662624b032754a",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.30843091700808145,
+      "content_sha256": "4c52845952415f126b68179a3bfe0cc53a53ae708702c9684064c42dccee5b0f"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/60/random_matched/1",
+      "task_id": "HumanEval/60",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/615c7e276391c659319dc7e76639f14c2e0e7a6dece6f0e725341721d5de89fc.json",
+        "sha256": "190eb5c2e53160b5ae78c312f49f4e410582779ae68e98c6ce2321146dc9007d"
+      },
+      "output_sha256": "1f089897191d96b86e535d3ed1e1a16be380a583169e20892f6577f9058d5912",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "8e1ba86302a2dfd0c5c32b4ccb4559b27b0e2151ece4ed85912ee2abb753258e",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.29247787498752587,
+      "content_sha256": "9f8d3b89de46dc49125b7d1cb3055f738611b8e243f6a6b3c7fc3c7b40b55ea9"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/71/full/0",
+      "task_id": "HumanEval/71",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/c10b65909a798d9f7a930ee18658829ed5ea63320c3a5e6671cce3f429fcc4b9.json",
+        "sha256": "35327b6f9fa919250ce3da890f49feb77597b55cbc5977b161f8bbdf93a21f07"
+      },
+      "output_sha256": "8d2052427763934c853a4587b02d32202c4414b450ecfc58731aa7db19df997e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "d970e7e282ae88bdd4a0453f7aea4ed933a574f44b26be2591b377be74c832be",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.29400758299743757,
+      "content_sha256": "de576d5c16a2af5cc4177677a9d269b58e18cfe598323f802804ab8c9442b8ee"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/14/random_matched/1",
+      "task_id": "HumanEval/14",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/b9d864079eb8f9eaed7758e10e55135056d5aefd73e35e1ad03439e5e1f836e5.json",
+        "sha256": "13fa923e4fdc4ce3ed3021c1b39a9270f636b2b3537345f735191083da37f4e4"
+      },
+      "output_sha256": "7762ed2a8eea9ba2bc2bea344f507a963407e9abcb620b4bb90374945d82b226",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "6c579b507742d55e0be5220790a95555611000d1cd0a0b56167fc641b01f1bcc",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36139525001635775,
+      "content_sha256": "d20db4617de12decb5741b408e4c087389e73124321c2b5798b4a8ae331d3a9e"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/41/vib/0",
+      "task_id": "HumanEval/41",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/eb5f3b8eb0bdd3fe9e71a28c42f06c85d715ec58bfd346385389e9a11511f0f6.json",
+        "sha256": "e698a72debae9fc12f07f13d5da15ec507cfa5bd271330694b8bc6e36d6ac887"
+      },
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "64f2ecef8447d2da2fc31930b20012a917b1c8c606c660f612662624b032754a",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.33593812500475906,
+      "content_sha256": "e83cdaca5e0ac82eb23c804bd833cf61441cdc3b90cae0f30738ad730fff5532"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/134/cosine_matched/1",
+      "task_id": "HumanEval/134",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/bde119b73929e6550f0b266027741516acbea8e4c8534b0a5f39d523efa2a27e.json",
+        "sha256": "48cc58b13d83e28c1a3edfb4c17e65b1b9d334031a655254a4ae9e640fdfbc9d"
+      },
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "466b2386997f6dbef04282707a3c623bf7efcba0b3080e778996ee9d7c35e7c2",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37353520799661055,
+      "content_sha256": "d48e46177dcba48d89c464c028c2e95dfad7c656bf06a07d6bf8679d2e9e57e6"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/74/vib/1",
+      "task_id": "HumanEval/74",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/8c3c1f0e0896418aba3ac39047d4989e854c138c1a17eb56ca75d36a57941d9b.json",
+        "sha256": "250de4865e1caa79ac823dd5df40faa39c93957d6fc342571cf2bdbb63aa3f13"
+      },
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3831077080103569,
+      "content_sha256": "fbb72c5d8e66b65e69e3dac72e2676dbdbfe85491accf7129f0b7dab5aec96e7"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/9/vib/1",
+      "task_id": "HumanEval/9",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/6c9f0ae17c325a098d2f0b00d2faeecdc36f98d27134588ac0238034a5afbb2d.json",
+        "sha256": "7df1809ae521812996308bcc9fb1549db15adc22f2cffabe37db0d269f78b94e"
+      },
+      "output_sha256": "6d978dc818d800a4436fcbcc4f3479194d1bd898f4a1d942def314a5d6a68992",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3997095839877147,
+      "content_sha256": "edcbc3f53c675347d1a36621f80cc00e7410fa863f1077f79ab73ae3d7e830b7"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/50/vib/0",
+      "task_id": "HumanEval/50",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/9dc28eb76db8850281308b395caa1b696bc8515911a81431d58475863fe17668.json",
+        "sha256": "d66fccb3cdc3ffa5ab071287330a4f97ed8c6dbe106c31acbb8885a3b9b2f6ab"
+      },
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "092362793d445b5277e2ba6952b224be6f6bb4411eb360002b58504fd26c6a61",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3812542080122512,
+      "content_sha256": "68f8f500b6a577f08490df32af030d1b8914656301d13b3859c8476068b84d9a"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/117/random_matched/0",
+      "task_id": "HumanEval/117",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/fa1604e9a76997de08b063f4a81c39e0c8536c522f2209a39585d92020fb330f.json",
+        "sha256": "201ae23686a54d1dc4e4d8d698b5344492bf0057dc3dcdda2bf965c30e19b2e9"
+      },
+      "output_sha256": "85d71d885e8528b85d1701000a036976db9066f4baab90e461f6eb87b060d587",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "31b5e48f4c9a846da957c8b5a53c99d17df981dcf68090cd03d0737a8a15ffc5",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3402696250122972,
+      "content_sha256": "bf987217c921c67e376a9a25946b3672e75ee30df272faaa368d6eae436f83a8"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/41/full/0",
+      "task_id": "HumanEval/41",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/6bc6b0ac91159f2eae906252b5cd573c4997b9c4822e0675fd4b818a0d4289a2.json",
+        "sha256": "8593950f2ce2666d823bb88ec273ba67a1bfe6c038ef6313d527c529b9dd629b"
+      },
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "64f2ecef8447d2da2fc31930b20012a917b1c8c606c660f612662624b032754a",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3181502920051571,
+      "content_sha256": "67e3c74af24b1177e1bd16aa1887786e29863217a7909ffdba2a01e44ef0f057"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/61/full/1",
+      "task_id": "HumanEval/61",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/33f533a854806423422e9dc741f9bc5017aaf8c7f7f9d703a5e153cc4404e1a9.json",
+        "sha256": "c93c1607106bbafefaddbebe9fbabe1814a4c08ad75c503db384e567972d762e"
+      },
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f978c5f11d412bd380d797bde9ece6032d1f1311ea42dbea46bc75a88ce13c67",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.32208937499672174,
+      "content_sha256": "c0732e434b056de5f98f60cdc7cbe844f47a2e3b5a9f9aa9744f30ee2b07af8a"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/153/vib/1",
+      "task_id": "HumanEval/153",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/594be2d64351fae8b4db8c921febfed19c59e31f94d57836d8101d9d5f993c3a.json",
+        "sha256": "acca6b66ea05d411011579530c0cccb9156da17785d6cbded1cfe34cda84fff9"
+      },
+      "output_sha256": "73afd1ba019d71bb752745aea8d321f66365eb0f5782ac4f9e2c103517b60803",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f7f3f0dd7e482f90e6683c7cdfa28f43cf87763ef1e692cc2c524c316b753912",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.38906441698782146,
+      "content_sha256": "c921497d438ed18c2d10e176e42a8cb134ef6f839bb7d4dcb2a18c2d5c7cded5"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/60/full/0",
+      "task_id": "HumanEval/60",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/4525d217705030d7fc6de8b25096d9e83cfcdd984c049b883a6efbc524e303c5.json",
+        "sha256": "4d7dc0efe720abe4f405ab9f1f2c2f7e2ec13d3033c301dfb8497db93d1123f4"
+      },
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "8e1ba86302a2dfd0c5c32b4ccb4559b27b0e2151ece4ed85912ee2abb753258e",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31523791697691195,
+      "content_sha256": "89002e0c59ab3e964de344c3b7cd3925594c0b282abd3fe71caae43a175f5eee"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/42/vib/0",
+      "task_id": "HumanEval/42",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/ae94237d799da9491b9d5da1a5fc3392e26390bd103e2ea0d661f4420e59c0d9.json",
+        "sha256": "4b33c0fa94f51911d7e77956d32ff58c3af5be886ebe74be904d8e70f32de630"
+      },
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "55446f68f20497e5125223c8b1402c9b76aafc1328723c5e752359621ad48e85",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.34363533297437243,
+      "content_sha256": "7852777b993ac29cface59d69103883e24a4248dbcaaa06b2c9a9672e0ea8827"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/50/full/1",
+      "task_id": "HumanEval/50",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/f648c26492cfce1383ac06a7b91f214112e2e9b3552bfcce547654358c3f036e.json",
+        "sha256": "70f13a8da593bff95b78c1e536f3da6d4640624bad9f4a0957315605877b0d14"
+      },
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "092362793d445b5277e2ba6952b224be6f6bb4411eb360002b58504fd26c6a61",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.337586250010645,
+      "content_sha256": "b614752ed26ba0ffc166ad7f584ffbd453f88955389992e9cfd22bcb923cb7e8"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/81/vib/0",
+      "task_id": "HumanEval/81",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/14135725e8984590e20e522eb873f551a06b775ed19649af7e1a46a8a210ae50.json",
+        "sha256": "4c6bfa11ec8fa0748069f00c24908c7015560b764a44c850ea3686eba4adc067"
+      },
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "5daa59edbce32d3a769fcfcec63dc73fd275d69ebe31f653a500298864a4467b",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36261337500764057,
+      "content_sha256": "f145257a865a08b243656a8617a96080684ea56de297ee6baf760531fcfd8674"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/60/vib/0",
+      "task_id": "HumanEval/60",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/f750e1c56c46f105c79dc330af662fe4973d8d9009abd0ecdabf33e805c8ee94.json",
+        "sha256": "d0cc179d03380171b04b66966c87e8c6590ee389e80e75e40c29d7b763a8d1db"
+      },
+      "output_sha256": "1f089897191d96b86e535d3ed1e1a16be380a583169e20892f6577f9058d5912",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "8e1ba86302a2dfd0c5c32b4ccb4559b27b0e2151ece4ed85912ee2abb753258e",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3317307499819435,
+      "content_sha256": "d5b72f4ff1983a5c72a64f835f527184d3563c3f4338f301bfe2c3f82c54625e"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/61/vib/1",
+      "task_id": "HumanEval/61",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/54c956e0b8521cb4d0ab1cdce9f79ede6e129ff911251e7dcafcf902a09642a4.json",
+        "sha256": "28dbe78cae11b57b11ca07476019279754c2346e1a8e198d242ca246894ff937"
+      },
+      "output_sha256": "8fba6beac0ef72f4ef5f1d6529470b313b9d287fc53d1b2cdca51e5e55ba6114",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f978c5f11d412bd380d797bde9ece6032d1f1311ea42dbea46bc75a88ce13c67",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.34830233399407007,
+      "content_sha256": "d9254024f2267ff1ab8f045db183665b39aae84ff878311ffcfa483853366708"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/61/cosine_matched/1",
+      "task_id": "HumanEval/61",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/7e079cbe555cffc9da2be697a67f104d2561287dfc5ee39f20e48db5aa2fc456.json",
+        "sha256": "8046fea54358ad07fdc40d2ea7d11fd84540fe0cfbae07b201c630abbab7a2a8"
+      },
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f978c5f11d412bd380d797bde9ece6032d1f1311ea42dbea46bc75a88ce13c67",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.2452382920018863,
+      "content_sha256": "6f3b3f3b24679aa3db6fc6deb7f22c4e39b4269d7f5810147623c956dad16bfb"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/41/random_matched/0",
+      "task_id": "HumanEval/41",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/741979b7a01bee69e419781afa7c315b1250c2c44741b99ec1c76eac753019ba.json",
+        "sha256": "36b85a70a503bd870b84f948ab954a07d2fb61e170198a463c8ae5f19a48b319"
+      },
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "64f2ecef8447d2da2fc31930b20012a917b1c8c606c660f612662624b032754a",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3176724170043599,
+      "content_sha256": "40298268e793ccf88070e69898e6e834753df147adab3e1046bc791ba5b73de9"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/153/vib/0",
+      "task_id": "HumanEval/153",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/bc83031988485bb7a6bfbce1b00db8cdaa06658e01ba64c3679a566523b38c7e.json",
+        "sha256": "69e434e96630c124670ba3e6390b19759321f62b6b5d75b51da05a203bf5c80d"
+      },
+      "output_sha256": "73afd1ba019d71bb752745aea8d321f66365eb0f5782ac4f9e2c103517b60803",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f7f3f0dd7e482f90e6683c7cdfa28f43cf87763ef1e692cc2c524c316b753912",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36823604101664387,
+      "content_sha256": "d6e1cb42986e7f482ad280a8a0f8191078b6a99604298d133f64863f583b1f73"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/137/full/1",
+      "task_id": "HumanEval/137",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/ad0aa0b73a265c9895d5a8ecd663f80379b85aa7f9c5478f4e6f4c5771f2702b.json",
+        "sha256": "f2f04ace175d4a464bec8e709e0bdb8937a3773b215f22d4364159109d61586e"
+      },
+      "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "a940fa7213c2f36d953e597cd04952cbe33a752b6bfbc9f329438be00cd57558",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.4022285419923719,
+      "content_sha256": "5ace9cac44dffb0fcb7ef425151f31a0f93903613ce94119f992d47f63048fba"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/71/vib/0",
+      "task_id": "HumanEval/71",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2ba3b78d5be85633cb528f5b758a6695d22ce7384d024036922575c2ace7a0c6.json",
+        "sha256": "67373f2bc763cca14fa644890969c3cbb0a799093af7bad19cd6bbb8555f3e3b"
+      },
+      "output_sha256": "9fb9aedeb83b788de163433391224d161ba92886c345f4afe7c7036060e7f5cb",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "d970e7e282ae88bdd4a0453f7aea4ed933a574f44b26be2591b377be74c832be",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3587393749912735,
+      "content_sha256": "4003ae7bc67c5ce4ac4b3d95a224fb3dd9dfc0aa511b093199b4adee15ae2445"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/42/cosine_matched/0",
+      "task_id": "HumanEval/42",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/1dc8b2f83072c5dc58c0501d8f91d1dfcd81e24590c2a291bcbda79379214d9a.json",
+        "sha256": "834feeb1b0c541b6511a5c96f16709effb75dd26f571afa7fe48ec18dd72017f"
+      },
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "55446f68f20497e5125223c8b1402c9b76aafc1328723c5e752359621ad48e85",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3771949580113869,
+      "content_sha256": "bf5649526cfbcfcfdf91a77687d5927ee385dfc343c90748fc44866ec5381979"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/14/full/1",
+      "task_id": "HumanEval/14",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/fe89f6bc653b0ef89f3bb1616eb4898f2c940658fad60a42bb82396aa96496c0.json",
+        "sha256": "ae0f70ffeb3105979caff42a868287b30162517c4d8b30298ca07e83257d6948"
+      },
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "6c579b507742d55e0be5220790a95555611000d1cd0a0b56167fc641b01f1bcc",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31468483302160166,
+      "content_sha256": "762868b5a2b8649be98fafefa798731952d77ebce6b67383985916169eeefd7a"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/115/full/1",
+      "task_id": "HumanEval/115",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/97a315dd8574b4935e78667210c858697c9dc1cb98936c24ef70751accc0aeac.json",
+        "sha256": "935ecfc030eef703b14f3d96027d74e28ec219d2074a2403fc7fcbec65ad097c"
+      },
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "43f300a5cf75d6337425305ede31bdbb7b369884e848b959a873f335b8cea8c6",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.4009745829971507,
+      "content_sha256": "ef1ded6c9152179a7ac764913133660e44ec7eade6c7738ab511c1640239b942"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/115/vib/0",
+      "task_id": "HumanEval/115",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/886af0e3c2e6214ee4f5938787ebc6c630b5a62a8b63cc8a32027238b18c3040.json",
+        "sha256": "3cc30fba6a82460ed049afc5456542614d3a279fdb069383086fa4874e557fa7"
+      },
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "43f300a5cf75d6337425305ede31bdbb7b369884e848b959a873f335b8cea8c6",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.39616750000277534,
+      "content_sha256": "2333571717037b6363650595fde51d63b7f2c4c1d62e1962ea81178aa0bbe797"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/42/random_matched/1",
+      "task_id": "HumanEval/42",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2208c2624492166f94c3642d01cbf492cf2ff57cdcc0d09cf61d4e84743286e6.json",
+        "sha256": "63f021d46607588f0bd54684a13ab2533a0b9d4ee806f83dea6f67a9fbf57f0a"
+      },
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "55446f68f20497e5125223c8b1402c9b76aafc1328723c5e752359621ad48e85",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36654062499292195,
+      "content_sha256": "9a23a2b50ba0c3e9f66915dd434725d0832df8db4352cbd429903be9a8065f9d"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/9/random_matched/0",
+      "task_id": "HumanEval/9",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/6cbccad9e8a0239434356c4df931f6ed513dca213861e6d890b066323f3b61ea.json",
+        "sha256": "83bcf98a6a9a54c2f185eb544a3a68aa11e49c7179c54c0c260b46664e7e6f80"
+      },
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.38459199998760596,
+      "content_sha256": "ff98e56e731db4e234c4e83accca34cae1b59c404f98dd3317f773fbd77d8ed4"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/133/random_matched/0",
+      "task_id": "HumanEval/133",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/b5b007e20b85463b696fbe763bd8e0a2d50b13c863266bd38056847408fd3da2.json",
+        "sha256": "9fbc83613b25d1e1ed693f0f9b842859a9df840c53456b15fcde7da5f0daefdb"
+      },
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "32566aad8225f4744edbbb8a8893853c4f4e7438bcefb62c0d4358738c794754",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.35830862500006333,
+      "content_sha256": "d0001b4c64562ba399533e2cf1d8db3eb17a126fa55f61fa61ccf80311c52742"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/117/vib/0",
+      "task_id": "HumanEval/117",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/00186b2d50bf6a03a1608cdd8d63f779cb61a88e0e71418a0c6a9a985b17ea30.json",
+        "sha256": "71b43395a48ced2ee7d7acef02b02dc38f1b908ebd736adf3de911d877594dd5"
+      },
+      "output_sha256": "e3d20bf1557ad16a5486e60056f4dd7809d2c315630fdc4a6b87fd8b632244bf",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "31b5e48f4c9a846da957c8b5a53c99d17df981dcf68090cd03d0737a8a15ffc5",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.32975545900990255,
+      "content_sha256": "a1ddb2c01cbc3938fc31d6bf472d2562859d8dca5162ee258ff8ce34e64cca24"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/61/random_matched/1",
+      "task_id": "HumanEval/61",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/84753049a00bc5c8bc504be6b3287829a4f92c4debfd943bb96cf3d957b070da.json",
+        "sha256": "ee62c62c2e79cbe6887000535b7a95c51370558b3034736e12d517c60b60fc80"
+      },
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f978c5f11d412bd380d797bde9ece6032d1f1311ea42dbea46bc75a88ce13c67",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37564904199098237,
+      "content_sha256": "baa8e723c017773c054b8714a2f20ea08ed022c4af7e76130dc068bfa4fe2aa4"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/153/full/0",
+      "task_id": "HumanEval/153",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/7b95fe40fa91e78d9c99426e2701faee481368fda8193734bf4c8bf90841a559.json",
+        "sha256": "9009ef1ca96d73d7e7e449744adb52f37e000bae83c67ba948e6f2115c84f772"
+      },
+      "output_sha256": "b9a4c59366d2eaba349655ccf887b7991218c9c6ca0ee67f5fbd23d20a6b6f19",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f7f3f0dd7e482f90e6683c7cdfa28f43cf87763ef1e692cc2c524c316b753912",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31834712499403395,
+      "content_sha256": "111e6fc0e2bbf8ee9d14c1a3003082e786758216efa560f97b7edb5632e43084"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/137/vib/0",
+      "task_id": "HumanEval/137",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/cb494c1a9cefac7b98021599c5a74661dfdfcb92fbf77072c89bb6ed16760ec7.json",
+        "sha256": "f769a197ed9c92bdf3c586b804b2b2b17ba2b61037f9a5baf2fb248aae1016f2"
+      },
+      "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "a940fa7213c2f36d953e597cd04952cbe33a752b6bfbc9f329438be00cd57558",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31247712500044145,
+      "content_sha256": "3ef4313196b4ae74643c2b48217a538b7f1ad348b2433a32ef4aefb2ed043e08"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/81/vib/1",
+      "task_id": "HumanEval/81",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/44a768b57e58f6fd8e31594e56987681fdf5ab2d12abf5090c821b297a963f7c.json",
+        "sha256": "755dd567094ad62538a25ef72ebb4da33e57d2999ec645efda12230a12f37c26"
+      },
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "5daa59edbce32d3a769fcfcec63dc73fd275d69ebe31f653a500298864a4467b",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.39108812500489876,
+      "content_sha256": "f150791562821dd91fb0f74b6d1c883a92607ab191b8d6608c106e2d5727c985"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/134/full/1",
+      "task_id": "HumanEval/134",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/b6aa21c305e91c3f0b7aec7c7b3de66ed6e09de99f42f9721d9117bba4b58254.json",
+        "sha256": "e3c3c8e26341b11169eec038dd24b76c040d00746afd4642edeac97522636b0f"
+      },
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "466b2386997f6dbef04282707a3c623bf7efcba0b3080e778996ee9d7c35e7c2",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.2285377500229515,
+      "content_sha256": "c3bdf21f9d9a28ffddd0a4d4783952a895676b316b099675485ad1a03e0bbdf2"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/133/full/0",
+      "task_id": "HumanEval/133",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/76bae1c48db6b386faba98a7b10480931c7dd82e642039b1b10daba7a6740263.json",
+        "sha256": "ea3b088b8c1c01735fe1636bd884d3ba5687971c2e0c250b9d59329e5ae965ee"
+      },
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "32566aad8225f4744edbbb8a8893853c4f4e7438bcefb62c0d4358738c794754",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.40233808298944496,
+      "content_sha256": "6b7f49ab5cb0a4f4a85fd33f75cb6a51bc97d35a63d4aa77024f338a947228b3"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/9/full/1",
+      "task_id": "HumanEval/9",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2cda056aecbfd12cb2aa99eb49e2c5a3e745cea8816b2e266771a05e2d8c6e86.json",
+        "sha256": "9d4ca632bd707ca5a01d7619e1a5898c843bc44a0a136dfeaf36395b45968db7"
+      },
+      "output_sha256": "5c0c271fa9caf4ab89a0ef3c53f06e6f78d6764a027987010f56a5186f54ec9f",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3574017079954501,
+      "content_sha256": "bcbdba2412336eb361190c8b73a9b89d534ebf9e07e6db844cbdeeac9709f819"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/117/cosine_matched/1",
+      "task_id": "HumanEval/117",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/6b1ea9e4f925ef521cbf13c0a39e116403de8d9836a1a26045b2422bd3023994.json",
+        "sha256": "10fd9812ab97b96c8b162681405cf58f716acfaedb547395503fbbe81ab6b12b"
+      },
+      "output_sha256": "3ae99f1fc8169b7974893f69bf39d9581c0525c008452ccac81fce6c9bcff98d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "31b5e48f4c9a846da957c8b5a53c99d17df981dcf68090cd03d0737a8a15ffc5",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3680432090186514,
+      "content_sha256": "90fd443b107d62f229b9f91995498279d3e9468882ce6d292418b604c53923a6"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/133/full/1",
+      "task_id": "HumanEval/133",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/f4b133a6121cd9ed2b8e5eee0405d459da0cded69cc29d8552797a151e71feca.json",
+        "sha256": "045a06cd05dc5c63756b8da3242faaf848d91a97430727994f69335b9ac94d37"
+      },
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "32566aad8225f4744edbbb8a8893853c4f4e7438bcefb62c0d4358738c794754",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3595962499966845,
+      "content_sha256": "39306310aabecb6a6389d2213b88a597ab52ab102912f639408f1dcbd53d7cbe"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/60/full/1",
+      "task_id": "HumanEval/60",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/04bfb493431de9aa5cd748c50f90c40dd7b3d2eb78cc54661e50603664d37552.json",
+        "sha256": "62f4c14e4dd8ae19f27734aff9924d6d9eaf2bfe36c29e877b9cf5d32afb3308"
+      },
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "8e1ba86302a2dfd0c5c32b4ccb4559b27b0e2151ece4ed85912ee2abb753258e",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3147926249948796,
+      "content_sha256": "9465c68634b6dca46b9b592b06772a5d7e0a79d0074818d399632f4cd3767160"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/9/cosine_matched/1",
+      "task_id": "HumanEval/9",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/eabb470a5a62b40e09f95ba8c18c013e282627047e30f33927ad0f941c6a72bd.json",
+        "sha256": "07215257dc78f4c5435d470cfce1895da0a8a0c703ecb43ae9143304be5c8526"
+      },
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.38696641600108705,
+      "content_sha256": "c5b36247ac6e3d56aea3a0e5464f814925b7faab69dbcf84013b41519d7af178"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/134/random_matched/1",
+      "task_id": "HumanEval/134",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2f2b0ff9c753d35158b8f2f9de63cf95b22857693a7f055d0b71b8d247b63b12.json",
+        "sha256": "84e6e92588c3edf94d7e2533046382e01e2c95b1528a8169bf4647df07588d98"
+      },
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "466b2386997f6dbef04282707a3c623bf7efcba0b3080e778996ee9d7c35e7c2",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.24046541602001525,
+      "content_sha256": "35dc350c006aeb4177ced44e877ff7d32d8bceb98e74ad528da09bdb7cad74b0"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/9/random_matched/1",
+      "task_id": "HumanEval/9",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/160169f663d2dae815bc4c52561905998d7864a0d76e0a432fb2fed2fc392320.json",
+        "sha256": "99e083c431927f59923bbecbc24a91196b6820082afb2a4a8d47fcea9793fc9f"
+      },
+      "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3989926250069402,
+      "content_sha256": "8f7de2e9a37adb3212acacbb70918d4315ab9aab24252f9844a681ce881f883a"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/137/full/0",
+      "task_id": "HumanEval/137",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/1bc3e993de6026ce3d6786996286403886ad55a066d627325393b7b344ead5cd.json",
+        "sha256": "beb1c69f923d5d7b58a538a4887be992a12837e0ed71ce9dc067f694f8b3cb4f"
+      },
+      "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "a940fa7213c2f36d953e597cd04952cbe33a752b6bfbc9f329438be00cd57558",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3754762079915963,
+      "content_sha256": "2998e2e363c9544ae77afe1290ac53d6a83de9068c7a438a655794d90024bbb6"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/50/random_matched/0",
+      "task_id": "HumanEval/50",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/3711cb291d931ed47b841950b19dd100b1610ddbff962a0fd13b7711fe69d42c.json",
+        "sha256": "802561b028a01ee7476a9f7de43ce2e2190234984f3c31a22b946104f566d9e0"
+      },
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "092362793d445b5277e2ba6952b224be6f6bb4411eb360002b58504fd26c6a61",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3885127500107046,
+      "content_sha256": "e8a1bc05d486cb212e72653acc325df9f904a8dd7a125e9faf37b3fdfbdac072"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/42/vib/1",
+      "task_id": "HumanEval/42",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/a56f26d424a71021c048fc4b32e0db57d4c1d48e65871dc7a397cb19c523a0da.json",
+        "sha256": "b6726729bca88874b95bf2175c2ac54881237b94e181a932e33c5593c8e2e73e"
+      },
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "55446f68f20497e5125223c8b1402c9b76aafc1328723c5e752359621ad48e85",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37349729202105664,
+      "content_sha256": "35b636a39a6984e3440715be49c524ebb518535a7792375b43e948c835c88d97"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/74/full/1",
+      "task_id": "HumanEval/74",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2af4f8ab45068ac4601721d66a5c622537775f5d4cc4624eba7a7b62decc915b.json",
+        "sha256": "47a3cb76f08fcf925d03ba36b419563ab3470f7f387e07475f9b0d93a7cf6ddc"
+      },
+      "output_sha256": "5ce8ea1d181038efbded7d93b0581637c3e83894ad0af868322f8ca3c3733f78",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37737091700546443,
+      "content_sha256": "54d2427f23f6fac06e5cb16262c98b678b65d0d8624e9259f00927588b665095"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/115/cosine_matched/1",
+      "task_id": "HumanEval/115",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/0670dc3ea4f4998e1f821c02c8438d2ad78b21252900fce0f792a79c6b89090f.json",
+        "sha256": "355f940ce91379acda69255abd45615bfd3d9cff3edbde363df83afd8ea45abf"
+      },
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "43f300a5cf75d6337425305ede31bdbb7b369884e848b959a873f335b8cea8c6",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3737339169892948,
+      "content_sha256": "f06438d108353438983259980a98401090541d45e5b8adfaa7a1ca6a6d48ad73"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/60/random_matched/0",
+      "task_id": "HumanEval/60",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/d1f013aa0d78c1565bca5751ac3c684dc49b64cccfa29d1ffcee93640a10865f.json",
+        "sha256": "80008c5673dfc6683c9540a72b7fef5a4de72fa6e2c4822a4046f55bab2366db"
+      },
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "8e1ba86302a2dfd0c5c32b4ccb4559b27b0e2151ece4ed85912ee2abb753258e",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31773070798953995,
+      "content_sha256": "9e3505dd431670aa34eab781a96cbbd76c1855674b8e9251d7d06ade08f43171"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/74/random_matched/0",
+      "task_id": "HumanEval/74",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/948745ef0e4d8e825a3d9c32adc14641c412ae67d84986f5165dc3c7c6b1f9b9.json",
+        "sha256": "176cf128dfcb90a35d02e9bcb85f114dc7eb6568281adbd6087e658efdc7f61a"
+      },
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.4068581669998821,
+      "content_sha256": "ba8e61378fd0c5f66cdd30e460885d4001c4fff09d894f3c96f55b313cea5ff0"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/153/random_matched/1",
+      "task_id": "HumanEval/153",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/03a9b23095cc1f2ae95222bef5de247f460d0e59398b7f45f0906f35acc3f3b3.json",
+        "sha256": "9233b727f4b10d58c8b9d2b59e43aaab4dbe4cc3047adc112c26bd29094b7a7d"
+      },
+      "output_sha256": "f9eaadc6a924aaa8b4c52692a4f3a3c16584e58fb99a4d7464194323f5189aad",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f7f3f0dd7e482f90e6683c7cdfa28f43cf87763ef1e692cc2c524c316b753912",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.24019099998986349,
+      "content_sha256": "7dcf4b6dd65fe8c256fc60950381d2998075dfcf5f676bf98ae891edda1502ee"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/133/vib/0",
+      "task_id": "HumanEval/133",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2fee457b34b0197f89f78a9d0003b41dbf6998ba08b10f66bb58afeefd640fab.json",
+        "sha256": "ecd1dee62679e838018ef4a3057aa0aad7aa2146d26e04a49e3e89be1e5d391e"
+      },
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "32566aad8225f4744edbbb8a8893853c4f4e7438bcefb62c0d4358738c794754",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37132258299971,
+      "content_sha256": "c943b0c1879a4fcc1b789ec86c711716c5dfdf00e72a059c1798db3c01a30008"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/117/random_matched/1",
+      "task_id": "HumanEval/117",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/d86afee8d0adbcdc23eb2880e61633917a3b71b752d504bb4624a93ff44eff47.json",
+        "sha256": "cf28cfeb99a23499f944acc9ecf4e716b432680816e942348ea9f1c92d5cc57b"
+      },
+      "output_sha256": "bdc97099a8d691efb9c8340d9dce7253142a79068b41c3e544413894333eb37d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "31b5e48f4c9a846da957c8b5a53c99d17df981dcf68090cd03d0737a8a15ffc5",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37166562501806766,
+      "content_sha256": "91be89ea61c6d1b0a06ac5d4236926e270161f6c3b14bd37f150e453d56d0739"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/81/cosine_matched/1",
+      "task_id": "HumanEval/81",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/f56c7ac9fbf837f34caa1b11c6e26b4ab37782921e558de4b7960776f519e7f5.json",
+        "sha256": "e7f21670a028c0bd0491ec56bfb52945b3325768d644dea814d9b0b477b2b3ae"
+      },
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "5daa59edbce32d3a769fcfcec63dc73fd275d69ebe31f653a500298864a4467b",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3878967909840867,
+      "content_sha256": "b3181ee6dbada056325c47b6d88c60d87c6aa02670081a7604bbb1b406581852"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/133/random_matched/1",
+      "task_id": "HumanEval/133",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/b75e5dbb9f166c021480f0344d9302757d38490059e7dd307adcb1e87530a5bc.json",
+        "sha256": "d48e656227e82330de04d3fa90f2bba0aa6b2ecf93893afed31a2fd7afdb40ea"
+      },
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "32566aad8225f4744edbbb8a8893853c4f4e7438bcefb62c0d4358738c794754",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.38025958300568163,
+      "content_sha256": "e586f1b6172f1ff979f3c0f349a2d8a3c62b7130506f25ebec7dccebb78f7966"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/71/vib/1",
+      "task_id": "HumanEval/71",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/632a1b0946be149d93ffe15da73fa193ee5ec5af3b30b2696a9a97a7090baa42.json",
+        "sha256": "f2323a21e9706301cc6eb74ad6ae673b5e1ee41ceb2385ca507e51858f72bf83"
+      },
+      "output_sha256": "9fb9aedeb83b788de163433391224d161ba92886c345f4afe7c7036060e7f5cb",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "d970e7e282ae88bdd4a0453f7aea4ed933a574f44b26be2591b377be74c832be",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.26101633298094384,
+      "content_sha256": "4f46b3300482fd554548e9cea06b1ebe05b36105414b38ddeb2460e344e30bec"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/74/cosine_matched/1",
+      "task_id": "HumanEval/74",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/b3c20d041a51d0192b91ce4031db6bf552e8f18347c70a20f31eda0c01213095.json",
+        "sha256": "ccaaab939506cac9e7d834def60599deb9bc4d51a48efffcb6869556252dd6ea"
+      },
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.34917062500608154,
+      "content_sha256": "d1491991a7cc0216721aebf42db01036d486314fbd69a999281b4a676344e5c8"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/134/cosine_matched/0",
+      "task_id": "HumanEval/134",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/fe30e8c6cd212102d14616a0936a4d187e5c312aac12586dea7d7f3d9838a42a.json",
+        "sha256": "ed5d0071a17e7d26d3d355b0735ad604adf1c79746548688e9532c8649398385"
+      },
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "466b2386997f6dbef04282707a3c623bf7efcba0b3080e778996ee9d7c35e7c2",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.22591325000394136,
+      "content_sha256": "5088a0ea97f477abf7bfabe737b522c2a3d2253656daf3c792a60ef8135ad6a8"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/81/full/0",
+      "task_id": "HumanEval/81",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/9c592ef7e465be9cbb78bda45ee172e457233a11b26aa0adeae92ff638a03aa2.json",
+        "sha256": "63fe4868bd8481c908c63f25d7f863745b1dc6afd655f7fff20ed49cf8504e60"
+      },
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "5daa59edbce32d3a769fcfcec63dc73fd275d69ebe31f653a500298864a4467b",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3431794159987476,
+      "content_sha256": "0cc6e8a8b8e9b58d04c02e14b57054132c98b4b58c8df61000f9f2bfd8287bcc"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/133/cosine_matched/1",
+      "task_id": "HumanEval/133",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/0126f02a5cf9ba02957e9ceb1645f4ae212678b469afca81232f1246aa911237.json",
+        "sha256": "a746e78c5f33610e36412c76206c257d86be0205d93172e2bb3d884ed9668143"
+      },
+      "output_sha256": "c5a1eb4584423d6f346fe4ad1ad13fdd83a1d3730369a1a48a1291f3e75f3b1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "32566aad8225f4744edbbb8a8893853c4f4e7438bcefb62c0d4358738c794754",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.2740932499873452,
+      "content_sha256": "ee23641ec4e59499e2ab7d63c3e2740768567a46e20b8ad331fc1fe3bcc19f39"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/137/random_matched/0",
+      "task_id": "HumanEval/137",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/78da5cd30f577c8a0b126d981dfaae70c5847e17e2fb5e0b47a988ab1a02784e.json",
+        "sha256": "6e92dcf86194fcc34d03911cb5886db889d88988f505c30f6afde2f61c256058"
+      },
+      "output_sha256": "14c40d4ee531b74b259d917411eb298699e0eab8e3097738c7ac4d74de0aff88",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "a940fa7213c2f36d953e597cd04952cbe33a752b6bfbc9f329438be00cd57558",
+      "passed": false,
+      "status": "runtime_exception",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.22805837501073256,
+      "content_sha256": "ed7b563941af9176a8593bda93663e0f92342d8bc2182249d47fbb34ed971df0"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/153/cosine_matched/0",
+      "task_id": "HumanEval/153",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/58272c5832bbb02723b9a4d67b0915e969d625ac88ee2de47b8bc3af3bf40f75.json",
+        "sha256": "b01d53a660a53c2e3000ac3b58b35666556946b76bfd428d278fcb061b92ee0a"
+      },
+      "output_sha256": "0835c820ec05df8278df28deefd1baa16348e00a5cb260a57aa777e854915ce2",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f7f3f0dd7e482f90e6683c7cdfa28f43cf87763ef1e692cc2c524c316b753912",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.2787870829924941,
+      "content_sha256": "1a7b8e0528232aeb866480a7e2daef3bb73be1a15f82a9882e78e00bf0d58520"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/71/cosine_matched/1",
+      "task_id": "HumanEval/71",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/46e7dda2d4a6b4bf6b3f4b2ce118ec3b8e948d000f0efade06c878d88930c0bf.json",
+        "sha256": "1dd45cfe95ba29ed751493b298c50d98bd1d9c5520e24719413a862385571a8b"
+      },
+      "output_sha256": "8d2052427763934c853a4587b02d32202c4414b450ecfc58731aa7db19df997e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "d970e7e282ae88bdd4a0453f7aea4ed933a574f44b26be2591b377be74c832be",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.35916341698612086,
+      "content_sha256": "3860c66c47a534eb516e687b3d22c40534ed67f93c37ec7348333d34f3340a2d"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/115/full/0",
+      "task_id": "HumanEval/115",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/6bd5688ff897d0c47bc66f44e44ccfb95d334f8578c45ee151f80541800b5ca6.json",
+        "sha256": "b8bccb554f9ce310cc9f89edcf4b9a0e8067f47d4ebba160e61c413c756b747d"
+      },
+      "output_sha256": "78b918465fb830b617da9c2384b78ef4a1bbbadbefca6323bd13ad5187a33d5e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "43f300a5cf75d6337425305ede31bdbb7b369884e848b959a873f335b8cea8c6",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3658318330126349,
+      "content_sha256": "bbe40d4951aef43ad3e2786c996f5179d19e197eaedeb5f960c779733d89d87a"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/74/random_matched/1",
+      "task_id": "HumanEval/74",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/38a6dc15482ab8dc63c99132bd10408567d216f7377c5b0e3a4c55357c559a40.json",
+        "sha256": "39c44f4c1f603b1f8d94f69b6a80dde37b1bb0e47869b7729f71440c8cd7930c"
+      },
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36044258301262744,
+      "content_sha256": "2a609159ec739d1c4222a6c58c4a939863ca5ac084371ef9cc15081ab0bd65f4"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/134/full/0",
+      "task_id": "HumanEval/134",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/7697fc073244d355845a56c13fdf5119bbc246f8c03175a36ec674b32b96fc1a.json",
+        "sha256": "cef4fd038626471a1d012299650d6fdbef78c8f6919c7b9e9b6c06e458b2ec92"
+      },
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "466b2386997f6dbef04282707a3c623bf7efcba0b3080e778996ee9d7c35e7c2",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36679962498601526,
+      "content_sha256": "d50e8eecf01127af5a8f9da3c238ca00afc284cf5e5d304e2c470c5c177813e5"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/74/cosine_matched/0",
+      "task_id": "HumanEval/74",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/ea7805ecebfc830d833592e87802f09dcd572ba9a5b722710ecac9a429dfbe1d.json",
+        "sha256": "18af53ef13e96d31aac4b461a6b578ff55d83b8d6c06656cbb7f1111c639f5f0"
+      },
+      "output_sha256": "2d86581933d734a6ea68956f9894c9ab57a315f819e530b0e9a04b81f6cc1373",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3728223749785684,
+      "content_sha256": "fd8dc78316d16eafced83ef0f6c08cb32dafd8b6e339e45c544e212130cf38f3"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/117/cosine_matched/0",
+      "task_id": "HumanEval/117",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/a7fd0823a6e57d00d7a1c8c96371d0a3b53b7eeda3d7da0c495e1b7d1befbba2.json",
+        "sha256": "6ee8eb90aefabb7eb702e20f248fc362d83b367251d817495dcea7dc4c096b28"
+      },
+      "output_sha256": "3ae99f1fc8169b7974893f69bf39d9581c0525c008452ccac81fce6c9bcff98d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "31b5e48f4c9a846da957c8b5a53c99d17df981dcf68090cd03d0737a8a15ffc5",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.29547629100852646,
+      "content_sha256": "82525644fa8e2fa78487758f791fbc5098bd97bfd7da20afcad5be84d676be53"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/50/vib/1",
+      "task_id": "HumanEval/50",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/56244462595de1d99655d2f790ffa789882845f5ee77412ec389d47b6c0b9f4b.json",
+        "sha256": "1e91276d6b34ceaf6d97042207526cda5d303f2747ed53870f41a24afd6eadde"
+      },
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "092362793d445b5277e2ba6952b224be6f6bb4411eb360002b58504fd26c6a61",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36921025000629015,
+      "content_sha256": "2171484355ae9383df5ff329beadbc79e9e0b8e0c9e4e6548d1770fabc28f594"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/14/vib/0",
+      "task_id": "HumanEval/14",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/3c88a0a62e4432ff0207d405d4238bdedf0e1dcacbabd9a12f4d44ad5041cb92.json",
+        "sha256": "51256fbda8c62fca51c6447935e4ff761584c84fee604cc2d1dca5f559a19cbb"
+      },
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "6c579b507742d55e0be5220790a95555611000d1cd0a0b56167fc641b01f1bcc",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3553423339908477,
+      "content_sha256": "6ac5c262e7e540ca07ef1e8ca99e351766ff72d0fea6ab140d1b4a86206339fe"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/14/cosine_matched/1",
+      "task_id": "HumanEval/14",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/08c018b851d0973474683477049df09c7c342564d1561a23e306e30b9d6bbe63.json",
+        "sha256": "af4a0e637bd3ea3ea6fdd09e68926ada0cbc864139e895c2f2bbc2db4e2f8d6a"
+      },
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "6c579b507742d55e0be5220790a95555611000d1cd0a0b56167fc641b01f1bcc",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31115116699947976,
+      "content_sha256": "93aa7e421f3c11836c5ca6296a249baaaf42e28b2fa0c108b5a6493d589bf1ae"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/117/vib/1",
+      "task_id": "HumanEval/117",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/59c5e71810bce8dccd35b5405e72220e7d98e5fbd94422f1e3f9624b394b7fd8.json",
+        "sha256": "4b786f2f38bcc276039987a609fdfaf178b3b09cfe4bda99c35443103d721e8d"
+      },
+      "output_sha256": "e3d20bf1557ad16a5486e60056f4dd7809d2c315630fdc4a6b87fd8b632244bf",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "31b5e48f4c9a846da957c8b5a53c99d17df981dcf68090cd03d0737a8a15ffc5",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3533260409894865,
+      "content_sha256": "5d1357600e54cd17498320823d6474255d847a760bf85669f8c55fbce449b697"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/61/full/0",
+      "task_id": "HumanEval/61",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/cf67026ebf0b9d473e22c57ed159e1805db73eb13216ffbf6a0300f87b925310.json",
+        "sha256": "055969a188b9dd4c722f4d71427952864f17c820be77bbe566eebf73dfd7ff91"
+      },
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f978c5f11d412bd380d797bde9ece6032d1f1311ea42dbea46bc75a88ce13c67",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.2453463750134688,
+      "content_sha256": "78a8d5a0547ac2c5345763e478b56233c7f41c14fe4c87db0be0d11719396ec8"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/137/cosine_matched/1",
+      "task_id": "HumanEval/137",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/32eb5191b7fd73b6f2ce82973a7b24a5bfa996597e98813ca9e9020674be2dae.json",
+        "sha256": "e5b07c7d01175f8501082d922dd1e18c6b828f78b82fd1ea1af9f371127218f8"
+      },
+      "output_sha256": "f212c860f84a3ff05197defff6d08a22327969937edf59509e13e07664fce012",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "a940fa7213c2f36d953e597cd04952cbe33a752b6bfbc9f329438be00cd57558",
+      "passed": false,
+      "status": "assertion_failure",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.30882370899780653,
+      "content_sha256": "4b44de27b62624f76fa97ab0cfce832c2ac0de44c01edeea8d0befb78222533a"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/50/full/0",
+      "task_id": "HumanEval/50",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/8248e1480b6d1c7899e8bdcd2ad067e04fb7132de81b69008565fcfa60530944.json",
+        "sha256": "86218d3fe1cfd14c1e7490d00e1961e64e32ce65cb8bd2f00166a5a8a6c900e1"
+      },
+      "output_sha256": "fbf07db7c9fb689579388d75fd0f7cb3724d1332944ce117eecbc71aa34e8fe5",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "092362793d445b5277e2ba6952b224be6f6bb4411eb360002b58504fd26c6a61",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3728658329928294,
+      "content_sha256": "fd01493464771bced8f1b9d6abb2a490b94fdf7341b37fe4c3a5c8c01e6c2318"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/71/random_matched/1",
+      "task_id": "HumanEval/71",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/dbe13e7ea0f08fcf6c0dee32de510bfb2c66e767a1252d5e122aeaf50f7b1f49.json",
+        "sha256": "c20b66eddfbdd191df965a7c400edd5cd05e12d4ed9359e88a805e00cf3fea5a"
+      },
+      "output_sha256": "83865221c398eace3b4b5850727369c3e564bfa81f76dea5221b3c6814c2c5b6",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "d970e7e282ae88bdd4a0453f7aea4ed933a574f44b26be2591b377be74c832be",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.32261199998902157,
+      "content_sha256": "e82ab1f4cb28782c212d99b65e2690e91dee6492beedfd15c445cc709d47a103"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/41/full/1",
+      "task_id": "HumanEval/41",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/d5a562bea01dd2667dc0c1cccf59d81df9d7e52f636a2904d0f992a87ea54e8f.json",
+        "sha256": "7fb2f2d9cdd6dcf02110147ce85904d747558b4ef9fa56fe787e0f7bff4f1e63"
+      },
+      "output_sha256": "eb6b18e48e45cc5f9f16623e57265229757bb4806d296de597deb089b0cdd65d",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "64f2ecef8447d2da2fc31930b20012a917b1c8c606c660f612662624b032754a",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3087112080247607,
+      "content_sha256": "c938c3c6223335c5b76e876f26e46d3fa98d10c4f01cf59eb981a7a325fefc4e"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/74/vib/0",
+      "task_id": "HumanEval/74",
+      "prompt_variant": "vib",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/7cc16b1fdd5199adcad621cd603b8256cb7d10b470e89b8bea94368503c0dcca.json",
+        "sha256": "2a69a8026f4d5726a621f9fd751bc5f415842292c1002c3924b58e824ea16baa"
+      },
+      "output_sha256": "24bee5d871b77380a39b5b6722eee221b0b32e1a91e73f4689ade49974dc2d1e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36209070798940957,
+      "content_sha256": "15bb66e66ee3bd9089d0f5795cc4d5b0c65decc4892ba390a1bfa06ad372a6d4"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/71/full/1",
+      "task_id": "HumanEval/71",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/3b61e4b5d77fbd90b673201ab7ac7a928f9349821a21fb1ca34c153982b45e86.json",
+        "sha256": "4f58ce13a4da6fae3b6521503d32559d0fa7324aea773f704deb6dbde38bb87d"
+      },
+      "output_sha256": "8d2052427763934c853a4587b02d32202c4414b450ecfc58731aa7db19df997e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "d970e7e282ae88bdd4a0453f7aea4ed933a574f44b26be2591b377be74c832be",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37530683298246004,
+      "content_sha256": "5be990ebf72c7d4f51c0743cdd1f332ebae102aa0d38fa77c7c3f1987ca1ded0"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/60/cosine_matched/0",
+      "task_id": "HumanEval/60",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/cf75e2ab645725a01636c57b3b347d3a84b5a38bc274ab39134d17727158fd0e.json",
+        "sha256": "9879554a714cea489256cadb3afe18b6f9201d97d328e5961fdb104c036b799e"
+      },
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "8e1ba86302a2dfd0c5c32b4ccb4559b27b0e2151ece4ed85912ee2abb753258e",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3178362920007203,
+      "content_sha256": "9ca8bbb21fead1f38a137c4f30bbaaa82eeb351b766c58c3d3f81e4a5120bddd"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/153/cosine_matched/1",
+      "task_id": "HumanEval/153",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/d9c0d70f9cb812f5c5a84d2e470f6d3533ff223d224683267b569786710dad26.json",
+        "sha256": "c29fb9fad8b6846bf41d55c0b766c7fb8a496b053f76d1930bb63f2f1c820ef7"
+      },
+      "output_sha256": "73afd1ba019d71bb752745aea8d321f66365eb0f5782ac4f9e2c103517b60803",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f7f3f0dd7e482f90e6683c7cdfa28f43cf87763ef1e692cc2c524c316b753912",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.2354557910002768,
+      "content_sha256": "bbb7132c2507eb909d5a1906706a838f0fd01ca958f09c5080c121c9b265cee6"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/42/random_matched/0",
+      "task_id": "HumanEval/42",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/0e1ef43f401f0a768d0d0990f5b6e477c561530f0e2f5419f7b78e5d8e564a88.json",
+        "sha256": "03dcf808c7e7d269f9d1a44d9b5081b2fb50ad57ae132553ef9aff39a9ca5870"
+      },
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "55446f68f20497e5125223c8b1402c9b76aafc1328723c5e752359621ad48e85",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.364855791995069,
+      "content_sha256": "2f202bfe251e196b26702678ecc5f7ae1d687957125dff0e168161b594ea017b"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/61/random_matched/0",
+      "task_id": "HumanEval/61",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/f17f4a1eefccc7d968bdb8cba83e3d0377fea13678ee840aec2154615d182f8d.json",
+        "sha256": "aa46039b2d55bb44a3c6c9894dbf189b28012bd84130ff9476687c2480e8f3e7"
+      },
+      "output_sha256": "3db316f579df5b1a068d6e46c9714ed8afca724cac2e3789d96613d0ea554a8f",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "f978c5f11d412bd380d797bde9ece6032d1f1311ea42dbea46bc75a88ce13c67",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3885325000155717,
+      "content_sha256": "72720c4fa6fcc2c01bc5f5d3bdef38c9454f403c87624bd32acfe71bbfde1d75"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/14/cosine_matched/0",
+      "task_id": "HumanEval/14",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/17f75c90f77826a613462ba453cafdd15a7588b9f25c1fa6790643ed20557dea.json",
+        "sha256": "4c283a37f63d172d8570b195c6391f9b37524484c6c655ebe3a1d695db7955b5"
+      },
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "6c579b507742d55e0be5220790a95555611000d1cd0a0b56167fc641b01f1bcc",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3152042079891544,
+      "content_sha256": "fd0ba157b9f154218238d01b3fa4a088040c33221dd808e6b487869169e3a232"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/60/cosine_matched/1",
+      "task_id": "HumanEval/60",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/6b902d91a383409ed1331022164cac0928e111cc38a7877d1b4c6a1fc16eccfb.json",
+        "sha256": "7da7a3bc4854add4eb29f1ceaf6d1d5a04f1b87220aa3f96c708423e959c528e"
+      },
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "8e1ba86302a2dfd0c5c32b4ccb4559b27b0e2151ece4ed85912ee2abb753258e",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.30129158301861025,
+      "content_sha256": "7d5ee330f5cc4ea1b1aaa8e88341ea6a64af18a7beb44f1cf467acb70e48e891"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/81/cosine_matched/0",
+      "task_id": "HumanEval/81",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/ffd09509508d802363848391fb84aad67dd3cff6a2c6a196b51349fc94647477.json",
+        "sha256": "2f9818dcaf0dc5ca1d4b1d3fa9cde4d4b0196d4ac6715fb86ba46ecfb3184bfe"
+      },
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "5daa59edbce32d3a769fcfcec63dc73fd275d69ebe31f653a500298864a4467b",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.4111646249948535,
+      "content_sha256": "6ea766c2528e652e434a602baa77a1c7be40c6c7dbae20b2750ae341ad881131"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/137/random_matched/1",
+      "task_id": "HumanEval/137",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/e9c19e6db560b8ff00744e4074ddf9ae77cac67b54a205ad88c831c5d1df6b47.json",
+        "sha256": "d79aade351dea8bab770a9070d245a695a7f774902fe50549b4a4eeef8419ec0"
+      },
+      "output_sha256": "aa986e82645cc3914ba86d031c4fa1d48ea082be86a61f4022a472859ade2f77",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "a940fa7213c2f36d953e597cd04952cbe33a752b6bfbc9f329438be00cd57558",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.30361579201417044,
+      "content_sha256": "3ee13dde6a2410cf1d6ef292fed8146c9e7f9c3e642379f8163a3125d1650d09"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/42/full/1",
+      "task_id": "HumanEval/42",
+      "prompt_variant": "full",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/ca0730026ea120e1dda0338075f72d30e009363dd1f44b0c156edae72b98d095.json",
+        "sha256": "440b210b7fb90bc097db756077f77dcc24922a2809d9f2dc2c0a56aeb47d8a5b"
+      },
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "55446f68f20497e5125223c8b1402c9b76aafc1328723c5e752359621ad48e85",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.39528349999454804,
+      "content_sha256": "560fc36019d6710760a8766af1e1a3ecc9a9cb0181b664071d863dfb497ba2e9"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/115/cosine_matched/0",
+      "task_id": "HumanEval/115",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/d723b944fef0b24525719e3a392fea84a64ef7747f120a7487ca27a4f73cb026.json",
+        "sha256": "7473601296e05c7bb6dbe2df6ef13d60a935276db0bf38a2a1d31ce850ddb270"
+      },
+      "output_sha256": "8d7cddfa4792f29a6985f78c53dad859b6ff389f2a894dd3a4772d2a9bb94f29",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "43f300a5cf75d6337425305ede31bdbb7b369884e848b959a873f335b8cea8c6",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.41842237501987256,
+      "content_sha256": "b389518e28ad748411bf0348d488814e28651ddac181c4dd5d8321978d0eb4e0"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/81/random_matched/0",
+      "task_id": "HumanEval/81",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/604a0ba745b9322ce0db70316efbc9526b39c98da5ef873d766cca2dfa52394d.json",
+        "sha256": "b3eab04cf0ea75c64132c9792212938814fbe5e72d2971b61ed91555ee4dee44"
+      },
+      "output_sha256": "c49608a95f6415cb7e96279377d9c78c1ee882a4557d206801b7e783dc70e27c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "5daa59edbce32d3a769fcfcec63dc73fd275d69ebe31f653a500298864a4467b",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3885593750164844,
+      "content_sha256": "eb724f0bc5bea2decf811cc90944f625977f5989fa4390767e6e6fcac33c5e81"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/134/random_matched/0",
+      "task_id": "HumanEval/134",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/defe64f99638da0008caedf47b6c0d69f8db220c32a7f2ffe88f14593c12304a.json",
+        "sha256": "7a7788d46d316749ab5b3873cc070c077680b3f7f47db10a484fdd59238d92cb"
+      },
+      "output_sha256": "48045f578f5faad02ee7b04ba5824e4731763a4ccaca9c4668dcf85d2f6ac5aa",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "466b2386997f6dbef04282707a3c623bf7efcba0b3080e778996ee9d7c35e7c2",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3026450000179466,
+      "content_sha256": "e0d1276246e728d7cf81e650f22b4ac944a54eb10111d2c1e506ff2fbb5a52bf"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/115/random_matched/1",
+      "task_id": "HumanEval/115",
+      "prompt_variant": "random_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/f490ffd77cb7a54ece287b591b59098151c47dbd02cfa5da91a4fb3a1e84137e.json",
+        "sha256": "b1fce41a87a2eaf6c13d7cf3edb8ded358613c16bba8c3c51c5ea6302c742948"
+      },
+      "output_sha256": "f2b88a2b8030a2b46c5ba3ff278af592c0c0c56145d70c27e7d65b52b10d0e55",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "43f300a5cf75d6337425305ede31bdbb7b369884e848b959a873f335b8cea8c6",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3720830419915728,
+      "content_sha256": "fc70764ad3accf7bd7c98bf79689bf451e498a28b0be48b71b7e53197755358c"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/60/vib/1",
+      "task_id": "HumanEval/60",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2db78fcaa23f07d4b8aae2b55e364be7eb866a69bda5afb10f11cc07e34d89e8.json",
+        "sha256": "534bc21197ff67257c2dad6e9010c6a61ca7d1d3eb5e1351bcc13d3ff90db8d2"
+      },
+      "output_sha256": "5bc5a1f7a718f2a82fc1397185278d2de1d203f814f544179c1188f5e71e4b02",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "8e1ba86302a2dfd0c5c32b4ccb4559b27b0e2151ece4ed85912ee2abb753258e",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.31210012498195283,
+      "content_sha256": "cbc438001de05dcaffe8d17ee5ee2fce2f84a5e6190a16d4fde237b1b8fc3557"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/137/vib/1",
+      "task_id": "HumanEval/137",
+      "prompt_variant": "vib",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/58cb73d4bd82e8b05717c65fb2bf02cb0bf6a098eb8e2bfe09ab7325f24fed90.json",
+        "sha256": "6835e50de0b62f59c815893780e6e0320fa866d42685ef2e9f16c7ec2f572dca"
+      },
+      "output_sha256": "ae5c46a4f9cd91bccd00d7a55ab215e6e166bc614a38125afade7e6e00a857a3",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "a940fa7213c2f36d953e597cd04952cbe33a752b6bfbc9f329438be00cd57558",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.37766479200217873,
+      "content_sha256": "a9c4ce30fee038dd3655ea63fd2574517dc869a148383eea209a8bc5dfe83890"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/71/random_matched/0",
+      "task_id": "HumanEval/71",
+      "prompt_variant": "random_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/b63bf67453a50ec5565addd1cfcb2403a4bc6344ed28953dd2477cf575ef8d0c.json",
+        "sha256": "de101ead63d1b809540700aa2d72caf14a16d12b48b8fa650f1db259e93a95de"
+      },
+      "output_sha256": "d288ec92e4e20c1fb0afe3206d068eca6687b5baeb4399c3d60f8cf1fb69f74c",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "d970e7e282ae88bdd4a0453f7aea4ed933a574f44b26be2591b377be74c832be",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36855912499595433,
+      "content_sha256": "dc0a86f82b9942ec95869920616f39333799b0d63a427eca6835fac1ed5b6281"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/42/cosine_matched/1",
+      "task_id": "HumanEval/42",
+      "prompt_variant": "cosine_matched",
+      "repetition": 1,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/cab2d820810743489d676197c45b17737177cf312331845d94a3317416c0c989.json",
+        "sha256": "3b83fbafe15ad43d953a475ba7131d79eec92e0ee6e34131572c0b5497c71cb3"
+      },
+      "output_sha256": "c0f3ff2b96dc01eb2844eaded020b984776df8408970fc870da6387533110f5a",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "55446f68f20497e5125223c8b1402c9b76aafc1328723c5e752359621ad48e85",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.36673516701557674,
+      "content_sha256": "d96d671f9c78cc27053a5edb30c380954bc71a168d003eca798a21227d078399"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/71/cosine_matched/0",
+      "task_id": "HumanEval/71",
+      "prompt_variant": "cosine_matched",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/452f35c5910256a1d946af5db03f7f34c564c361dba7b398908652f04b74f5f1.json",
+        "sha256": "c94e6cd00435b86cfeed025bf0b59d0b625a535ae16e3cabba037d3b87639812"
+      },
+      "output_sha256": "8d2052427763934c853a4587b02d32202c4414b450ecfc58731aa7db19df997e",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "d970e7e282ae88bdd4a0453f7aea4ed933a574f44b26be2591b377be74c832be",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.3557080420141574,
+      "content_sha256": "805b73fb53e2b9bf804e39e3241fd565af14bf744111a24b3531091f55e5e86c"
+    },
+    {
+      "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+      "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+      "job_id": "HumanEval/14/full/0",
+      "task_id": "HumanEval/14",
+      "prompt_variant": "full",
+      "repetition": 0,
+      "raw_response": {
+        "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/de93c63c3d203b0bdcf70fa35e0c5661bcc392553d31564f6f86d3e550c4404e.json",
+        "sha256": "5d578eacf6142e234b75ccd018a95aa2b4fbcddc6d931f21bcd99ee29403db3e"
+      },
+      "output_sha256": "f8d733b9e4d1dbcce8d8193ce0f950214a9571bac19a3a8501e9337e96a3f671",
+      "original_passed": true,
+      "original_status": "completed",
+      "test_sha256": "6c579b507742d55e0be5220790a95555611000d1cd0a0b56167fc641b01f1bcc",
+      "passed": true,
+      "status": "pass",
+      "independent_checks": 2,
+      "local_evaluation_seconds": 0.34918037499301136,
+      "content_sha256": "fa34be7d820d231e783739c2ec988e21e9189ee683281c4c470955133e9bd048"
+    }
+  ],
+  "patch": {
+    "version": "humaneval32_exact_residual_adjacent_float_local_repair_v2",
+    "task_id": "HumanEval/32",
+    "before": "assert _poly(*candidate(*inp), inp) <= 0.0001",
+    "after": "assert _vib_local_root_check(inp[0], candidate(*inp))",
+    "helper_source": "\ndef _vib_local_root_check(coefficients, root):\n    from fractions import Fraction\n    import math\n    from numbers import Real\n\n    if isinstance(root, bool) or not isinstance(root, Real):\n        return False\n    try:\n        root = float(root)\n        if not math.isfinite(root):\n            return False\n        exact_coefficients = [Fraction(value) for value in coefficients]\n\n        def evaluate(value):\n            argument = Fraction.from_float(value)\n            residual = Fraction(0)\n            for coefficient in reversed(exact_coefficients):\n                residual = residual * argument + coefficient\n            return residual\n\n        if abs(evaluate(root)) <= Fraction(1, 10000):\n            return True\n        lower = math.nextafter(root, -math.inf)\n        upper = math.nextafter(root, math.inf)\n        if not math.isfinite(lower) or not math.isfinite(upper):\n            return False\n        lower_residual, upper_residual = evaluate(lower), evaluate(upper)\n        return (lower_residual <= 0 <= upper_residual\n                or upper_residual <= 0 <= lower_residual)\n    except (TypeError, ValueError, OverflowError, ZeroDivisionError):\n        return False\n",
+    "reason": "scalar_root_not_iterable_absolute_residual_and_finite_precision_root_interval",
+    "tolerance": 0.0001,
+    "tolerance_changed": false,
+    "inputs_changed": false,
+    "numerical_acceptance_extended": true,
+    "precision_guard": "exact_fraction_sign_change_between_adjacent_float_neighbors",
+    "precision_guard_user_confirmed": true,
+    "reference_changed": false,
+    "changed_tasks": 1,
+    "original_file_sha256": "908377f1daf28dcb36846db73a5662b2e05a9907407c2696c89ad9d3b0b04492",
+    "local_file_sha256": "78f2c0b38d1b32f184c9ecad9fe794b16b2b9e2b913751101e00f0a4c7d8d336",
+    "task32_original_test_sha256": "47f364ff54e11b7131ad138b053b27509dbea1d8fcfb1c7210ff9b4491018b25",
+    "task32_local_test_sha256": "73edbd9a13d2fe1645235458b8d1cb2931a92620a312d2756afae8b81acb1738",
+    "task32_in_candidate_cohort": false,
+    "scope": "user_authorized_local_oracle_revision_not_official_evalplus_score",
+    "reference_validation_override": {
+      "task_id": "HumanEval/32",
+      "mode": "publisher_expected_root_table",
+      "user_confirmed": true,
+      "input_root_pairs": 886,
+      "original_canonical_preserved": true,
+      "remaining_original_canonicals": 163,
+      "original_code_sha256": "53c868414980a3967dd3aefc022954262425c23ed9dcc0bf17465d437423c386",
+      "validation_code_sha256": "e7b5464606f6a75d76275e507b3a7394e37eb8a8fe91e680db80efdf9a8042ff",
+      "reason": "original_newton_can_fail_to_converge_under_valid_expanded_inputs"
+    }
+  },
+  "cost": {
+    "new_model_requests": 0,
+    "new_model_proxy_usd": "0",
+    "original_actual_experiment_cost": {
+      "requests": 368,
+      "prompt_tokens": 177169,
+      "completion_tokens": 31450,
+      "proxy_usd": "0.0908907"
+    },
+    "scope": "original_generation_usage_unchanged_no_new_invoice_claim"
+  },
+  "new_model_requests": 0,
+  "original_artifacts_unchanged": true,
+  "reference_acceptance": {
+    "all_passed": true,
+    "tasks": 164
+  },
+  "reference_validation_scope": "163_original_canonicals_plus_task32_publisher_root_table",
+  "original_task32_reference_diagnostic": {
+    "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+    "task_id": "HumanEval/32",
+    "passed": false,
+    "status": "assertion_failure",
+    "independent_checks": 2,
+    "scope": "original_newton_diagnostic_not_validation_override",
+    "content_sha256": "c9a04256f37bb819df0246f1ae6f0d476e58c35040b937381e9d3be925c70fcc"
+  },
+  "interpretation": "same_frozen_outputs_local_repaired_exported_tests_not_official_or_new_confirmation",
+  "independent_candidate_executions": 256,
+  "local_reference_evaluation_seconds": 125.00751771195792,
+  "local_candidate_evaluation_seconds": 44.34245816004113,
+  "content_sha256": "7016f5de5e2a1e79b306bf2db40e9f291f7cef767dd8d872d3a6eb5a69d46285"
+}

@@ -1,0 +1,21 @@
+{
+  "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+  "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+  "job_id": "HumanEval/9/cosine_matched/1",
+  "task_id": "HumanEval/9",
+  "prompt_variant": "cosine_matched",
+  "repetition": 1,
+  "raw_response": {
+    "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/eabb470a5a62b40e09f95ba8c18c013e282627047e30f33927ad0f941c6a72bd.json",
+    "sha256": "07215257dc78f4c5435d470cfce1895da0a8a0c703ecb43ae9143304be5c8526"
+  },
+  "output_sha256": "a1e7440091616e2963e3978ff1226ba54c20748b2c618267a50b8d6c016b42f8",
+  "original_passed": true,
+  "original_status": "completed",
+  "test_sha256": "348014cb5a511fc53c36efb7c706af61026041d53aff30cbfdf25374bdd97449",
+  "passed": true,
+  "status": "pass",
+  "independent_checks": 2,
+  "local_evaluation_seconds": 0.38696641600108705,
+  "content_sha256": "c5b36247ac6e3d56aea3a0e5464f814925b7faab69dbcf84013b41519d7af178"
+}

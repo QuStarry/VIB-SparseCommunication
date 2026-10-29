@@ -1,0 +1,21 @@
+{
+  "manifest_sha256": "f9e3e8a0c28f92e70e2061a74d67853928b2fa898a6d664720055a51a1863479",
+  "reference_acceptance_sha256": "7fc62ff830cb8a5b7e1ddca7c94c36c56d85b9c73d5e365cd3613eb3ef8739f1",
+  "job_id": "HumanEval/74/full/1",
+  "task_id": "HumanEval/74",
+  "prompt_variant": "full",
+  "repetition": 1,
+  "raw_response": {
+    "path": "/Users/starry/Development/Code/VIB-SparseCommunication/results/feedback_experiment_20261028/synthesis/responses/2af4f8ab45068ac4601721d66a5c622537775f5d4cc4624eba7a7b62decc915b.json",
+    "sha256": "47a3cb76f08fcf925d03ba36b419563ab3470f7f387e07475f9b0d93a7cf6ddc"
+  },
+  "output_sha256": "5ce8ea1d181038efbded7d93b0581637c3e83894ad0af868322f8ca3c3733f78",
+  "original_passed": true,
+  "original_status": "completed",
+  "test_sha256": "9b526ce9e812e8014fc8bf05b16c68e59deb840c5ca761764ea4a729b0c333cf",
+  "passed": true,
+  "status": "pass",
+  "independent_checks": 2,
+  "local_evaluation_seconds": 0.37737091700546443,
+  "content_sha256": "54d2427f23f6fac06e5cb16262c98b678b65d0d8624e9259f00927588b665095"
+}
