@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>增强重评 · 来源验收未通过</title>
+<style>
+:root{--ink:#242a27;--muted:#59665e;--paper:#f4f1e9;--line:#cdd2c9;--accent:#17654b}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 "PingFang SC","Helvetica Neue",sans-serif}
+header{padding:18px 5vw;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;font-size:13px}
+main{max-width:1160px;margin:auto;padding:36px 5vw 65px}h1{font:normal clamp(30px,4vw,52px)/1.3 Georgia,"PingFang SC",serif;margin:15px 0}
+h2{font-size:23px;font-weight:500}p{max-width:870px}.muted{color:var(--muted)}section{border-top:1px solid var(--line);padding:20px 0;margin-top:25px}
+.metrics{display:flex;gap:45px;flex-wrap:wrap;margin:25px 0}.metrics strong{display:block;font:normal 30px Georgia,serif}.metrics span{font-size:13px;color:var(--muted)}
+button{font:inherit;cursor:pointer;padding:8px 16px;border:1px solid var(--line);background:transparent;color:var(--ink);transition:background .15s}
+button[aria-pressed=true],button:hover{background:var(--ink);color:var(--paper)}button:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.controls{display:flex;gap:8px;flex-wrap:wrap}.chart-row{display:grid;grid-template-columns:90px 1fr 100px;gap:15px;align-items:center;margin:18px 0}
+.track{height:20px;background:#e0e4da}.bar{height:100%;background:#858e80;transition:width .3s}.bar.vib{background:var(--accent)}
+.num{text-align:right;font-variant-numeric:tabular-nums}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px;white-space:nowrap}
+th,td{padding:11px 15px 11px 0;border-bottom:1px solid var(--line);text-align:right}th:first-child{text-align:left}thead th{font-weight:500;color:var(--muted)}
+.note{padding-left:18px;border-left:3px solid var(--accent)}a{color:var(--accent);text-underline-offset:4px}.links{display:flex;gap:20px;flex-wrap:wrap}
+code{overflow-wrap:anywhere;font-size:.85em}footer{font-size:13px;color:var(--muted);margin-top:30px}
+@media(max-width:650px){header{flex-wrap:wrap}.metrics{gap:25px}.chart-row{grid-template-columns:75px 1fr 85px;gap:8px}table{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}@media print{button{display:none}main{padding:10px}body{background:white}}
+</style></head><body><header><span>VIB / SOURCE ACCEPTANCE</span>
+<span>Zhanxiang Qu · 2026-10-29</span></header><main><p class="muted">增强评分源审计 · 原实验不变</p>
+<h1>增强重评暂停</h1><p>发布方导出测试未通过参考验收，不能据此发布模型候选的增强准确率。</p>
+<div class="metrics"><div><strong>163/164</strong><span>参考实现通过</span></div>
+<div><strong>128份未重评</strong><span>不是零分，也不是增强测试通过</span></div>
+<div><strong>0次 / $0</strong><span>新增模型请求与代理费用</span></div></div>
+<section><h2>参考验收失败</h2><div class="scroll"><table><thead><tr><th>任务</th><th>独立双检查状态</th></tr></thead>
+<tbody><tr><th scope="row">HumanEval/32</th><td>runtime_exception</td></tr></tbody></table></div><p>164个参考实现各检查两次，共328次独立执行。
+失败记录完整保留。候选评分守卫没有放行，不删题、不修改发布方测试，不修复或重新生成模型输出。</p></section>
+<section><h2>已定位的导出断言问题</h2><p>HumanEval/32的原样断言为：</p>
+<p><code>assert _poly(*candidate(*inp), inp) &lt;= 0.0001</code></p>
+<p>find_zero应返回浮点根；断言先尝试将该浮点数用<code>*</code>展开。
+独立复现得到<code>TypeError: Value after * must be an iterable, not float</code>。
+这是评分源失败，不是VIB候选退化。未自行修改oracle后冒称官方成绩。</p></section>
+<section><h2>两种口径的状态</h2><div class="scroll"><table><thead><tr><th>策略</th><th>原测试</th><th>增强测试</th></tr></thead><tbody>
+<tr><th scope="row">Full</th><td>32/32，100%</td><td>未执行</td></tr><tr><th scope="row">VIB</th><td>32/32，100%</td><td>未执行</td></tr><tr><th scope="row">随机匹配</th><td>32/32，100%</td><td>未执行</td></tr><tr><th scope="row">余弦匹配</th><td>32/32，100%</td><td>未执行</td></tr>
+</tbody></table></div><p class="note">原100%记录保持不变；增强准确率不可用，不能把未执行填为0或100%。
+未完成增强重评，也不能据此声称全输入域正确或策略等效。</p></section>
+<section><h2>来源与范围</h2><p>固定HF修订<code>d32357cf319e50e9c8d8dab5ea876c72b0fd321b</code>，
+下载镜像SHA-256与发布方LFS指纹一致。全库声明125,037组输入，本16题声明13,243组。
+部分测试源失败，输入数量不是已通过覆盖，也不是独立统计样本。</p>
+<p>使用发布方HF导出测试，不是已认证GitHub release v0.1.10或EvalPlus CLI。
+整体每评分进程30秒超时，与官方逐输入参考时间缩放不同。
+同源HumanEval增强测试不是新数据集，不消除污染、单团队轨迹和16题功效限制。</p></section>
+<section><h2>一键证据导航</h2><nav class="links"><a href="README.md">完整审计说明</a>
+<a href="source_audit.json">164题参考结果</a><a href="manifest.json">来源与原输出绑定</a>
+<a href="publisher_test.jsonl">字节原样导出数据</a>
+<a href="../feedback_experiment_20261028/report.html">原报告保持不变</a>
+<a href="../../docs/enhanced_rescoring.md">隔离与守卫说明</a></nav></section>
+<footer>离线自包含 · 无外部请求 · 原账目不变 · 候选增强成绩未发布</footer></main></body></html>

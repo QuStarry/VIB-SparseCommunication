@@ -1,0 +1,11 @@
+{
+  "manifest_sha256": "ad94def3782289f616171ccc6e8f444385ac1d13cc59b1ea39a58b2b1615a290",
+  "task_id": "HumanEval/28",
+  "reference_sha256": "d334cb2c3a444a3863ff90137e2789ad41293af8b714d6102e751f096552beec",
+  "test_sha256": "33b429670c91c6641a7504f431e736673d75cc328975bee585a800180610a105",
+  "passed": true,
+  "status": "pass",
+  "independent_checks": 2,
+  "local_evaluation_seconds": 0.43685258299228735,
+  "content_sha256": "5de5a816689cdd55a54035f453a2f0d79349c9b0718bfa16b7c716f813845d54"
+}
