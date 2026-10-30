@@ -1,0 +1,15 @@
+\begin{table}[t]
+\centering
+\caption{三种方法的历史表现与通信预算。Vanilla/Full/VIB 均为 Pass@1（\%）；$\Delta$ 为 VIB 相对 Full 的差值（百分点）及 10000 次任务配对 bootstrap 95\% 区间；广播减少与 Token 减少均为相对 Full 的下降比例。区间跨零不证明等效或非劣效。\label{tab:main_results_simple}}
+\setlength{\tabcolsep}{4pt}
+\small
+\begin{tabular}{l r r r r r r r r}
+\toprule
+数据集 & 题数 & Vanilla (\%) & Full (\%) & VIB (\%) & $\Delta$(VIB$-$Full) (pp) & 95\% CI & 广播减少 & Token 减少 \\
+\midrule
+HumanEval & 164 & 93.90 & 92.07 & 90.24 & $-1.83$ & $[-6.71, +3.05]$ & 21.14\% & 3.88\% \\
+GSM8K     & 1319 & 59.29 & 95.30 & 95.22 & $-0.08$ & $[-0.83, +0.68]$ & 30.49\% & 4.96\% \\
+MATH      & 5000 & 46.16 & 78.58 & 77.66 & $-0.92$ & $[-1.78, -0.04]$ & 25.59\% & 4.42\% \\
+\bottomrule
+\end{tabular}
+\end{table}
