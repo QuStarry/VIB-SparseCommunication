@@ -25,7 +25,7 @@ from decimal import Decimal, InvalidOperation
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field, asdict
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional, Tuple, Callable
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
@@ -195,25 +195,34 @@ class HumanEvalAdapter(BaseDatasetAdapter):
 
 
 class MBPPAdapter(BaseDatasetAdapter):
-    """加载 MBPP Sanitized 版本 (通过 HuggingFace datasets)"""
+    """加载 MBPP Sanitized 版本 (通过 HuggingFace datasets)
 
-    def load(self, limit: int = -1) -> List[TaskSample]:
+    ``splits`` 默认 ``("test",)`` 以保持既有行为。改为 ``("train", "validation")``
+    可取与历史 test 划分（task_id 11–479）不重叠的新鲜题池（602–809 / 554–600），
+    从而在不改标签的前提下支持"新鲜题"实验。
+    """
+
+    def __init__(self, splits: Tuple[str, ...] = ("test",), id_prefix: str = "MBPP") -> None:
+        self.splits = tuple(splits)
+        self.id_prefix = id_prefix
+
+    def _load_split(self, split: str, samples: List[TaskSample], limit: int) -> Optional[List[TaskSample]]:
+        """把单个 split 的题目追加到 *samples*；返回 None 表示加载失败。"""
         try:
             from datasets import load_dataset
-            ds = load_dataset("mbpp", "sanitized", split="test")
+            ds = load_dataset("mbpp", "sanitized", split=split)
         except ImportError:
             print("  [Warning] 无法加载 MBPP 数据集: 缺少 datasets 依赖")
             print("  请安装依赖: pip install -r requirements.txt")
-            return []
+            return None
         except Exception as e:
             print(f"  [Warning] 无法加载 MBPP 数据集: {e}")
             if "OfflineModeIsEnabled" in str(e) or _is_hf_offline_mode():
                 print("  当前为离线模式且本地未命中缓存；请先用 --online 运行一次以下载缓存")
             else:
                 print("  请检查网络/代理，或确认 HuggingFace Hub 可访问")
-            return []
+            return None
 
-        samples = []
         for item in ds:
             # 提取 entry_point 函数名
             code = item.get("code", "")
@@ -244,7 +253,7 @@ class MBPPAdapter(BaseDatasetAdapter):
             ]).strip()
 
             samples.append(TaskSample(
-                task_id=f"MBPP/{item['task_id']}",
+                task_id=f"{self.id_prefix}/{item['task_id']}",
                 dataset_name="MBPP",
                 prompt=prompt_text,
                 entry_point=entry_point,
@@ -254,7 +263,7 @@ class MBPPAdapter(BaseDatasetAdapter):
 
             _dbg_event("dataset_sample", {
                 "dataset": "MBPP",
-                "task_id": f"MBPP/{item.get('task_id')}",
+                "task_id": f"{self.id_prefix}/{item.get('task_id')}",
                 "prompt_head": prompt_text[:200],
                 "entry_point": entry_point,
                 "test_imports": test_imports,
@@ -266,14 +275,33 @@ class MBPPAdapter(BaseDatasetAdapter):
                 break
         return samples
 
+    def load(self, limit: int = -1) -> List[TaskSample]:
+        samples: List[TaskSample] = []
+        for split in self.splits:
+            if 0 < limit <= len(samples):
+                break
+            if self._load_split(split, samples, limit) is None:
+                # 首个 split 就失败时返回空；否则保留已收集的样本。
+                return samples if samples else []
+        return samples
+
 
 class GSM8KAdapter(BaseDatasetAdapter):
-    """加载 GSM8K Main 测试集 (数学推理)"""
+    """加载 GSM8K Main 数据集 (数学推理)
+
+    ``split``/``id_prefix`` 默认保持既有行为（``test`` 划分、``GSM8K/{i}``）。
+    改为 ``split="train"`` 并换用独立 ``id_prefix``（如 ``GSM8K-train``）可取
+    与历史已用 test 题（``GSM8K/0..1318``）在命名空间上不重叠的新鲜题池。
+    """
+
+    def __init__(self, split: str = "test", id_prefix: str = "GSM8K") -> None:
+        self.split = split
+        self.id_prefix = id_prefix
 
     def load(self, limit: int = -1) -> List[TaskSample]:
         try:
             from datasets import load_dataset
-            ds = load_dataset("gsm8k", "main", split="test")
+            ds = load_dataset("gsm8k", "main", split=self.split)
         except ImportError:
             print("  [Warning] 无法加载 GSM8K 数据集: 缺少 datasets 依赖")
             print("  请安装依赖: pip install -r requirements.txt")
@@ -292,7 +320,7 @@ class GSM8KAdapter(BaseDatasetAdapter):
             target = answer.split("####")[-1].strip() if "####" in answer else answer.strip()
 
             samples.append(TaskSample(
-                task_id=f"GSM8K/{i}",
+                task_id=f"{self.id_prefix}/{i}",
                 dataset_name="GSM8K",
                 prompt=item["question"],
                 reference_answer=target,
@@ -517,7 +545,9 @@ class DatasetFactory:
     _adapters = {
         "humaneval": HumanEvalAdapter(),
         "mbpp": MBPPAdapter(),
+        "mbpp_train": MBPPAdapter(splits=("train", "validation")),
         "gsm8k": GSM8KAdapter(),
+        "gsm8k_train": GSM8KAdapter(split="train", id_prefix="GSM8K-train"),
         "math": MATHAdapter(),
     }
 
@@ -1097,8 +1127,18 @@ class MultiDatasetHarness:
         create_agents_fn,
         generate_fn,
         router,
-        max_steps_override: Optional[int] = None
+        max_steps_override: Optional[int] = None,
+        pre_generation_scheduler: Optional[Callable] = None,
+        variant_label: Optional[str] = None
     ) -> Dict[str, Any]:
+        """Run one arm on one task.
+
+        ``pre_generation_scheduler`` is forwarded verbatim to the workflow so a
+        caller can add pre-generation scheduling without changing the default
+        (now-scheduling) behaviour of the existing Full/VIB arms.
+        ``variant_label`` only annotates the request context for the ledger; it
+        never influences routing.
+        """
         ledger_kwargs = {}
         if self.request_ledger_dir:
             import uuid
@@ -1114,7 +1154,7 @@ class MultiDatasetHarness:
         client.inference_protocol = self.inference_protocol
         client.request_context = {
             "task_id": sample.task_id, "dataset": sample.dataset_name,
-            "variant": "full" if isinstance(router, BypassVIBRouter) else "vib",
+            "variant": variant_label or ("full" if isinstance(router, BypassVIBRouter) else "vib"),
             "purpose": "oracle_probe" if max_steps_override == 1 else "benchmark",
         }
         agents = create_agents_fn(client)
@@ -1126,7 +1166,8 @@ class MultiDatasetHarness:
             same_round_history_mode=workflow_options["same_round_history_mode"],
             enable_digest_fallback=workflow_options["enable_digest_fallback"],
             required_roles_first_step=workflow_options["required_roles_first_step"],
-            first_step_min_approvals=workflow_options["first_step_min_approvals"]
+            first_step_min_approvals=workflow_options["first_step_min_approvals"],
+            pre_generation_scheduler=pre_generation_scheduler
         )
         workflow_result = workflow.run(goal=sample.prompt, verbose=False)
         final_output = generate_fn(client, sample.prompt, workflow_result["history"])

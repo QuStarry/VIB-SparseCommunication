@@ -462,3 +462,64 @@ def test_generate_final_code_picks_best_candidate_when_all_3_fail(monkeypatch):
     # 3 次 attempt 的 doctest 失败数：[3, 1, 4] → 最少是第 2 次（attempt=1）
     assert "ATTEMPT_2_CODE" in result
     assert "ATTEMPT_3_CODE" not in result
+
+
+def test_default_adapters_keep_historical_split_and_prefix():
+    """默认工厂键必须保持既有行为，不得因新增新鲜题键而改变。"""
+    module = load_run_multi_benchmark_module()
+
+    gsm8k = module.DatasetFactory.get_adapter("gsm8k")
+    mbpp = module.DatasetFactory.get_adapter("mbpp")
+
+    assert gsm8k.split == "test"
+    assert gsm8k.id_prefix == "GSM8K"
+    assert mbpp.splits == ("test",)
+    assert mbpp.id_prefix == "MBPP"
+
+
+def test_mbpp_train_adapter_collects_both_splits_with_prefix(monkeypatch):
+    """新鲜题键 mbpp_train 应合并 train+validation，且 id 前缀保持 MBPP（与历史 test 11–479 不重叠）。"""
+    module = load_run_multi_benchmark_module()
+
+    def _row(task_id: int, name: str):
+        return {
+            "source_file": "s", "task_id": task_id, "prompt": "p",
+            "code": f"def {name}(a):\n    return a",
+            "test_imports": [], "test_list": [f"assert {name}(1) == 1"],
+        }
+
+    rows = {"train": [_row(602, "f")], "validation": [_row(554, "g")]}
+
+    class FakeDatasets:
+        @staticmethod
+        def load_dataset(name, config=None, split=None):
+            return rows[split]
+
+    monkeypatch.setitem(sys.modules, "datasets", FakeDatasets)
+
+    adapter = module.DatasetFactory.get_adapter("mbpp_train")
+    samples = adapter.load(limit=-1)
+    assert [s.task_id for s in samples] == ["MBPP/602", "MBPP/554"]
+    assert {s.dataset_name for s in samples} == {"MBPP"}
+
+
+def test_gsm8k_train_adapter_uses_disjoint_id_prefix(monkeypatch):
+    """新鲜题键 gsm8k_train 须改用 GSM8K-train 前缀，避免与历史 GSM8K/0..1318 撞车。"""
+    module = load_run_multi_benchmark_module()
+
+    class FakeDatasets:
+        @staticmethod
+        def load_dataset(name, config=None, split=None):
+            assert split == "train"
+            return [
+                {"question": "q0", "answer": "steps #### 7"},
+                {"question": "q1", "answer": "#### 9"},
+            ]
+
+    monkeypatch.setitem(sys.modules, "datasets", FakeDatasets)
+
+    adapter = module.DatasetFactory.get_adapter("gsm8k_train")
+    samples = adapter.load(limit=-1)
+    assert [s.task_id for s in samples] == ["GSM8K-train/0", "GSM8K-train/1"]
+    assert [s.reference_answer for s in samples] == ["7", "9"]
+    assert all(s.dataset_name == "GSM8K" for s in samples)
