@@ -1356,3 +1356,13 @@ assert _poly(*candidate(*inp), inp) <= 0.0001
 4. **[MED] MBPP/437 van-only failure 定性笔记** — 用于 §4 Limitation 第 (3) 条 "不是通信瓶颈而是 synthesis 瓶颈" 的举证，可从 vanilla_baseline trace 里抽 Coder 最终输出 vs 标准答案做 1 段 100 字摘要。
 5. **[LOW] β₀ / λ 2D sweep (e.g. β₀ ∈ {1,2,4}, λ ∈ {0.05,0.15,0.3})** — 把 Table 3 升级成 3×3 热图；如果时间紧（顶会 deadline 前 3 天）可以不跑，当前 frozen/role 两列足够。
 6. **[LOW] 正文引用 → bibtex key 映射清单**：§5 中提到的 Du2023AgentCoder, Alemi2017VIB, Tishby2015IB, Razeghi2022InfoBERT, Xia2024DyLAN 等 10 篇需要和 `paper/refs.bib` 一一对应（Gap-appendix refs）。
+
+---
+
+## 2026-11-18 D「任务自适应通信预算」定位决策
+
+- 触发：本批 n=300 GSM8K `train`（`results/pre_generation_scheduling_20261117`，模型 `deepseek-v4-flash`，温度 0、`max_steps=2`）实跑结果显示：在数量匹配预算下，覆盖度调度与随机跳过**不可区分**（$\Delta$acc `+0.33` pp，CI `[-1.00,+1.67]`；总词元仅差 `0.27%`），固定裁剪更省且不更差。即「同预算下**选谁**不影响精度」，D 赖以立论的「更聪明的预算分配」前提在本批数据不成立。
+- 新颖性占位核对：与本方向直接冲突的两篇已核实并著录——`li2026progrouter`（ProgRouter, Findings of EMNLP 2026, arXiv:2608.25992：在线、进度引导、逐步的 LLM agent 路由，质量—成本权衡）与 `feng2026pear`（PEAR, EMNLP 2026, arXiv:2606.20621：推理期动态重构通信角色与稀疏拓扑的等变路由）。二者已覆盖「逐步选择/分配预算」，仅「把门控前移」不足以在这些工作之上单独构成调度策略的新颖性。
+- 决策（用户确认，方案 A）：**D 不再作为独立新机制**，重定位并入 ②「门控时机/结构」贡献。可辩护增量为：门控**时机**前移到候选生成之前，把消息级节省转为完整费用节省（总词元 `4.01%→41.38%`）并消除生成后门控的精度天花板；同时如实报告受控负结果（收益来自「生成前跳过」而非「选谁」）。不对任何调度/预算分配策略声称优越性。
+- 论文落点：`paper/paper.tex` 与 `paper/paper_zh.tex` 相关工作各新增一段显式点名 ProgRouter/PEAR 划界；② 小节（`table7_pre_generation_scheduling`）已给出 H1/H2 与机制性负结果。
+- 不变量：本决策与相关文字**未发起任何新的真实模型调用**；不修改历史 JSON 的 history/output/passed/Token/费用字段；沿用既有 ② 批次产物与指纹。

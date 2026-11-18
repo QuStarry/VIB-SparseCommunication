@@ -252,6 +252,8 @@ HumanEval/93的Full输出违反公开编码例子，错误建议首轮已经存�
 \section{相关工作}
 AgentCoder、ChatDev、MetaGPT、SWE-agent和OpenDevin涉及代理软件工作流\citep{du2023agentcoder,qian2023chatdev,hong2023metagpt,yang2024sweagent,wang2024opendevin}。DyLAN、LLMLingua、AgentPrune与AgentDropout涉及团队优化、提示压缩或通信裁剪\citep{liu2023dylan,jiang2023llmlingua,zhang2024agentprune,wang2025agentdropout}，因此稀疏通信本身不能声称新颖。多智能体强化学习领域对通信效率亦有系统梳理，其核心问题同样是在有限带宽下选择性地传递信息\citep{chen2026communication}，近期工作进一步研究了大规模情境下的图信息通信与拓扑优化\citep{li2026graphinfo}。本文没有在相同harness下复现这些方法的主结果。
 
+自适应路由与调度方面，ProgRouter~\citep{li2026progrouter}研究在质量—成本预算下对多智能体LLM工作流进行在线、逐步骤的进度引导路由，PEAR~\citep{feng2026pear}在推理期动态重构通信角色与稀疏拓扑。二者已覆盖“更聪明地逐步选择与分配预算”，因此本文不对调度或预算分配策略本身声称新颖。本文的贡献是门控的\textbf{时机}：把准入前移到候选生成之前，可把消息级节省转为完整费用节省（总词元$4.01\%\rightarrow41.38\%$）；而在数量匹配预算下，选择规则与随机不可区分，收益来自“生成前跳过”而非“保留哪条消息”。
+
 信息瓶颈、深度VIB和InfoBERT关注信息保留及正则化\citep{tishby2015deep,alemi2017variational,wang2021infobert}，与本文启发式的理论强度不同。Self-Refine提示应设置强单智能体迭代对照\citep{madaan2023selfrefine}；关于多智能体辩论评估的研究也强调推理预算和模型差异\citep{zhang2025stopovervaluing}，国内亦有工作将多智能体辩论机制用于复杂生成任务\citep{ma2026debate}。StreamingLLM及MemWalker主要研究长上下文或记忆导航\citep{xiao2023streamingllm,liu2024memwalker}，不等同于本文短团队广播门控。
 
 \section{结论}
