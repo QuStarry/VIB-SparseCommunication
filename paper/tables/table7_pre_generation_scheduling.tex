@@ -1,0 +1,38 @@
+\begin{table}[t]
+\centering
+\caption{Pre-generation scheduling on 300 GSM8K \texttt{train} tasks (model
+\texttt{deepseek-v4-flash}, temperature $0$, max steps $2$). A skipped role is never invoked, so its
+cost is genuinely avoided, whereas post-generation gating still pays for every candidate.
+Descriptive reductions are relative to Full-Comm; the lower block reports paired accuracy
+differences in pp with a $10\,000$-resample bootstrap 95\% CI plus the total-token reduction
+of the first arm relative to the second (positive = first arm cheaper).
+Coverage$-$Full is the primary comparison and Coverage$-$RandomSkip the prespecified
+count-matched control; the remaining contrasts are descriptive. Every interval spans zero:
+at this scale no condition shows a significant accuracy change, coverage is indistinguishable
+from the count-matched random control, and it still costs more than fixed trimming.
+\label{tab:pre_generation}}
+\setlength{\tabcolsep}{3.5pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} l r r r r @{}}
+\toprule
+\multicolumn{5}{@{}l}{\textit{(a) Descriptive metrics}}\\
+\textbf{Condition} & \textbf{Pass@1 (\%)} & \textbf{Msg$\downarrow$\%} &
+\textbf{Prompt$\downarrow$\%} & \textbf{Tok$\downarrow$\%} \\
+\midrule
+Full-Comm (no gate) & 94.00 & -- & -- & -- \\
+Post-gate (current) & 95.33 & 29.83 & 5.07 & 4.01 \\
+Fixed trim & 95.00 & 50.00 & 61.02 & 59.25 \\
+Random skip (matched) & 94.00 & 43.89 & 42.70 & 41.23 \\
+\textbf{Coverage (ours)} & \textbf{94.33} & \textbf{43.17} & \textbf{42.72} & \textbf{41.38} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{(b) Paired contrasts ($10$k bootstrap 95\% CI)}}\\
+\textbf{Contrast} & \textbf{$\Delta$acc (pp)} & \textbf{95\% CI} & \multicolumn{2}{c}{\textbf{Tok$\downarrow$\%}} \\
+\midrule
+Coverage $-$ Full & $+0.33$ & $[-1.00, +1.67]$ & \multicolumn{2}{c}{+41.38} \\
+Coverage $-$ Post-gate & $-1.00$ & $[-2.67, +0.67]$ & \multicolumn{2}{c}{+38.94} \\
+Coverage $-$ Random skip & $+0.33$ & $[-1.00, +1.67]$ & \multicolumn{2}{c}{+0.27} \\
+Coverage $-$ Fixed trim & $-0.67$ & $[-2.33, +1.00]$ & \multicolumn{2}{c}{-43.83} \\
+\bottomrule
+\end{tabular}}
+\end{table}

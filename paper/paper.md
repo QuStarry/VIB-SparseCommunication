@@ -13,9 +13,19 @@ keywords:
   - HumanEval · MBPP · GSM8K
 style: neurips_2026   # placeholder; see paper/main.tex for actual template imports
 draft: true
+deprecated: true   # 已废弃，唯一事实源见下方声明 / paper.tex 与 paper_zh.tex
 ---
 
-> ⚠️ **Working Draft (Markdown scaffold → LaTeX).** 本文件为论文骨架草稿，所有数字均来自 `results/*.json`，后续将由 `pandoc` 或专用脚本直接导出为对应会场模板的 `.tex`。正文结构严格按 8 页双栏 (NeurIPS/ICLR) 控制，不包含参考文献与附录（见 paper/refs.bib 和 paper/appendix/）。
+> 🚫 **DEPRECATED — 已废弃的早期乐观草稿，请勿引用本文件数值。**
+>
+> 本文件保留为历史骨架，**不再维护**。其结论口径（“Less is More / 稀疏通信提精度”）已被重定位后的实证审计推翻：门控的真实收益是**省通信而非提精度**，且存在结构性精度天花板。
+>
+> **唯一事实源（single source of truth）：**
+> - 英文论文：`paper/paper.tex`
+> - 中文论文：`paper/paper_zh.tex`
+> - 所有表格由 `scripts/export_latex_tables.py` 从 `results/*.json` 生成，禁止手改生成的 `.tex` 表格。
+>
+> 如需细节出处与判读规则，见 `paper/gap1_claim_audit_trail.md`、`paper/pre_generation_scheduling_protocol_zh.md` 与 `paper/refs.bib`。下方正文内容仅供历史追溯，可能与上列 `.tex` 不一致。
 
 ---
 

@@ -1,15 +1,17 @@
-\begin{table}[t]
+\begin{table*}[t]
 \centering
-\caption{三种方法的历史表现与通信预算。Vanilla/Full/VIB 均为 Pass@1（\%）；$\Delta$ 为 VIB 相对 Full 的差值（百分点）及 10000 次任务配对 bootstrap 95\% 区间；广播减少与 Token 减少均为相对 Full 的下降比例。区间跨零不证明等效或非劣效。\label{tab:main_results_simple}}
-\setlength{\tabcolsep}{4pt}
-\small
-\begin{tabular}{l r r r r r r r r}
+\caption{三种方法的历史表现与通信预算。Vanilla/Full/VIB 均为 Pass@1（\%），Full 与 VIB 后括号内为 Wilson 95\% 单比例区间；$\Delta$ 为 VIB 相对 Full 的差值（百分点）及 10000 次任务配对 bootstrap 95\% 区间；广播减少与历史词元计数差均为相对 Full 的下降比例。$\dagger$ 表示配对区间不跨零。区间跨零不证明等效或非劣效；历史词元计数差不等于完整费用节省。\label{tab:main_results_simple}}
+\setlength{\tabcolsep}{3.4pt}
+\scriptsize
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{@{} l r r l l r r l r r @{}}
 \toprule
-数据集 & 题数 & Vanilla (\%) & Full (\%) & VIB (\%) & $\Delta$(VIB$-$Full) (pp) & 95\% CI & 广播减少 & Token 减少 \\
+数据集 & 题数 & Vanilla (\%) & Full (\%) [Wilson 95\% CI] & VIB (\%) [Wilson 95\% CI] &
+$\Delta$(Full$-$Vanilla) (pp) & $\Delta$(VIB$-$Full) (pp) & 95\% CI & 广播减少 & 历史词元计数差 \\
 \midrule
-HumanEval & 164 & 93.90 & 92.07 & 90.24 & $-1.83$ & $[-6.71, +3.05]$ & 21.14\% & 3.88\% \\
-GSM8K     & 1319 & 59.29 & 95.30 & 95.22 & $-0.08$ & $[-0.83, +0.68]$ & 30.49\% & 4.96\% \\
-MATH      & 5000 & 46.16 & 78.58 & 77.66 & $-0.92$ & $[-1.78, -0.04]$ & 25.59\% & 4.42\% \\
+HumanEval & 164  & 93.90 & 92.07 [86.91, 95.31] & 90.24 [84.74, 93.90] & $-3.66$ & $-1.83$            & $[-6.71, +3.05]$ & 21.14\% & 3.88\% \\
+GSM8K     & 1319 & 59.29 & 95.30 [94.02, 96.32] & 95.22 [93.93, 96.25] & $+35.93$ & $-0.08$           & $[-0.83, +0.68]$ & 30.49\% & 4.96\% \\
+MATH      & 5000 & 46.16 & 78.58 [77.42, 79.70] & 77.66 [76.48, 78.79] & $+31.50$ & $-0.92^{\dagger}$ & $[-1.78, -0.04]$ & 25.59\% & 4.42\% \\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{tabular}}
+\end{table*}

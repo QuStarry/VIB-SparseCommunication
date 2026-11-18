@@ -19,7 +19,7 @@
 \setlist{noitemsep,topsep=3pt,leftmargin=*}
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,
   pdfauthor={屈占祥 / Zhanxiang Qu},
-  pdftitle={LLM团队需要多少通信？轻量消息门控的实证研究}}
+  pdftitle={多智能体大语言模型消息门控的实证研究：通信节省、精度天花板与报告口径}}
 \crefname{table}{表}{表}
 \Crefname{table}{表}{表}
 \crefname{figure}{图}{图}
@@ -36,7 +36,7 @@
 \emergencystretch=2em
 \setlength{\hfuzz}{0pt}
 \setlength{\parskip}{3pt}
-\title{LLM团队需要多少通信？\\轻量消息门控的实证研究}
+\title{多智能体大语言模型消息门控的实证研究：\\通信节省、精度天花板与报告口径}
 \author{屈占祥（Zhanxiang Qu）\\独立研究者\\
   \href{mailto:zhanxiangqu@126.com}{\texttt{zhanxiangqu@126.com}}\\
   \href{https://orcid.org/0009-0000-0137-9751}{ORCID: 0009-0000-0137-9751}}
@@ -45,7 +45,7 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-多智能体大语言模型系统是否需要广播每条候选消息？更复杂的门控是否优于简单冗余过滤？本文以信息瓶颈思想启发的VIB-Sparse为测试策略，在HumanEval（164题）、GSM8K（1319题）和MATH（5000题）上分析通信与任务表现。相对完整通信，HumanEval和GSM8K的广播消息减少21.14\%和30.49\%，精度差为$-1.83$和$-0.08$个百分点；MATH在保守完整答案匹配下差值为$-0.92$个百分点，广播减少25.59\%。GSM8K和MATH记录的总Token减少仅为4.96\%和4.42\%；HumanEval刷新代码沿用旧费用字段，不能声称完整成本节省。历史MBPP结果因参考测试参与早停而作为oracle-only证据隔离。三个早期HumanEval正收益批次通过实际重评，但不足以证明稳定优越性。另一个200题GSM8K子集上，余弦阈值门控与VIB的精度点估计均为97.00\%，配对差值区间为$[-2.50,+2.50]$个百分点。结果支持审慎的精度--成本评估和协议修复，不支持VIB特有优越性、正式等效性或可部署的讨论调度器结论。
+多智能体大语言模型系统是否需要在共享历史中广播每一条候选消息？更复杂的门控是否优于简单冗余过滤？本文以"团队是否需要广播全部候选消息"为研究问题，构建统一的实证评测框架，并以信息瓶颈思想为动机实现的确定性轻量门控VIB-Sparse作为被评估的复杂门控代表，在HumanEval（164题）、GSM8K（1319题）和MATH（5000题）上分析通信与任务表现。相对完整通信，HumanEval和GSM8K的广播消息减少21.14\%和30.49\%，精度差为$-1.83$和$-0.08$个百分点；MATH在保守完整答案匹配下差值为$-0.92$个百分点，广播减少25.59\%。GSM8K和MATH记录的总Token减少仅为4.96\%和4.42\%；HumanEval刷新代码沿用旧费用字段，不能声称完整成本节省。由于候选生成成本在门控之前已经发生，生成后门控存在结构性精度天花板：消息数、输入词元与完整费用三者并不同步，以消息数作为通信收益的代理会系统性高估门控的经济价值。把门控前移到候选生成之前可把总Token节省从4.01\%放大到41.38\%（300题GSM8K实跑），且配对精度差落在$\pm1$个百分点内；但在相同预算下，覆盖度调度与数量匹配的随机跳过精度不可区分，说明收益来自“是否前置跳过”而非“选择哪条消息”。历史MBPP结果因参考测试参与早停而作为oracle-only证据隔离。三个早期HumanEval正收益批次通过实际重评，但不足以证明稳定优越性。另一个200题GSM8K子集上，余弦阈值门控与VIB-Sparse的精度点估计均为97.00\%，配对差值区间为$[-2.50,+2.50]$个百分点。现有证据不支持VIB机制相对简单门控的独有精度优势，也不支持正式等效性或可部署的讨论调度器结论。
 \end{abstract}
 \noindent\textbf{关键词：}多智能体大语言模型；稀疏通信；信息瓶颈；成本评估；实验可复现性。
 
@@ -53,15 +53,15 @@
 本文为可独立阅读的中文研究工作稿，内容与英文稿的事实和评分口径对应，而非逐句翻译。当前不是完成独立确认实验的正式投稿版本。生成表格是数值事实源；作者已确认无资助、无利益冲突，公开数据声明尚须投稿前复核。
 
 \section{引言}
-多智能体系统将代码生成、测试建议和验证等工作分配给不同角色，常通过共享历史广播所有候选消息。ChatDev、MetaGPT、AgentCoder和SWE-agent等工作展示了角色分工的不同形式\citep{qian2023chatdev,hong2023metagpt,du2023agentcoder,yang2024sweagent}。但是，更多讨论既可能补充推理，也可能传播错误建议；消息进入上下文并不代表它对最终正确性有贡献。
+多智能体系统将代码生成、测试建议和验证等工作分配给不同角色，常通过共享历史广播所有候选消息。ChatDev、MetaGPT、AgentCoder和SWE-agent等工作展示了角色分工的不同形式\citep{qian2023chatdev,hong2023metagpt,du2023agentcoder,yang2024sweagent}，国内已有综述对基于大语言模型智能体的代码生成进行系统梳理\citep{dong2026codereview}。但是，更多讨论既可能补充推理，也可能传播错误建议；消息进入上下文并不代表它对最终正确性有贡献。
 
 本文区分两个问题。第一，\textbf{上下文质量}：删除重复或错误内容是否能改善答案，需要控制候选内容的因果实验，而不是仅根据相似度分数推断。第二，\textbf{广播与实际费用}：如果候选已经生成，随后丢弃不能撤销其生成费用；节省的是可能减少的后续输入上下文，而非已发生的请求。
 
-VIB-Sparse是信息瓶颈思想启发的确定性嵌入启发式。其名称不表示已经拟合、优化或证明变分互信息界。本文的贡献为：
+VIB-Sparse是信息瓶颈思想启发的确定性嵌入启发式，作为被评估的复杂门控代表；其名称不表示已经拟合、优化或证明变分互信息界。本文的贡献为：
 \begin{enumerate}
-\item 报告三个非oracle主基准的精度--广播权衡，并隔离参考辅助早停的MBPP历史结果。
-\item 在相同任务和接近消息预算下比较Random、余弦阈值和VIB，不将消息数匹配误称为总费用匹配。
-\item 审计评分、参数透传、合成刷新和成本关联，保留真实历史正收益，同时区分探索证据与稳定方法优势。
+\item \textbf{口径分离}：在消息数、输入词元与完整费用三个层次上审计通信收益，指出以广播消息数作为通信收益的代理会系统性高估门控的经济价值。
+\item \textbf{生成后门控的精度天花板与前置突破}：论证候选生成成本先于门控发生、属于沉没成本，生成后门控难以获得稳定精度正收益；并在300题GSM8K上前置实跑调度，说明把门控移到候选生成之前可将总词元节省放大约十倍，而在相同预算下保留哪些角色并不影响精度。辅以Random、余弦阈值和VIB-Sparse对照，说明简单门控即可达到与复杂门控相当的精度。
+\item \textbf{可复现的实证审计}：审计评分、参数透传、合成刷新和成本关联，在不修改历史记录的前提下区分探索性观察与稳定方法优势，并在三个非oracle主基准上报告精度--广播权衡。
 \end{enumerate}
 
 \section{方法}
@@ -101,7 +101,7 @@ HumanEval采用可执行代码测试\citep{chen2021evaluating}；历史MBPP-Sani
 \begin{equation}
 \mathcal L_{\mathrm{IB}}(M)=I(M;H)-\beta_t I(M;G).
 \end{equation}
-信息瓶颈和深度VIB提供的是理论或训练框架\citep{tishby2015deep,alemi2017variational}；本文实现没有估计真实分布下的互信息，也没有优化相应变分界。
+信息瓶颈和深度VIB提供的是理论或训练框架\citep{tishby2015deep,alemi2017variational}；本文实现没有估计真实分布下的互信息，也没有优化相应变分界。在多智能体通信场景中，已有工作以深度强化学习结合互信息约束与信息瓶颈理论过滤冗余信息、自适应选择通信对象\citep{gao2024info}。
 
 采用冻结的all-MiniLM-L6-v2编码器，维度384，目标相关性代理为：
 \begin{equation}
@@ -179,6 +179,17 @@ Random、VIB和该余弦门控的记录Token减少为13.08\%、5.08\%、4.72\%�
 
 200题网关跨族比较中，DeepSeek参考行和Qwen行差值为$+0.5$和$+1.5$个百分点，消息减少均超过25\%。Qwen为97.50/99.00\%，区间$[0.00,+3.50]$，$p=0.25$。这些是有限迁移观察，不是模型无关保证；网关ID也不独立证明不可变提供方快照。
 
+\subsection{生成前调度：把门控移到候选生成之前}
+前述门控都在候选生成之后才作出决定：被拒绝的候选虽然不再进入合成，其生成费用已经发生，这正是精度天花板的来源。唯一的突破口是把门控前移到候选生成之前——被跳过的角色完全不调用模型，成本为零。此时调度器只能使用决策时可见的证据（目标、已批准历史、轮次与角色名），不得读取参考答案或隐藏信号。为检验这一点，我们在GSM8K \texttt{train} 的300题上以模型 \texttt{deepseek-v4-flash}、温度0、最大轮次2实跑五个条件：全通信（无门控无调度，作为上界）、生成后门控（现状方法）、固定裁剪（仅第1轮裁剪）、随机跳过（与覆盖度调度逐轮保留相同数量角色的随机对照）与覆盖度调度。结果见\Cref{tab:pre_generation}。
+
+\textbf{假设1（前置门控节省成本）成立。} 覆盖度调度相对全通信减少$43.17$\%广播、$41.38$\%总词元；生成后门控相对全通信只减少$29.83$\%广播、$4.01$\%总词元。把“是否跳过”的决定前移之后，总词元节省被放大约十倍。
+
+\textbf{假设2（精度非劣）成立。} 所有处理条件相对全通信的配对精度差都落在$\pm1$个百分点以内，区间跨零：覆盖度调度减全通信为$+0.33$个百分点，区间$[-1.00,+1.67]$；覆盖度调度减生成后门控为$-1.00$个百分点，区间$[-2.67,+0.67]$。该规模下前置调度没有造成可检出的精度损失，但也没有带来显著增益。
+
+\textbf{机制性负结果。} 节省来自“前置跳过”这一动作本身，而不是“跳得聪明”。覆盖度调度与数量匹配的随机跳过几乎完全重合：精度差$+0.33$个百分点、区间$[-1.00,+1.67]$，总词元仅相差$0.27$\%。固定裁剪反而更省且略准：它相对全通信减少$59.25$\%总词元，覆盖度调度相对它贵$43.83$\%、低$0.67$个百分点。因此，“按任务自适应分配通信预算”在本批数据中缺乏支撑——在相同预算下保留哪些角色并不影响精度，真正的成本由是否前置跳过决定。我们据此不主张调度策略的优越性，只把它作为可复现的阴性证据报告。
+
+\input{tables/table7_pre_generation_scheduling_zh}
+
 \section{历史回溯：正收益与实现缺陷}
 \subsection{真实正收益并未被重评抹掉}
 三个旧HumanEval批次重新执行原entry-point测试后，标签完全保持不变：
@@ -239,9 +250,9 @@ HumanEval/93的Full输出违反公开编码例子，错误建议首轮已经存�
 建议先校准后报价，探索初始整体费用上限\$3；这不是保证完成大样本验证的报价。80题不能保证检测1个百分点，更不足以无条件证明非劣效，确认实验须提前做功效分析。本文没有运行这批新付费实验。
 
 \section{相关工作}
-AgentCoder、ChatDev、MetaGPT、SWE-agent和OpenDevin涉及代理软件工作流\citep{du2023agentcoder,qian2023chatdev,hong2023metagpt,yang2024sweagent,wang2024opendevin}。DyLAN、LLMLingua、AgentPrune与AgentDropout涉及团队优化、提示压缩或通信裁剪\citep{liu2023dylan,jiang2023llmlingua,zhang2024agentprune,wang2025agentdropout}，因此稀疏通信本身不能声称新颖。本文没有在相同harness下复现这些方法的主结果。
+AgentCoder、ChatDev、MetaGPT、SWE-agent和OpenDevin涉及代理软件工作流\citep{du2023agentcoder,qian2023chatdev,hong2023metagpt,yang2024sweagent,wang2024opendevin}。DyLAN、LLMLingua、AgentPrune与AgentDropout涉及团队优化、提示压缩或通信裁剪\citep{liu2023dylan,jiang2023llmlingua,zhang2024agentprune,wang2025agentdropout}，因此稀疏通信本身不能声称新颖。多智能体强化学习领域对通信效率亦有系统梳理，其核心问题同样是在有限带宽下选择性地传递信息\citep{chen2026communication}，近期工作进一步研究了大规模情境下的图信息通信与拓扑优化\citep{li2026graphinfo}。本文没有在相同harness下复现这些方法的主结果。
 
-信息瓶颈、深度VIB和InfoBERT关注信息保留及正则化\citep{tishby2015deep,alemi2017variational,wang2021infobert}，与本文启发式的理论强度不同。Self-Refine提示应设置强单智能体迭代对照\citep{madaan2023selfrefine}；关于多智能体辩论评估的研究也强调推理预算和模型差异\citep{zhang2025stopovervaluing}。StreamingLLM及MemWalker主要研究长上下文或记忆导航\citep{xiao2023streamingllm,liu2024memwalker}，不等同于本文短团队广播门控。
+信息瓶颈、深度VIB和InfoBERT关注信息保留及正则化\citep{tishby2015deep,alemi2017variational,wang2021infobert}，与本文启发式的理论强度不同。Self-Refine提示应设置强单智能体迭代对照\citep{madaan2023selfrefine}；关于多智能体辩论评估的研究也强调推理预算和模型差异\citep{zhang2025stopovervaluing}，国内亦有工作将多智能体辩论机制用于复杂生成任务\citep{ma2026debate}。StreamingLLM及MemWalker主要研究长上下文或记忆导航\citep{xiao2023streamingllm,liu2024memwalker}，不等同于本文短团队广播门控。
 
 \section{结论}
 本文不是宣称VIB稳定优于Full或简单门控，而是展示可观测的通信权衡与影响结论的协议边界。历史正收益应保留、复现和解释，负差值也应如实披露。先修可复现性和费用关联，再开展固定候选提示词实验及独立等实际费用验证，是保留已有研究价值、避免盲目扩样的更可靠路径。

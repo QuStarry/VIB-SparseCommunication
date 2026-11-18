@@ -1,0 +1,35 @@
+\begin{table}[t]
+\centering
+\caption{GSM8K \texttt{train} 300 题上的生成前调度（模型 \texttt{deepseek-v4-flash}，温度 $0$，
+最大轮次 $2$）。被跳过的角色从不调用模型，其成本被真正省下；生成后门控仍需为每个候选付费。
+描述性节省率相对全通信；下半区给出配对精度差（pp，$10\,000$ 次 bootstrap 95\% 置信区间）
+与前者相对后者的总 Token 降幅（正 $=$ 前者更省）。
+Coverage$-$Full 为主比较，Coverage$-$RandomSkip 为预注册的数量匹配对照，其余为描述性。
+所有区间均跨零：该规模下无处理条件产生显著精度变化，覆盖度调度与数量匹配随机对照不可区分，
+且成本仍高于固定裁剪。
+\label{tab:pre_generation}}
+\setlength{\tabcolsep}{3.5pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} l r r r r @{}}
+\toprule
+\multicolumn{5}{@{}l}{\textit{(a) 描述性指标}}\\
+\textbf{处理条件} & \textbf{Pass@1 (\%)} & \textbf{消息$\downarrow$\%} &
+\textbf{输入词元$\downarrow$\%} & \textbf{总词元$\downarrow$\%} \\
+\midrule
+全通信（无门控） & 94.00 & -- & -- & -- \\
+生成后门控（现状） & 95.33 & 29.83 & 5.07 & 4.01 \\
+固定裁剪 & 95.00 & 50.00 & 61.02 & 59.25 \\
+随机跳过（数量匹配） & 94.00 & 43.89 & 42.70 & 41.23 \\
+\textbf{覆盖度调度（本文）} & \textbf{94.33} & \textbf{43.17} & \textbf{42.72} & \textbf{41.38} \\
+\midrule
+\multicolumn{5}{@{}l}{\textit{(b) 配对对照（$10$k bootstrap 95\% 置信区间）}}\\
+\textbf{对照} & \textbf{$\Delta$精度 (pp)} & \textbf{95\% 置信区间} & \multicolumn{2}{c}{\textbf{总词元$\downarrow$\%}} \\
+\midrule
+Coverage $-$ Full & $+0.33$ & $[-1.00, +1.67]$ & \multicolumn{2}{c}{+41.38} \\
+Coverage $-$ Post-gate & $-1.00$ & $[-2.67, +0.67]$ & \multicolumn{2}{c}{+38.94} \\
+Coverage $-$ Random skip & $+0.33$ & $[-1.00, +1.67]$ & \multicolumn{2}{c}{+0.27} \\
+Coverage $-$ Fixed trim & $-0.67$ & $[-2.33, +1.00]$ & \multicolumn{2}{c}{-43.83} \\
+\bottomrule
+\end{tabular}}
+\end{table}

@@ -31,11 +31,11 @@
 \usepackage{ragged2e}
 
 %% ---- Title / authors ----
-\title{How Much Communication Do LLM Teams Need?\\An Empirical Study of Lightweight Message Gating}
+\title{An Empirical Study of Message Gating for Multi-Agent LLMs:\\Communication Savings, the Accuracy Ceiling, and Reporting Metrics}
 \author{Zhanxiang Qu\\Independent Researcher\\\texttt{zhanxiangqu@126.com}\\
   \href{https://orcid.org/0009-0000-0137-9751}{ORCID: 0009-0000-0137-9751}}
 \date{}
-\hypersetup{pdfauthor={Zhanxiang Qu},pdftitle={How Much Communication Do LLM Teams Need?}}
+\hypersetup{pdfauthor={Zhanxiang Qu},pdftitle={An Empirical Study of Message Gating for Multi-Agent LLMs}}
 
 %% ---- Utility math ----
 \newcommand{\VIB}{\text{VIB}}
@@ -52,7 +52,7 @@
 %% 0. Abstract
 %% ================================================================
 \begin{abstract}
-Do LLM teams need to broadcast every candidate message, and does effective gating require a complex selection rule? We study these questions using a lightweight information-bottleneck-inspired router, VIB-Sparse, on HumanEval ($n=164$), GSM8K ($n=1319$), and MATH ($n=5000$). Relative to full communication, it reduces broadcast messages by $21.14\%$ on HumanEval and $30.49\%$ on GSM8K, with observed accuracy differences of $-1.83$ and $-0.08$ percentage points. MATH has a $-0.92$-point difference for $25.59\%$ message reduction under a conservative whole-answer matcher, not a complete semantic oracle. GSM8K and MATH record only $4.96\%$ and $4.42\%$ fewer total tokens; refreshed HumanEval outputs inherit old counters and lack complete cost evidence. Historical MBPP ($n=257$) is isolated as oracle-only evidence because reference tests informed stopping. Three earlier HumanEval batches retain positive VIB differences after executable re-scoring, but do not establish stable superiority. On a separate $200$-problem GSM8K subset, a cosine-only gate and VIB share a $97.00\%$ point estimate at similar message budgets; their paired interval is $[-2.50,+2.50]$ points. These findings motivate simple controls and auditable protocols, not VIB-specific superiority or formal equivalence.
+Do LLM teams need to broadcast every candidate message, and does effective gating require a complex selection rule? We build a unified empirical evaluation framework and, motivated by the information-bottleneck principle, implement a deterministic lightweight gate, VIB-Sparse, as the complex-gate representative under evaluation, on HumanEval ($n=164$), GSM8K ($n=1319$), and MATH ($n=5000$). Relative to full communication, VIB-Sparse reduces broadcast messages by $21.14\%$ on HumanEval and $30.49\%$ on GSM8K, with observed accuracy differences of $-1.83$ and $-0.08$ percentage points. MATH has a $-0.92$-point difference for $25.59\%$ message reduction under a conservative whole-answer matcher, not a complete semantic oracle. GSM8K and MATH record only $4.96\%$ and $4.42\%$ fewer total tokens; refreshed HumanEval outputs inherit old counters and lack complete cost evidence. Two main conclusions follow. First, message count, input tokens, and full cost do not move in step, so using message count as a proxy for communication savings systematically overstates the economic value of gating. Second, because candidate generation cost is already incurred before gating, post-generation gating has a structural accuracy ceiling: it mainly saves communication rather than improving accuracy. Moving the gate before candidate generation scales total-token savings from $4.01\%$ to $41.38\%$ on $300$ GSM8K training tasks while keeping paired accuracy differences within $\pm1$ pp; but under a matched budget, coverage-based scheduling and a count-matched random control are indistinguishable, so the saving comes from skipping before generation rather than from choosing which message to keep. Historical MBPP ($n=257$) is isolated as oracle-only evidence because reference tests informed stopping. Three earlier HumanEval batches retain positive VIB differences after executable re-scoring, but do not establish stable superiority. On a separate $200$-problem GSM8K subset, a cosine-only gate and VIB-Sparse share a $97.00\%$ point estimate at similar message budgets, with a paired interval of $[-2.50,+2.50]$ points. The evidence does not support VIB-specific superiority over simple gates, nor formal equivalence or a deployable discussion-scheduler conclusion.
 \end{abstract}
 
 %% ================================================================
@@ -78,7 +78,7 @@ We use VIB-Sparse as an information-bottleneck-inspired test policy and compare 
 \subsection{Contributions and main results}
 \textbf{C1.}\, A three-benchmark account of observed accuracy--communication trade-offs, with an additional historical MBPP oracle-only audit. MATH's negative point estimate is conditional on the answer-matching protocol.
 
-\textbf{C2.}\, Matched-message-budget controls on a separate GSM8K subset. A cosine-only gate and VIB have identical accuracy point estimates; random drop is one point lower, with both comparison intervals spanning zero. This limits claims of selector-specific benefit rather than proving the policies equivalent.
+\textbf{C2.}\, Matched-message-budget controls on a separate GSM8K subset. A cosine-only gate and VIB have identical accuracy point estimates; random drop is one point lower, with both comparison intervals spanning zero. This limits claims of selector-specific benefit rather than proving the policies equivalent. We also move the gate before generation on $300$ GSM8K training tasks: total-token savings scale from $4.01\%$ to $41.38\%$ at paired accuracy differences within $\pm1$ pp, yet coverage-based scheduling is indistinguishable from a count-matched random control, so the gain comes from skipping before generation rather than from the selection rule.
 
 \textbf{C3.}\, An audit of attribution and protocol validity: broadcast reductions exceed recorded token reductions; refreshed HumanEval cost is incomplete; purported zero-temperature runs have caller overrides; and selected MBPP successes broadcast every candidate. Historical positive scores are retained rather than conflated with scoring artifacts.
 
@@ -196,6 +196,18 @@ The headline results use the public \texttt{deepseek-chat} alias, historically a
 \item HumanEval has $151/164$ (Full) and $148/164$ (VIB) observed passes, with $21.14\%$ fewer broadcasts. The paired difference interval spans zero, so the recorded shortfall is one of several inconclusive comparisons. We do not test reinvestment of the saved budget.
 \item MATH saves $7676$ of $30000$ broadcasts. Its whole-answer matching interval is below zero on the full set but crosses zero on the reference-expression subset. This is not a demonstrated accuracy-preserving Pareto improvement.
 \end{itemize}
+
+\subsection{Pre-generation scheduling --- moving the gate before candidates exist}
+
+Every gate above decides \emph{after} candidates have been generated: a rejected message never enters synthesis, but its generation cost has already been paid. That sunk cost is the source of the accuracy ceiling. The one lever left is to move the decision \emph{before} generation, where a skipped role is never invoked and its cost is zero. A pre-generation scheduler may use only evidence visible at decision time (the goal, the already-approved history, the round index, and role names); it may not read reference answers or any hidden signal. We instantiate this on $300$ GSM8K \texttt{train} tasks with model \texttt{deepseek-v4-flash} at temperature $0$ and max steps $2$, running five conditions: Full-Comm (no gate, no schedule; an upper bound), Post-gate (the current method), Fixed trim (trim round 1 only), Random skip (a count-matched control that keeps the same \emph{number} of roles per round as coverage but picks them at random), and Coverage (role-coverage scheduling). \Cref{tab:pre_generation} reports the outcome.
+
+\textbf{H1 (pre-generation gating saves cost) holds.} Coverage reduces broadcasts by $43.17\%$ and total tokens by $41.38\%$ relative to Full-Comm, whereas post-generation gating reduces broadcasts by only $29.83\%$ and total tokens by $4.01\%$. Moving the admit/skip decision earlier scales the total-token saving by roughly an order of magnitude.
+
+\textbf{H2 (accuracy non-inferiority) holds.} Every treatment's paired accuracy difference from Full-Comm lies within $\pm1$ pp with an interval spanning zero: Coverage$-$Full is $+0.33$ pp (95\% CI $[-1.00,+1.67]$) and Coverage$-$Post-gate is $-1.00$ pp (CI $[-2.67,+0.67]$). At this scale pre-generation scheduling causes no detectable accuracy loss, but it also delivers no significant gain.
+
+\textbf{A mechanistic negative result.} The saving comes from the \emph{act} of skipping before generation, not from skipping \emph{smartly}. Coverage and the count-matched random control are nearly indistinguishable: $+0.33$ pp (CI $[-1.00,+1.67]$), with total-token costs differing by only $0.27\%$. Fixed trimming is both cheaper and slightly more accurate: it removes $59.25\%$ of total tokens, and coverage costs $43.83\%$ more than it while trailing by $0.67$ pp. Consequently, ``allocating a task-adaptive communication budget'' is not supported by this batch: under a matched budget, \emph{which} roles are kept does not change accuracy, and the cost is set by whether the skip happens before generation. We therefore do not claim superiority for any scheduling policy and report this only as reproducible negative evidence.
+
+\input{tables/table7_pre_generation_scheduling}
 
 \subsection{Ablation --- GSM8K frozen-history $\times$ role-aware weights}
 

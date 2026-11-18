@@ -793,6 +793,181 @@ Intervals spanning zero do not establish equivalence or VIB-specific superiority
 
 
 # ---------------------------------------------------------------
+# Table 7: pre-generation scheduling (agent-level skipping before synthesis)
+# ---------------------------------------------------------------
+# Source: results/pre_generation_scheduling_20261117/<ds>/summary.json produced by
+# experiments/run_pre_generation_scheduling.py, under the prespecified protocol
+# paper/pre_generation_scheduling_protocol_zh.md. Every number here is copied
+# straight from that summary; nothing is recomputed or hand-edited.
+
+PRE_GEN_CONDITIONS: Tuple[str, ...] = ("full", "post_gate", "fixed_trim", "random_skip", "coverage")
+PRE_GEN_CONTRASTS: Tuple[str, ...] = (
+    "coverage_minus_full",
+    "coverage_minus_post_gate",
+    "coverage_minus_random_skip",
+    "coverage_minus_fixed_trim",
+)
+
+PRE_GEN_CONDITION_LABELS = {
+    "full": "Full-Comm (no gate)",
+    "post_gate": "Post-gate (current)",
+    "fixed_trim": "Fixed trim",
+    "random_skip": "Random skip (matched)",
+    "coverage": "Coverage (ours)",
+}
+PRE_GEN_CONDITION_LABELS_ZH = {
+    "full": "全通信（无门控）",
+    "post_gate": "生成后门控（现状）",
+    "fixed_trim": "固定裁剪",
+    "random_skip": "随机跳过（数量匹配）",
+    "coverage": "覆盖度调度（本文）",
+}
+PRE_GEN_CONTRAST_LABELS = {
+    "coverage_minus_full": "Coverage $-$ Full",
+    "coverage_minus_post_gate": "Coverage $-$ Post-gate",
+    "coverage_minus_random_skip": "Coverage $-$ Random skip",
+    "coverage_minus_fixed_trim": "Coverage $-$ Fixed trim",
+}
+
+
+def _pre_generation_ready(s: Dict[str, Any]) -> str:
+    """Return "" when the summary carries every condition and contrast, else why to skip."""
+    summ = s.get("summary") or {}
+    missing_cond = [c for c in PRE_GEN_CONDITIONS if c not in summ]
+    if missing_cond:
+        return f"summary 缺少条件 {', '.join(missing_cond)}"
+    if not summ["full"].get("messages"):
+        return "full 条件缺少 messages，无法计算节省率"
+    comps = s.get("comparisons") or {}
+    missing_cmp = [c for c in PRE_GEN_CONTRASTS if c not in comps]
+    if missing_cmp:
+        return f"缺少对比 {', '.join(missing_cmp)}"
+    return ""
+
+
+def _reduction_pct(base: float, arm: float) -> float:
+    """Percent saved by ``arm`` relative to ``base`` (positive = arm cheaper)."""
+    return 100.0 * (base - arm) / base if base else 0.0
+
+
+def _table7_body_lines(s: Dict[str, Any], labels: Dict[str, str],
+                       block_b_header: str) -> List[str]:
+    """Numeric body shared by the English and Chinese renderers."""
+    summ = s["summary"]
+    full = summ["full"]
+    lines: List[str] = []
+
+    for cond in PRE_GEN_CONDITIONS:
+        row = summ[cond]
+        if cond == "full":
+            msg_cell = pr_cell = tk_cell = "--"
+        else:
+            msg_cell = _pct(_reduction_pct(full["messages"], row["messages"]))
+            pr_cell = _pct(_reduction_pct(full["prompt_tokens"], row["prompt_tokens"]))
+            tk_cell = _pct(_reduction_pct(full["total_tokens"], row["total_tokens"]))
+        cells = (labels[cond], _pct(row["accuracy_pct"]), msg_cell, pr_cell, tk_cell)
+        if cond == "coverage":
+            cells = tuple(r"\textbf{%s}" % c for c in cells)
+        lines.append(" & ".join(cells) + r" \\")
+
+    lines.append(r"\midrule")
+    lines.append(block_b_header)
+    lines.append(r"\midrule")
+    for key in PRE_GEN_CONTRASTS:
+        comp = s["comparisons"][key]
+        delta = comp["accuracy_delta_pp"]
+        mean, lo, hi = delta["mean"], delta["lo"], delta["hi"]
+        tok = comp["reduction_pct"]["total_tokens"]
+        lines.append(
+            f"{PRE_GEN_CONTRAST_LABELS[key]} & "
+            f"${mean:+.2f}$ & $[{lo:+.2f}, {hi:+.2f}]$ & "
+            f"\\multicolumn{{2}}{{c}}{{{tok:+.2f}}} \\\\"
+        )
+    return lines
+
+
+def render_table7_pre_generation(s: Dict[str, Any]) -> str:
+    model = (s.get("config") or {}).get("model") or "unknown"
+    limit = (s.get("config") or {}).get("limit") or (s["summary"]["full"] or {}).get("n")
+    header = r"""\begin{table}[t]
+\centering
+\caption{Pre-generation scheduling on __LIMIT__ GSM8K \texttt{train} tasks (model
+\texttt{__MODEL__}, temperature $0$, max steps $2$). A skipped role is never invoked, so its
+cost is genuinely avoided, whereas post-generation gating still pays for every candidate.
+Descriptive reductions are relative to Full-Comm; the lower block reports paired accuracy
+differences in pp with a $10\,000$-resample bootstrap 95\% CI plus the total-token reduction
+of the first arm relative to the second (positive = first arm cheaper).
+Coverage$-$Full is the primary comparison and Coverage$-$RandomSkip the prespecified
+count-matched control; the remaining contrasts are descriptive. Every interval spans zero:
+at this scale no condition shows a significant accuracy change, coverage is indistinguishable
+from the count-matched random control, and it still costs more than fixed trimming.
+\label{tab:pre_generation}}
+\setlength{\tabcolsep}{3.5pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} l r r r r @{}}
+\toprule
+\multicolumn{5}{@{}l}{\textit{(a) Descriptive metrics}}\\
+\textbf{Condition} & \textbf{Pass@1 (\%)} & \textbf{Msg$\downarrow$\%} &
+\textbf{Prompt$\downarrow$\%} & \textbf{Tok$\downarrow$\%} \\
+\midrule
+""".replace("__MODEL__", str(model)).replace("__LIMIT__", str(limit))
+
+    block_b_header = (
+        r"\multicolumn{5}{@{}l}{\textit{(b) Paired contrasts ($10$k bootstrap 95\% CI)}}\\"
+        "\n"
+        r"\textbf{Contrast} & \textbf{$\Delta$acc (pp)} & \textbf{95\% CI} & "
+        r"\multicolumn{2}{c}{\textbf{Tok$\downarrow$\%}} \\"
+    )
+
+    footer = r"""\bottomrule
+\end{tabular}}
+\end{table}
+"""
+    body = _table7_body_lines(s, PRE_GEN_CONDITION_LABELS, block_b_header)
+    return header + "\n".join(body) + "\n" + footer
+
+
+def render_table7_pre_generation_chinese(s: Dict[str, Any]) -> str:
+    model = (s.get("config") or {}).get("model") or "unknown"
+    limit = (s.get("config") or {}).get("limit") or (s["summary"]["full"] or {}).get("n")
+    header = r"""\begin{table}[t]
+\centering
+\caption{GSM8K \texttt{train} __LIMIT__ 题上的生成前调度（模型 \texttt{__MODEL__}，温度 $0$，
+最大轮次 $2$）。被跳过的角色从不调用模型，其成本被真正省下；生成后门控仍需为每个候选付费。
+描述性节省率相对全通信；下半区给出配对精度差（pp，$10\,000$ 次 bootstrap 95\% 置信区间）
+与前者相对后者的总 Token 降幅（正 $=$ 前者更省）。
+Coverage$-$Full 为主比较，Coverage$-$RandomSkip 为预注册的数量匹配对照，其余为描述性。
+所有区间均跨零：该规模下无处理条件产生显著精度变化，覆盖度调度与数量匹配随机对照不可区分，
+且成本仍高于固定裁剪。
+\label{tab:pre_generation}}
+\setlength{\tabcolsep}{3.5pt}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{} l r r r r @{}}
+\toprule
+\multicolumn{5}{@{}l}{\textit{(a) 描述性指标}}\\
+\textbf{处理条件} & \textbf{Pass@1 (\%)} & \textbf{消息$\downarrow$\%} &
+\textbf{输入词元$\downarrow$\%} & \textbf{总词元$\downarrow$\%} \\
+\midrule
+""".replace("__MODEL__", str(model)).replace("__LIMIT__", str(limit))
+
+    block_b_header = (
+        r"\multicolumn{5}{@{}l}{\textit{(b) 配对对照（$10$k bootstrap 95\% 置信区间）}}\\"
+        "\n"
+        r"\textbf{对照} & \textbf{$\Delta$精度 (pp)} & \textbf{95\% 置信区间} & "
+        r"\multicolumn{2}{c}{\textbf{总词元$\downarrow$\%}} \\"
+    )
+
+    footer = r"""\bottomrule
+\end{tabular}}
+\end{table}
+"""
+    body = _table7_body_lines(s, PRE_GEN_CONDITION_LABELS_ZH, block_b_header)
+    return header + "\n".join(body) + "\n" + footer
+
+
+# ---------------------------------------------------------------
 # README
 # ---------------------------------------------------------------
 
@@ -806,12 +981,16 @@ README = r"""
     \input{paper/tables/table4_sensitivity}   % Appendix B: hyperparameter sensitivity
     \input{paper/tables/table5_crossmodel}    % Appendix C: cross-family transfer
     \input{paper/tables/table6_gating_controls}  % Appendix D: naive-gating controls
+    \input{paper/tables/table7_pre_generation_scheduling}      % pre-generation scheduling
+    \input{paper/tables/table7_pre_generation_scheduling_zh}   % 中文版
 
 若需重生成：
     python3 scripts/export_latex_tables.py
 
 table4 需要 results/sweep_v1/sweep_summary.json 覆盖全部 15 个网格点，否则自动跳过。
 table6 需要 results/gating_sweep/ 下 6 个点 (anchor + random + 4×top-k) 全部跑完，否则自动跳过。
+table7 需要 results/pre_generation_scheduling_20261117/gsm8k_train/summary.json 含 5 个条件
+       与 4 组配对对比，否则自动跳过。
 """
 
 
@@ -885,6 +1064,8 @@ def main():
     p.add_argument("--gating", default="results/gating_sweep/gating_summary.json",
                    help="Table 6: 朴素门控对照 sweep 汇总 (run_gating_baseline_sweep.py 产出)；"
                         "各点原始 JSON 需与其同目录，用于配对 bootstrap")
+    p.add_argument("--pre-gen", default="results/pre_generation_scheduling_20261117/gsm8k_train/summary.json",
+                   help="Table 7: 生成前调度 summary (run_pre_generation_scheduling.py 产出)")
     args = p.parse_args()
 
     outdir = Path(args.outdir)
@@ -977,6 +1158,25 @@ def main():
             (outdir / "table6_gating_controls.tex").write_text(
                 render_table6_gating(gating, gating_p.parent))
             written.append("table6_gating_controls.tex")
+
+    # Table 7 is the pre-generation scheduling result: require the full set of
+    # conditions and contrasts so a partial run cannot silently understate the
+    # savings or drop a control arm.
+    pre_gen_p = Path(args.pre_gen)
+    if not pre_gen_p.exists():
+        print(f"⚠️  Table 7 跳过: 缺少 {pre_gen_p}")
+    else:
+        pre_gen = load(pre_gen_p)
+        reason = _pre_generation_ready(pre_gen)
+        if reason:
+            print(f"⚠️  Table 7 跳过: {reason}")
+        else:
+            (outdir / "table7_pre_generation_scheduling.tex").write_text(
+                render_table7_pre_generation(pre_gen))
+            (outdir / "table7_pre_generation_scheduling_zh.tex").write_text(
+                render_table7_pre_generation_chinese(pre_gen))
+            written.append("table7_pre_generation_scheduling.tex")
+            written.append("table7_pre_generation_scheduling_zh.tex")
 
     preview_table1_plain(headline_rows)
     print(f"\n✅ 已生成 {len(written)} 张 .tex + 1 README to {outdir.resolve()}:")
