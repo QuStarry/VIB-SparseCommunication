@@ -1,0 +1,198 @@
+{
+  "protocol": "paper/pre_generation_scheduling_protocol_zh.md",
+  "generated_at": "2026-11-18 05:14:37",
+  "config": {
+    "datasets": [
+      "gsm8k_train"
+    ],
+    "limit": 300,
+    "conditions": [
+      "full",
+      "post_gate",
+      "fixed_trim",
+      "random_skip",
+      "coverage"
+    ],
+    "max_steps": 2,
+    "temperature": 0.0,
+    "max_tokens": null,
+    "random_seed": 20260812,
+    "model": "deepseek-v4-flash",
+    "provider": "private",
+    "excluded_task_count": 0,
+    "closer_roles": {
+      "HumanEval": [
+        "Coder"
+      ],
+      "MBPP": [
+        "Coder"
+      ],
+      "GSM8K": [
+        "Solver"
+      ],
+      "MATH": [
+        "Solver"
+      ]
+    }
+  },
+  "inference_protocol": {
+    "version": "explicit_stages_v1",
+    "overrides": {
+      "temperature": 0.0,
+      "max_tokens": null,
+      "agent_temperature": null,
+      "agent_max_tokens": null,
+      "code_temperature": null,
+      "code_max_tokens": null,
+      "math_temperature": null,
+      "math_max_tokens": null
+    },
+    "effective": {
+      "agent": {
+        "temperature": 0.0,
+        "max_tokens": 256
+      },
+      "code": {
+        "temperature": 0.0,
+        "max_tokens": 1024
+      },
+      "math": {
+        "temperature": 0.0,
+        "max_tokens": 256
+      }
+    }
+  },
+  "summary": {
+    "full": {
+      "n": 300,
+      "passed": 282,
+      "accuracy_pct": 94.0,
+      "messages": 1800,
+      "candidates": 1800,
+      "skipped_roles": 0,
+      "prompt_tokens": 585251,
+      "completion_tokens": 107264,
+      "total_tokens": 692515,
+      "errors": 0
+    },
+    "post_gate": {
+      "n": 300,
+      "passed": 286,
+      "accuracy_pct": 95.33333333333333,
+      "messages": 1263,
+      "candidates": 1800,
+      "skipped_roles": 0,
+      "prompt_tokens": 555594,
+      "completion_tokens": 109176,
+      "total_tokens": 664770,
+      "errors": 0
+    },
+    "fixed_trim": {
+      "n": 300,
+      "passed": 285,
+      "accuracy_pct": 95.0,
+      "messages": 900,
+      "candidates": 900,
+      "skipped_roles": 900,
+      "prompt_tokens": 228142,
+      "completion_tokens": 54078,
+      "total_tokens": 282220,
+      "errors": 0
+    },
+    "random_skip": {
+      "n": 300,
+      "passed": 282,
+      "accuracy_pct": 94.0,
+      "messages": 1010,
+      "candidates": 1200,
+      "skipped_roles": 600,
+      "prompt_tokens": 335368,
+      "completion_tokens": 71649,
+      "total_tokens": 407017,
+      "errors": 0
+    },
+    "coverage": {
+      "n": 300,
+      "passed": 283,
+      "accuracy_pct": 94.33333333333333,
+      "messages": 1023,
+      "candidates": 1200,
+      "skipped_roles": 600,
+      "prompt_tokens": 335247,
+      "completion_tokens": 70677,
+      "total_tokens": 405924,
+      "errors": 0
+    }
+  },
+  "comparisons": {
+    "coverage_minus_full": {
+      "a": "coverage",
+      "b": "full",
+      "n_pairs": 300,
+      "accuracy_delta_pp": {
+        "n": 300,
+        "n_boot": 10000,
+        "mean": 0.3333333333333333,
+        "lo": -1.0,
+        "hi": 1.6666666666666667
+      },
+      "reduction_pct": {
+        "messages": 43.166666666666664,
+        "prompt_tokens": 42.71739817616715,
+        "total_tokens": 41.38408554327343
+      }
+    },
+    "coverage_minus_post_gate": {
+      "a": "coverage",
+      "b": "post_gate",
+      "n_pairs": 300,
+      "accuracy_delta_pp": {
+        "n": 300,
+        "n_boot": 10000,
+        "mean": -1.0,
+        "lo": -2.6666666666666665,
+        "hi": 0.6666666666666666
+      },
+      "reduction_pct": {
+        "messages": 19.002375296912113,
+        "prompt_tokens": 39.6597155476841,
+        "total_tokens": 38.93767769303669
+      }
+    },
+    "coverage_minus_random_skip": {
+      "a": "coverage",
+      "b": "random_skip",
+      "n_pairs": 300,
+      "accuracy_delta_pp": {
+        "n": 300,
+        "n_boot": 10000,
+        "mean": 0.3333333333333333,
+        "lo": -1.0,
+        "hi": 1.6666666666666667
+      },
+      "reduction_pct": {
+        "messages": -1.2871287128712872,
+        "prompt_tokens": 0.036079769089477826,
+        "total_tokens": 0.2685391519273151
+      }
+    },
+    "coverage_minus_fixed_trim": {
+      "a": "coverage",
+      "b": "fixed_trim",
+      "n_pairs": 300,
+      "accuracy_delta_pp": {
+        "n": 300,
+        "n_boot": 10000,
+        "mean": -0.6666666666666666,
+        "lo": -2.3333333333333335,
+        "hi": 1.0
+      },
+      "reduction_pct": {
+        "messages": -13.666666666666666,
+        "prompt_tokens": -46.946638497076385,
+        "total_tokens": -43.83247112181986
+      }
+    }
+  },
+  "total_execution_time": 30789.06843495369
+}
