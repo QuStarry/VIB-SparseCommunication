@@ -56,7 +56,8 @@ class VIBMultiAgentWorkflow:
         same_round_history_mode: str = "incremental",
         enable_digest_fallback: bool = False,
         required_roles_first_step: Optional[List[str]] = None,
-        first_step_min_approvals: int = 0
+        first_step_min_approvals: int = 0,
+        pre_generation_scheduler: Optional[Callable] = None
     ):
         """
         Initialize the multi-agent workflow.
@@ -66,6 +67,12 @@ class VIBMultiAgentWorkflow:
             vib_router: VIB router instance (creates default if None)
             max_steps: Maximum collaboration rounds
             completion_checker: Function to check if task is complete
+            pre_generation_scheduler: Optional callable that decides which
+                agents may generate this round *before* any candidate exists.
+                Signature: ``(goal, history, step_t, agent_names) -> List[str]``.
+                It must rely only on evidence visible at decision time and must
+                never consult reference answers. When ``None`` (default) every
+                agent runs, reproducing the original post-generation-gating flow.
         """
         self.agents = agents
         self.vib_router = vib_router or VIBSparseCommRouter()
@@ -75,6 +82,7 @@ class VIBMultiAgentWorkflow:
         self.enable_digest_fallback = enable_digest_fallback
         self.required_roles_first_step = list(required_roles_first_step or [])
         self.first_step_min_approvals = first_step_min_approvals
+        self.pre_generation_scheduler = pre_generation_scheduler
         
         # Statistics tracking
         self.stats = {
@@ -85,7 +93,8 @@ class VIBMultiAgentWorkflow:
             "total_role_rescues": 0,
             "steps_completed": 0,
             "history_per_step": [],
-            "gate_decisions": []
+            "gate_decisions": [],
+            "schedule_decisions": []
         }
         
         # Build the workflow
@@ -124,12 +133,46 @@ class VIBMultiAgentWorkflow:
         
         return workflow
     
+    def _select_agents_for_round(self, state: AgentState) -> List[str]:
+        """Decide which agent names may generate this round.
+
+        With no scheduler configured this returns every agent, preserving the
+        original behaviour. A scheduler may return a subset, or an empty list to
+        skip the round entirely (which costs no model calls). Unknown names are
+        dropped, duplicates collapsed, and declaration order preserved so the
+        candidate stream stays deterministic.
+        """
+        declared = [agent["name"] for agent in self.agents]
+        if self.pre_generation_scheduler is None:
+            return declared
+
+        requested = self.pre_generation_scheduler(
+            goal=state["global_goal"],
+            history=state["history"],
+            step_t=state["step_t"],
+            agent_names=list(declared)
+        )
+        requested_set = set(requested or [])
+        selected = [name for name in declared if name in requested_set]
+        skipped = [name for name in declared if name not in requested_set]
+
+        self.stats["schedule_decisions"].append({
+            "round_idx": state["step_t"],
+            "selected": selected,
+            "skipped": skipped,
+            "history_len": len(state["history"])
+        })
+        return selected
+
     def _agents_node(self, state: AgentState) -> Dict:
-        """Run all agents and collect their candidates."""
+        """Run the scheduled agents and collect their candidates."""
         all_candidates = []
-        
+        active_names = set(self._select_agents_for_round(state))
+
         for agent in self.agents:
             agent_name = agent["name"]
+            if agent_name not in active_names:
+                continue
             generate_fn = agent["generate"]
             
             # Generate candidate message
@@ -351,7 +394,8 @@ class VIBMultiAgentWorkflow:
             "total_role_rescues": 0,
             "steps_completed": 0,
             "history_per_step": [],
-            "gate_decisions": []
+            "gate_decisions": [],
+            "schedule_decisions": []
         }
         
         # Initial state

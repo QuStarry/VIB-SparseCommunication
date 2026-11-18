@@ -32,6 +32,13 @@ def make_agent(name, content):
     return {"name": name, "generate": lambda goal, history, step_t: content}
 
 
+def make_counting_agent(name, content, counter):
+    def generate(goal, history, step_t):
+        counter[name] = counter.get(name, 0) + 1
+        return content
+    return {"name": name, "generate": generate}
+
+
 def test_frozen_same_round_history_does_not_chain_same_step_messages():
     router = RecordingRouter(allow_all=True)
     workflow = VIBMultiAgentWorkflow(
@@ -267,3 +274,82 @@ def test_mbpp_early_stop_uses_probe_when_first_round_passes(monkeypatch):
     assert result["vib"]["early_stopped"] is True
     assert result["task_result"].full_messages == 1
     assert result["task_result"].vib_messages == 1
+
+
+def test_workflow_without_scheduler_runs_every_agent_and_records_nothing():
+    calls = {}
+    workflow = VIBMultiAgentWorkflow(
+        agents=[
+            make_counting_agent("Planner", "Plan", calls),
+            make_counting_agent("Solver", "Solve", calls),
+        ],
+        vib_router=RecordingRouter(allow_all=True),
+        max_steps=1,
+    )
+
+    workflow.run("goal", verbose=False)
+
+    assert calls == {"Planner": 1, "Solver": 1}
+    assert workflow.stats["schedule_decisions"] == []
+
+
+def test_pre_generation_scheduler_skips_unscheduled_agents():
+    calls = {}
+    workflow = VIBMultiAgentWorkflow(
+        agents=[
+            make_counting_agent("Planner", "Plan", calls),
+            make_counting_agent("Solver", "Solve", calls),
+        ],
+        vib_router=RecordingRouter(allow_all=True),
+        max_steps=1,
+        pre_generation_scheduler=lambda goal, history, step_t, agent_names: ["Solver"],
+    )
+
+    workflow.run("goal", verbose=False)
+
+    assert calls == {"Solver": 1}
+    decision = workflow.stats["schedule_decisions"][0]
+    assert decision["selected"] == ["Solver"]
+    assert decision["skipped"] == ["Planner"]
+
+
+def test_pre_generation_scheduler_receives_visible_evidence_only():
+    seen = []
+
+    def scheduler(goal, history, step_t, agent_names):
+        seen.append({
+            "goal": goal,
+            "history": list(history),
+            "step_t": step_t,
+            "agents": list(agent_names),
+        })
+        return list(agent_names)
+
+    workflow = VIBMultiAgentWorkflow(
+        agents=[make_agent("Planner", "Plan")],
+        vib_router=RecordingRouter(allow_all=True),
+        max_steps=2,
+        pre_generation_scheduler=scheduler,
+    )
+
+    workflow.run("the goal", verbose=False)
+
+    assert seen[0] == {"goal": "the goal", "history": [], "step_t": 1, "agents": ["Planner"]}
+    assert seen[1]["step_t"] == 2
+    assert seen[1]["history"] == ["[Planner]: Plan"]
+
+
+def test_pre_generation_scheduler_drops_unknown_names_and_can_skip_round():
+    calls = {}
+    workflow = VIBMultiAgentWorkflow(
+        agents=[make_counting_agent("Solver", "Solve", calls)],
+        vib_router=RecordingRouter(allow_all=True),
+        max_steps=1,
+        pre_generation_scheduler=lambda goal, history, step_t, agent_names: ["Ghost"],
+    )
+
+    workflow.run("goal", verbose=False)
+
+    assert calls == {}
+    assert workflow.stats["schedule_decisions"][0]["selected"] == []
+    assert workflow.stats["total_candidates"] == 0
